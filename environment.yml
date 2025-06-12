@@ -1,0 +1,22 @@
+name: legal_assistant
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python
+  - pip
+  - requests
+  - beautifulsoup4
+  - lxml
+  - sentence-transformers
+  - pytorch
+  - transformers
+  - fastapi
+  - uvicorn
+  - python-dotenv
+  - aiohttp
+  - pandas
+  - numpy
+  - pip:
+      - google-generativeai
