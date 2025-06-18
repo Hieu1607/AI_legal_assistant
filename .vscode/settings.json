@@ -1,0 +1,68 @@
+{
+    // Terminal và Environment
+    "terminal.integrated.env.windows": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUTF8": "1",
+        "CONDA_DEFAULT_ENV": "legal_assistant"
+    },
+
+    // Python Configuration
+    "python.defaultInterpreterPath": "C:\\Users\\HP\\anaconda3\\envs\\legal_assistant\\python.exe",
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--max-line-length=100",
+        "--disable=C0114,C0116"
+    ],
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length=100"],
+
+    // File Settings
+    "files.encoding": "utf8",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 2000,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+
+    // Editor Settings
+    "editor.fontSize": 14,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+
+    // Jupyter Notebook
+    "jupyter.askForKernelRestart": false,
+
+    // Git
+    "git.autofetch": true,
+    "git.confirmSync": false,
+
+    // Logging và Debug
+    "python.logging.level": "info",
+
+    // File Associations
+    "files.associations": {
+        "*.yaml": "yaml",
+        "*.yml": "yaml",
+        "logging.yaml": "yaml"
+    },
+
+    // Exclude từ File Explorer
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/logs/*.log": false,
+        "**/.git": true
+    },
+
+    // Search exclude
+    "search.exclude": {
+        "**/logs": true,
+        "**/__pycache__": true,
+        "**/data/raw": true
+    },
+    "jupyter.interactiveWindow.creationMode": "perFile"
+}

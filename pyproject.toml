@@ -30,4 +30,5 @@ disable = [
     "missing-function-docstring",
     "invalid-name",
     "unused-variable",
+    "wrong-import-position",
 ]
