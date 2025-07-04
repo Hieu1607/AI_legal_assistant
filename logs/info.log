@@ -1838,3 +1838,171 @@
 2025-06-18 13:30:58,443 - src.extract_data.extract_clean_text - INFO - Processing file: c:\Users\HP\Desktop\AI_legal_assistant\data\raw\ff9bd05c-2e15-4b95-9b1c-26dbd5684060.html
 2025-06-18 13:30:58,572 - src.extract_data.extract_clean_text - INFO - Processed c:\Users\HP\Desktop\AI_legal_assistant\data\raw\ff9bd05c-2e15-4b95-9b1c-26dbd5684060.html into chu_de_15\de_muc_6/15_6_Quốc_tịch_Việt_Nam.md
 2025-06-18 13:30:58,572 - src.extract_data - INFO - Batch processing completed successfully
+2025-06-19 11:28:00,305 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 11:28:00,359 - src.retrieval.links_scraper - INFO - Total links : 14
+2025-06-19 11:28:00,360 - src.retrieval.links_scraper - INFO - Error in saving data : Object of type Tag is not JSON serializable
+2025-06-19 11:28:00,360 - src.retrieval.links_scraper - INFO - Successfully scrape all links from the url
+2025-06-19 11:32:17,991 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 11:32:18,043 - src.retrieval.links_scraper - INFO - Total links : 14
+2025-06-19 11:32:18,045 - src.retrieval.links_scraper - INFO - Error in saving data : Object of type Tag is not JSON serializable
+2025-06-19 11:32:18,045 - src.retrieval.links_scraper - INFO - Failed to scrape all links
+2025-06-19 11:32:53,143 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 11:32:53,191 - src.retrieval.links_scraper - INFO - Total links : 14
+2025-06-19 11:32:53,193 - src.retrieval.links_scraper - INFO - Successfully scrape all links from the url
+2025-06-19 11:34:52,390 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 11:34:52,446 - src.retrieval.links_scraper - INFO - Total links : 14
+2025-06-19 11:34:52,448 - src.retrieval.links_scraper - INFO - Successfully scrape all links from the url
+2025-06-19 13:22:12,803 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 13:22:12,857 - src.retrieval.links_scraper - INFO - Total links : 20
+2025-06-19 13:22:12,872 - src.retrieval.links_scraper - INFO - Successfully scrape all links from the url
+2025-06-19 15:57:49,606 - __main__ - INFO - Successfully scraped the page!
+2025-06-19 15:57:49,661 - __main__ - INFO - Total links : 14
+2025-06-19 16:02:47,158 - __main__ - INFO - Successfully scraped the page!
+2025-06-19 16:02:47,216 - __main__ - INFO - Total links : 14
+2025-06-19 16:03:41,500 - __main__ - INFO - Successfully scraped the page!
+2025-06-19 16:03:41,549 - __main__ - INFO - Total links : 14
+2025-06-19 16:05:49,690 - __main__ - INFO - Successfully scraped the page!
+2025-06-19 16:05:49,734 - __main__ - INFO - Total links : 14
+2025-06-19 16:08:11,922 - __main__ - INFO - Successfully scraped the page!
+2025-06-19 16:08:11,979 - __main__ - INFO - Total links : 14
+2025-06-19 16:08:11,989 - __main__ - INFO - Successfully scrape all links from the url
+2025-06-19 16:09:18,959 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 16:09:19,018 - src.retrieval.links_scraper - INFO - Total links : 20
+2025-06-19 16:09:19,037 - src.retrieval.links_scraper - INFO - Successfully scrape all links from the url
+2025-06-19 16:47:32,238 - __main__ - INFO - Successfully scraped the page!
+2025-06-19 16:47:32,290 - __main__ - INFO - Total links : 14
+2025-06-19 16:47:32,300 - __main__ - INFO - Successfully scrape all links from the url
+2025-06-19 16:48:01,798 - src.retrieval.links_scraper - INFO - Successfully scraped the page!
+2025-06-19 16:48:01,847 - src.retrieval.links_scraper - INFO - Total links : 20
+2025-06-19 16:48:01,870 - src.retrieval.links_scraper - INFO - Successfully scrape all links from the url
+2025-06-30 09:42:32,849 - __main__ - INFO - Successfully get the content of link 0
+2025-06-30 09:42:45,240 - __main__ - INFO - Successfully get the content of link 1
+2025-06-30 09:43:46,833 - __main__ - INFO - Successfully get the content of link 1
+2025-06-30 09:43:58,800 - __main__ - INFO - Successfully get the content of link 2
+2025-06-30 09:44:27,186 - __main__ - INFO - Successfully get the content of link 3
+2025-06-30 09:44:34,083 - __main__ - INFO - Successfully get the content of link 4
+2025-06-30 09:44:45,536 - __main__ - INFO - Successfully get the content of link 5
+2025-06-30 09:44:57,285 - __main__ - INFO - Successfully get the content of link 6
+2025-06-30 09:45:02,805 - __main__ - INFO - Successfully get the content of link 7
+2025-06-30 09:45:08,397 - __main__ - INFO - Successfully get the content of link 8
+2025-06-30 09:45:19,337 - __main__ - INFO - Successfully get the content of link 9
+2025-06-30 09:45:26,407 - __main__ - INFO - Successfully get the content of link 10
+2025-06-30 09:45:32,176 - __main__ - INFO - Successfully get the content of link 11
+2025-06-30 09:45:41,358 - __main__ - INFO - Successfully get the content of link 12
+2025-06-30 09:45:45,757 - __main__ - INFO - Successfully get the content of link 13
+2025-06-30 09:45:49,571 - __main__ - INFO - Successfully get the content of link 14
+2025-06-30 09:45:49,572 - __main__ - INFO - Successfully get all content
+2025-06-30 10:01:05,244 - src.retrieval.fetch_details - INFO - Successfully get the content of link 1
+2025-06-30 10:01:09,672 - src.retrieval.fetch_details - INFO - Successfully get the content of link 2
+2025-06-30 10:01:13,300 - src.retrieval.fetch_details - INFO - Successfully get the content of link 3
+2025-06-30 10:01:17,084 - src.retrieval.fetch_details - INFO - Successfully get the content of link 4
+2025-06-30 10:01:20,764 - src.retrieval.fetch_details - INFO - Successfully get the content of link 5
+2025-06-30 10:01:24,469 - src.retrieval.fetch_details - INFO - Successfully get the content of link 6
+2025-06-30 10:01:28,047 - src.retrieval.fetch_details - INFO - Successfully get the content of link 7
+2025-06-30 10:01:31,890 - src.retrieval.fetch_details - INFO - Successfully get the content of link 8
+2025-06-30 10:01:35,648 - src.retrieval.fetch_details - INFO - Successfully get the content of link 9
+2025-06-30 10:01:39,568 - src.retrieval.fetch_details - INFO - Successfully get the content of link 10
+2025-06-30 10:01:43,442 - src.retrieval.fetch_details - INFO - Successfully get the content of link 11
+2025-06-30 10:01:47,612 - src.retrieval.fetch_details - INFO - Successfully get the content of link 12
+2025-06-30 10:01:50,933 - src.retrieval.fetch_details - INFO - Successfully get the content of link 13
+2025-06-30 10:01:54,878 - src.retrieval.fetch_details - INFO - Successfully get the content of link 14
+2025-06-30 10:01:58,617 - src.retrieval.fetch_details - INFO - Successfully get the content of link 15
+2025-06-30 10:02:02,532 - src.retrieval.fetch_details - INFO - Successfully get the content of link 16
+2025-06-30 10:02:06,195 - src.retrieval.fetch_details - INFO - Successfully get the content of link 17
+2025-06-30 10:02:09,738 - src.retrieval.fetch_details - INFO - Successfully get the content of link 18
+2025-06-30 10:02:13,298 - src.retrieval.fetch_details - INFO - Successfully get the content of link 19
+2025-06-30 10:02:17,080 - src.retrieval.fetch_details - INFO - Successfully get the content of link 20
+2025-06-30 10:02:17,080 - src.retrieval.fetch_details - INFO - Successfully get all content
+2025-06-30 10:03:09,107 - src.retrieval.fetch_details - INFO - Successfully get the content of link 1
+2025-06-30 10:03:22,255 - src.retrieval.fetch_details - INFO - Successfully get the content of link 2
+2025-06-30 10:03:51,201 - src.retrieval.fetch_details - INFO - Successfully get the content of link 3
+2025-06-30 10:03:58,255 - src.retrieval.fetch_details - INFO - Successfully get the content of link 4
+2025-06-30 10:04:09,741 - src.retrieval.fetch_details - INFO - Successfully get the content of link 5
+2025-06-30 10:04:21,336 - src.retrieval.fetch_details - INFO - Successfully get the content of link 6
+2025-06-30 10:04:26,749 - src.retrieval.fetch_details - INFO - Successfully get the content of link 7
+2025-06-30 10:04:32,402 - src.retrieval.fetch_details - INFO - Successfully get the content of link 8
+2025-06-30 10:04:43,417 - src.retrieval.fetch_details - INFO - Successfully get the content of link 9
+2025-06-30 10:04:51,617 - src.retrieval.fetch_details - INFO - Successfully get the content of link 10
+2025-06-30 10:04:57,671 - src.retrieval.fetch_details - INFO - Successfully get the content of link 11
+2025-06-30 10:05:06,669 - src.retrieval.fetch_details - INFO - Successfully get the content of link 12
+2025-06-30 10:05:11,122 - src.retrieval.fetch_details - INFO - Successfully get the content of link 13
+2025-06-30 10:05:15,494 - src.retrieval.fetch_details - INFO - Successfully get the content of link 14
+2025-06-30 10:05:15,494 - src.retrieval.fetch_details - INFO - Successfully get all content
+2025-06-30 10:05:47,796 - src.retrieval.fetch_details - INFO - Successfully get the content of link 1
+2025-06-30 10:05:52,017 - src.retrieval.fetch_details - INFO - Successfully get the content of link 2
+2025-06-30 10:05:55,639 - src.retrieval.fetch_details - INFO - Successfully get the content of link 3
+2025-06-30 10:05:59,320 - src.retrieval.fetch_details - INFO - Successfully get the content of link 4
+2025-06-30 10:06:03,299 - src.retrieval.fetch_details - INFO - Successfully get the content of link 5
+2025-06-30 10:06:06,582 - src.retrieval.fetch_details - INFO - Successfully get the content of link 6
+2025-06-30 10:06:10,067 - src.retrieval.fetch_details - INFO - Successfully get the content of link 7
+2025-06-30 10:06:13,960 - src.retrieval.fetch_details - INFO - Successfully get the content of link 8
+2025-06-30 10:06:17,586 - src.retrieval.fetch_details - INFO - Successfully get the content of link 9
+2025-06-30 10:06:21,052 - src.retrieval.fetch_details - INFO - Successfully get the content of link 10
+2025-06-30 10:06:24,608 - src.retrieval.fetch_details - INFO - Successfully get the content of link 11
+2025-06-30 10:06:28,329 - src.retrieval.fetch_details - INFO - Successfully get the content of link 12
+2025-06-30 10:06:31,865 - src.retrieval.fetch_details - INFO - Successfully get the content of link 13
+2025-06-30 10:06:35,525 - src.retrieval.fetch_details - INFO - Successfully get the content of link 14
+2025-06-30 10:06:39,177 - src.retrieval.fetch_details - INFO - Successfully get the content of link 15
+2025-06-30 10:06:42,908 - src.retrieval.fetch_details - INFO - Successfully get the content of link 16
+2025-06-30 10:06:46,881 - src.retrieval.fetch_details - INFO - Successfully get the content of link 17
+2025-06-30 10:06:50,303 - src.retrieval.fetch_details - INFO - Successfully get the content of link 18
+2025-06-30 10:06:53,704 - src.retrieval.fetch_details - INFO - Successfully get the content of link 19
+2025-06-30 10:06:57,350 - src.retrieval.fetch_details - INFO - Successfully get the content of link 20
+2025-06-30 10:06:57,350 - src.retrieval.fetch_details - INFO - Successfully get all content
+2025-07-01 13:08:27,857 - src.preprocess.cleaner - INFO - Parsed Bộ luật Lao động 2019, số 45/2019/QH14 completely
+2025-07-01 13:08:29,633 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng hình sự 2015, số 101/2015/QH13 completely
+2025-07-01 13:08:32,451 - src.preprocess.cleaner - INFO - Parsed Bộ luật Hình sự 2015, số 100/2015/QH13 completely
+2025-07-01 13:08:33,531 - src.preprocess.cleaner - INFO - Parsed Bộ luật Hàng hải 2015, số 95/2015/QH13 completely
+2025-07-01 13:08:35,201 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng dân sự 2015, số 92/2015/QH13 completely
+2025-07-01 13:08:36,727 - src.preprocess.cleaner - INFO - Parsed Bộ luật Dân sự 2015, số 91/2015/QH13 completely
+2025-07-01 13:08:37,465 - src.preprocess.cleaner - INFO - Parsed Bộ luật Lao động 2012, số 10/2012/QH13 completely
+2025-07-01 13:08:38,185 - src.preprocess.cleaner - INFO - Parsed Bộ luật Hàng hải năm 2005 completely
+2025-07-01 13:08:39,809 - src.preprocess.cleaner - INFO - Parsed Bộ luật Dân sự 2005, số 33/2005/QH11 completely
+2025-07-01 13:08:40,867 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng dân sự số 24/2004/QH11 completely
+2025-07-01 13:08:41,729 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng Hình sự số 19/2003/QH11 completely
+2025-07-01 13:08:43,043 - src.preprocess.cleaner - INFO - Parsed Bộ Luật Hình sự năm 1999 completely
+2025-07-01 13:08:43,609 - src.preprocess.cleaner - INFO - Parsed Bộ luật Dân sự năm 1995 completely
+2025-07-01 13:08:43,758 - src.preprocess.cleaner - INFO - Parsed Luật hình sự 1985 - Luật số 17-LCT/HĐNN7 completely
+2025-07-01 13:55:46,846 - src.preprocess.cleaner - INFO - Parsed Bộ luật Lao động 2019, số 45/2019/QH14 completely
+2025-07-01 13:55:48,691 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng hình sự 2015, số 101/2015/QH13 completely
+2025-07-01 13:55:51,493 - src.preprocess.cleaner - INFO - Parsed Bộ luật Hình sự 2015, số 100/2015/QH13 completely
+2025-07-01 13:55:52,657 - src.preprocess.cleaner - INFO - Parsed Bộ luật Hàng hải 2015, số 95/2015/QH13 completely
+2025-07-01 13:55:54,334 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng dân sự 2015, số 92/2015/QH13 completely
+2025-07-01 13:55:55,889 - src.preprocess.cleaner - INFO - Parsed Bộ luật Dân sự 2015, số 91/2015/QH13 completely
+2025-07-01 13:55:56,632 - src.preprocess.cleaner - INFO - Parsed Bộ luật Lao động 2012, số 10/2012/QH13 completely
+2025-07-01 13:55:57,376 - src.preprocess.cleaner - INFO - Parsed Bộ luật Hàng hải năm 2005 completely
+2025-07-01 13:55:59,114 - src.preprocess.cleaner - INFO - Parsed Bộ luật Dân sự 2005, số 33/2005/QH11 completely
+2025-07-01 13:56:00,157 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng dân sự số 24/2004/QH11 completely
+2025-07-01 13:56:01,001 - src.preprocess.cleaner - INFO - Parsed Bộ luật Tố tụng Hình sự số 19/2003/QH11 completely
+2025-07-01 13:56:02,338 - src.preprocess.cleaner - INFO - Parsed Bộ Luật Hình sự năm 1999 completely
+2025-07-01 13:56:02,903 - src.preprocess.cleaner - INFO - Parsed Bộ luật Dân sự năm 1995 completely
+2025-07-01 13:56:03,037 - src.preprocess.cleaner - INFO - Parsed Luật hình sự 1985 - Luật số 17-LCT/HĐNN7 completely
+2025-07-04 10:04:55,169 - src.retrieval.fetch_details - INFO - Successfully get the content of link 1
+2025-07-04 10:05:06,502 - src.retrieval.fetch_details - INFO - Successfully get the content of link 2
+2025-07-04 10:05:34,351 - src.retrieval.fetch_details - INFO - Successfully get the content of link 3
+2025-07-04 10:05:40,357 - src.retrieval.fetch_details - INFO - Successfully get the content of link 4
+2025-07-04 10:05:52,294 - src.retrieval.fetch_details - INFO - Successfully get the content of link 5
+2025-07-04 10:06:06,679 - src.retrieval.fetch_details - INFO - Successfully get the content of link 6
+2025-07-04 10:06:12,933 - src.retrieval.fetch_details - INFO - Successfully get the content of link 7
+2025-07-04 10:06:17,648 - src.retrieval.fetch_details - INFO - Successfully get the content of link 8
+2025-07-04 10:06:27,675 - src.retrieval.fetch_details - INFO - Successfully get the content of link 9
+2025-07-04 10:06:34,924 - src.retrieval.fetch_details - INFO - Successfully get the content of link 10
+2025-07-04 10:06:40,130 - src.retrieval.fetch_details - INFO - Successfully get the content of link 11
+2025-07-04 10:06:48,814 - src.retrieval.fetch_details - INFO - Successfully get the content of link 12
+2025-07-04 10:06:53,215 - src.retrieval.fetch_details - INFO - Successfully get the content of link 13
+2025-07-04 10:06:56,650 - src.retrieval.fetch_details - INFO - Successfully get the content of link 14
+2025-07-04 10:06:56,651 - src.retrieval.fetch_details - INFO - Successfully get all content
+2025-07-04 13:32:30,048 - __main__ - INFO - data/processed/chunks\100_2015_QH13.txt_chunks.json is clear
+2025-07-04 13:32:30,069 - __main__ - INFO - data/processed/chunks\101_2015_QH13.txt_chunks.json is clear
+2025-07-04 13:32:30,086 - __main__ - INFO - data/processed/chunks\10_2012_QH13.txt_chunks.json is clear
+2025-07-04 13:32:30,117 - __main__ - INFO - data/processed/chunks\17_LCT_HĐNN7.txt_chunks.json is clear
+2025-07-04 13:32:30,134 - __main__ - INFO - data/processed/chunks\1995.txt_chunks.json is clear
+2025-07-04 13:32:30,153 - __main__ - INFO - data/processed/chunks\1999.txt_chunks.json is clear
+2025-07-04 13:32:30,175 - __main__ - INFO - data/processed/chunks\19_2003_QH11.txt_chunks.json is clear
+2025-07-04 13:32:30,191 - __main__ - INFO - data/processed/chunks\2005.txt_chunks.json is clear
+2025-07-04 13:32:30,210 - __main__ - INFO - data/processed/chunks\24_2004_QH11.txt_chunks.json is clear
+2025-07-04 13:32:30,230 - __main__ - INFO - data/processed/chunks\33_2005_QH11.txt_chunks.json is clear
+2025-07-04 13:32:30,235 - __main__ - INFO - data/processed/chunks\45_2019_QH14.txt_chunks.json is clear
+2025-07-04 13:32:30,272 - __main__ - INFO - data/processed/chunks\91_2015_QH13.txt_chunks.json is clear
+2025-07-04 13:32:30,295 - __main__ - INFO - data/processed/chunks\92_2015_QH13.txt_chunks.json is clear
+2025-07-04 13:32:30,324 - __main__ - INFO - data/processed/chunks\95_2015_QH13.txt_chunks.json is clear
