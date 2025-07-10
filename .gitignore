@@ -3,3 +3,4 @@ environment.yml
 .vscode
 .pytest_cache
 .env
+embedded_chunks_with_local_model.py
