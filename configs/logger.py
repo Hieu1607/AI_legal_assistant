@@ -20,6 +20,16 @@ class LoggerManager:
         """Get the project root directory."""
         return Path(__file__).parent.parent
 
+    def _update_handler_paths(self, config, project_root):
+        """Update file handler paths to use absolute paths."""
+        if "handlers" in config:
+            for handler_name, handler_config in config["handlers"].items():
+                if "filename" in handler_config:
+                    # Convert relative path to absolute path from project root
+                    filename = handler_config["filename"]
+                    if not Path(filename).is_absolute():
+                        handler_config["filename"] = str(project_root / filename)
+
     def setup_logging(self, force_setup=False):
         """
         Setup logging configuration from YAML file.
@@ -44,6 +54,9 @@ class LoggerManager:
             if config_path.exists():
                 with open(config_path, "r", encoding="utf-8") as f:
                     config = yaml.safe_load(f)
+
+                # Update file handler paths to use absolute paths
+                self._update_handler_paths(config, project_root)
                 logging.config.dictConfig(config)
             else:
                 # Fallback to basic config
