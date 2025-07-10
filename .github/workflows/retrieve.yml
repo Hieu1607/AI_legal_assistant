@@ -2,9 +2,9 @@ name: CI - AI Legal Assistant
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, Week_4_and_week_5]
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, Week_4_and_week_5]
 
 jobs:
   test:
