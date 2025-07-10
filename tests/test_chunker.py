@@ -55,16 +55,14 @@ def test_chunk_law_text():
             "chapter": "CHƯƠNG I NHỮNG QUY ĐỊNH CHUNG",
             "section": None,
             "subsection": None,
-            "article": (
-                "Điều 1. Phạm vi điều chỉnh Bộ luật lao động quy định tiêu chuẩn lao động; "
-                "quyền, nghĩa vụ, trách nhiệm của người lao động, người sử dụng lao động, "
-                "tổ chức đại diện tập thể lao động, tổ chức đại diện người sử dụng lao động "
-                "trong quan hệ lao động và các quan hệ khác liên quan trực tiếp đến quan hệ "
-                "lao động; quản lý nhà nước về lao động."
-            ),
+            "article": "Điều 1. Phạm vi điều chỉnh Bộ luật lao động quy định tiêu chuẩn lao động; quyền, nghĩa vụ,",
             "clause": None,
             "point": None,
-            "content": [],
+            "content": [
+                "trách nhiệm của người lao động, người sử dụng lao động, tổ chức đại diện tập thể lao động,",
+                "tổ chức đại diện người sử dụng lao động trong quan hệ lao động và các quan hệ khác liên quan",
+                "trực tiếp đến quan hệ lao động; quản lý nhà nước về lao động.",
+            ],
         },
         {
             "chapter": "CHƯƠNG I NHỮNG QUY ĐỊNH CHUNG",

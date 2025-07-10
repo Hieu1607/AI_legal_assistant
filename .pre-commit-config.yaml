@@ -3,19 +3,28 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-yaml
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/)
       - id: end-of-file-fixer
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/|\.git/)
       - id: trailing-whitespace
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/|\.git/)
       - id: check-merge-conflict
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/)
+
   - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
       - id: black
         args: [--line-length=88]
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/|docs/|demo/)
+
   - repo: https://github.com/pycqa/isort
     rev: 6.0.1
     hooks:
       - id: isort
         args: [--profile, black, --line-length=88]
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/|docs/|demo/)
+
   - repo: local
     hooks:
       - id: pylint
@@ -24,3 +33,11 @@ repos:
         language: system
         types: [python]
         args: ["--max-line-length=880", "--disable=C0114,C0115,C0116"]
+        exclude: ^(data/|logs/|__pycache__/|\.pytest_cache/|docs/|demo/)
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=1000']  # Limit files to 1MB
+        exclude: ^(data/|logs/)

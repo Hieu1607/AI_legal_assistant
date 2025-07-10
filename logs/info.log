@@ -2006,3 +2006,732 @@
 2025-07-04 13:32:30,272 - __main__ - INFO - data/processed/chunks\91_2015_QH13.txt_chunks.json is clear
 2025-07-04 13:32:30,295 - __main__ - INFO - data/processed/chunks\92_2015_QH13.txt_chunks.json is clear
 2025-07-04 13:32:30,324 - __main__ - INFO - data/processed/chunks\95_2015_QH13.txt_chunks.json is clear
+2025-07-07 16:11:14,997 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-07 16:11:14,997 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-07 16:16:15,564 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-07 16:16:15,564 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-07 16:16:30,950 - __main__ - INFO - Done loadding model
+2025-07-07 16:17:25,419 - __main__ - INFO - Done embedding all chunks
+2025-07-07 16:17:25,804 - __main__ - INFO - Done saving file
+2025-07-08 09:30:57,328 - __main__ - INFO - Đang xử lý batch từ chunk 0 đến 100...
+2025-07-08 09:30:58,239 - __main__ - INFO - Done saving file
+2025-07-08 09:31:40,466 - __main__ - INFO - Đang xử lý batch từ chunk 0 đến 100...
+2025-07-08 09:31:42,065 - __main__ - INFO - Done saving file
+2025-07-08 09:32:08,600 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 09:32:08,609 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-08 09:32:25,357 - __main__ - INFO - Done loadding model
+2025-07-08 09:33:19,501 - __main__ - INFO - Done embedding all chunks
+2025-07-08 09:33:19,744 - __main__ - INFO - Done saving file
+2025-07-08 09:35:00,344 - __main__ - INFO - Đang xử lý batch từ chunk 0 đến 100...
+2025-07-08 09:35:01,154 - __main__ - INFO - Done saving file
+2025-07-08 09:36:45,966 - __main__ - INFO - Đang xử lý batch từ chunk 0 đến 100...
+2025-07-08 09:36:51,916 - __main__ - INFO - Done saving file
+2025-07-08 10:47:57,090 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 10:47:57,575 - __main__ - INFO - Client ChromaDB created successfully.
+2025-07-08 10:47:57,575 - __main__ - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 10:47:57,625 - __main__ - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 10:49:02,463 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 10:49:02,663 - __main__ - INFO - Client ChromaDB created successfully.
+2025-07-08 10:49:02,663 - __main__ - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 10:49:02,689 - __main__ - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 14:05:02,460 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 14:05:02,688 - init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 14:05:02,688 - init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 14:05:02,719 - init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 14:06:13,049 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 14:06:13,251 - init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 14:06:13,251 - init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 14:06:13,281 - init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 14:14:18,477 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 14:14:18,821 - init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 14:14:18,821 - init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 14:14:18,879 - init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 14:18:12,041 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 14:18:12,041 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-08 14:18:25,600 - __main__ - INFO - Done loading model
+2025-07-08 14:56:56,823 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 14:56:57,289 - init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 14:56:57,289 - init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 14:56:57,332 - init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 14:56:57,336 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 14:56:57,336 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-08 15:41:55,093 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 15:41:55,503 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 15:41:55,503 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 15:41:55,541 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 15:41:55,547 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 15:41:55,547 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-08 15:43:49,379 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 15:43:49,639 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 15:43:49,639 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 15:43:49,670 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 15:43:49,674 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 15:43:49,674 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-08 15:44:43,775 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 15:44:44,101 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 15:44:44,101 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 15:44:44,129 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 15:44:44,133 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 15:44:44,133 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-08 15:58:39,507 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-08 15:58:39,817 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-08 15:58:39,817 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-08 15:58:39,854 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-08 15:58:39,857 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-08 15:58:39,857 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 08:53:35,861 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 08:53:36,251 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 08:53:36,251 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 08:55:43,858 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 08:55:44,113 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 08:55:44,113 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 08:55:44,145 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 08:55:44,145 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 08:55:44,145 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 09:15:32,011 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 09:15:32,026 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 09:15:45,966 - __main__ - INFO - Done loading model
+2025-07-09 09:27:46,319 - __main__ - INFO - Done embedding all chunks
+2025-07-09 09:27:52,656 - __main__ - INFO - Done saving file
+2025-07-09 09:46:40,147 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 09:46:40,147 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 09:46:52,437 - __main__ - INFO - Done loading model
+2025-07-09 09:59:21,020 - __main__ - INFO - Done embedding all chunks
+2025-07-09 09:59:27,812 - __main__ - INFO - Done saving batch 2. Total chunks: 2000
+2025-07-09 10:42:22,674 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 10:42:22,674 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 10:42:34,241 - __main__ - INFO - Done loading model
+2025-07-09 10:54:32,274 - __main__ - INFO - Done embedding all chunks
+2025-07-09 10:54:39,889 - __main__ - INFO - Done saving batch 3. Total chunks: 3000
+2025-07-09 11:35:50,811 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 11:35:51,081 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 11:35:51,081 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 11:35:51,105 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 11:36:32,656 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 11:36:32,656 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 11:41:07,536 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 11:41:07,536 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 11:41:20,800 - __main__ - INFO - Done loading model
+2025-07-09 13:45:22,599 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 13:45:23,191 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 13:45:23,192 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 13:45:23,231 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 13:49:52,413 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 13:49:52,415 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 14:36:44,646 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 14:36:45,300 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 14:36:45,302 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 14:36:45,350 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 14:37:38,074 - retrieve - INFO - The question is Điều 5 chương 7 bộ luật hàng hải
+2025-07-09 14:37:38,075 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 14:37:38,084 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 14:37:38,085 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 14:38:01,197 - retrieve - INFO - Found 5 valid chunk
+2025-07-09 14:42:57,758 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 14:42:58,605 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 14:42:58,607 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 14:42:58,666 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 14:50:47,694 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 14:50:48,217 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 14:50:48,220 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 14:50:48,264 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 14:54:01,565 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 14:54:02,606 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 14:54:02,611 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 14:54:02,727 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 14:58:02,913 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 14:58:03,452 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 14:58:03,452 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 14:58:03,494 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 14:59:00,824 - __main__ - INFO - Done embedding all chunks
+2025-07-09 14:59:48,278 - __main__ - INFO - Done saving all. Total chunks: 27061
+2025-07-09 15:01:40,471 - retrieve - INFO - The question is Chương 2
+2025-07-09 15:01:40,471 - retrieve - INFO - The number of returning chunks is 9
+2025-07-09 15:01:40,539 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:01:40,539 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:01:54,686 - retrieve - INFO - Found 9 valid chunk
+2025-07-09 15:04:19,460 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:04:19,714 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:04:19,714 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:04:19,740 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:04:29,760 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:04:29,959 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:04:29,959 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:04:29,992 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:08:00,018 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:08:00,237 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:08:00,237 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:08:00,258 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:08:52,842 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:08:53,032 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:08:53,032 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:08:53,049 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:09:55,599 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:09:55,783 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:09:55,783 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:09:55,800 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:13:29,391 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:13:29,640 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:13:29,640 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:13:29,669 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:13:40,005 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:13:40,206 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:13:40,206 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:13:40,227 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:16:27,145 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:16:27,383 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:16:27,383 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:16:27,410 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:17:45,140 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:17:45,380 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:17:45,380 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:17:45,409 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:17:56,111 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:17:56,325 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:17:56,325 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:17:56,350 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:19:20,786 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:19:20,980 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:19:20,980 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:19:21,003 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:19:47,680 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:19:47,897 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:19:47,897 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:19:47,923 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:19:58,091 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:19:58,284 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:19:58,284 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:19:58,301 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:20:24,574 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:20:24,791 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:20:24,791 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:20:24,812 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:20:42,532 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:20:42,742 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:20:42,742 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:20:42,764 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:21:23,116 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:21:23,301 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:21:23,301 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:21:23,332 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:25:31,257 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:25:31,445 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:25:31,445 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:25:31,467 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:25:58,416 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:25:58,616 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:25:58,618 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:25:58,638 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:26:42,376 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:26:42,577 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:26:42,577 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:26:42,599 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:27:52,525 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:27:52,777 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:27:52,777 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:27:52,799 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:28:46,990 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:28:47,200 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:28:47,200 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:28:47,221 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:29:32,163 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:29:32,400 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:29:32,400 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:29:32,423 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:29:44,433 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:29:44,651 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:29:44,651 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:29:44,683 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:30:10,981 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:30:11,233 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:30:11,233 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:30:11,266 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:31:57,032 - retrieve - INFO - The question is Chương 2 bộ luật Hàng hải
+2025-07-09 15:31:57,043 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 15:31:57,151 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:31:57,151 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:32:09,661 - retrieve - INFO - Found 5 valid chunk
+2025-07-09 15:34:08,518 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:34:08,791 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:34:08,791 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:34:08,817 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:34:19,595 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:34:19,806 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:34:19,806 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:34:19,827 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:35:08,201 - retrieve - INFO - The question is Điều 2 luật Hàng hải
+2025-07-09 15:35:08,211 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 15:35:08,265 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:35:08,265 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:35:18,858 - retrieve - INFO - Found 5 valid chunk
+2025-07-09 15:37:53,317 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:37:53,605 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:37:53,605 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:37:53,633 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:38:13,287 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:38:13,488 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:38:13,488 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:38:13,508 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:40:22,473 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:40:22,691 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:40:22,691 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:40:22,718 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:41:22,787 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:41:23,010 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:41:23,010 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:41:23,036 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:42:59,238 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:42:59,454 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:42:59,454 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:42:59,492 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:43:16,085 - retrieve - INFO - The question is Điều 2 khoản 7
+2025-07-09 15:43:16,102 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 15:43:16,169 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:43:16,169 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:43:32,649 - retrieve - INFO - Found 5 valid chunk
+2025-07-09 15:46:50,013 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:46:50,353 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:46:50,353 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:46:50,383 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:47:06,511 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:47:06,772 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:47:06,772 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:47:06,798 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:48:25,961 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:48:26,177 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:48:26,177 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:48:26,199 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:49:12,084 - retrieve - INFO - The question is test question
+2025-07-09 15:49:12,084 - retrieve - INFO - The number of returning chunks is 3
+2025-07-09 15:49:12,195 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:49:12,195 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:49:23,461 - retrieve - INFO - Found 3 valid chunk
+2025-07-09 15:50:56,451 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:50:56,708 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:50:56,708 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:50:56,739 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:51:10,339 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:51:10,604 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:51:10,604 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:51:10,629 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:51:24,514 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:51:24,826 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:51:24,826 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:51:24,862 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:51:36,512 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 15:51:36,856 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 15:51:36,856 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 15:51:36,872 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 15:51:37,940 - retrieve - INFO - The question is Điều 2 khoản 7
+2025-07-09 15:51:37,940 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 15:51:38,005 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:51:38,005 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:52:01,490 - retrieve - INFO - The question is Điều 2 khoản 7
+2025-07-09 15:52:01,490 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 15:52:01,537 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:52:01,537 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:52:17,904 - retrieve - INFO - Found 5 valid chunk
+2025-07-09 15:59:30,043 - retrieve - INFO - The question is Điều 2 khoản 7
+2025-07-09 15:59:30,043 - retrieve - INFO - The number of returning chunks is 5
+2025-07-09 15:59:30,095 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 15:59:30,095 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 15:59:40,946 - retrieve - INFO - Found 5 valid chunk
+2025-07-09 16:03:15,438 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:03:15,899 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:03:15,899 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:03:15,926 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:03:26,633 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:03:26,829 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:03:26,829 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:03:26,860 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:04:19,389 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:04:19,609 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:04:19,609 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:04:19,632 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:04:50,905 - retrieve - INFO - The question is test question
+2025-07-09 16:04:50,905 - retrieve - INFO - The number of returning chunks is 3
+2025-07-09 16:04:50,966 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 16:04:50,966 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 16:05:00,545 - retrieve - INFO - Found 3 valid chunk
+2025-07-09 16:06:02,088 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:06:02,298 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:06:02,298 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:06:02,321 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:06:22,657 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:06:22,829 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:06:22,829 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:06:22,861 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:06:50,631 - retrieve - INFO - The question is test question
+2025-07-09 16:06:50,631 - retrieve - INFO - The number of returning chunks is 3
+2025-07-09 16:06:50,647 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 16:06:50,647 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 16:06:58,630 - retrieve - INFO - Found 3 valid chunk
+2025-07-09 16:07:58,163 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:07:58,397 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:07:58,398 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:07:58,419 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:08:37,421 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:08:37,626 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:08:37,626 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:08:37,646 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:08:39,570 - retrieve - INFO - The question is test question
+2025-07-09 16:08:39,570 - retrieve - INFO - The number of returning chunks is 3
+2025-07-09 16:08:39,617 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 16:08:39,617 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 16:09:14,853 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:09:15,054 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:09:15,054 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:09:15,076 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:09:26,602 - urllib3.connectionpool - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x000001FC31F38920>: Failed to resolve 'us.i.posthog.com' ([Errno 11001] getaddrinfo failed)")': /batch/
+2025-07-09 16:10:43,492 - retrieve - INFO - Found 3 valid chunk
+2025-07-09 16:10:58,184 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:10:58,433 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:10:58,433 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:10:58,460 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:11:46,618 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:11:46,847 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:11:46,847 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:11:46,871 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:12:05,799 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:12:06,000 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:12:06,000 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:12:06,022 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:13:01,574 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:13:01,857 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:13:01,857 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:13:01,890 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:14:20,657 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:14:20,840 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:14:20,840 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:14:20,861 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:14:32,663 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:14:32,835 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:14:32,835 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:14:32,880 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:15:23,319 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:15:23,508 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:15:23,508 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:15:23,526 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:15:43,216 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:15:43,412 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:15:43,412 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:15:43,436 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:18:39,603 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:18:39,875 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:18:39,875 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:18:39,892 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:19:24,791 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:19:24,976 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:19:24,976 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:19:24,994 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:20:54,815 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:20:55,023 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:20:55,023 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:20:55,045 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:21:58,543 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:21:58,729 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:21:58,729 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:21:58,756 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:23:18,503 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:23:18,686 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:23:18,686 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:23:18,709 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:24:40,036 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:24:40,221 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:24:40,221 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:24:40,246 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:24:53,125 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:24:53,300 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:24:53,316 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:24:53,339 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:25:04,167 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:25:04,366 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:25:04,366 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:25:04,381 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:25:14,967 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:25:15,183 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:25:15,183 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:25:15,221 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:25:24,587 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:25:24,770 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:25:24,770 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:25:24,794 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:25:33,948 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:25:34,134 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:25:34,134 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:25:34,159 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:25:53,309 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:25:53,529 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:25:53,529 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:25:53,551 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:26:02,814 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:26:03,020 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:26:03,020 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:26:03,045 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:32:35,566 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:32:35,827 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:32:35,827 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:32:35,838 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:52:56,288 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:52:56,428 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:52:56,428 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:52:56,464 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:54:06,745 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:54:06,884 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:54:06,884 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:54:06,911 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:54:19,536 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:54:19,607 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:54:19,607 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:54:19,635 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:54:35,678 - app.retrieve - ERROR - Validation error occurred: [{'type': 'missing', 'loc': ('body', 'question'), 'msg': 'Field required', 'input': {'top_k': 'not_a_number'}}, {'type': 'int_parsing', 'loc': ('body', 'top_k'), 'msg': 'Input should be a valid integer, unable to parse string as an integer', 'input': 'not_a_number'}]
+2025-07-09 16:55:23,240 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:55:23,324 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:55:23,324 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:55:23,346 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:57:52,727 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 16:57:52,839 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 16:57:52,839 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 16:57:52,858 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 16:58:20,175 - app.retrieve - INFO - The question is Chương 2 Bộ luật hình sự là gì?
+2025-07-09 16:58:20,178 - app.retrieve - INFO - The number of returning chunks is 3
+2025-07-09 16:58:20,289 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-09 16:58:20,293 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-09 16:58:36,993 - app.retrieve - INFO - Found 3 valid chunk
+2025-07-09 17:03:35,268 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:03:35,411 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:03:35,411 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:03:35,448 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:03:48,834 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:03:48,949 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:03:48,950 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:03:48,976 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:03:52,776 - app.retrieve - ERROR - Validation error occurred: [{'type': 'string_type', 'loc': ('body', 'question'), 'msg': 'Input should be a valid string', 'input': 35}, {'type': 'int_parsing', 'loc': ('body', 'top_k'), 'msg': 'Input should be a valid integer, unable to parse string as an integer', 'input': 'hehe'}]
+2025-07-09 17:04:25,352 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:04:25,423 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:04:25,423 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:04:25,450 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:04:52,875 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:04:52,976 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:04:52,976 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:04:52,998 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:05:02,435 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:05:02,508 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:05:02,508 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:05:02,536 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:05:30,381 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:05:30,503 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:05:30,503 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:05:30,527 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:05:49,436 - app.retrieve - ERROR - Validation error occurred: [{'type': 'string_type', 'loc': ('body', 'question'), 'msg': 'Input should be a valid string', 'input': 65}, {'type': 'int_parsing', 'loc': ('body', 'top_k'), 'msg': 'Input should be a valid integer, unable to parse string as an integer', 'input': 'haha'}]
+2025-07-09 17:06:29,920 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:06:30,018 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:06:30,019 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:06:30,038 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:06:47,810 - app.retrieve - ERROR - Validation error occurred: [{'type': 'string_type', 'loc': ('body', 'question'), 'msg': 'Input should be a valid string', 'input': 87}, {'type': 'int_parsing', 'loc': ('body', 'top_k'), 'msg': 'Input should be a valid integer, unable to parse string as an integer', 'input': 'haha'}]
+2025-07-09 17:07:31,366 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:07:31,445 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:07:31,445 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:07:31,469 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:07:44,796 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:07:44,915 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:07:44,915 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:07:44,937 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:07:54,588 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:07:54,661 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:07:54,661 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:07:54,694 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:08:04,423 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:08:04,516 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:08:04,517 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:08:04,537 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:11:05,867 - app.retrieve - ERROR - Validation error occurred: [{'type': 'string_type', 'loc': ('body', 'question'), 'msg': 'Input should be a valid string', 'input': 86}, {'type': 'int_parsing', 'loc': ('body', 'top_k'), 'msg': 'Input should be a valid integer, unable to parse string as an integer', 'input': 'heehe'}]
+2025-07-09 17:11:46,956 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:11:47,030 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:11:47,030 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:11:47,052 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:12:03,935 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:12:04,029 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:12:04,029 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:12:04,049 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:12:38,554 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:12:38,647 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:12:38,647 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:12:38,665 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:13:11,255 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:13:11,376 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:13:11,377 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:13:11,401 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:13:22,480 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:13:22,572 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:13:22,572 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:13:22,591 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:13:32,228 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:13:32,306 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:13:32,306 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:13:32,334 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:14:22,863 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:14:22,967 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:14:22,968 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:14:22,987 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:16:21,898 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:16:22,015 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:16:22,015 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:16:22,048 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:16:44,058 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:16:44,145 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:16:44,145 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:16:44,172 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:16:53,595 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:16:53,706 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:16:53,706 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:16:53,729 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:17:03,059 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:17:03,155 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:17:03,155 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:17:03,171 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:17:25,060 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:17:25,199 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:17:25,199 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:17:25,232 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:23:35,094 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:23:35,238 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:23:35,254 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:23:35,298 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-09 17:24:05,085 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-09 17:24:05,170 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-09 17:24:05,170 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-09 17:24:05,190 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:16:41,491 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:16:41,643 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:16:41,643 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:16:41,676 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:16:56,749 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:16:56,852 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:16:56,852 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:16:56,871 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:18:08,719 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:18:08,800 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:18:08,800 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:18:08,827 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:20:13,094 - app.retrieve - INFO - The question is hehe
+2025-07-10 09:20:13,094 - app.retrieve - INFO - The number of returning chunks is 5
+2025-07-10 09:20:13,129 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-10 09:20:13,129 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-10 09:20:27,875 - app.retrieve - INFO - Found 5 valid chunk
+2025-07-10 09:29:12,897 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:29:13,010 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:29:13,010 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:29:13,034 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:29:13,044 - app.retrieve - INFO - Server starting up...
+2025-07-10 09:29:13,044 - app.retrieve - INFO - Server shutting down...
+2025-07-10 09:49:53,134 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:49:53,284 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:49:53,284 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:49:53,319 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:49:53,322 - app.retrieve - INFO - Server starting up...
+2025-07-10 09:51:28,781 - app.retrieve - INFO - Received signal 2, initiating graceful shutdown...
+2025-07-10 09:51:57,007 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:51:57,162 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:51:57,162 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:51:57,182 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:51:57,194 - app.retrieve - INFO - Server starting up...
+2025-07-10 09:57:37,970 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:57:38,124 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:57:38,124 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:57:38,154 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 09:59:41,306 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 09:59:41,388 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 09:59:41,388 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 09:59:41,413 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:01:09,161 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:01:09,251 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:01:09,251 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:01:09,272 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:02:03,732 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:02:03,810 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:02:03,810 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:02:03,835 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:03:26,115 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:03:26,231 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:03:26,231 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:03:26,256 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:05:59,684 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:05:59,762 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:05:59,762 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:05:59,787 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:06:41,548 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:06:41,640 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:06:41,640 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:06:41,660 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:07:11,968 - app.retrieve - INFO - The question is string
+2025-07-10 10:07:11,968 - app.retrieve - INFO - The number of returning chunks is 5
+2025-07-10 10:07:11,974 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-10 10:07:11,974 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-10 10:07:31,391 - app.retrieve - INFO - Found 5 valid chunk
+2025-07-10 10:08:41,131 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:08:41,250 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:08:41,250 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:08:41,277 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:09:13,213 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:09:13,301 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:09:13,301 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:09:13,333 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:09:23,749 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:09:23,833 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:09:23,833 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:09:23,868 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:09:51,397 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:09:51,480 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:09:51,480 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:09:51,503 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:10:57,856 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:10:57,946 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:10:57,946 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:10:57,968 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:11:17,759 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:11:17,874 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:11:17,874 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:11:17,898 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:11:29,301 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:11:29,419 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:11:29,419 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:11:29,447 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:11:41,126 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:11:41,224 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:11:41,224 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:11:41,246 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:11:50,871 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:11:50,957 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:11:50,957 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:11:50,978 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:12:21,733 - app.retrieve - INFO - An error occured: [{'type': 'string_type', 'loc': ('body', 'question'), 'msg': 'Input should be a valid string', 'input': 75}, {'type': 'int_parsing', 'loc': ('body', 'top_k'), 'msg': 'Input should be a valid integer, unable to parse string as an integer', 'input': 'hehe'}]
+2025-07-10 10:16:17,858 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:16:17,941 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:16:17,941 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:16:17,962 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:16:33,260 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:16:33,357 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:16:33,357 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:16:33,392 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:19:54,891 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:19:54,979 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:19:54,979 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:19:55,015 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:20:18,583 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:20:18,673 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:20:18,676 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:20:18,699 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:21:12,141 - retrieve - INFO - The question is string
+2025-07-10 10:21:12,141 - retrieve - INFO - The number of returning chunks is 5
+2025-07-10 10:21:12,141 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-10 10:21:12,141 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-07-10 10:21:29,977 - retrieve - INFO - Found 5 valid chunk
+2025-07-10 10:22:05,695 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-07-10 10:22:05,819 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-07-10 10:22:05,819 - src.store_vector.init_index - INFO - Kiểm tra hoặc tạo collection: 'legal_assistant_collection'...
+2025-07-10 10:22:05,871 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' đã sẵn sàng.
+2025-07-10 10:22:41,681 - retrieve - INFO - The question is string
+2025-07-10 10:22:41,681 - retrieve - INFO - The number of returning chunks is 5
+2025-07-10 10:22:41,686 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-07-10 10:22:41,686 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
