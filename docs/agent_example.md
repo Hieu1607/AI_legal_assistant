@@ -57,4 +57,3 @@ Response:
   "message": "Step 1 (retrieve chunks) timed out after 1s",
   "execution_time": 1.0080208778381348
 }
-

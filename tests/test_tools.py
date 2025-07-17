@@ -190,4 +190,5 @@ def test_format_citation_bad_cases():
         result = format_citation(FormatInput(answer="", chunks=[]))
         assert result.formatted_answer == "Cannot format the answer"
 
+
 # pytest --cov=services.tools --cov-report=term tests/test_tools.py

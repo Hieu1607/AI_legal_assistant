@@ -79,7 +79,7 @@ def index_embeddings(embeddings, batch_size=5000):
             # If the ID already exists, append a counter to it
             if chunk_id in id_counter:
                 id_counter[chunk_id] += 1
-                unique_id = ("%s_%s",chunk_id, id_counter[chunk_id])
+                unique_id = ("%s_%s", chunk_id, id_counter[chunk_id])
                 logger.info(
                     "Duplicate ID found: %s, using %s instead", chunk_id, unique_id
                 )
