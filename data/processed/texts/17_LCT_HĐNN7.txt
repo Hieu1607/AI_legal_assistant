@@ -7,7 +7,8 @@ Bộ luật hình sự này kế thừa và phát triển Luật hình sự củ
 Bộ luật hình sự thấu suốt quyền làm chủ tập thể xã hội chủ nghĩa của nhân dân ta do giai cấp công nhân lãnh đạo, thể hiện tinh thần chủ động phòng ngừa và kiến quyết đấu tranh chống tội phạm; thể hiện chính sách của Đảng và Nhà nước ta là xử phạt người phạm tội không chỉ nhằm trừng trị mà còn giáo dục, cải tạo họ trở thành người có ích cho xã hội; thể hiện tinh thần nhân đạo xã hội chủ nghĩa và lòng tin vào khả năng cải tạo con người dưới chế độ xã hội chủ nghĩa.
 Thi hành nghiêm chỉnh Bộ luật hình sự là nhiệm vụ chung của tất cả các cơ quan Nhà nước, các tổ chức xã hội và của toàn thể nhân dân.
 PHẦN CHUNG
-CHƯƠNG I. ĐIỀU KHOẢN CƠ BẢN Điều 1. Nhiệm vụ của Bộ luật Hình sự
+CHƯƠNG I. ĐIỀU KHOẢN CƠ BẢN
+Điều 1. Nhiệm vụ của Bộ luật Hình sự
 Bộ luật hình sự có nhiệm vụ bảo vệ chế độ xã hội chủ nghĩa, quyền làm chủ tập thể xã hội chủ nghĩa của nhân dân, bảo vệ quyền bình đẳng giữa đồng bào các dân tộc, bảo vệ các quyền lợi và lợi ích hợp pháp của công dân, bảo vệ trật tự pháp luật xã hội chủ nghĩa, chống mọi hành vi phạm tội, đồng thời giáo dục mọi người ý thức tuân theo pháp luật, đấu tranh chống và phòng ngừa tội phạm.
 Để thực hiện nhiệm vụ đó, Bộ luật quy định tội phạm và hình phạt đối với người phạm tội.
 Điều 2. Cơ sở của trách nhiệm hình sự.
@@ -35,7 +36,8 @@ Quy định này cũng được áp dụng đối với người không quốc t
 1- Điều luật áp dụng đối với một hành vi phạm tội là điều luật đang có hiệu lực thi hành khi hành vi ấy được thực hiện.
 2- Điều luật quy định một tội phạm mới hoặc một hình phạt nặng hơn không áp dụng đối với hành vi phạm tội đã thực hiện trước khi điều luật đó được ban hành, trừ trường hợp luật quy định khác.
 3- Điều luật xoá bỏ một tội phạm hoặc quy định một hình phạt nhẹ hơn được áp dụng đối với hành vi phạm tội đã được thực hiện trước khi điều luật đó được ban hành.
-CHƯƠNG III. TỘI PHẠM Điều 8. Khái niệm tội phạm.
+CHƯƠNG III. TỘI PHẠM
+Điều 8. Khái niệm tội phạm.
 1- Tội phạm là hành vi nguy hiểm cho xã hội được quy định trong Bộ luật hình sự, do người có năng lực trách nhiệm hình sự thực hiện một cách cố ý hoặc vô ý, xâm phạm độc lập, chủ quyền, thống nhất, toàn vẹn lãnh thổ của Tổ quốc, xâm phạm chế độ Nhà nước xã hội chủ nghĩa, chế độ kinh tế và sở hữu xã hội chủ nghĩa, xâm phạm tính mạng, sức khoẻ, danh dự, nhân phẩm, tự do, tài sản, các quyền và lợi ích hợp pháp khác của công dân, xâm phạm những lĩnh vực khác của trật tự pháp luật xã hội chủ nghĩa.
 2- Tội phạm nghiêm trọng là tội phạm gây nguy hại lớn cho xã hội mà mức cao nhất của khung hình phạt đối với tội ấy là trên năm năm tù, tù chung thân hoặc tử hình.
 Những tội phạm khác là tội phạm ít nghiêm trọng.
@@ -79,7 +81,8 @@ Những tình tiết tăng nặng, giảm nhẹ hoặc loại trừ trách nhi�
 Người nào tuy không hứa hẹn trước, nhưng sau khi biết tội phạm được thực hiện, đã che giấu người phạm tội, các dấu vết, tang vật của tội phạm hoặc có hành vi khác cản trở việc phát hiện, điều tra, xử lý người phạm tội, thì phải chịu trách nhiệm hình sự về tội che giấu tội phạm trong những trường hợp mà Bộ luật này quy định.
 Điều 19. Không tố giác tội phạm.
 Người nào biết rõ tội phạm đang được chuẩn bị, đang được thực hiện hoặc đã được thực hiện mà không tố giác, thì phải chịu trách nhiệm hình sự về tội không tố giác tội phạm trong những trường hợp mà Bộ luật này quy định.
-CHƯƠNG IV. HÌNH PHẠT Điều 20. Mục đích của hình phạt.
+CHƯƠNG IV. HÌNH PHẠT
+Điều 20. Mục đích của hình phạt.
 Hình phạt không chỉ nhằm trừng trị người phạm tội mà còn nhằm cải tạo trở thành người có ích cho xã hội, có ý thức tuân theo pháp luật và các quy tắc của cuộc sống xã hội chủ nghĩa, ngăn ngừa họ phạm tội mới. Hình phạt còn nhằm giáo dục người khác tôn trọng pháp luật, đấu tranh chống và phòng ngừa tội phạm.
 Điều 21. Các hình phạt.
 1- Đối với người phạm tội, chỉ áp dụng một trong các hình phạt chính sau đây:
@@ -159,7 +162,8 @@ Nếu thấy không cần thiết phải đưa vào một cơ sở điều trị
 Điều 36. Thời gian bắt buộc chữa bệnh.
 Căn cứ vào kết luận của cơ quan điều trị, nếu người bị bắt buộc chữa bệnh nói ở điều 35 đã khỏi hoặc bệnh trạng đã giảm, thì Viện kiểm sát hoặc Toà án xét và quyết định đình chỉ việc thi hành biện pháp này.
 Thời gian bắt buộc chữa bệnh được trừ vào thời hạn chấp hành hình phạt tù.
-CHƯƠNG VI. VIỆC QUYẾT ĐỊNH HÌNH PHẠT, MIỄN VÀ GIẢM HÌNH PHẠT Điều 37. Nguyên tắc quyết định hình phạt.
+CHƯƠNG VI. VIỆC QUYẾT ĐỊNH HÌNH PHẠT, MIỄN VÀ GIẢM HÌNH PHẠT
+Điều 37. Nguyên tắc quyết định hình phạt.
 Khi quyết định hình phạt, Toà án căn cứ vào các quy định của Bộ luật này, cân nhắc tính chất và mức độ nguy hiểm của hành vi phạm tội, nhân thân người phạm tội và các tình tiết giảm nhẹ hoặc tăng nặng trách nhiệm hình sự.
 Điều 38. Những tình tiết giảm nhẹ.
 1- Những tình tiết sau đây được coi là tình tiết giảm nhẹ:
@@ -942,7 +946,8 @@ c) Tái phạm nguy hiểm.
 Điều 204. Tội xâm phạm mồ mả, hài cốt.
 1- Người nào đào, phá mồ mả, chiếm đoạt những đồ vật để ở trong mộ, trên mộ hoặc có hành vi khác xâm phạm mồ mả, hài cốt, thì bị phạt cải tạo không giam giữ đến một năm hoặc bị phạt tù từ ba tháng đến hai năm.
 2- Phạm tội gây hậu quả nghiêm trọng thì bị phạt tù từ một năm đến năm năm.
-MỤC C. CÁC TỘI XÂM PHẠM TRẬT TỰ QUẢN LÝ HÀNH CHÍNH Điều 205. Tội chống người thi hành công vụ.
+MỤC C. CÁC TỘI XÂM PHẠM TRẬT TỰ QUẢN LÝ HÀNH CHÍNH
+Điều 205. Tội chống người thi hành công vụ.
 1- Người nào dùng vũ lực hoặc đe doạ dùng vũ lực chống người thi hành công vụ cũng như dùng mọi thủ đoạn cưỡng ép họ thực hiện những hành vi trái pháp luật, nếu không thuộc trường hợp quy định ở Điều 101 và Điều 109, thì bị phạt cải tạo không giam giữ đến một năm hoặc bị phạt tù từ sáu tháng đến ba năm.
 2- Phạm tội gây hậu quả nghiêm trọng thì bị phạt tù từ hai năm đến mười năm.
 Điều 206. Tội trốn tránh nghĩa vụ quân sự.

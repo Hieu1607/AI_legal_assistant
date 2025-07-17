@@ -3,9 +3,7 @@ import signal
 import sys
 
 import fastapi
-import uvicorn
-from fastapi import FastAPI, Request
-from fastapi.exceptions import RequestValidationError
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
@@ -38,7 +36,7 @@ from src.store_vector.search_embeddings import search_relevant_embeddings
 setup_logging()
 logger = get_logger(__name__)
 
-app = FastAPI()
+router = APIRouter()
 
 
 class QueryRequest(BaseModel):
@@ -46,12 +44,12 @@ class QueryRequest(BaseModel):
     top_k: int = 5
 
 
-@app.get("/")
+@router.get("/")
 def index():
     return {"Hello muhehehehe"}
 
 
-@app.post("/retrieve")
+@router.post("/retrieve")
 def retrieve_embeddings(request: QueryRequest):
     logger.info("The question is %s", request.question)
     logger.info("The number of returning chunks is %d", request.top_k)
@@ -87,40 +85,14 @@ def retrieve_embeddings(request: QueryRequest):
         )
 
 
-# Exception handler for validation error
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(_: Request, exc: RequestValidationError):
-    logger.info("An error occured: %s", exc.errors())
-    errors = [
-        {
-            "field": ".".join(str(loc) for loc in err["loc"][1:]),  # loại bỏ 'body'
-            "error": err["msg"],
-        }
-        for err in exc.errors()
-    ]
-    return JSONResponse(
-        status_code=422,
-        content={
-            "error": {
-                "type": "validation_error",
-                "message": "Input data is not valid",
-                "fields": errors,
-            }
-        },
-    )
-
-
 def shutdown():
     os.kill(os.getpid(), signal.SIGTERM)
     return fastapi.Response(status_code=200, content="Server shutting down...")
 
 
-@app.on_event("shutdown")
+@router.on_event("shutdown")
 def on_shutdown():
     print("Server shutting down...")
 
 
-app.add_api_route("/shutdown", shutdown, methods=["GET"])
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000)
+router.add_api_route("/shutdown", shutdown, methods=["GET"])

@@ -37,7 +37,7 @@ logger = get_logger(__name__)
 collection = init_chroma_index()[1]
 
 
-def search_relevant_embeddings(text, n_results):
+def search_relevant_embeddings(text, n_results=5):
     model = SentenceTransformer("BAAI/bge-m3")
     embedding_from_text = model.encode(text, normalize_embeddings=True)
     results = collection.query(

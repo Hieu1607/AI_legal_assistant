@@ -33,5 +33,6 @@ disable = [
     "wrong-import-position",
     "too-many-branches",
     "too-many-statements",
-    "duplicate-code"
+    "duplicate-code",
+    "redefined-outer-name"
 ]

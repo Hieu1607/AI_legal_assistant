@@ -1,125 +1,178 @@
-#!/usr/bin/env python3
 """
-Script để test exception handler của FastAPI app
+Module để test FastAPI app với router từ retrieve.py và cấu hình từ main.py
 """
 
+import os
 import sys
+from unittest.mock import patch
 
-import requests
+import pytest
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+from fastapi.testclient import TestClient
 
+# Thêm thư mục gốc của dự án vào sys.path để import các module từ app và src
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-def test_validation_error():
-    """Test validation error bằng cách gửi request không hợp lệ"""
-    url = "http://localhost:8000/retrieve"
-
-    # Test case 1: Thiếu trường question
-    print("=== Test 1: Thiếu trường 'question' ===")
-    invalid_data_1 = {"top_k": 5}
-
-    try:
-        response = requests.post(url, json=invalid_data_1, timeout=10)
-        print(f"Status code: {response.status_code}")
-        print(f"Response: {response.json()}")
-    except requests.exceptions.ConnectionError:
-        print("Không thể kết nối tới server. Hãy chắc chắn server đang chạy.")
-        return
-    except (requests.exceptions.Timeout, requests.exceptions.HTTPError) as e:
-        print(f"Lỗi khi gửi request: {e}")
-
-    print("\n" + "=" * 50 + "\n")
-
-    # Test case 2: Kiểu dữ liệu sai cho top_k
-    print("=== Test 2: Kiểu dữ liệu sai cho 'top_k' ===")
-    invalid_data_2 = {"question": "test question", "top_k": "không phải số"}
-
-    try:
-        response = requests.post(url, json=invalid_data_2, timeout=10)
-        print(f"Status code: {response.status_code}")
-        print(f"Response: {response.json()}")
-    except (
-        requests.exceptions.ConnectionError,
-        requests.exceptions.Timeout,
-        requests.exceptions.HTTPError,
-    ) as e:
-        print(f"Lỗi khi gửi request: {e}")
-
-    print("\n" + "=" * 50 + "\n")
-
-    # Test case 3: Dữ liệu hoàn toàn không hợp lệ
-    print("=== Test 3: Dữ liệu hoàn toàn không hợp lệ ===")
-    invalid_data_3 = {"invalid_field": "value"}
-
-    try:
-        response = requests.post(url, json=invalid_data_3, timeout=10)
-        print(f"Status code: {response.status_code}")
-        print(f"Response: {response.json()}")
-    except (
-        requests.exceptions.ConnectionError,
-        requests.exceptions.Timeout,
-        requests.exceptions.HTTPError,
-    ) as e:
-        print(f"Lỗi khi gửi request: {e}")
+# Import router từ module app.retrieve và functions cần thiết
+from app.retrieve import get_project_root, router
 
 
-def test_valid_request():
-    """Test request hợp lệ để đảm bảo server hoạt động bình thường"""
-    url = "http://localhost:8000/retrieve"
+# Fixture để tạo TestClient cho FastAPI app
+@pytest.fixture
+def client():
+    # Tạo app tương tự như trong main.py
+    app = FastAPI()
+    app.include_router(router)
 
-    print("=== Test: Request hợp lệ ===")
-    valid_data = {"question": "test question", "top_k": 3}
-
-    try:
-        response = requests.post(url, json=valid_data, timeout=10)
-        print(f"Status code: {response.status_code}")
-        print(f"Response type: {type(response.json())}")
-        print(
-            f"Response length: {len(response.json()) if isinstance(response.json(), list) else 'Not a list'}"
+    # Thêm exception handler như trong main.py
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(_: Request, exc: RequestValidationError):
+        errors = [
+            {
+                "field": ".".join(str(loc) for loc in err["loc"][1:]),  # loại bỏ 'body'
+                "error": err["msg"],
+            }
+            for err in exc.errors()
+        ]
+        return JSONResponse(
+            status_code=422,
+            content={
+                "error": {
+                    "type": "validation_error",
+                    "message": "Input data is not valid",
+                    "fields": errors,
+                }
+            },
         )
-    except (
-        requests.exceptions.ConnectionError,
-        requests.exceptions.Timeout,
-        requests.exceptions.HTTPError,
-    ) as e:
-        print(f"Lỗi khi gửi request: {e}")
+
+    return TestClient(app)
 
 
-def check_server_status():
-    """Kiểm tra xem server có đang chạy không"""
-    try:
-        response = requests.get("http://localhost:8000/", timeout=10)
-        print(f"Server đang chạy. Response: {response.json()}")
-        return True
-    except requests.exceptions.ConnectionError:
-        print("Server không chạy. Vui lòng khởi động server trước.")
-        return False
-    except (requests.exceptions.Timeout, requests.exceptions.HTTPError) as e:
-        print(f"Lỗi khi kiểm tra server: {e}")
-        return False
+# Fixture để mock search_relevant_embeddings để không cần dữ liệu thực
+@pytest.fixture
+def mock_search():
+    with patch("src.store_vector.search_embeddings.search_relevant_embeddings") as mock:
+        # Mock dữ liệu trả về từ hàm search_relevant_embeddings
+        mock.return_value = {
+            "ids": [["id1", "id2", "id3"]],
+            "distances": [[0.1, 0.2, 0.3]],
+            "metadatas": [[{"source": "doc1"}, {"source": "doc2"}, {"source": "doc3"}]],
+            "cosine_similarities": [[0.9, 0.8, 0.7]],
+            "documents": [["content1", "content2", "content3"]],
+        }
+        yield mock
 
 
-if __name__ == "__main__":
-    print("Bắt đầu test Exception Handler...")
-    print("=" * 60)
+def test_get_project_root():
+    """Test hàm get_project_root"""
+    root = get_project_root()
+    assert os.path.isdir(os.path.join(root, "data"))
+    assert os.path.isdir(os.path.join(root, "src"))
 
-    # Kiểm tra server
-    if not check_server_status():
-        print("\nHướng dẫn khởi động server:")
-        print("1. Mở terminal mới")
-        print("2. cd c:\\Users\\HP\\Desktop\\AI_legal_assistant")
-        print("3. python -m uvicorn app.retrieve:app --reload")
-        sys.exit(1)
 
-    print("\n")
+def test_index_endpoint(client):
+    """Test endpoint / trả về greeting message"""
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "Hello muhehehehe" in response.json()
 
-    # Test các trường hợp validation error
-    test_validation_error()
 
-    print("\n")
+def test_validation_error_missing_question(client):
+    """Test lỗi thiếu trường bắt buộc 'question'"""
+    response = client.post("/retrieve", json={"top_k": 5})
+    assert response.status_code == 422
+    error_response = response.json()
+    assert error_response["error"]["type"] == "validation_error"
 
-    # Test request hợp lệ
-    test_valid_request()
+    # Kiểm tra xem lỗi có đề cập đến trường 'question' không
+    field_errors = [err["field"] for err in error_response["error"]["fields"]]
+    assert any("question" in field for field in field_errors)
 
-    print("\n=== Kết thúc test ===")
-    print(
-        "Kiểm tra file logs/errors.log và logs/info.log để xem exception handler có được gọi không."
+
+def test_validation_error_invalid_top_k(client):
+    """Test lỗi kiểu dữ liệu không hợp lệ cho 'top_k'"""
+    response = client.post(
+        "/retrieve", json={"question": "test question", "top_k": "không phải số"}
     )
+    assert response.status_code == 422
+    error_response = response.json()
+    assert error_response["error"]["type"] == "validation_error"
+
+    # Kiểm tra xem lỗi có đề cập đến trường 'top_k' không
+    field_errors = [err["field"] for err in error_response["error"]["fields"]]
+    assert any("top_k" in field for field in field_errors)
+
+
+def test_validation_error_invalid_data(client):
+    """Test lỗi dữ liệu hoàn toàn không hợp lệ"""
+    response = client.post("/retrieve", json={"invalid_field": "value"})
+    assert response.status_code == 422
+    error_response = response.json()
+    assert error_response["error"]["type"] == "validation_error"
+
+
+def test_valid_request(client, mock_search):
+    """Test request hợp lệ với mock data"""
+    # Patch the search_relevant_embeddings function in the specific module where it's imported
+    with patch("app.retrieve.search_relevant_embeddings", mock_search):
+        # Kiểm tra kết quả khi gọi API
+        response = client.post(
+            "/retrieve", json={"question": "test question", "top_k": 3}
+        )
+
+    assert response.status_code == 200
+    result = response.json()
+
+    # Kiểm tra kết quả
+    assert isinstance(result, list)
+    assert len(result) == 3
+    assert result[0]["chunk_id"] == "id1"
+    assert result[1]["chunk_id"] == "id2"
+    assert result[2]["chunk_id"] == "id3"
+
+    # Kiểm tra xem mock_search đã được gọi với đúng tham số chưa
+    mock_search.assert_called_once_with("test question", 3)
+
+
+def test_error_handling(client, mock_search):
+    """Test xử lý lỗi khi có exception trong quá trình tìm kiếm"""
+    mock_search.side_effect = ValueError("Test error")
+
+    with patch("app.retrieve.search_relevant_embeddings", mock_search):
+        response = client.post(
+            "/retrieve", json={"question": "test question", "top_k": 3}
+        )
+
+    assert response.status_code == 500
+    error_response = response.json()
+    assert error_response["error"]["type"] == "internal_error"
+
+
+def test_empty_result(client, mock_search):
+    """Test kết quả rỗng từ search_relevant_embeddings"""
+    mock_search.return_value = {
+        "ids": [[]],
+        "distances": [[]],
+        "metadatas": [[]],
+        "cosine_similarities": [[]],
+        "documents": [[]],
+    }
+
+    with patch("app.retrieve.search_relevant_embeddings", mock_search):
+        response = client.post(
+            "/retrieve", json={"question": "test question", "top_k": 3}
+        )
+
+    assert response.status_code == 200
+    result = response.json()
+    assert result == []
+
+
+def test_shutdown_endpoint(client):
+    """Test endpoint /shutdown trả về thông báo shutdown"""
+    with patch("os.kill") as mock_kill:
+        response = client.get("/shutdown")
+        assert response.status_code == 200
+        assert mock_kill.called
