@@ -45,7 +45,9 @@ htmlcov/
 
 # Logs
 *.log
+*.log.*
 logs/
+logs/*
 
 # Documentation
 docs/_build/
@@ -83,3 +85,4 @@ ehthumbs.db
 Thumbs.db
 
 data/
+logs/
