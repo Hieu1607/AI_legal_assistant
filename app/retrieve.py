@@ -1,11 +1,12 @@
 import os
 import signal
 import sys
+import time
 
 import fastapi
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 def get_project_root():
@@ -41,7 +42,7 @@ router = APIRouter()
 
 class QueryRequest(BaseModel):
     question: str
-    top_k: int = 5
+    top_k: int = Field(default=5, description="Number of top results to return", ge=1)
 
 
 @router.get("/")
@@ -53,6 +54,7 @@ def index():
 def retrieve_embeddings(request: QueryRequest):
     logger.info("The question is %s", request.question)
     logger.info("The number of returning chunks is %d", request.top_k)
+    start_time = time.time()
     try:
         relevant_embeddings = search_relevant_embeddings(
             request.question, request.top_k
@@ -69,6 +71,8 @@ def retrieve_embeddings(request: QueryRequest):
         if not result:
             return JSONResponse(status_code=200, content=[])
         logger.info("Found %s valid chunk", len(result))
+        end_time = time.time()
+        logger.info("All time: %s", start_time - end_time)
         return result
     except (IndexError, KeyError, FileNotFoundError, ImportError, ValueError) as e:
         logger.info(

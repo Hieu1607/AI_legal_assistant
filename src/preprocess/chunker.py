@@ -3,7 +3,7 @@ import os
 import re
 import sys
 
-root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, str(root))
 from configs.logger import get_logger, setup_logging
 
@@ -92,8 +92,23 @@ def chunk_law_text(text):
             current_chunk["content"] = []
             continue
 
-        # Nội dung bình thường
-        current_chunk["content"].append(line)
+        # Nội dung bình thường - thêm vào cấp hiện tại thay vì content riêng biệt
+        # Tìm cấp cao nhất hiện tại để nối text vào
+        if current_chunk["point"]:
+            current_chunk["point"] += " " + line
+        elif current_chunk["clause"]:
+            current_chunk["clause"] += " " + line
+        elif current_chunk["article"]:
+            current_chunk["article"] += " " + line
+        elif current_chunk["subsection"]:
+            current_chunk["subsection"] += " " + line
+        elif current_chunk["section"]:
+            current_chunk["section"] += " " + line
+        elif current_chunk["chapter"]:
+            current_chunk["chapter"] += " " + line
+        else:
+            # Nếu chưa có cấp nào, thêm vào content
+            current_chunk["content"].append(line)
 
     # Thêm chunk cuối cùng nếu có nội dung
     if current_chunk["content"] or current_chunk["chapter"] or current_chunk["article"]:
@@ -179,6 +194,9 @@ def add_metadata(chunk_id_container, content_container, metadata):
 
 def make_chunks_from_metadata(metadata_file):
     try:
+        processed_count = 0
+        skipped_count = 0
+
         for metadata in metadata_file:
             text_file_name = (
                 metadata["law_id"]
@@ -189,39 +207,62 @@ def make_chunks_from_metadata(metadata_file):
                 + ".txt"
             )
             text_file_path = os.path.join(
-                root, "data", "processed", "texts", text_file_name
+                root, "data", "processed", "new_texts", text_file_name
             )
-            save_file_path = os.path.join(root, "data", "processed", "chunks")
-            with open(text_file_path, "r", encoding="utf-8") as f:
-                text_file = f.read()
-                chunks = chunk_law_text(text_file)
-                chunk_id_container, content_container = chunks_to_right_schema(chunks)
-                res = add_metadata(chunk_id_container, content_container, metadata)
-                new_chunks_file_name = (
-                    (
-                        metadata["law_id"]
-                        .replace(" ", "_")
-                        .replace("/", "_")
-                        .replace("\\", "_")
-                        .replace("-", "_")
-                        + ".txt"
+
+            # Kiểm tra xem file có tồn tại không
+            if not os.path.exists(text_file_path):
+                logger.warning("File not found, skipping: %s", text_file_path)
+                skipped_count += 1
+                continue
+
+            try:
+                save_file_path = os.path.join(root, "data", "processed", "new_chunks")
+                # Tạo thư mục save nếu chưa tồn tại
+                os.makedirs(save_file_path, exist_ok=True)
+
+                with open(text_file_path, "r", encoding="utf-8") as f:
+                    text_file = f.read()
+                    chunks = chunk_law_text(text_file)
+                    chunk_id_container, content_container = chunks_to_right_schema(
+                        chunks
                     )
-                    + "_chunks"
-                    + ".json"
-                )
-                new_chunks_file_path = os.path.join(
-                    save_file_path, new_chunks_file_name
-                )
-                with open(new_chunks_file_path, "w", encoding="utf-8") as f:
-                    json.dump(res, f, ensure_ascii=False, indent=4)
-            logger.info("Done processing %s", metadata["title"])
-        logger.info("Done processing all files")
-    except (ValueError, OSError, KeyError) as e:
-        logger.error("An error happenned : %s", e)
+                    res = add_metadata(chunk_id_container, content_container, metadata)
+                    new_chunks_file_name = (
+                        (
+                            metadata["law_id"]
+                            .replace(" ", "_")
+                            .replace("/", "_")
+                            .replace("\\", "_")
+                            .replace("-", "_")
+                            + ".txt"
+                        )
+                        + "_chunks"
+                        + ".json"
+                    )
+                    new_chunks_file_path = os.path.join(
+                        save_file_path, new_chunks_file_name
+                    )
+                    with open(new_chunks_file_path, "w", encoding="utf-8") as f:
+                        json.dump(res, f, ensure_ascii=False, indent=4)
+                logger.info("Done processing %s", metadata["title"])
+                processed_count += 1
+            except (FileNotFoundError, OSError, IOError) as file_error:
+                logger.error("Error processing file %s: %s", text_file_name, file_error)
+                skipped_count += 1
+                continue
+
+        logger.info(
+            "Processing completed. Processed: %d, Skipped: %d",
+            processed_count,
+            skipped_count,
+        )
+    except (ValueError, KeyError) as e:
+        logger.error("An error happened: %s", e)
 
 
 if __name__ == "__main__":
-    file_path = "src/preprocess/law.txt"  # Thay bằng đường dẫn file của bạn
+    file_path = "src/preprocess/law.txt"
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             text_txt = file.read()

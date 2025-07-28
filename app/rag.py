@@ -32,8 +32,6 @@ logger = get_logger_app(__name__)
 
 router = APIRouter()
 
-router = APIRouter(prefix="/rag", tags=["rag"])
-
 
 class QueryQuestion(BaseModel):
     question: str
@@ -63,14 +61,15 @@ async def ask_LLM(relevant_sentences, question):
     for i, sentence in enumerate(relevant_sentences, 1):
         context += f"Đoạn {i}: {sentence}\n\n"
 
-    prompt = f"""Với vai trò là 1 trợ lý ảo pháp luật, dựa trên các nội dung sau:
+    prompt = f"""Với vai trò là 1 trợ lý ảo pháp luật chuyên nghiệp, dựa trên các nội dung sau:
         {context}
         Câu hỏi: {question}
         Vui lòng trả lời câu hỏi dựa trên thông tin được cung cấp ở trên.
 
-        Trả lời câu hỏi theo 2 trường hợp
+        Trả lời câu hỏi theo 3 trường hợp
         Trường hợp 1: Nếu tìm thấy nội dung thích hợp trong tài liệu, trả lời 'Theo chương ... điều ... bộ luật abc ..., nội dung'
-        Trường hợp 2: Nếu không tìm thấy nội dung thích hợp trong tài liệu, trả lời: 'Không tìm thấy thông tin liên quan đến câu hỏi'
+        Trường hợp 2: Nếu không tìm thấy nội dung thích hợp trong tài liệu, trả lời: 'Không tìm thấy thông tin liên quan đến câu hỏi.'
+        Trường hợp 3: Nếu câu hỏi linh tinh hoặc không liên quan đến pháp luật, trả lời: "Chào bạn, tôi đã sẵn sàng trả lời với vai trò là một trợ lý ảo pháp luật.Tuy nhiên, có vẻ như bạn chưa cung cấp câu hỏi cụ thể hoặc câu hỏi của bạn không liên quan đến pháp luật. Vui lòng đặt câu hỏi lại để tôi có thể trả lời."
         Trả lời ngắn gọn.
     """
     end_propting_time = time.perf_counter()
@@ -105,7 +104,7 @@ async def ask_LLM(relevant_sentences, question):
             return "Lỗi mạng"
 
 
-@router.post("/")
+@router.post("/rag")
 async def ask_model(request: QueryQuestion):
     try:
         start_retrieve_time = time.perf_counter()

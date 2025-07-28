@@ -84,7 +84,8 @@ def find_all_links(soup):
     Find all links in the soup page
     """
     all_links_in_h2 = soup.select("h2.doc-title a")
-    all_links_in_h3 = soup.select("h3.doc-title a")
+    # Uncommend this for the main link (14 links)
+    # all_links_in_h3 = soup.select("h3.doc-title a")
     result = []
     for a in all_links_in_h2:
         link = a.get("href")
@@ -93,13 +94,13 @@ def find_all_links(soup):
             result.append(link)
         else:
             logger.info("Can't find the link in current container")
-    for a in all_links_in_h3:
-        link = a.get("href")
-        link = "https://luatvietnam.vn" + link
-        if a:
-            result.append(link)
-        else:
-            logger.info("Can't find the link in current container")
+    # for a in all_links_in_h3:
+    #     link = a.get("href")
+    #     link = "https://luatvietnam.vn" + link
+    #     if a:
+    #         result.append(link)
+    #     else:
+    #         logger.info("Can't find the link in current container")
     logger.info("Total links : %d", len(result))
     # print("Result: ", result)
     return result
@@ -120,6 +121,18 @@ def find_all_metadata(soup):
 
 def concatenate_2_type_of_data(links, issue_days_list, update_day_list):
     result = []
+    logger.info(
+        "Number of links is %d",
+        len(links),
+    )
+    logger.info(
+        "Number of issue_days_list is %d",
+        len(issue_days_list),
+    )
+    logger.info(
+        "Number of update_day_list is %d",
+        len(update_day_list),
+    )
 
     for i, link in enumerate(links):
         current_result = {}
@@ -132,7 +145,7 @@ def concatenate_2_type_of_data(links, issue_days_list, update_day_list):
 
 def save_to_data(result, file_name):
     """
-    Save the data just crawl to json file
+    Save the data just crawl to json file (append if file exists)
     params:
         - result: All links
         - file_name: Name of the file (json)
@@ -141,11 +154,61 @@ def save_to_data(result, file_name):
         # file_name = "law_links.json"
         raw_path = os.path.join(root, "data", "raw")
         file_path = os.path.join(raw_path, file_name)
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=4)
+
+        # Tạo thư mục nếu chưa tồn tại
+        os.makedirs(raw_path, exist_ok=True)
+
+        existing_data = []
+
+        # Đọc data cũ nếu file đã tồn tại
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    existing_data = json.load(f)
+                logger.info(
+                    "Loaded %d existing records from %s", len(existing_data), file_name
+                )
+            except (json.JSONDecodeError, ValueError) as e:
+                logger.warning(
+                    "Failed to read existing file %s: %s. Starting with empty data.",
+                    file_name,
+                    e,
+                )
+                existing_data = []
+
+        # Lọc bỏ các link trùng lặp (nếu có)
+        existing_links = {
+            item.get("link")
+            for item in existing_data
+            if isinstance(item, dict) and "link" in item
+        }
+        new_data = [
+            item
+            for item in result
+            if isinstance(item, dict) and item.get("link") not in existing_links
+        ]
+
+        if new_data:
+            # Kết hợp data cũ và mới
+            combined_data = existing_data + new_data
+
+            # Ghi lại vào file
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(combined_data, f, indent=4, ensure_ascii=False)
+
+            logger.info(
+                "Added %d new records. Total records: %d",
+                len(new_data),
+                len(combined_data),
+            )
+        else:
+            logger.info(
+                "No new data to add. All %d records already exist.", len(result)
+            )
+
         return 1
     except (ValueError, TypeError, OSError) as e:
-        logger.info("Error in saving data : %s", e)
+        logger.error("Error in saving data: %s", e)
         return 0
 
 

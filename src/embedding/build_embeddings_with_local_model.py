@@ -50,10 +50,10 @@ def make_embeddings(all_chunks, model="BAAI/bge-m3"):
 
 if __name__ == "__main__":
     # Đọc dữ liệu gốc để lấy batch tiếp theo
-    file_path = os.path.join(root, "data/processed/all_chunks.json")
+    file_path = os.path.join(root, "data/processed/new_all_chunks.json")
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-        data = data[3000:27061]  # Lấy 1000 dữ liệu tiếp theo (index 1000-1999)
+        # data = data[1:20]
         all_embedded_chunks = make_embeddings(data)
         for chunk in all_embedded_chunks:
             if "embedding" in chunk and isinstance(chunk["embedding"], np.ndarray):
@@ -61,19 +61,48 @@ if __name__ == "__main__":
 
     # Đọc file cũ để ghi tiếp
     saved_file_path = os.path.join(
-        root, "data/processed/embedded_chunks_with_local_model.json"
+        root, "data/processed/bge_embedded_chunks_with_local_model.json"
     )
 
     # Đọc dữ liệu cũ nếu file tồn tại
     existing_data = []
     if os.path.exists(saved_file_path):
-        with open(saved_file_path, "r", encoding="utf-8") as f:
-            existing_data = json.load(f)
+        try:
+            with open(saved_file_path, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                if content:  # Kiểm tra nếu file không trống
+                    existing_data = json.loads(content)
+                else:
+                    logger.warning(
+                        "File %s is empty, starting with empty data", saved_file_path
+                    )
+                    existing_data = []
+        except (json.JSONDecodeError, ValueError) as e:
+            logger.warning(
+                "Failed to read JSON file %s: %s. Starting with empty data.",
+                saved_file_path,
+                e,
+            )
+            existing_data = []
+        except (OSError, IOError) as e:
+            logger.error(
+                "Failed to read file %s: %s. Starting with empty data.",
+                saved_file_path,
+                e,
+            )
+            existing_data = []
 
     # Gộp dữ liệu cũ với dữ liệu mới
     combined_data = existing_data + all_embedded_chunks
 
     # Ghi lại file với dữ liệu gộp
-    with open(saved_file_path, "w", encoding="utf-8") as f:
-        json.dump(combined_data, f, ensure_ascii=False, indent=4)
+    try:
+        # Tạo thư mục nếu chưa tồn tại
+        os.makedirs(os.path.dirname(saved_file_path), exist_ok=True)
+
+        with open(saved_file_path, "w", encoding="utf-8") as f:
+            json.dump(combined_data, f, ensure_ascii=False, indent=4)
         logger.info("Done saving all. Total chunks: %d", len(combined_data))
+    except (OSError, IOError) as e:
+        logger.error("Failed to save file %s: %s", saved_file_path, e)
+        raise

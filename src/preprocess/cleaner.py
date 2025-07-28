@@ -5,7 +5,7 @@ import sys
 
 from bs4 import BeautifulSoup, Tag
 
-root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, str(root))
 from configs.logger import get_logger, setup_logging
 
@@ -53,12 +53,25 @@ def parse_text_from_HTML(html_content):
 
 def clean_metadata_file_to_text(file_path):
     try:
+        # Tạo thư mục output nếu chưa tồn tại
+        output_dir = os.path.join(root, "data", "processed", "new_texts")
+        os.makedirs(output_dir, exist_ok=True)
+        logger.info("Output directory ensured: %s", output_dir)
+
         with open(file_path, "r", encoding="utf-8") as f:
             datas = json.load(f)
+            processed_count = 0
+            skipped_count = 0
+
             for data in datas:
                 text = parse_text_from_HTML(data["content"])
-                logger.info("Parsed %s completely", data["tilte"])
+                logger.info("Parsed %s completely", data["title"])
+
                 if text == "":
+                    skipped_count += 1
+                    logger.warning(
+                        "Skipped %s - empty text content", data.get("law_id", "Unknown")
+                    )
                     continue
 
                 # Replace invalid filename characters with underscores
@@ -70,15 +83,28 @@ def clean_metadata_file_to_text(file_path):
                     .replace("-", "_")
                     + ".txt"
                 )
-                new_file_path = os.path.join(
-                    root, "data", "processed", "texts", new_file_name
-                )
-                with open(new_file_path, "w", encoding="utf-8") as f:
-                    if text is not None:
-                        f.write(text)
+                new_file_path = os.path.join(output_dir, new_file_name)
+
+                try:
+                    with open(new_file_path, "w", encoding="utf-8") as f:
+                        if text is not None:
+                            f.write(text)
+                            processed_count += 1
+                            logger.info("Saved text to: %s", new_file_name)
+                except (OSError, IOError) as file_error:
+                    logger.error(
+                        "Failed to save file %s: %s", new_file_name, file_error
+                    )
+
+            logger.info(
+                "Processing completed. Processed: %d, Skipped: %d",
+                processed_count,
+                skipped_count,
+            )
+
     except (ValueError, TypeError, OSError) as e:
-        logger.info("Error in cleaning data : %s", e)
+        logger.error("Error in cleaning data: %s", e)
 
 
 if __name__ == "__main__":
-    clean_metadata_file_to_text(testing_file_path)
+    print(root)

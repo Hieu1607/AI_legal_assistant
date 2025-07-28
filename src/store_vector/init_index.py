@@ -32,8 +32,8 @@ setup_logging()
 logger = get_logger(__name__)
 
 CHROMA_DB_PATH = os.path.join(root, "data/processed/vector_store")
-COLLECTION_NAME = "legal_assistant_collection"
-
+COLLECTION_NAME = "legal_assistant_collection_bge"
+# COLLECTION_NAME = "legal_assistant_collection_all-MiniLM-L6-v2"
 INDEX_CONFIG = {
     "collection_name": COLLECTION_NAME,
     "db_path": CHROMA_DB_PATH,

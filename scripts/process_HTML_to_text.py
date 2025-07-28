@@ -29,6 +29,6 @@ logger = get_logger(__name__)
 
 from src.preprocess.cleaner import clean_metadata_file_to_text
 
-file_path = os.path.join(root, "data", "raw", "law_metadata.json")
+file_path = os.path.join(root, "data", "raw", "new_law_metadata.json")
 
 clean_metadata_file_to_text(file_path)

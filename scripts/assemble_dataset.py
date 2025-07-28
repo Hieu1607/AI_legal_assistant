@@ -42,8 +42,17 @@ for filename in os.listdir(folder_path):
             chunks_in_file = json.load(f)
             for chunk in chunks_in_file:
                 all_chunks.append(chunk)
+new_folder_path = "data/processed/new_chunks"
+for filename in os.listdir(new_folder_path):
+    file_path = os.path.join(new_folder_path, filename)
 
-new_file_path = "data/processed/all_chunks.json"
+    if os.path.isfile(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            chunks_in_file = json.load(f)
+            for chunk in chunks_in_file:
+                all_chunks.append(chunk)
+
+new_file_path = "data/processed/new_all_chunks.json"
 with open(new_file_path, "w", encoding="utf-8") as f:
     json.dump(all_chunks, f, ensure_ascii=False, indent=4)
-print(len(all_chunks))  # 27061
+print(len(all_chunks))

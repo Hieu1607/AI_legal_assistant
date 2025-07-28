@@ -1,0 +1,56 @@
+# Core FastAPI và ASGI server
+fastapi==0.115.9
+uvicorn==0.35.0
+starlette==0.45.3
+
+# HTTP và networking
+aiohttp==3.12.12
+requests==2.32.4
+httpx==0.28.1
+urllib3==2.4.0
+
+# Machine Learning và AI
+sentence-transformers==5.0.0
+torch==2.7.1
+transformers==4.52.4
+numpy==2.3.0
+scikit-learn==1.7.0
+huggingface_hub==0.33.0
+tokenizers==0.21.1
+tiktoken==0.9.0
+
+# Data processing
+pandas==2.3.0
+beautifulsoup4==4.13.4
+lxml==5.4.0
+
+# Vector database
+chromadb==1.0.15
+
+# Configuration và environment
+python-dotenv==1.1.0
+pyyaml==6.0.2
+
+# File handling
+python-multipart==0.0.20
+
+# Validation
+pydantic==2.11.7
+email-validator==2.2.0
+
+# Logging
+coloredlogs==15.0.1
+
+# Security
+cryptography==44.0.1
+certifi==2025.7.14
+
+# AI services
+google-generativeai==0.8.5
+google-auth==2.40.3
+
+# Development tools (optional - loại bỏ trong production)
+black==25.1.0
+pytest==8.4.1
+pytest-asyncio==0.25.3
+pytest-cov==6.0.0

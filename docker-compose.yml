@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  ai-legal-assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - PYTHONPATH=/app
+    volumes:
+      # Mount data directory để persist dữ liệu
+      - ./data:/app/data
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - ai-legal-network
+
+networks:
+  ai-legal-network:
+    driver: bridge
+
+volumes:
+  ai-legal-data:
+    driver: local
