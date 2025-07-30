@@ -175,7 +175,7 @@ if __name__ == "__main__":
         start_time = time.time()
 
         file_path = os.path.join(
-            root, "data/processed/new_embedded_chunks_with_local_model.json"
+            root, "data/processed/filtered_bge_embedded_chunks_with_local_model.json"
         )
 
         logger.info("Starting streaming indexing from %s", file_path)

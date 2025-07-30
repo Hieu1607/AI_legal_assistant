@@ -35,15 +35,20 @@ logger = get_logger(__name__)
 
 
 # Because the time for loading the model is quite long, so we dont seperate the function for each sentence.
-def make_embeddings(all_chunks, model="BAAI/bge-m3"):
-    model = SentenceTransformer(model)
+def make_embeddings(all_chunks, model_name="BAAI/bge-m3", batch_size=32):
+    model = SentenceTransformer(model_name)
     logger.info("Done loading model")
+    texts = [chunk["text"] for chunk in all_chunks]
+    embeddings = model.encode(
+        texts, batch_size=batch_size, normalize_embeddings=True, show_progress_bar=True
+    )  # Thêm thanh tiến trình để dễ theo dõi
+
+    # 3. Gán embedding trở lại cho từng chunk
     result = []
-    for current_chunk in all_chunks:
-        current_chunk["embedding"] = model.encode(
-            current_chunk["text"], normalize_embeddings=True
-        )
+    for i, current_chunk in enumerate(all_chunks):
+        current_chunk["embedding"] = embeddings[i]
         result.append(current_chunk)
+
     logger.info("Done embedding all chunks")
     return result
 
@@ -61,7 +66,7 @@ if __name__ == "__main__":
 
     # Đọc file cũ để ghi tiếp
     saved_file_path = os.path.join(
-        root, "data/processed/bge_embedded_chunks_with_local_model.json"
+        root, "data/processed/filtered_bge_embedded_chunks_with_local_model.json"
     )
 
     # Đọc dữ liệu cũ nếu file tồn tại
