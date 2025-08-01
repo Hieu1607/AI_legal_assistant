@@ -7,28 +7,7 @@ from bs4 import BeautifulSoup, Tag
 
 # from pathlib import Path
 
-
-def get_project_root():
-    """Get the root directory of the project."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    while True:
-        # Kiểm tra xem 'data' và 'src' có tồn tại trong thư mục hiện tại không
-        if os.path.isdir(os.path.join(current_dir, "data")) and os.path.isdir(
-            os.path.join(current_dir, "src")
-        ):
-            return current_dir
-
-        parent_dir = os.path.dirname(current_dir)
-        if parent_dir == current_dir:  # Đã đến thư mục gốc của hệ thống
-            raise FileNotFoundError(
-                "Check the project structure. 'data' and 'src' directories not found."
-            )
-        current_dir = parent_dir
-    return current_dir
-
-
-# Set up logging
-root = get_project_root()
+root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
@@ -157,7 +136,7 @@ def save_to_markdown(content, output_dir, filename):
         print(f"Skipping {filename} due to insufficient content length.")
         return
 
-    project_root = get_project_root()
+    project_root = root
     output_dir_path = os.path.join(
         project_root, "data", "processed", "rules", output_dir
     )  # Create the directory first

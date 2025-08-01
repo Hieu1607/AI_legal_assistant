@@ -1,7 +1,8 @@
 import sys
-
+import os
 # Define get_project_root locally to avoid circular import issues
-root = "../"
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # Set up paths
 if root not in sys.path:

@@ -18,23 +18,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-def get_project_root():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    while True:
-        if os.path.isdir(os.path.join(current_dir, "data")) and os.path.isdir(
-            os.path.join(current_dir, "src")
-        ):
-            return current_dir
-        parent_dir = os.path.dirname(current_dir)
-        if parent_dir == current_dir:
-            raise FileNotFoundError(
-                "Check the project structure. 'data' and 'src' not found."
-            )
-        current_dir = parent_dir
-
-
-root = get_project_root()
+root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging

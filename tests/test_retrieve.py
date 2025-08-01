@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 # Import router từ module app.retrieve và functions cần thiết
-from app.retrieve import get_project_root, router
+from app.retrieve import router
 
 
 # Fixture để tạo TestClient cho FastAPI app
@@ -63,13 +63,6 @@ def mock_search():
             "documents": [["content1", "content2", "content3"]],
         }
         yield mock
-
-
-def test_get_project_root():
-    """Test hàm get_project_root"""
-    root = get_project_root()
-    assert os.path.isdir(os.path.join(root, "data"))
-    assert os.path.isdir(os.path.join(root, "src"))
 
 
 def test_index_endpoint(client):

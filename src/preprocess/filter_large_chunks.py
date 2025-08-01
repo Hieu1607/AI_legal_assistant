@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
-root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # print(root)
 sys.path.insert(0, root)
 
