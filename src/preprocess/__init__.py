@@ -1,26 +1,23 @@
 import os
 import sys
 
+# Get the root directory of the project
+current_dir = os.path.dirname(os.path.abspath(__file__))
+while True:
+    # Check if 'data' and 'src' directories exist in current directory
+    if os.path.isdir(os.path.join(current_dir, "data")) and os.path.isdir(
+        os.path.join(current_dir, "src")
+    ):
+        root = current_dir
+        break
 
-def get_project_root():
-    """Get the root directory of the project."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    while True:
-        # Kiểm tra xem 'data' và 'src' có tồn tại trong thư mục hiện tại không
-        if os.path.isdir(os.path.join(current_dir, "data")) and os.path.isdir(
-            os.path.join(current_dir, "src")
-        ):
-            return current_dir
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir == current_dir:  # Reached system root directory
+        raise FileNotFoundError(
+            "Check the project structure. 'data' and 'src' directories not found."
+        )
+    current_dir = parent_dir
 
-        parent_dir = os.path.dirname(current_dir)
-        if parent_dir == current_dir:  # Đã đến thư mục gốc của hệ thống
-            raise FileNotFoundError(
-                "Check the project structure. 'data' and 'src' directories not found."
-            )
-        current_dir = parent_dir
-
-
-root = get_project_root()
 sys.path.insert(0, str(root))
 
 from .chunker import chunk_law_text

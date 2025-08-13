@@ -5,7 +5,7 @@ Simple centralized logging configuration for the AI Legal Assistant project.
 
 import logging
 import logging.config
-from pathlib import Path
+import os
 
 import yaml
 
@@ -18,7 +18,7 @@ class LoggerManager:
 
     def get_project_root(self):
         """Get the project root directory."""
-        return Path(__file__).parent.parent
+        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     def _update_handler_paths(self, config, project_root):
         """Update file handler paths to use absolute paths."""
@@ -27,8 +27,10 @@ class LoggerManager:
                 if "filename" in handler_config:
                     # Convert relative path to absolute path from project root
                     filename = handler_config["filename"]
-                    if not Path(filename).is_absolute():
-                        handler_config["filename"] = str(project_root / filename)
+                    if not os.path.isabs(filename):
+                        handler_config["filename"] = os.path.join(
+                            project_root, filename
+                        )
 
     def setup_logging(self, force_setup=False):
         """
@@ -45,13 +47,13 @@ class LoggerManager:
 
         try:
             project_root = self.get_project_root()
-            config_path = project_root / "configs" / "logging.yaml"
-            logs_dir = project_root / "logs"
+            config_path = os.path.join(project_root, "configs", "logging.yaml")
+            logs_dir = os.path.join(project_root, "logs")
 
             # Create logs directory if it doesn't exist
-            logs_dir.mkdir(exist_ok=True)
+            os.makedirs(logs_dir, exist_ok=True)
 
-            if config_path.exists():
+            if os.path.exists(config_path):
                 with open(config_path, "r", encoding="utf-8") as f:
                     config = yaml.safe_load(f)
 
@@ -81,11 +83,6 @@ class LoggerManager:
 
 # Create a singleton instance
 _logger_manager = LoggerManager()
-
-
-def get_project_root():
-    """Get the project root directory."""
-    return _logger_manager.get_project_root()
 
 
 def setup_logging(force_setup=False):

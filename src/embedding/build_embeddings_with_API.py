@@ -23,17 +23,17 @@ logger = get_logger(__name__)
 
 def make_embeddings(all_chunks, model="models/embedding-001", batch_size=100):
     """
-    Tạo embeddings cho một danh sách các chunks theo từng batch.
+    Create embeddings for a list of chunks in batches.
 
     Args:
-        all_chunks (list): Danh sách các dictionary, mỗi dictionary chứa 'text' và các thông tin khác.
-        model (str): Tên của mô hình embedding.
-        batch_size (int): Số lượng văn bản tối đa trong mỗi batch.
-                          Giới hạn API cho gemini-embedding-exp-03-07 là 250 câu.
+        all_chunks (list): List of dictionaries, each containing 'text' and other information.
+        model (str): Name of the embedding model.
+        batch_size (int): Maximum number of texts in each batch.
+                          API limit for gemini-embedding-exp-03-07 is 250 sentences.
 
     Returns:
-        list: Danh sách các dictionary đã được cập nhật thêm trường 'embedding'.
-              Trả về danh sách rỗng nếu có lỗi hoặc không có chunks nào.
+        list: List of dictionaries updated with 'embedding' field.
+              Returns empty list if there are errors or no chunks.
     """
     genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
     processed_chunks = []
@@ -45,42 +45,46 @@ def make_embeddings(all_chunks, model="models/embedding-001", batch_size=100):
         texts_to_embed = [chunk["text"] for chunk in current_batch_chunks]
 
         logger.info(
-            "Đang xử lý batch từ chunk %d đến %d...", i, min(i + batch_size, num_chunks)
+            "Processing batch from chunk %d to %d...",
+            i,
+            min(i + batch_size, num_chunks),
         )
 
         try:
-            # Gửi yêu cầu embedding cho toàn bộ batch
+            # Send embedding request for entire batch
             embedded_data = genai.embed_content(  # type: ignore
                 model=model,
                 content=texts_to_embed,
-                task_type="RETRIEVAL_QUERY",  # Đảm bảo task_type phù hợp với mục đích của bạn
+                task_type="RETRIEVAL_QUERY",  # Ensure task_type is appropriate for your purpose
             )
 
-            # Kiểm tra xem có embeddings được trả về không
+            # Check if embeddings are returned
             if embedded_data and "embedding" in embedded_data:
                 embeddings_for_batch = embedded_data["embedding"]
 
-                # Gán embedding trở lại cho từng chunk trong batch
+                # Assign embedding back to each chunk in batch
                 for j, current_chunk in enumerate(current_batch_chunks):
                     if j < len(
                         embeddings_for_batch
-                    ):  # Đảm bảo có đủ embedding cho chunk
+                    ):  # Ensure there are enough embeddings for chunk
                         current_chunk["embedding"] = embeddings_for_batch[j]
                         processed_chunks.append(current_chunk)
                     else:
                         print(
-                            f"Cảnh báo: Không có embedding cho chunk tại vị trí {j} trong batch này."
+                            f"Warning: No embedding for chunk at position {j} in this batch."
                         )
             else:
-                print(f"Cảnh báo: API không trả về embedding cho batch từ chunk {i}.")
-            time.sleep(random.uniform(0.0, 2.0))  # Dừng 100ms
+                print(
+                    f"Warning: API did not return embedding for batch from chunk {i}."
+                )
+            time.sleep(random.uniform(0.0, 2.0))  # Pause 100ms
 
         except (
             KeyError,
             TypeError,
             GoogleAPICallError,
         ) as e:
-            print(f"Lỗi khi xử lý batch từ chunk {i}: {e}")
+            print(f"Error processing batch from chunk {i}: {e}")
             continue
     return processed_chunks
 

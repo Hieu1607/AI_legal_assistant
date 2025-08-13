@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script để test exception handler của FastAPI app
+Script to test exception handler of FastAPI app
 """
 
 import sys
@@ -9,11 +9,11 @@ import requests
 
 
 def test_validation_error():
-    """Test validation error bằng cách gửi request không hợp lệ"""
+    """Test validation error by sending invalid request"""
     url = "http://localhost:8000/retrieve"
 
-    # Test case 1: Thiếu trường question
-    print("=== Test 1: Thiếu trường 'question' ===")
+    # Test case 1: Missing question field
+    print("=== Test 1: Missing 'question' field ===")
     invalid_data_1 = {"top_k": 5}
 
     try:
@@ -21,16 +21,16 @@ def test_validation_error():
         print(f"Status code: {response.status_code}")
         print(f"Response: {response.json()}")
     except requests.exceptions.ConnectionError:
-        print("Không thể kết nối tới server. Hãy chắc chắn server đang chạy.")
+        print("Cannot connect to server. Make sure the server is running.")
         return
     except (requests.exceptions.Timeout, requests.exceptions.HTTPError) as e:
-        print(f"Lỗi khi gửi request: {e}")
+        print(f"Error sending request: {e}")
 
     print("\n" + "=" * 50 + "\n")
 
-    # Test case 2: Kiểu dữ liệu sai cho top_k
-    print("=== Test 2: Kiểu dữ liệu sai cho 'top_k' ===")
-    invalid_data_2 = {"question": "test question", "top_k": "không phải số"}
+    # Test case 2: Wrong data type for top_k
+    print("=== Test 2: Wrong data type for 'top_k' ===")
+    invalid_data_2 = {"question": "test question", "top_k": "not a number"}
 
     try:
         response = requests.post(url, json=invalid_data_2, timeout=10)
@@ -41,12 +41,12 @@ def test_validation_error():
         requests.exceptions.Timeout,
         requests.exceptions.HTTPError,
     ) as e:
-        print(f"Lỗi khi gửi request: {e}")
+        print(f"Error sending request: {e}")
 
     print("\n" + "=" * 50 + "\n")
 
-    # Test case 3: Dữ liệu hoàn toàn không hợp lệ
-    print("=== Test 3: Dữ liệu hoàn toàn không hợp lệ ===")
+    # Test case 3: Completely invalid data
+    print("=== Test 3: Completely invalid data ===")
     invalid_data_3 = {"invalid_field": "value"}
 
     try:
@@ -58,14 +58,14 @@ def test_validation_error():
         requests.exceptions.Timeout,
         requests.exceptions.HTTPError,
     ) as e:
-        print(f"Lỗi khi gửi request: {e}")
+        print(f"Error sending request: {e}")
 
 
 def test_valid_request():
-    """Test request hợp lệ để đảm bảo server hoạt động bình thường"""
+    """Test valid request to ensure server operates normally"""
     url = "http://localhost:8000/retrieve"
 
-    print("=== Test: Request hợp lệ ===")
+    print("=== Test: Valid request ===")
     valid_data = {"question": "test question", "top_k": 3}
 
     try:
@@ -80,46 +80,46 @@ def test_valid_request():
         requests.exceptions.Timeout,
         requests.exceptions.HTTPError,
     ) as e:
-        print(f"Lỗi khi gửi request: {e}")
+        print(f"Error sending request: {e}")
 
 
 def check_server_status():
-    """Kiểm tra xem server có đang chạy không"""
+    """Check if the server is running"""
     try:
         response = requests.get("http://localhost:8000/", timeout=10)
-        print(f"Server đang chạy. Response: {response.json()}")
+        print(f"Server is running. Response: {response.json()}")
         return True
     except requests.exceptions.ConnectionError:
-        print("Server không chạy. Vui lòng khởi động server trước.")
+        print("Server is not running. Please start the server first.")
         return False
     except (requests.exceptions.Timeout, requests.exceptions.HTTPError) as e:
-        print(f"Lỗi khi kiểm tra server: {e}")
+        print(f"Error checking server: {e}")
         return False
 
 
 if __name__ == "__main__":
-    print("Bắt đầu test Exception Handler...")
+    print("Starting Exception Handler test...")
     print("=" * 60)
 
-    # Kiểm tra server
+    # Check server
     if not check_server_status():
-        print("\nHướng dẫn khởi động server:")
-        print("1. Mở terminal mới")
+        print("\nServer startup instructions:")
+        print("1. Open new terminal")
         print("2. cd c:\\Users\\HP\\Desktop\\AI_legal_assistant")
         print("3. python -m uvicorn app.retrieve:app --reload")
         sys.exit(1)
 
     print("\n")
 
-    # Test các trường hợp validation error
+    # Test various validation error cases
     test_validation_error()
 
     print("\n")
 
-    # Test request hợp lệ
+    # Test valid request
     test_valid_request()
 
-    print("\n=== Kết thúc test ===")
+    print("\n=== Test completed ===")
     print(
-        "Kiểm tra file logs/errors.log và logs/info.log để xem exception handler có được gọi không."
+        "Check files logs/errors.log and logs/info.log to see if exception handler was called."
     )

@@ -9,7 +9,6 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-
 # Set up logging
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, str(root))
@@ -75,7 +74,7 @@ async def validation_exception_handler(_: Request, exc: RequestValidationError):
     logger.info("An error occured: %s", exc.errors())
     errors = [
         {
-            "field": ".".join(str(loc) for loc in err["loc"][1:]),  # loại bỏ 'body'
+            "field": ".".join(str(loc) for loc in err["loc"][1:]),  # remove 'body'
             "error": err["msg"],
         }
         for err in exc.errors()

@@ -4,7 +4,6 @@ import json
 import os
 import sys
 
-
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.insert(0, str(root))
@@ -27,8 +26,8 @@ csv_headers = list(data[0].keys())
 with open(new_file_path, "w", newline="", encoding="utf-8") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=csv_headers, quoting=csv.QUOTE_MINIMAL)
 
-    writer.writeheader()  # Ghi tiêu đề cột
+    writer.writeheader()  # Write column headers
 
     for row in data:
         writer.writerow(row)
-print(f"Đã ghi thành công vào '{new_file_path}'.")
+print(f"Successfully written to '{new_file_path}'.")

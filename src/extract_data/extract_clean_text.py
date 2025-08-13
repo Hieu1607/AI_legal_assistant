@@ -181,8 +181,8 @@ def process_legal_document(html_file_path):
             description = text.group(1).strip()
         match = re.search(r"Đề mục (\d+)\.(\d+)", title_text)
         if match:
-            big_subject = match.group(1)  # Số nguyên
-            small_subject = match.group(2)  # Số thập phân
+            big_subject = match.group(1)  # Integer
+            small_subject = match.group(2)  # Decimal
         else:
             raise ValueError(f"Title does not match expected format: {title_text}")
         folder_name = os.path.join(f"chu_de_{big_subject}", f"de_muc_{small_subject}")

@@ -7,26 +7,24 @@ from sentence_transformers import SentenceTransformer
 load_dotenv()
 
 
-def get_project_root():
-    """Get the root directory of the project."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    while True:
-        # Kiểm tra xem 'data' và 'src' có tồn tại trong thư mục hiện tại không
-        if os.path.isdir(os.path.join(current_dir, "data")) and os.path.isdir(
-            os.path.join(current_dir, "src")
-        ):
-            return current_dir
+# Get the root directory of the project
+current_dir = os.path.dirname(os.path.abspath(__file__))
+while True:
+    # Check if 'data' and 'src' directories exist in current directory
+    if os.path.isdir(os.path.join(current_dir, "data")) and os.path.isdir(
+        os.path.join(current_dir, "src")
+    ):
+        root = current_dir
+        break
 
-        parent_dir = os.path.dirname(current_dir)
-        if parent_dir == current_dir:  # Đã đến thư mục gốc của hệ thống
-            raise FileNotFoundError(
-                "Check the project structure. 'data' and 'src' directories not found."
-            )
-        current_dir = parent_dir
-
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir == current_dir:  # Reached system root directory
+        raise FileNotFoundError(
+            "Check the project structure. 'data' and 'src' directories not found."
+        )
+    current_dir = parent_dir
 
 # Set up logging
-root = get_project_root()
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
@@ -43,17 +41,17 @@ def search_relevant_embeddings(text, n_results):
     results = collection.query(
         query_embeddings=embedding_from_text,
         n_results=n_results,
-        # where={"source": "article"},        # Tùy chọn: Lọc theo metadata (AND logic)
-        # where_document={"$contains":"leave"} # Tùy chọn: Lọc theo nội dung document
+        # where={"source": "article"},        # Optional: Filter by metadata (AND logic)
+        # where_document={"$contains":"leave"} # Optional: Filter by document content
     )
 
-    # Tính cosine similarity từ distances (ChromaDB trả về cosine distances)
+    # Calculate cosine similarity from distances (ChromaDB returns cosine distances)
     # Cosine similarity = 1 - cosine distance
     cosine_similarities = []
     if results["distances"] and len(results["distances"][0]) > 0:
         cosine_similarities = [1 - distance for distance in results["distances"][0]]
 
-    # Tạo dictionary mới với cosine similarities
+    # Create new dictionary with cosine similarities
     enhanced_results = {
         "ids": results["ids"],
         "distances": results["distances"],

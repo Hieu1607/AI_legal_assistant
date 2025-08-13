@@ -29,7 +29,7 @@ def chunk_law_text(text):
         if not line:
             continue
 
-        # Chương
+        # Chapter
         if re.match(r"^CHƯƠNG\s+[IVXLCDM]+", line, re.IGNORECASE):
             if current_chunk["content"] or any(current_chunk.values()):
                 chunks.append(current_chunk.copy())
@@ -42,7 +42,7 @@ def chunk_law_text(text):
             current_chunk["content"] = []
             continue
 
-        # Mục
+        # Section
         if re.match(r"^Mục\s+\d+", line):
             if current_chunk["content"] or any(current_chunk.values()):
                 chunks.append(current_chunk.copy())
@@ -53,7 +53,7 @@ def chunk_law_text(text):
             current_chunk["content"] = []
             continue
 
-        # Tiểu mục
+        # Subsection
         if re.match(r"^Tiểu mục\s+\d+\.", line):
             if current_chunk["content"] or any(current_chunk.values()):
                 chunks.append(current_chunk.copy())
@@ -64,19 +64,19 @@ def chunk_law_text(text):
             current_chunk["content"] = []
             continue
 
-        # Điều
+        # Article
         if re.match(r"^Điều\s+\d+", line):
             if current_chunk["content"] or any(current_chunk.values()):
                 chunks.append(current_chunk.copy())
-            # Giữ nguyên chapter, section và subsection
+            # Keep same chapter, section and subsection
             current_chunk["article"] = line
             current_chunk["clause"] = None
             current_chunk["point"] = None
             current_chunk["content"] = []
             continue
 
-        # Khoản
-        if re.match(r"^\d+\.", line):  # Sửa regex để khớp với định dạng "1.", "2.", ...
+        # Clause
+        if re.match(r"^\d+\.", line):  # Fix regex to match format "1.", "2.", ...
             if current_chunk["content"] or any(current_chunk.values()):
                 chunks.append(current_chunk.copy())
             current_chunk["clause"] = line
@@ -84,7 +84,7 @@ def chunk_law_text(text):
             current_chunk["content"] = []
             continue
 
-        # Điểm
+        # Point
         if re.match(r"^[a-zA-Z]\)", line) or re.match(r"^[aAÀÁẢẠÃăâđêôơư]{1}\)", line):
             if current_chunk["content"] or any(current_chunk.values()):
                 chunks.append(current_chunk.copy())
@@ -92,10 +92,10 @@ def chunk_law_text(text):
             current_chunk["content"] = []
             continue
 
-        # Nội dung bình thường
+        # Normal content
         current_chunk["content"].append(line)
 
-    # Thêm chunk cuối cùng nếu có nội dung
+    # Add last chunk if there's content
     if current_chunk["content"] or current_chunk["chapter"] or current_chunk["article"]:
         chunks.append(current_chunk)
 
@@ -105,7 +105,7 @@ def chunk_law_text(text):
 def make_chunk_id(chunk):
     parts = []
 
-    # Tạo các bộ quy tắc cho từng cấp
+    # Create rule sets for each level
     rules = [
         ("chapter", r"CHƯƠNG\s+([IVXLCDM]+)", "CHUONG_{}"),
         ("section", r"Mục\s+(\d+)", "Muc_{}"),
@@ -221,7 +221,7 @@ def make_chunks_from_metadata(metadata_file):
 
 
 if __name__ == "__main__":
-    file_path = "src/preprocess/law.txt"  # Thay bằng đường dẫn file của bạn
+    file_path = "src/preprocess/law.txt"  # Replace with your file path
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             text_txt = file.read()
@@ -229,4 +229,4 @@ if __name__ == "__main__":
         with open("test2.json", "w", encoding="utf-8") as file:
             json.dump(result, file, ensure_ascii=False, indent=4)
     except (ValueError, OSError) as e:
-        print(f"Lỗi: {str(e)}")
+        print(f"Error: {str(e)}")
