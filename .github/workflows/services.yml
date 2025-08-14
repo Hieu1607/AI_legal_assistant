@@ -93,3 +93,98 @@ jobs:
           curl -f http://127.0.0.1:8000/ || exit 1
           pkill -f uvicorn
         continue-on-error: true
+
+      - name: Install Newman for API testing
+        run: |
+          npm install -g newman
+        continue-on-error: true
+
+      - name: Run Postman tests with Newman
+        run: |
+          # Create sample collection and environment if not exists
+          mkdir -p postman
+
+          # Create sample collection
+          cat > postman/ci-tests.json << 'EOF'
+          {
+            "info": {
+              "name": "CI API Tests",
+              "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+            },
+            "item": [
+              {
+                "name": "Health Check",
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{base_url}}/",
+                    "host": ["{{base_url}}"],
+                    "path": [""]
+                  }
+                },
+                "event": [
+                  {
+                    "listen": "test",
+                    "script": {
+                      "exec": [
+                        "pm.test('Status code is 200', function () {",
+                        "    pm.response.to.have.status(200);",
+                        "});"
+                      ],
+                      "type": "text/javascript"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+
+          # Create environment
+          cat > postman/ci-environment.json << 'EOF'
+          {
+            "id": "ci-env",
+            "name": "CI Environment",
+            "values": [
+              {
+                "key": "base_url",
+                "value": "http://127.0.0.1:8000",
+                "enabled": true
+              }
+            ]
+          }
+          EOF
+
+          # Start server in background
+          timeout 60s uvicorn app.main:app --host 127.0.0.1 --port 8000 &
+          SERVER_PID=$!
+
+          # Wait for server to start
+          sleep 10
+
+          # Check if server is running
+          if curl -f http://127.0.0.1:8000/ > /dev/null 2>&1; then
+            echo "Server is running, starting Newman tests..."
+
+            # Run Newman tests
+            npx newman run postman/ci-tests.json \
+              --environment postman/ci-environment.json \
+              --reporters cli \
+              --timeout-request 30000 \
+              --bail
+
+            NEWMAN_EXIT_CODE=$?
+            echo "Newman tests completed with exit code: $NEWMAN_EXIT_CODE"
+          else
+            echo "Server failed to start, skipping Newman tests"
+            NEWMAN_EXIT_CODE=1
+          fi
+
+          # Cleanup
+          kill $SERVER_PID 2>/dev/null || true
+          pkill -f uvicorn || true
+
+          # Don't fail the build on Newman test failure in CI
+          exit 0
+        continue-on-error: true

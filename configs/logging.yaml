@@ -46,12 +46,12 @@ loggers:
   app:
     level: INFO
     handlers: [console, info_file_handler, error_file_handler]
-    propagate: False  # Không propagate để tránh duplicate logs
+    propagate: False 
 
   # retrieve:
   #   level: INFO
   #   handlers: [console, info_file_handler, error_file_handler]
-  #   propagate: False  # Không propagate để tránh duplicate logs
+  #   propagate: False
 
 root:
   level: INFO
