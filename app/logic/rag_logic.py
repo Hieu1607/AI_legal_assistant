@@ -84,8 +84,8 @@ async def ask_LLM(relevant_sentences: list, question: str):
     """
 
     end_propting_time = time.perf_counter()
+    global prompt_time
     prompt_time = end_propting_time - start_prompting_time
-
     try:
         model = genai.GenerativeModel(model_name="gemini-2.5-pro")  # type: ignore
 

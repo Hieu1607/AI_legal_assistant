@@ -2735,3 +2735,12 @@
 2025-07-10 10:22:41,681 - retrieve - INFO - The number of returning chunks is 5
 2025-07-10 10:22:41,686 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
 2025-07-10 10:22:41,686 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-15 15:29:35,518 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-15 15:29:35,695 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-15 15:29:35,695 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-15 15:29:35,733 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-15 15:33:46,918 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-08-15 15:33:46,918 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
+2025-08-15 15:33:46,923 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-15 15:33:46,923 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-15 15:34:02,165 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
