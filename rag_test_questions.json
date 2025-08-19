@@ -1,0 +1,502 @@
+[
+  {
+    "id": 1,
+    "question": "Bài hát nào quy định trong bộ luật hình sự?",
+    "case_type": "bad"
+  },
+  {
+    "id": 2,
+    "question": "Quy định pháp luật về lao động là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 3,
+    "question": "Quy trình đăng ký nhãn hiệu độc quyền như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 4,
+    "question": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?",
+    "case_type": "good"
+  },
+  {
+    "id": 5,
+    "question": "Quy định pháp luật về trách nhiệm bồi thường là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 6,
+    "question": "Nếu bị mất giấy chứng minh nhân dân thì phải làm lại như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 7,
+    "question": "Quy định pháp luật về sở hữu trí tuệ là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 8,
+    "question": "Luật nào cho tôi trúng số mỗi ngày?",
+    "case_type": "bad"
+  },
+  {
+    "id": 9,
+    "question": "Quy định pháp luật về đất đai là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 10,
+    "question": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?",
+    "case_type": "good"
+  },
+  {
+    "id": 11,
+    "question": "Tại sao trời lại mưa khi tôi đi làm?",
+    "case_type": "bad"
+  },
+  {
+    "id": 12,
+    "question": "Quy định pháp luật về bảo hiểm là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 13,
+    "question": "Quy định pháp luật về thuế là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 14,
+    "question": "Điều kiện để được hưởng bảo hiểm thất nghiệp là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 15,
+    "question": "Điều kiện để được hưởng bảo hiểm thất nghiệp là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 16,
+    "question": "Tôi muốn ly hôn với người chưa cưới được không?",
+    "case_type": "bad"
+  },
+  {
+    "id": 17,
+    "question": "Quy định về độ tuổi lao động tối thiểu ở Việt Nam là bao nhiêu?",
+    "case_type": "good"
+  },
+  {
+    "id": 18,
+    "question": "Có điều luật nào bắt buộc ăn sáng không?",
+    "case_type": "bad"
+  },
+  {
+    "id": 19,
+    "question": "Nếu bị mất giấy chứng minh nhân dân thì phải làm lại như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 20,
+    "question": "Người nước ngoài có thể mua nhà tại Việt Nam không?",
+    "case_type": "good"
+  },
+  {
+    "id": 21,
+    "question": "Quy định pháp luật về lao động là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 22,
+    "question": "Quy định pháp luật về tố tụng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 23,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 24,
+    "question": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?",
+    "case_type": "good"
+  },
+  {
+    "id": 25,
+    "question": "Tại sao trời lại mưa khi tôi đi làm?",
+    "case_type": "bad"
+  },
+  {
+    "id": 26,
+    "question": "Quy định pháp luật về hình sự là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 27,
+    "question": "Nếu công ty nợ lương nhân viên thì xử lý thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 28,
+    "question": "Quy định pháp luật về quốc tịch là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 29,
+    "question": "Thủ tục ly hôn đơn phương cần giấy tờ gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 30,
+    "question": "Quy định pháp luật về thuế là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 31,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 32,
+    "question": "Quy định pháp luật về hành chính là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 33,
+    "question": "Nếu bị mất giấy chứng minh nhân dân thì phải làm lại như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 34,
+    "question": "Quy định pháp luật về trách nhiệm bồi thường là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 35,
+    "question": "Quy định pháp luật về hợp đồng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 36,
+    "question": "Nếu bị mất giấy chứng minh nhân dân thì phải làm lại như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 37,
+    "question": "Thủ tục ly hôn đơn phương cần giấy tờ gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 38,
+    "question": "Quy định pháp luật về thuế là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 39,
+    "question": "Bài hát nào quy định trong bộ luật hình sự?",
+    "case_type": "bad"
+  },
+  {
+    "id": 40,
+    "question": "abc xyz 123???",
+    "case_type": "bad"
+  },
+  {
+    "id": 41,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 42,
+    "question": "Quy định pháp luật về hình sự là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 43,
+    "question": "Khi nào thì hợp đồng mua bán vô hiệu?",
+    "case_type": "good"
+  },
+  {
+    "id": 44,
+    "question": "Có điều luật nào bắt buộc ăn sáng không?",
+    "case_type": "bad"
+  },
+  {
+    "id": 45,
+    "question": "Quy định pháp luật về đất đai là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 46,
+    "question": "Tại sao trời lại mưa khi tôi đi làm?",
+    "case_type": "bad"
+  },
+  {
+    "id": 47,
+    "question": "Quy định pháp luật về hợp đồng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 48,
+    "question": "Bài hát nào quy định trong bộ luật hình sự?",
+    "case_type": "bad"
+  },
+  {
+    "id": 49,
+    "question": "Làm thế nào để biến mất khỏi pháp luật?",
+    "case_type": "bad"
+  },
+  {
+    "id": 50,
+    "question": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?",
+    "case_type": "good"
+  },
+  {
+    "id": 51,
+    "question": "Tôi muốn ly hôn với người chưa cưới được không?",
+    "case_type": "bad"
+  },
+  {
+    "id": 52,
+    "question": "Làm sao để hack ngân hàng mà không phạm tội?",
+    "case_type": "bad"
+  },
+  {
+    "id": 53,
+    "question": "Thủ tục ly hôn đơn phương cần giấy tờ gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 54,
+    "question": "Quy định pháp luật về thừa kế là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 55,
+    "question": "Quy định pháp luật về thuế là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 56,
+    "question": "Khi gây tai nạn giao thông thì trách nhiệm bồi thường được tính ra sao?",
+    "case_type": "good"
+  },
+  {
+    "id": 57,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 58,
+    "question": "Quy định pháp luật về hợp đồng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 59,
+    "question": "Quy định pháp luật về sở hữu trí tuệ là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 60,
+    "question": "Người nước ngoài có thể mua nhà tại Việt Nam không?",
+    "case_type": "good"
+  },
+  {
+    "id": 61,
+    "question": "Bài hát nào quy định trong bộ luật hình sự?",
+    "case_type": "bad"
+  },
+  {
+    "id": 62,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 63,
+    "question": "Quy định pháp luật về quốc tịch là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 64,
+    "question": "Tôi muốn ly hôn với người chưa cưới được không?",
+    "case_type": "bad"
+  },
+  {
+    "id": 65,
+    "question": "Quy định pháp luật về môi trường là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 66,
+    "question": "Tôi có thể kiện người ngoài hành tinh không?",
+    "case_type": "bad"
+  },
+  {
+    "id": 67,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 68,
+    "question": "Khi nào thì hợp đồng mua bán vô hiệu?",
+    "case_type": "good"
+  },
+  {
+    "id": 69,
+    "question": "Quy định pháp luật về hành chính là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 70,
+    "question": "Khi gây tai nạn giao thông thì trách nhiệm bồi thường được tính ra sao?",
+    "case_type": "good"
+  },
+  {
+    "id": 71,
+    "question": "Quy định pháp luật về tố tụng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 72,
+    "question": "Quy trình đăng ký nhãn hiệu độc quyền như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 73,
+    "question": "Quy định về độ tuổi lao động tối thiểu ở Việt Nam là bao nhiêu?",
+    "case_type": "good"
+  },
+  {
+    "id": 74,
+    "question": "Quy định pháp luật về giao thông là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 75,
+    "question": "Quy định pháp luật về quốc tịch là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 76,
+    "question": "Quy định về độ tuổi lao động tối thiểu ở Việt Nam là bao nhiêu?",
+    "case_type": "good"
+  },
+  {
+    "id": 77,
+    "question": "Luật nào cho tôi trúng số mỗi ngày?",
+    "case_type": "bad"
+  },
+  {
+    "id": 78,
+    "question": "Quy trình đăng ký nhãn hiệu độc quyền như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 79,
+    "question": "Quy định pháp luật về kinh doanh là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 80,
+    "question": "Quy định pháp luật về ngân hàng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 81,
+    "question": "Quy định pháp luật về kinh doanh là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 82,
+    "question": "abc xyz 123???",
+    "case_type": "bad"
+  },
+  {
+    "id": 83,
+    "question": "Tôi muốn hỏi về Pokemon trong luật Việt Nam",
+    "case_type": "bad"
+  },
+  {
+    "id": 84,
+    "question": "Quy định pháp luật về lao động là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 85,
+    "question": "Điều kiện để được hưởng bảo hiểm thất nghiệp là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 86,
+    "question": "Quy trình đăng ký nhãn hiệu độc quyền như thế nào?",
+    "case_type": "good"
+  },
+  {
+    "id": 87,
+    "question": "Quy định pháp luật về đất đai là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 88,
+    "question": "Điều kiện để được hưởng bảo hiểm thất nghiệp là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 89,
+    "question": "Quy định pháp luật về hợp đồng là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 90,
+    "question": "abc xyz 123???",
+    "case_type": "bad"
+  },
+  {
+    "id": 91,
+    "question": "Tại sao trời lại mưa khi tôi đi làm?",
+    "case_type": "bad"
+  },
+  {
+    "id": 92,
+    "question": "Khi gây tai nạn giao thông thì trách nhiệm bồi thường được tính ra sao?",
+    "case_type": "good"
+  },
+  {
+    "id": 93,
+    "question": "Thời hiệu khởi kiện tranh chấp đất đai là bao lâu?",
+    "case_type": "good"
+  },
+  {
+    "id": 94,
+    "question": "Khi gây tai nạn giao thông thì trách nhiệm bồi thường được tính ra sao?",
+    "case_type": "good"
+  },
+  {
+    "id": 95,
+    "question": "Quy định pháp luật về quyền con người là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 96,
+    "question": "Tại sao trời lại mưa khi tôi đi làm?",
+    "case_type": "bad"
+  },
+  {
+    "id": 97,
+    "question": "Quy định pháp luật về đất đai là gì?",
+    "case_type": "good"
+  },
+  {
+    "id": 98,
+    "question": "  ",
+    "case_type": "bad"
+  },
+  {
+    "id": 99,
+    "question": "Quy định về độ tuổi lao động tối thiểu ở Việt Nam là bao nhiêu?",
+    "case_type": "good"
+  },
+  {
+    "id": 100,
+    "question": "Quy trình đăng ký nhãn hiệu độc quyền như thế nào?",
+    "case_type": "good"
+  }
+]
