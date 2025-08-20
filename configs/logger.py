@@ -5,7 +5,8 @@ Simple centralized logging configuration for the AI Legal Assistant project.
 
 import logging
 import logging.config
-import os
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
 
 import yaml
 
@@ -18,7 +19,7 @@ class LoggerManager:
 
     def get_project_root(self):
         """Get the project root directory."""
-        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        return Path(__file__).parent.parent
 
     def _update_handler_paths(self, config, project_root):
         """Update file handler paths to use absolute paths."""
@@ -27,10 +28,8 @@ class LoggerManager:
                 if "filename" in handler_config:
                     # Convert relative path to absolute path from project root
                     filename = handler_config["filename"]
-                    if not os.path.isabs(filename):
-                        handler_config["filename"] = os.path.join(
-                            project_root, filename
-                        )
+                    if not Path(filename).is_absolute():
+                        handler_config["filename"] = str(project_root / filename)
 
     def setup_logging(self, force_setup=False):
         """
@@ -47,13 +46,13 @@ class LoggerManager:
 
         try:
             project_root = self.get_project_root()
-            config_path = os.path.join(project_root, "configs", "logging.yaml")
-            logs_dir = os.path.join(project_root, "logs")
+            config_path = project_root / "configs" / "logging.yaml"
+            logs_dir = project_root / "logs"
 
             # Create logs directory if it doesn't exist
-            os.makedirs(logs_dir, exist_ok=True)
+            logs_dir.mkdir(exist_ok=True)
 
-            if os.path.exists(config_path):
+            if config_path.exists():
                 with open(config_path, "r", encoding="utf-8") as f:
                     config = yaml.safe_load(f)
 
@@ -85,6 +84,11 @@ class LoggerManager:
 _logger_manager = LoggerManager()
 
 
+def get_project_root():
+    """Get the project root directory."""
+    return _logger_manager.get_project_root()
+
+
 def setup_logging(force_setup=False):
     """
     Setup logging configuration from YAML file.
@@ -103,6 +107,137 @@ def get_logger(name):
     return logging.getLogger(name)
 
 
+_APP_LOG_HANDLER = None
+_APP_LOG_PATH = None
+
+
+_AGENT_LOG_HANDLER = None
+_AGENT_LOG_PATH = None
+
+
+def get_logger_app(name="app"):
+    """
+    Get a logger specifically configured to write to app.log.
+
+    This function creates a logger with the given name and adds a
+    RotatingFileHandler that writes to logs/app.log. It ensures that
+    only one handler is added to prevent duplicate logs.
+
+    Args:
+        name: The name of the logger. Defaults to "app".
+
+    Returns:
+        logging.Logger: A configured logger that writes to app.log
+    """
+    setup_logging()
+
+    # pylint: disable=global-statement
+    global _APP_LOG_HANDLER, _APP_LOG_PATH
+
+    if _APP_LOG_HANDLER is None:
+        logs_dir = get_project_root() / "logs"
+        logs_dir.mkdir(exist_ok=True)
+
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+
+        app_log_path = str(logs_dir / "app.log")
+        handler = RotatingFileHandler(
+            filename=app_log_path,
+            maxBytes=10485760,  # 10MB
+            backupCount=5,
+            encoding="utf8",
+        )
+
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(formatter)
+
+        _APP_LOG_HANDLER = handler
+        _APP_LOG_PATH = app_log_path
+
+    # Get the logger with the specified name
+    logger = logging.getLogger(name)
+
+    logger.propagate = False
+
+    if not logger.level:
+        logger.setLevel(logging.INFO)
+
+    app_handler_exists = any(
+        isinstance(handler, logging.FileHandler)
+        and getattr(handler, "baseFilename", "") == _APP_LOG_PATH
+        for handler in logger.handlers
+    )
+
+    if not app_handler_exists:
+        logger.addHandler(_APP_LOG_HANDLER)
+
+    return logger
+
+
+def get_logger_agent(name="agent"):
+    """
+    Get a logger specifically configured to write to agent.log.
+
+    This function creates a logger with the given name and adds a
+    RotatingFileHandler that writes to logs/agent.log. It ensures that
+    only one handler is added to prevent duplicate logs.
+
+    Args:
+        name: The name of the logger. Defaults to "agent".
+
+    Returns:
+        logging.Logger: A configured logger that writes to agent.log
+    """
+
+    setup_logging()
+
+    # pylint: disable=global-statement
+    global _AGENT_LOG_HANDLER, _AGENT_LOG_PATH
+
+    if _AGENT_LOG_HANDLER is None:
+        logs_dir = get_project_root() / "logs"
+        logs_dir.mkdir(exist_ok=True)
+
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
+
+        agent_log_path = str(logs_dir / "agent.log")
+        handler = RotatingFileHandler(
+            filename=agent_log_path,
+            maxBytes=10485760,  # 10MB
+            backupCount=5,
+            encoding="utf8",
+        )
+
+        handler.setLevel(logging.INFO)
+        handler.setFormatter(formatter)
+
+        _AGENT_LOG_HANDLER = handler
+        _AGENT_LOG_PATH = agent_log_path
+
+    # Get the logger with the specified name
+    logger = logging.getLogger(name)
+
+    logger.propagate = False
+
+    if not logger.level:
+        logger.setLevel(logging.INFO)
+
+    agent_handler_exists = any(
+        isinstance(handler, logging.FileHandler)
+        and getattr(handler, "baseFilename", "") == _AGENT_LOG_PATH
+        for handler in logger.handlers
+    )
+
+    if not agent_handler_exists:
+        logger.addHandler(_AGENT_LOG_HANDLER)
+
+    return logger
+
+
 def reset_logging():
     """Reset the setup flag for testing purposes."""
     return _logger_manager.reset_logging()
@@ -111,5 +246,19 @@ def reset_logging():
 # Simple test
 if __name__ == "__main__":
     setup_logging()
-    logger = get_logger(__name__)
-    logger.info("Logger module working correctly")
+
+    # Regular logger (writes to info.log)
+    current_logger = get_logger(__name__)
+    current_logger.info("Logger module working correctly")
+
+    # App logger (writes to app.log)
+    app_logger = get_logger_app()
+    app_logger.info("App logger working correctly - check logs/app.log")
+
+    # Agent logger (writes to agent.log)
+    agent_logger = get_logger_agent()
+    agent_logger.info("Agent logger working correctly - check logs/agent.log")
+
+    # Agent logger (writes to agent.log)
+    agent_logger = get_logger_agent()
+    agent_logger.info("Agent logger working correctly - check logs/agent.log")

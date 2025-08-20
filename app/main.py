@@ -83,7 +83,7 @@ def health_check():
                 "error": f"Gemini API error: {str(e)}",
             },
         )
-    except Exception as e:
+    except (ValueError, OSError, KeyError) as e:
         return JSONResponse(
             status_code=500,
             content={
