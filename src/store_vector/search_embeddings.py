@@ -98,25 +98,7 @@ def load_model():
             
     except Exception as e:
         logger.error(f"Failed to load/download model: {e}")
-        logger.info("Attempting to use fallback model...")
-        
-        try:
-            # Try a smaller fallback model
-            fallback_dir = os.path.join(root, "models", "all-MiniLM-L6-v2")
-            if os.path.exists(fallback_dir):
-                model = SentenceTransformer(fallback_dir)
-                logger.info("Using locally saved fallback model: all-MiniLM-L6-v2")
-            else:
-                temp_model = SentenceTransformer("all-MiniLM-L6-v2")
-                os.makedirs(fallback_dir, exist_ok=True)
-                temp_model.save(fallback_dir)
-                model = SentenceTransformer(fallback_dir)
-                logger.info("Downloaded and using fallback model: all-MiniLM-L6-v2")
-            return model
-        except Exception as e2:
-            logger.error(f"All model loading attempts failed: {e2}")
-            model = None
-            return None
+        return None
 
 
 def search_relevant_embeddings(text, n_results):
