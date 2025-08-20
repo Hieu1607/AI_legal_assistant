@@ -3,28 +3,69 @@ channels:
   - pytorch
   - conda-forge
   - defaults
-  - https://repo.anaconda.com/pkgs/main
-  - https://repo.anaconda.com/pkgs/r
-  - https://repo.anaconda.com/pkgs/msys2
-
 dependencies:
-  - python=3.12
-  - pip
+  # Core Python runtime
+  - python=3.12.11
+  - pip=25.1.1
+  - setuptools=80.9.0
+  - wheel=0.45.1
+
+  # Web framework và server
+  - fastapi=0.115.9
+  - uvicorn=0.35.0
+  - starlette=0.45.3
+
+  # HTTP và networking
+  - aiohttp=3.12.12
   - requests=2.32.4
+  - httpx=0.28.1
+  - urllib3=2.4.0
+
+  # Machine Learning và AI
+  - sentence-transformers=5.0.0
+  - transformers=4.52.4
+  - pytorch=2.6.0
+  - numpy=2.3.0
+  - scikit-learn=1.7.0
+  - huggingface_hub=0.33.0
+  - tokenizers=0.21.1
+  - tiktoken=0.9.0
+
+  # Data processing
+  - pandas=2.3.0
   - beautifulsoup4=4.13.4
   - lxml=5.4.0
-  - sentence-transformers=4.1.0
-  - pytorch=2.5.1
-  - transformers=4.52.4
-  - fastapi=0.115.12
-  - uvicorn=0.34.3
+
+  # Vector database
+  - chromadb=1.0.15
+
+  # Configuration và environment
   - python-dotenv=1.1.0
-  - aiohttp=3.12.12
-  - pandas=2.3.0
-  - numpy=2.3.0
+  - pyyaml=6.0.2
+
+  # File handling
+  - python-multipart=0.0.20
+
+  # Validation
+  - pydantic=2.11.7
+  - email-validator=2.2.0
+
+  # Logging
+  - coloredlogs=15.0.1
+
+  # Essential system libraries
+  - openssl=3.5.0
+  - ca-certificates=2025.6.15
+  - certifi=2025.7.14
+  - cryptography=44.0.1
+
+  # Development tools and testing
   - black=25.1.0
-  - isort=6.0.1
-  - pylint=3.3.7
+  - pytest=8.4.1
+  - pytest-asyncio=0.25.3
+  - pytest-cov=6.0.0
 
   - pip:
+      # Google AI services
       - google-generativeai==0.8.5
+      - google-auth==2.40.3

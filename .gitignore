@@ -4,7 +4,7 @@ environment.yml
 .pytest_cache
 .env
 embedded_chunks_with_local_model.py
-data/processed/embedded_chunks_with_local_model.json
+data/processed/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -82,3 +82,6 @@ dist/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+models/
+logs/
