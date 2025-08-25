@@ -19,6 +19,7 @@ project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
 from app.routers import rag, retrieve
 from configs.logger import get_logger, setup_logging
+from src.store_vector.init_index import init_chroma_index
 
 setup_logging()
 logger = get_logger(__name__)
@@ -43,11 +44,20 @@ def root():
 @app.get("/health")
 def health_check():
     try:
+        # Check HuggingFace model availability
         hf_hub_download(
             repo_id="BAAI/bge-m3", filename="config.json", local_files_only=True
-        )  # Check model health
+        )
+
+        # Check ChromaDB collection
+        _, legal_collection = init_chroma_index()
+        collection_count = legal_collection.count()
+        results = legal_collection.peek(limit=5)
+
+        # Check Gemini API
         model = genai.GenerativeModel("gemini-2.5-pro")  # type: ignore
         model.generate_content("Hello")
+
         return JSONResponse(
             status_code=200,
             content={
@@ -57,6 +67,16 @@ def health_check():
                     "bge_m3_model": {
                         "status": "healthy",
                         "message": "Model files available locally",
+                    },
+                    "chroma_db": {
+                        "status": "healthy",
+                        "message": f"Collection accessible with {collection_count} documents",
+                        "collection_info": {
+                            "document_count": collection_count,
+                            "sample_documents": (
+                                len(results.get("ids", [])) if results else 0
+                            ),
+                        },
                     },
                     "gemini_api": {
                         "status": "healthy",
@@ -83,13 +103,20 @@ def health_check():
                 "error": f"Gemini API error: {str(e)}",
             },
         )
-    except (ValueError, OSError, KeyError) as e:
+    except Exception as e:  # pylint: disable=broad-except
+        # This will catch ChromaDB errors and other unexpected errors
+        error_message = str(e)
+        if "chroma" in error_message.lower():
+            error_type = "ChromaDB error"
+        else:
+            error_type = "Unexpected error"
+
         return JSONResponse(
             status_code=500,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",
-                "error": f"Unexpected error: {str(e)}",
+                "error": f"{error_type}: {error_message}",
             },
         )
 
