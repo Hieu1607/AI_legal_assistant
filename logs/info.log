@@ -9476,3 +9476,54 @@ See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-3243
 2025-08-20 10:22:57,367 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
 2025-08-20 10:22:57,368 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
 2025-08-20 10:22:57,368 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
+2025-08-25 10:52:16,255 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 10:52:16,556 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 10:52:16,556 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 10:52:16,599 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 10:54:01,003 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 10:54:01,003 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 10:54:01,071 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 10:54:58,365 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-08-25 10:54:58,369 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
+2025-08-25 10:54:58,371 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 10:54:58,372 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 10:54:58,372 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 10:54:58,407 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 10:54:58,407 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 10:55:16,630 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 10:55:33,635 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 10:55:33,689 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 10:55:33,689 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 10:55:35,710 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 10:55:37,121 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
+2025-08-25 10:56:25,141 - app.logic.rag_logic - INFO - The question is Luật lao động cho trẻ vị thành niên?
+2025-08-25 10:56:38,867 - app.logic.rag_logic - INFO - retrieving_time = 0.2984, prompting_time = 0.0007, llm_time = 13.4300, total_time = 13.7291 
+2025-08-25 10:56:38,867 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-25 11:36:22,665 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 11:36:22,818 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:36:22,818 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:36:22,847 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 11:37:20,420 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 11:37:20,764 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 11:37:20,841 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:37:20,841 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:37:20,870 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 11:38:20,104 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 11:38:20,413 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 11:38:20,506 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:38:20,506 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:38:20,530 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 11:38:34,776 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:38:34,776 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:38:34,808 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 11:40:21,790 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:40:21,790 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:40:21,811 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 11:46:21,109 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 11:46:21,507 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 11:46:21,586 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:46:21,586 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:46:21,608 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 11:46:30,645 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 11:46:30,645 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 11:46:30,676 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
