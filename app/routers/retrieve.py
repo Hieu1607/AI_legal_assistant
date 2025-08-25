@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
 
+from app.constants.http_status import HTTP_STATUS_INTERNAL_SERVER_ERROR, HTTP_STATUS_OK
 from app.logic.retrieve_logic import retrieve_embeddings_logic
 from app.models.base_model import QueryRequest
 from configs.logger import get_logger, setup_logging
@@ -37,7 +38,7 @@ def retrieve_embeddings(request: QueryRequest):
         result = retrieve_embeddings_logic(request.question, request.top_k)
 
         if not result:
-            return JSONResponse(status_code=200, content=[])
+            return JSONResponse(status_code=HTTP_STATUS_OK, content=[])
 
         return result
 
@@ -46,7 +47,7 @@ def retrieve_embeddings(request: QueryRequest):
             "An error occurred during embedding retrieval: %s", e, exc_info=True
         )
         return JSONResponse(
-            status_code=500,
+            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
             content={
                 "error": {
                     "type": "internal_error",

@@ -1,5 +1,14 @@
 """
-Router/Controller for RAG (Retrieval-Augmented Generation) endpoints
+Router/Controller for RAG (Retrieval-Augmented G        return JSONResponse(
+            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
+            content={
+                "status": "error",
+                "error": {
+                    "type": "internal_error",
+                    "message": "An error occurred while processing your question",
+                },
+            },
+        ) endpoints
 """
 
 import os
@@ -12,6 +21,7 @@ from fastapi.responses import JSONResponse
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
 
+from app.constants.http_status import HTTP_STATUS_OK
 from app.logic.rag_logic import process_rag_query
 from app.models.base_model import QueryQuestion
 from configs.logger import get_logger, setup_logging
@@ -37,7 +47,7 @@ async def ask_model(request: QueryQuestion):
         result = await process_rag_query(request.question)
 
         return JSONResponse(
-            status_code=200,
+            status_code=HTTP_STATUS_OK,
             content={
                 "status": "success",
                 "data": {

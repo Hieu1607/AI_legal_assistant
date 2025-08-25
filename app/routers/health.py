@@ -19,16 +19,7 @@ genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
-from configs.logger import get_logger, setup_logging
-
-setup_logging()
-logger = get_logger(__name__)
-
-
-# Set up logging
-root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, str(root))
-
+from app.constants.http_status import HTTP_STATUS_INTERNAL_SERVER_ERROR, HTTP_STATUS_OK
 from app.logic.health_logic import health_check
 from configs.logger import get_logger, setup_logging
 
@@ -43,7 +34,7 @@ def process_health_check():
     try:
         health_check()
         return JSONResponse(
-            status_code=200,
+            status_code=HTTP_STATUS_OK,
             content={
                 "service": "AI Legal Assistant",
                 "status": "healthy",
@@ -63,7 +54,7 @@ def process_health_check():
 
     except HfHubHTTPError as e:
         return JSONResponse(
-            status_code=500,
+            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",
@@ -72,7 +63,7 @@ def process_health_check():
         )
     except GoogleAPICallError as e:
         return JSONResponse(
-            status_code=500,
+            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",
@@ -88,7 +79,7 @@ def process_health_check():
             error_type = "Unexpected error"
 
         return JSONResponse(
-            status_code=500,
+            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",

@@ -48,6 +48,11 @@ loggers:
     handlers: [console, info_file_handler, error_file_handler]
     propagate: False 
 
+  services:
+    level: INFO
+    handlers: [console, info_file_handler, error_file_handler]
+    propagate: False 
+
   # retrieve:
   #   level: INFO
   #   handlers: [console, info_file_handler, error_file_handler]

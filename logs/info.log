@@ -9527,3 +9527,146 @@ See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-3243
 2025-08-25 11:46:30,645 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
 2025-08-25 11:46:30,645 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
 2025-08-25 11:46:30,676 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:41:02,917 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 13:41:04,367 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 13:41:04,513 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 13:41:04,513 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 13:41:04,548 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:50:52,665 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 13:50:53,092 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 13:50:53,233 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 13:50:53,233 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 13:50:53,262 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:51:11,568 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 13:51:12,504 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 13:51:12,600 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 13:51:12,600 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 13:51:12,621 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:55:29,010 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 13:55:30,120 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 13:55:30,250 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 13:55:30,250 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 13:55:30,289 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:55:47,860 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 13:55:48,734 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 13:55:48,820 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 13:55:48,820 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 13:55:48,840 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:59:30,241 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 13:59:32,580 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 13:59:32,580 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 13:59:32,607 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 13:59:32,625 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 13:59:32,625 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 13:59:32,626 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 13:59:32,629 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 13:59:32,630 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 13:59:42,164 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 13:59:54,413 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 13:59:54,465 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 13:59:54,465 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 13:59:55,833 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:02:35,012 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:02:37,923 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:02:37,923 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:02:37,958 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:02:37,986 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 14:02:37,986 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:02:37,988 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 14:02:37,993 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:02:37,993 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 14:02:50,746 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:03:00,917 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:03:00,976 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:03:00,976 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:03:02,428 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:04:11,226 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:04:13,530 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:04:13,530 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:04:13,556 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:04:13,576 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 14:04:13,576 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:04:13,576 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 14:04:13,580 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:04:13,581 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 14:04:25,452 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:04:34,338 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:04:34,370 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:04:34,370 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:04:35,806 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:07:27,838 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:07:30,472 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:07:30,472 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:07:30,498 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:07:30,519 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 14:07:30,519 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:07:30,519 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 14:07:30,523 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:07:30,523 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 14:07:42,104 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:07:55,216 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:07:55,299 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:07:55,300 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:07:57,402 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:15:24,295 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:15:25,546 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:15:25,546 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:15:25,576 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:15:25,585 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 14:15:25,585 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:15:25,585 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 14:15:25,589 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:15:25,589 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 14:15:35,771 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:15:44,976 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:15:45,005 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:15:45,005 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:15:46,196 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:22:06,645 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:22:07,951 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:22:07,951 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:22:07,986 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:22:32,436 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:22:34,800 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:22:34,800 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:22:34,829 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:22:44,577 - test_tools - INFO - answer='Lỗi hệ thống, vui lòng thử lại sau.'
+2025-08-25 14:34:29,395 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:34:31,480 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:34:31,480 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:34:31,507 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:38:19,849 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:38:20,968 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 14:38:21,109 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:38:21,109 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:38:21,137 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:39:06,059 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 14:39:06,059 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:39:06,059 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 14:39:06,068 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:39:06,069 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 14:39:16,631 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:39:26,099 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:39:26,149 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:39:26,149 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:39:27,439 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:55:16,738 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:55:17,852 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-25 14:55:17,998 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:55:17,998 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:55:18,025 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:55:24,729 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-25 14:55:24,729 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:55:24,729 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-25 14:55:24,745 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:55:24,745 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-25 14:55:37,341 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:55:48,580 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:55:48,619 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-25 14:55:48,619 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-25 14:55:49,781 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-25 14:57:27,428 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-25 14:57:29,805 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-25 14:57:29,807 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-25 14:57:29,826 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-25 14:57:45,198 - test_tools - INFO - answer='Lỗi hệ thống, vui lòng thử lại sau.'
