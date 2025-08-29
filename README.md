@@ -1,376 +1,318 @@
 # AI Legal Assistant
 
-A comprehensive AI-powered legal document processing and retrieval system that combines vector search with Large Language Models (LLM) to provide intelligent legal assistance through Retrieval-Augmented Generation (RAG).
+A comprehensive AI-powered legal document processing and retrieval system that combines vector search with Large Language Models (LLM) to provide intelligent legal assistance through Retrieval-Augmented Generation (RAG) and multi-step AI Agent orchestration.
 
 ## 🏗️ Project Structure
 
 ```
 AI_legal_assistant/
-├── app/                    # FastAPI application with Model-Controller architecture
-│   ├── main.py            # FastAPI entry point
-│   ├── routers/           # Controllers (API endpoints)
-│   │   ├── retrieve.py    # Retrieval endpoint controller
-│   │   └── rag.py         # RAG endpoint controller
-│   ├── logic/             # Business logic layer
-│   │   ├── retrieve_logic.py  # Embedding retrieval logic
-│   │   └── rag_logic.py       # RAG processing logic
-│   └── models/            # Data models
-│       └── base_model.py  # Pydantic request/response models
-├── configs/               # Configuration files and logging setup
-├── data/                  # Data storage and processing
-│   ├── processed/         # Processed data including chunks and embeddings
-│   │   ├── chunks/        # Text chunks from legal documents
-│   │   ├── rules/         # Categorized legal rules
-│   │   └── vector_store/  # Vector index storage
-│   └── raw/               # Raw scraped data
-├── demo/                  # Demonstration scripts and notebooks
-├── docs/                  # Documentation files
-│   └── prompt_template.md # RAG prompt templates
-├── scripts/               # Data processing and utility scripts
-├── src/                   # Main source code
-│   ├── embedding/         # Text embedding modules
-│   ├── extract_data/      # Data extraction utilities
-│   ├── preprocess/        # Text preprocessing and chunking
-│   ├── retrieval/         # Web scraping and data fetching
-│   └── store_vector/      # Vector storage and search
-└── tests/                 # Unit tests
-    └── test_rag.py        # RAG module integration tests
+├── app/              # FastAPI applications
+│   ├── retrieve.py   # Document retrieval service
+│   ├── rag.py        # RAG service combining retrieval + LLM
+│   ├── agent.py      # Multi-step AI Agent orchestrator
+│   └── main.py       # Main application router
+├── services/         # Core business logic
+│   └── tools.py      # Agent tools and functions
+├── configs/          # Configuration and logging
+├── data/             # Data storage
+│   ├── raw/          # Raw scraped documents
+│   └── processed/    # Processed data and vector store
+├── docs/             # Documentation
+│   └── integration_test_plan.md  # Integration test specifications
+├── postman/          # Postman collections for API testing
+│   ├── LegalQA_Integration.postman_collection.json  # Main test collection
+│   └── dev_environment.json                         # Development environment variables
+├── src/              # Core modules
+│   ├── embedding/    # Text embedding processing
+│   ├── preprocess/   # Text chunking and preprocessing
+│   └── store_vector/ # Vector storage and search
+├── tests/            # Test suites
+├── logs/             # Application logs
+├── run_newman.sh     # Newman test execution script
+├── run_scripts.py    # Script runner utility
+├── pyproject.toml    # Python project configuration
+├── Dockerfile        # Docker containerization
+└── requirements.txt  # Python dependencies
 ```
 
-## 🔧 Features
+## 🚀 Quick Start
 
-### 🤖 Week 6: RAG Module - Retrieve + LLM Integration
-- **RAG Pipeline**: Complete Retrieval-Augmented Generation workflow
-- **Prompt Template System**: Structured prompt templates with fallback logic
-- **LLM Integration**: Google Gemini API integration with timeout handling
-- **Performance Monitoring**: Detailed latency tracking and logging
-- **Error Handling**: Comprehensive fallback mechanisms and retry logic
+### Local Development
 
-### Retrieval Service (Week 5)
-- **FastAPI REST API**: High-performance `/retrieve` endpoint for document retrieval
-- **Vector Search Integration**: Seamless connection with ChromaDB vector store
-- **Structured Response**: JSON responses with chunk metadata and similarity scores
-- **Model-Controller Architecture**: Clean separation of concerns
-
-### Data Processing Pipeline
-- **Web Scraping**: Automated scraping of legal documents from Vietnamese legal websites
-- **Text Extraction**: Clean text extraction from HTML documents
-- **Chunking**: Intelligent document segmentation for optimal processing
-- **Validation**: Data quality assurance and validation
-
-### Embedding & Vector Search
-- **Multiple Embedding Options**: Support for both API-based (Google Gemini) and local models
-- **Vector Storage**: ChromaDB integration for efficient similarity search
-- **Incremental Indexing**: Support for adding new documents without rebuilding entire index
-- **Search & Reranking**: Advanced search capabilities with result reranking
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Python 3.10+
-- FastAPI and Uvicorn for the web service
-- ChromaDB for vector storage
-- Required dependencies (see `pyproject.toml`)
-
-### Installation
-
-1. Clone the repository:
+#### Installation
 ```bash
-git clone <repository-url>
-cd AI_legal_assistant
+# Install required dependencies
+pip install fastapi uvicorn pytest pytest-cov
+pip install sentence-transformers transformers torch
+pip install python-dotenv aiohttp pandas numpy pydantic
+pip install google-generativeai chromadb
 ```
 
-2. Install dependencies:
+#### Environment Setup
 ```bash
-pip install -r requirements.txt
-```
-
-3. Set up environment variables:
-```bash
-# Copy and configure your API keys
+# Set up environment variables
 cp .env.example .env
+# Configure your API keys in .env
 ```
 
-### Configuration
-Configure your embedding preferences and API keys in the environment file. The system supports:
-- Google Gemini API for embeddings
-- Local sentence-transformers models
-- ChromaDB for vector storage
-
-## 📊 Usage
-
-### RAG Service (Week 6)
-
-Start the FastAPI server:
+#### Run Services
 ```bash
-uvicorn app.main:app --host localhost --port 8000
+# Development mode with auto-reload
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+
+# Production mode
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-#### API Endpoints
+### Docker Deployment
 
-**POST /rag**
-Complete RAG query processing with retrieval and LLM generation.
+#### Build and Run with Docker
+```bash
+# Build Docker image
+docker build -t ai-legal-assistant .
 
-Request:
-```json
-{
-  "question": "Quy định về hợp đồng lao động là gì?"
-}
+# Run container
+docker run -p 8000:8000 \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/logs:/app/logs \
+  ai-legal-assistant
+
+# Run with environment variables
+docker run -p 8000:8000 \
+  -e GEMINI_API_KEY=your_api_key \
+  -v $(pwd)/data:/app/data \
+  ai-legal-assistant
 ```
 
-Response:
+#### Docker Features
+- **Optimized Build**: Multi-stage build with Python 3.12 slim image
+- **Dependency Caching**: Efficient layer caching for faster rebuilds
+- **Volume Mounting**: External data and logs mounting
+- **Environment Configuration**: Configurable through environment variables
+- **Production Ready**: Includes system dependencies and proper security
+
+## 📡 API Services
+
+### Retrieve Service
+**Endpoint**: `POST /retrieve`
+
+Retrieves relevant legal document chunks based on semantic similarity.
+
+**Request**:
 ```json
 {
-  "status": "success",
-  "data": {
-    "answer": "Theo chương 3 điều 15 bộ luật lao động 2019, hợp đồng lao động là...",
-    "question": "Quy định về hợp đồng lao động là gì?",
-    "context_count": 5
-  }
-}
-```
-
-**Fallback Responses:**
-- Timeout (≥10s): `"Hệ thống đang bận, vui lòng thử lại sau"`
-- No relevant info: `"Không tìm thấy thông tin liên quan đến câu hỏi"`
-- Non-legal questions: `"Chào bạn, tôi đã sẵn sàng trả lời với vai trò là một trợ lý ảo pháp luật..."`
-
-**POST /retrieve**
-Retrieve relevant legal document chunks based on a question.
-
-Request:
-```json
-{
-  "question": "What are the regulations about contracts?",
+  "question": "What are the contract regulations?",
   "top_k": 5
 }
 ```
 
-Response:
+### RAG Service  
+**Endpoint**: `POST /rag`
+
+Combines document retrieval with LLM generation for comprehensive answers.
+
+**Request**:
 ```json
-[
-  {
-    "chunk_id": "contract_law_article_123",
-    "distance": 0.234,
-    "score": 0.87,
-    "content": "Article content about contracts...",
-    "metadatas": {
-      "law_id": "contract_law_2015",
-      "title": "Contract Law 2015"
-    }
-  }
-]
+{
+  "question": "What are the requirements for a valid contract?"
+}
 ```
 
-### Data Processing
-1. **Scrape legal documents**:
+### AI Agent Service
+**Endpoint**: `POST /agent`
+
+Multi-step AI Agent with configurable orchestration.
+
+**Request**:
+```json
+{
+  "question": "What are contract requirements?",
+  "top_k": 5,
+  "total_steps": 3,
+  "timeout_sec": 30
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "status_code": 200,
+  "step_completed": 3,
+  "data": "A valid contract requires mutual consent... [Source: Civil Code 2015, Article 385]",
+  "message": "Successfully formatted answer with citations",
+  "execution_time": 15.2
+}
+```
+
+### Interactive API Documentation
+Access Swagger UI at: `http://127.0.0.1:8000/docs`
+
+## 🧪 Testing Framework (Week 8)
+
+### Integration Testing Strategy
+
+#### Test Plan Coverage
+The system includes comprehensive integration testing covering:
+- ✅ **Happy Path Scenarios**: Normal operation with expected results
+- ✅ **Error Handling**: Timeout, validation, and system errors
+- ✅ **Partial Success**: Step-by-step execution scenarios
+- ✅ **Edge Cases**: Empty results, invalid inputs
+
+#### Test Cases
+1. **Happy Path**: Complete 3-step execution with citations
+2. **LLM Timeout**: Fallback to retrieved chunks
+3. **System Errors**: Internal server error handling
+4. **Empty Results**: No relevant documents found
+5. **Partial Execution**: Single-step operations
+6. **Validation Errors**: Invalid input handling
+7. **Step-specific Timeouts**: Individual step failure scenarios
+
+### Unit Testing
 ```bash
-python scripts/scrape_links_from_url.py
-python scripts/scrape_HTML_from_url.py
-```
+# Run all tests
+python -m pytest tests/ -v
 
-2. **Process and chunk documents**:
-```bash
-python scripts/process_HTML_to_text.py
-python scripts/make_chunks.py
-```
-
-3. **Build embeddings**:
-```bash
-python src/embedding/build_embeddings_with_API.py
-# or
-python src/embedding/build_embeddings_with_local_model.py
-```
-
-4. **Initialize and populate vector store**:
-```bash
-python src/store_vector/init_index.py
-python src/store_vector/index_embeddings.py
-```
-
-### Testing the API
-
-**RAG Endpoint:**
-```bash
-curl -X POST "http://localhost:8000/rag" \
-     -H "Content-Type: application/json" \
-     -d '{"question": "Quy định về hợp đồng lao động là gì?"}'
-```
-
-**Retrieve Endpoint:**
-```bash
-curl -X POST "http://localhost:8000/retrieve" \
-     -H "Content-Type: application/json" \
-     -d '{"question": "contract regulations", "top_k": 3}'
-```
-
-Using Python requests:
-```python
-import requests
-
-# RAG query
-response = requests.post(
-    "http://localhost:8000/rag",
-    json={"question": "Quy định về hợp đồng lao động là gì?"}
-)
-print(response.json())
-
-# Retrieve query
-response = requests.post(
-    "http://localhost:8000/retrieve",
-    json={"question": "What are contract regulations?", "top_k": 5}
-)
-print(response.json())
-```
-
-## 🧪 Testing
-
-Run the test suite:
-```bash
-python -m pytest tests/
-```
-
-Run specific test modules:
-```bash
-# RAG module tests (Week 6)
-python -m pytest tests/test_rag.py -v
-
-# Retrieval tests (Week 5) 
+# Run specific test modules
 python -m pytest tests/test_retrieve.py -v
+python -m pytest tests/test_rag.py -v
+python -m pytest tests/test_agent.py -v
 
-# Other tests
-python -m pytest tests/test_chunker.py -v
-python -m pytest tests/test_cleaner.py -v
+# Run with coverage report
+python -m pytest tests/ --cov=app --cov=services --cov-report=term-missing
 ```
 
-Available tests:
-- `test_rag.py`: RAG module integration tests (≥4 test cases, ≥80% coverage)
-- `test_retrieve.py`: API endpoint testing
-- `test_chunker.py`: Text chunking functionality
-- `test_cleaner.py`: Text cleaning utilities
+### Postman Integration Testing
 
-## 📝 Error Handling
+#### Collection Structure
+- **Health Check**: Server availability testing
+- **Retrieve Tests**: Document retrieval functionality
+- **RAG Tests**: Question answering with citations
+- **Agent Tests**: Multi-step orchestration scenarios
 
-The API handles various error scenarios with proper fallback mechanisms:
+#### Running Postman Tests
+```bash
+# Install Newman for CLI testing
+npm install -g newman
 
-### RAG Module Error Handling
-- **LLM Timeout (≥10s)**: `"Hệ thống đang bận, vui lòng thử lại sau"`
-- **Network Errors**: Automatic retry (2 attempts) with exponential backoff
-- **No Relevant Context**: `"Không tìm thấy thông tin liên quan đến câu hỏi"`
-- **Non-Legal Questions**: Polite redirection to legal topics
-- **500 Internal Error**: Detailed error logging with fallback response
+# Simple test execution using script
+bash run_newman.sh
 
-### General API Error Handling
-- **422 Validation Error**: Invalid request format or missing required fields
-- **500 Internal Server Error**: Vector store errors or processing failures  
-- **200 Empty Results**: Valid request but no matching documents found
+# Manual execution with collection and environment
+npx newman run postman/LegalQA_Integration.postman_collection.json \
+  --environment postman/dev_environment.json \
+  --reporters cli,html --reporter-html-export newman_report.html
+```
 
-All errors include detailed error messages and proper HTTP status codes.
+#### Sample Test Results
+```
+LegalQA_Integration
+→ Check health [200 OK, 145B, 37ms]
+→ Retrieve happy case [200 OK, 3.33kB, 12.2s]
+→ Agent happy case [200 OK, 4.68kB, 30s]
+→ Agent timeout case [200 OK, 282B, 5.2s]
+```
+
+### Automated Testing Scripts
+```bash
+# Simple Newman execution script
+bash run_newman.sh
+
+# PowerShell equivalent (if available)
+./run_newman.ps1
+```
+
+#### Newman Script Content
+```bash
+#!/bin/bash
+COLLECTION="postman/LegalQA_Integration.postman_collection.json"
+ENVIRONMENT="postman/dev_environment.json"
+
+newman run $COLLECTION -e $ENVIRONMENT \
+  -r cli,html --reporter-html-export newman_report.html
+```
+
+## 🔧 Error Handling & Timeouts
+
+### Service-Level Error Handling
+- **Request Timeout**: 60 seconds maximum per request
+- **Retry Logic**: Automatic retry (2 attempts) for network errors
+- **Graceful Degradation**: Partial results on step failures
+
+### Agent-Specific Error Responses
+- **Timeout (408)**: Step-level timeout with partial results
+- **Bad Request (400)**: No relevant chunks retrieved
+- **Internal Error (500)**: System-level failures
+- **Validation Error (422)**: Invalid input parameters
 
 ## 📊 Performance Monitoring
 
-### RAG Pipeline Latency Tracking
-The system provides detailed performance monitoring:
+### Execution Metrics
+- **Step Duration**: Individual tool execution times
+- **Total Execution Time**: Complete workflow duration
+- **Success Rates**: Step-by-step completion statistics
+- **Error Patterns**: Failure mode analysis
 
+### Logging Structure
 ```
-INFO:retrieve_time=0.03,prompt_time=0.01,llm_time=1.2,total=1.24
-```
-
-**Performance Metrics:**
-- **Retrieve Time**: Vector search latency
-- **Prompt Time**: Template construction time  
-- **LLM Time**: Language model response time
-- **Total Time**: End-to-end request processing
-- **Target SLA**: < 2 seconds total response time
-
-### Logging
-Comprehensive logging across all modules:
-- `logs/app.log`: General application logs
-- `logs/rag.log`: RAG-specific performance logs  
-- `logs/errors.log`: Error tracking with stack traces
-- `logs/info.log`: Information-level logs
-
-**Log Structure:**
-```
-INFO:retrieve_time=0.03,prompt_time=0.01,llm_time=1.2,total=1.24
-INFO:RAG answer successfully
-ERROR:An error occurred during asking model: ConnectionError
+INFO [agent] step=1 name=retrieve_laws duration=0.05s status=ok
+INFO [agent] step=2 name=generate_answer duration=1.2s status=ok
+INFO [agent] step=3 name=format_citation duration=0.01s status=ok
 ```
 
-## 🔄 Development Workflow
+## 🚀 CI/CD Integration
 
-### Adding New Documents
-1. Add new documents to the raw data directory
-2. Process documents through the chunking pipeline
-3. Generate embeddings for new chunks
-4. Update the vector index incrementally
+### GitHub Actions
+The project includes automated CI/CD with:
+- **Code Quality**: Black, isort, flake8 linting checks
+- **Unit Testing**: Automated pytest execution with coverage reports
+- **Integration Testing**: Simplified Newman-based API testing via bash script
+- **FastAPI Testing**: Server startup validation and health checks
+- **Artifact Upload**: Coverage reports and test results
 
-### Code Quality
-The project uses:
-- **Black** for code formatting
-- **isort** for import sorting
-- **Pylint** for code analysis
-- **pytest** for testing
+### Test Automation
+```yaml
+# Simplified Newman integration in CI/CD
+- name: Install Newman for API testing
+  run: npm install -g newman
+
+- name: Run Postman tests with Newman
+  run: |
+    # Start server in background
+    timeout 60s uvicorn app.main:app --host 127.0.0.1 --port 8000 &
+    SERVER_PID=$!
+    sleep 10
+    
+    # Run Newman tests using existing script
+    if curl -f http://127.0.0.1:8000/ > /dev/null 2>&1; then
+      echo "Server is running, starting Newman tests..."
+      bash run_newman.sh
+    else
+      echo "Server failed to start, skipping Newman tests"
+    fi
+    
+    # Cleanup
+    kill $SERVER_PID 2>/dev/null || true
+```
 
 ## 🏷️ Current Development
 
-### 🤖 Week 6: RAG Module Implementation
-Current focus on Retrieval-Augmented Generation:
+**Week 8 Focus**: Integration Testing & CI/CD Pipeline Optimization
+- ✅ Comprehensive integration test plan documentation
+- ✅ Postman collection for automated API testing
+- ✅ Simplified Newman CLI integration for CI/CD pipelines
+- ✅ Environment-specific configuration files
+- ✅ Docker containerization with proper volume mounting
+- ✅ Swagger UI for interactive API testing
+- ✅ Automated testing scripts for cross-platform compatibility
+- ✅ GitHub Actions workflow optimization with simplified Newman execution
+- ✅ Error handling and timeout management improvements
 
-1. **✅ Prompt Template & Fallback Logic**
-   - Structured prompt templates in `docs/prompt_template.md`
-   - LLM timeout handling (≥10s fallback)
-   - Context-aware response generation
-
-2. **✅ RAG Endpoint Implementation** 
-   - POST `/rag` endpoint with complete workflow
-   - Input validation and error handling
-   - Retry logic for network failures (2 attempts)
-   - Citation-based responses
-
-3. **✅ Performance Monitoring**
-   - Detailed latency tracking with `time.perf_counter()`
-   - Structured logging for performance metrics
-   - Target SLA monitoring (< 2s response time)
-
-4. **✅ Integration Testing**
-   - Comprehensive test suite in `tests/test_rag.py`
-   - Mock testing for LLM and vector store
-   - Coverage ≥80% for RAG module
-   - End-to-end workflow validation
-
-5. **🔄 CI/CD & Documentation**
-   - Updated GitHub workflows for RAG testing
-   - Complete API documentation with examples
-   - Performance benchmarking and monitoring
-
-### Previous Milestones
-- **Week 5**: Retrieval Service with FastAPI REST API
-- **Weeks 1-4**: Data pipeline, embedding, and vector search infrastructure
-
-## 🚀 Production Deployment
-
-For production deployment:
-
-### RAG Service Configuration
-1. **Environment Variables**: Configure Gemini API keys and timeout settings
-2. **Performance Tuning**: Optimize vector search and LLM call parameters
-3. **Rate Limiting**: Implement API rate limiting to prevent abuse
-4. **Caching**: Add response caching for frequently asked questions
-5. **Monitoring**: Set up performance monitoring and alerting
-
-### Infrastructure Requirements  
-1. **WSGI Server**: Use Gunicorn for production deployment
-2. **Load Balancing**: Configure nginx for high availability
-3. **Logging**: Centralized logging with log rotation
-4. **Health Checks**: Implement comprehensive health monitoring
-5. **Security**: API authentication and input sanitization
-
-### Performance Targets
-- **Response Time**: < 2 seconds for 95% of requests
-- **Availability**: 99.9% uptime
-- **Throughput**: Support for concurrent requests
-- **Resource Usage**: Optimized memory and CPU utilization
+**Latest Updates**:
+- Streamlined CI/CD Newman integration using existing `run_newman.sh` script
+- Created `dev_environment.json` for consistent API testing across environments
+- Improved GitHub Actions workflow with proper server lifecycle management
+- Enhanced documentation with actual script examples and configurations
 
 ## 📄 License
 
