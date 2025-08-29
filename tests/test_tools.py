@@ -60,7 +60,9 @@ def mock_search():
         yield mock
 
 
-def test_retrieve_laws_good_case(mock_search):  # pylint: disable=redefined-outer-name
+def test_retrieve_laws_good_case(
+    mock_search,  # pylint: disable=unused-argument, redefined-outer-name
+):
     response = retrieve_laws(RetrieveInput(question=test_question, top_k=5))
     assert "CHƯƠNG II" in response.chunks[0].upper()
     assert len(response.chunks) == 5
@@ -78,7 +80,9 @@ def test_retrieve_laws_bad_case():
         assert response.chunks == []
 
 
-def test_generate_answer_good_case(mock_search):  # pylint: disable=redefined-outer-name
+def test_generate_answer_good_case(
+    mock_search,  # pylint: disable=unused-argument, redefined-outer-name
+):
     # The mock_search fixture automatically patches the function
     relevant_sentences = retrieve_laws(RetrieveInput(question=test_question, top_k=5))
     answer = asyncio.run(
@@ -103,8 +107,8 @@ def test_generate_answer_no_relevant_sentences():
 
 @pytest.mark.asyncio
 async def test_generate_answer_timeout_error(
-    mock_search,
-):  # pylint: disable=redefined-outer-name
+    mock_search,  # pylint: disable=unused-argument, redefined-outer-name
+):
     relevant_sentences = retrieve_laws(RetrieveInput(question=test_question, top_k=5))
     with patch("google.generativeai.GenerativeModel") as mock_model_cls:
         mock_model = MagicMock()
@@ -119,8 +123,8 @@ async def test_generate_answer_timeout_error(
 
 @pytest.mark.asyncio
 async def test_generate_answer_connection_error_2_times(
-    mock_search,
-):  # pylint: disable=redefined-outer-name
+    mock_search,  # pylint: disable=unused-argument, redefined-outer-name
+):
     relevant_sentences = retrieve_laws(RetrieveInput(question=test_question, top_k=5))
     with patch("google.generativeai.GenerativeModel") as mock_model_cls:
         mock_model = MagicMock()
@@ -135,8 +139,8 @@ async def test_generate_answer_connection_error_2_times(
 
 @pytest.mark.asyncio
 async def test_generate_answer_connection_error_1_time(
-    mock_search,
-):  # pylint: disable=redefined-outer-name
+    mock_search,  # pylint: disable=unused-argument, redefined-outer-name
+):
     relevant_sentences = retrieve_laws(RetrieveInput(question=test_question, top_k=5))
     with patch("google.generativeai.GenerativeModel") as mock_model_cls:
         mock_model = MagicMock()
@@ -152,7 +156,9 @@ async def test_generate_answer_connection_error_1_time(
         assert result.answer == "Đây là câu trả lời"
 
 
-def test_format_citation_good_case(mock_search):  # pylint: disable=redefined-outer-name
+def test_format_citation_good_case(
+    mock_search,  # pylint: disable=unused-argument, redefined-outer-name
+):
     relevant_sentences = retrieve_laws(RetrieveInput(question=test_question, top_k=5))
     result = format_citation(
         FormatInput(answer="Some answer", chunks=relevant_sentences.chunks)

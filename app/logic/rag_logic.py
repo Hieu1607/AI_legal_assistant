@@ -113,6 +113,9 @@ async def ask_LLM(relevant_sentences: list, question: str):
         except ConnectionError:
             logger.info("Retry failed: %s", e)
             return "Network errored"
+    except Exception as e:  # pylint: disable = broad-exception-caught
+        logger.info("An error occured: %s", e)
+        return "Internal server error"
 
 
 async def process_rag_query(question: str):

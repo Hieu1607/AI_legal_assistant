@@ -58,7 +58,7 @@ async def ask_model(request: QueryQuestion):
             },
         )
 
-    except (IndexError, KeyError, FileNotFoundError, ImportError, ValueError) as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         logger.info("An error occurred during asking model: %s", e)
         return JSONResponse(
             status_code=500,

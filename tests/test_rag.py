@@ -87,7 +87,7 @@ def mock_search():
         yield mock
 
 
-def test_get_relevant_sentences(mock_search):
+def test_get_relevant_sentences(mock_search):  # pylint: disable=redefined-outer-name
     with patch(
         "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
     ):
@@ -100,7 +100,7 @@ def test_get_relevant_sentences(mock_search):
         )
 
 
-def test_ask_LLM_good_case(mock_search):
+def test_ask_LLM_good_case(mock_search):  # pylint: disable=redefined-outer-name
     with patch(
         "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
     ):
@@ -118,7 +118,9 @@ def test_ask_LLM_no_relevant_sentences():
 
 
 @pytest.mark.asyncio
-async def test_ask_LLM_timeout_error(mock_search):
+async def test_ask_LLM_timeout_error(
+    mock_search,
+):  # pylint: disable=redefined-outer-name
     with patch(
         "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
     ):
@@ -135,7 +137,9 @@ async def test_ask_LLM_timeout_error(mock_search):
 
 
 @pytest.mark.asyncio
-async def test_ask_LLM_connection_error_2_times(mock_search):
+async def test_ask_LLM_connection_error_2_times(
+    mock_search,
+):  # pylint: disable=redefined-outer-name
     with patch(
         "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
     ):
@@ -150,7 +154,9 @@ async def test_ask_LLM_connection_error_2_times(mock_search):
 
 
 @pytest.mark.asyncio
-async def test_ask_LLM_connection_error_1_time(mock_search):
+async def test_ask_LLM_connection_error_1_time(
+    mock_search,
+):  # pylint: disable=redefined-outer-name
     with patch(
         "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
     ):
@@ -168,7 +174,9 @@ async def test_ask_LLM_connection_error_1_time(mock_search):
 
 
 @pytest.mark.asyncio
-async def test_ask_model_good_case(client, mock_search):
+async def test_ask_model_good_case(
+    client, mock_search
+):  # pylint: disable=redefined-outer-name
     with (
         patch(
             "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
@@ -194,8 +202,10 @@ async def test_ask_model_good_case(client, mock_search):
 
 
 @pytest.mark.asyncio
-async def test_ask_model_bad_case(client):
-    with patch("app.rag.get_relevant_sentences") as mock_search:
+async def test_ask_model_bad_case(client):  # pylint: disable=redefined-outer-name
+    with patch(
+        "app.rag.get_relevant_sentences"
+    ) as mock_search:  # pylint: disable=redefined-outer-name
         mock_search.side_effect = ValueError("Simulated error")
 
         response = client.post("/rag/", json={"question": test_question})

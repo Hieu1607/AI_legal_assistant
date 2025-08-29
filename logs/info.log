@@ -9742,3 +9742,133 @@ See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-3243
 2025-08-29 09:19:02,246 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
 2025-08-29 09:19:02,263 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
 2025-08-29 09:19:02,316 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 13:43:27,147 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 13:43:28,937 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-29 13:43:29,107 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 13:43:29,107 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 13:43:29,148 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 13:43:54,930 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 13:43:54,931 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 13:43:54,952 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 13:44:08,896 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-08-29 13:44:08,896 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
+2025-08-29 13:44:08,897 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 13:44:08,897 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:44:08,899 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 13:44:08,904 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 13:44:08,904 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 13:44:21,598 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:44:38,496 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:44:38,552 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 13:44:38,552 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:44:39,668 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 13:44:41,184 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
+2025-08-29 13:44:46,817 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-08-29 13:44:46,817 - app.logic.retrieve_logic - INFO - The number of returning chunks is 0
+2025-08-29 13:44:46,978 - src.store_vector.search_embeddings - ERROR - Error during embedding search: Number of requested results 0, cannot be negative, or zero. in query.
+2025-08-29 13:47:21,958 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 13:47:22,959 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-29 13:47:23,086 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 13:47:23,086 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 13:47:23,103 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 13:47:29,155 - app.main - INFO - An error occured: [{'type': 'greater_than_equal', 'loc': ('body', 'top_k'), 'msg': 'Input should be greater than or equal to 1', 'input': 0, 'ctx': {'ge': 1}}]
+2025-08-29 13:47:38,644 - app.logic.rag_logic - INFO - The question is Luật lao động cho trẻ vị thành niên?
+2025-08-29 13:47:38,644 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 13:47:38,645 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:47:38,645 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 13:47:38,650 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 13:47:38,650 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 13:47:48,286 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:47:58,570 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:47:58,604 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 13:47:58,604 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 13:47:59,631 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 13:48:01,220 - app.logic.rag_logic - INFO - The question is Con mèo thích meo meo
+2025-08-29 13:48:01,537 - app.logic.rag_logic - INFO - The question is 
+2025-08-29 13:48:04,838 - app.main - INFO - An error occured: [{'type': 'greater_than_equal', 'loc': ('body', 'timeout_sec'), 'msg': 'Input should be greater than or equal to 5', 'input': 1, 'ctx': {'ge': 5}}]
+2025-08-29 13:48:10,459 - app.logic.rag_logic - INFO - retrieving_time = 0.3132, prompting_time = 0.0000, llm_time = 8.9246, total_time = 9.2378 
+2025-08-29 13:48:10,459 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-29 13:48:15,964 - app.logic.rag_logic - INFO - retrieving_time = 0.1064, prompting_time = 0.0000, llm_time = 14.3207, total_time = 14.4272 
+2025-08-29 13:48:15,965 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-29 13:48:24,954 - app.logic.rag_logic - INFO - retrieving_time = 22.5235, prompting_time = 0.0000, llm_time = 23.7869, total_time = 46.3105 
+2025-08-29 13:48:24,955 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-29 14:13:02,699 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 14:13:03,863 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-29 14:13:03,991 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 14:13:03,991 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 14:13:04,020 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 14:13:11,079 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 14:13:11,079 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:13:11,079 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 14:13:11,096 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 14:13:11,097 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 14:13:18,636 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 14:13:21,073 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 14:13:21,074 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:13:21,075 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 14:13:21,093 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 14:13:21,093 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 14:13:22,501 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 14:13:22,502 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 14:13:22,544 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 14:13:26,185 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:13:40,743 - test_tools - INFO - answer='Theo Chương II, Điều 29 Bộ luật Hàng hải có các nội dung sau:\n- Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.\n- Nguyên tắc đăng kiểm tàu biển Việt Nam.'
+2025-08-29 14:13:44,330 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:13:44,387 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 14:13:44,387 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:13:45,931 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 14:13:48,696 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:13:55,134 - src.store_vector.search_embeddings - ERROR - Failed to load/download model: Error while serializing: IoError(Os { code: 1224, kind: Uncategorized, message: "The requested operation cannot be performed on a file with a user-mapped section open." })
+2025-08-29 14:13:55,150 - src.store_vector.search_embeddings - ERROR - Model is not loaded. Cannot perform embedding search.
+2025-08-29 14:19:07,778 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 14:19:09,118 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 14:19:09,118 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 14:19:09,149 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 14:19:09,156 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 14:19:09,156 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:19:09,158 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 14:19:09,161 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 14:19:09,161 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 14:19:21,260 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:19:27,150 - src.store_vector.search_embeddings - ERROR - Failed to load/download model: Error while serializing: IoError(Os { code: 1224, kind: Uncategorized, message: "The requested operation cannot be performed on a file with a user-mapped section open." })
+2025-08-29 14:19:27,157 - src.store_vector.search_embeddings - ERROR - Model is not loaded. Cannot perform embedding search.
+2025-08-29 14:20:05,771 - test_tools - INFO - answer='Theo Chương II Tàu biển, Điều 29: Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.\nTheo Chương II Tàu biển, Mục 3, Điều 29: Nguyên tắc đăng kiểm tàu biển Việt Nam.'
+2025-08-29 14:43:31,602 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 14:43:32,992 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-29 14:43:33,127 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 14:43:33,127 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 14:43:33,158 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 14:43:53,912 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 14:43:53,912 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:43:53,912 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 14:43:53,920 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 14:43:53,920 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 14:44:08,818 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:44:31,714 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:44:31,782 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 14:44:31,783 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 14:44:33,149 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 14:57:24,477 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 14:57:24,479 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 14:57:24,527 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 14:58:59,289 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 14:58:59,290 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 14:58:59,317 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 15:00:00,835 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 15:00:00,835 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 15:00:00,878 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 15:02:01,297 - app.logic.rag_logic - INFO - The question is 
+2025-08-29 15:08:30,561 - app.logic.rag_logic - INFO - The question is 
+2025-08-29 15:08:47,643 - app.logic.rag_logic - INFO - retrieving_time = 1.8904, prompting_time = 0.0017, llm_time = 15.1909, total_time = 17.0829 
+2025-08-29 15:08:47,645 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-29 15:08:55,543 - app.logic.rag_logic - INFO - The question is Con mèo thích meo meo
+2025-08-29 15:09:07,273 - app.logic.rag_logic - INFO - retrieving_time = 1.6708, prompting_time = 0.0031, llm_time = 10.0555, total_time = 11.7294 
+2025-08-29 15:09:07,273 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-29 15:09:21,803 - app.logic.rag_logic - INFO - The question is Luật lao động cho trẻ vị thành niên?
+2025-08-29 15:10:49,290 - app.logic.rag_logic - INFO - The question is Luật lao động cho trẻ vị thành niên?
+2025-08-29 15:11:21,452 - app.logic.rag_logic - INFO - retrieving_time = 0.2248, prompting_time = 0.0003, llm_time = 31.9335, total_time = 32.1586 
+2025-08-29 15:11:21,452 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-08-29 15:11:44,403 - app.main - INFO - An error occured: [{'type': 'greater_than_equal', 'loc': ('body', 'top_k'), 'msg': 'Input should be greater than or equal to 1', 'input': 0, 'ctx': {'ge': 1}}]
+2025-08-29 15:11:49,293 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-08-29 15:11:49,294 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
+2025-08-29 15:11:49,572 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
