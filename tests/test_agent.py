@@ -59,7 +59,7 @@ def client():
 
 @pytest.fixture
 def mock_search():
-    with patch("app.agent.retrieve_laws") as mock:
+    with patch("app.logic.agent_logic.retrieve_laws") as mock:
         mock.return_value = RetrieveOutput(
             chunks=[
                 "CHƯƠNG II TÀU BIỂN; Điều 29. Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường",
@@ -74,7 +74,7 @@ def mock_search():
 
 @pytest.fixture
 def mock_ask():
-    with patch("app.agent.generate_answer") as mock:
+    with patch("app.logic.agent_logic.generate_answer") as mock:
         mock.return_value = GenerateOutput(
             answer="Theo chương II điều 29 bộ luật hàng hải thì nội dung là blabla"
         )
@@ -210,7 +210,7 @@ def test_timeout_in_step_3(
     client, mock_search, mock_ask
 ):  # pylint: disable=redefined-outer-name
     with mock_search & mock_ask:
-        with patch("app.agent.format_citation") as mock:
+        with patch("app.logic.agent_logic.format_citation") as mock:
             mock.side_effect = asyncio.TimeoutError("Example error")
             response = client.post(
                 "/agent",

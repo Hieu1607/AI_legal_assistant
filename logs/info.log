@@ -9670,3 +9670,75 @@ See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-3243
 2025-08-25 14:57:29,807 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
 2025-08-25 14:57:29,826 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
 2025-08-25 14:57:45,198 - test_tools - INFO - answer='Lỗi hệ thống, vui lòng thử lại sau.'
+2025-08-29 08:35:52,360 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 08:35:53,975 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-08-29 08:35:54,209 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 08:35:54,224 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 08:35:54,266 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 08:36:44,447 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 08:36:44,448 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 08:36:44,450 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 08:36:44,458 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 08:36:44,460 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 08:36:55,944 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 08:37:08,259 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 08:37:08,322 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 08:37:08,322 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 08:37:09,552 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 08:57:19,390 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 08:57:19,390 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 08:57:19,436 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 08:58:55,296 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 08:58:56,991 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 08:58:56,991 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 08:58:57,016 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 08:59:16,630 - test_tools - INFO - answer='Theo tài liệu được cung cấp, Chương II Điều 29 có các nội dung:\n- Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.\n- Nguyên tắc đăng kiểm tàu biển Việt Nam.'
+2025-08-29 09:05:33,646 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 09:05:35,321 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 09:05:35,321 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 09:05:35,364 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 09:15:50,772 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 09:15:51,856 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 09:15:51,856 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 09:15:51,888 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 09:15:51,907 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:15:51,924 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:15:51,925 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:15:51,938 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 09:15:51,938 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:15:51,940 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 09:15:51,943 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 09:15:51,943 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 09:16:02,398 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:16:11,714 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:16:11,745 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 09:16:11,746 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:16:12,798 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 09:16:14,187 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:16:25,523 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:16:25,640 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:16:25,648 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:16:25,662 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:18:13,707 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-08-29 09:18:15,568 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-08-29 09:18:15,568 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-08-29 09:18:15,599 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-08-29 09:18:15,660 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:18:15,660 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:18:15,683 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:18:15,697 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-08-29 09:18:15,697 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:18:15,697 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-08-29 09:18:15,697 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 09:18:15,697 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-08-29 09:18:25,041 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:18:35,249 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:18:35,297 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-08-29 09:18:35,297 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-08-29 09:18:36,601 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-08-29 09:18:37,919 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:19:02,212 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:19:02,230 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:19:02,246 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:19:02,263 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-08-29 09:19:02,316 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
