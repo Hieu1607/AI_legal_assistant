@@ -60,7 +60,7 @@ def client():
 
 @pytest.fixture
 def mock_search():
-    with patch("src.store_vector.search_embeddings.search_relevant_embeddings") as mock:
+    with patch("app.logic.rag_logic.search_relevant_embeddings") as mock:
         mock.return_value = {
             "ids": [["id1", "id2", "id3", "id4", "id5"]],
             "distances": [[0.1, 0.2, 0.3, 0.4, 0.5]],
@@ -88,9 +88,7 @@ def mock_search():
 
 
 def test_get_relevant_sentences(mock_search):  # pylint: disable=redefined-outer-name
-    with patch(
-        "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
-    ):
+    with patch("app.logic.rag_logic.search_relevant_embeddings", mock_search):
         response = get_relevant_sentences(test_question)
         assert "chương ii" in response[0].lower()
         assert len(response) == 5
@@ -101,9 +99,7 @@ def test_get_relevant_sentences(mock_search):  # pylint: disable=redefined-outer
 
 
 def test_ask_LLM_good_case(mock_search):  # pylint: disable=redefined-outer-name
-    with patch(
-        "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
-    ):
+    with patch("app.logic.rag_logic.search_relevant_embeddings", mock_search):
         relevant_sentences = get_relevant_sentences(test_question)
     answer = asyncio.run(ask_LLM(relevant_sentences, test_question))
     logger.info(answer)
@@ -121,11 +117,9 @@ def test_ask_LLM_no_relevant_sentences():
 async def test_ask_LLM_timeout_error(
     mock_search,
 ):  # pylint: disable=redefined-outer-name
-    with patch(
-        "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
-    ):
+    with patch("app.logic.rag_logic.search_relevant_embeddings", mock_search):
         relevant_sentences = get_relevant_sentences(test_question)
-    with patch("google.generativeai.GenerativeModel") as mock_model_cls:
+    with patch("app.logic.rag_logic.genai.GenerativeModel") as mock_model_cls:
         # Create mock for GenerativeModel
         mock_model = MagicMock()
         mock_model.generate_content.side_effect = asyncio.TimeoutError
@@ -133,38 +127,34 @@ async def test_ask_LLM_timeout_error(
         mock_model_cls.return_value = mock_model
 
         answer = await ask_LLM(relevant_sentences, test_question)
-        assert answer == "The system is busy now. Please try again."
+        assert answer == "Hệ thống đang bận vui lòng thử lại sau."
 
 
 @pytest.mark.asyncio
 async def test_ask_LLM_connection_error_2_times(
     mock_search,
 ):  # pylint: disable=redefined-outer-name
-    with patch(
-        "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
-    ):
+    with patch("app.logic.rag_logic.search_relevant_embeddings", mock_search):
         relevant_sentences = get_relevant_sentences(test_question)
-    with patch("google.generativeai.GenerativeModel") as mock_model_cls:
+    with patch("app.logic.rag_logic.genai.GenerativeModel") as mock_model_cls:
         mock_model = MagicMock()
         mock_model.generate_content.side_effect = ConnectionError
         mock_model_cls.return_value = mock_model
 
         result = await ask_LLM(relevant_sentences, test_question)
-        assert result == "Network errored"
+        assert result == "Lỗi mạng"
 
 
 @pytest.mark.asyncio
 async def test_ask_LLM_connection_error_1_time(
     mock_search,
 ):  # pylint: disable=redefined-outer-name
-    with patch(
-        "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
-    ):
+    with patch("app.logic.rag_logic.search_relevant_embeddings", mock_search):
         relevant_sentences = get_relevant_sentences(test_question)
-    with patch("google.generativeai.GenerativeModel") as mock_model_cls:
+    with patch("app.logic.rag_logic.genai.GenerativeModel") as mock_model_cls:
         mock_model = MagicMock()
         mock_model.generate_content.side_effect = [
-            ConnectionError("Network errored"),
+            ConnectionError("Lỗi mạng"),
             MagicMock(text="This is the answer"),
         ]
         mock_model_cls.return_value = mock_model
@@ -178,10 +168,8 @@ async def test_ask_model_good_case(
     client, mock_search
 ):  # pylint: disable=redefined-outer-name
     with (
-        patch(
-            "src.store_vector.search_embeddings.search_relevant_embeddings", mock_search
-        ),
-        patch("google.generativeai.GenerativeModel") as mock_model_cls,
+        patch("app.logic.rag_logic.search_relevant_embeddings", mock_search),
+        patch("app.logic.rag_logic.genai.GenerativeModel") as mock_model_cls,
     ):
         mock_model = MagicMock()
         mock_response = MagicMock()
@@ -204,7 +192,7 @@ async def test_ask_model_good_case(
 @pytest.mark.asyncio
 async def test_ask_model_bad_case(client):  # pylint: disable=redefined-outer-name
     with patch(
-        "app.rag.get_relevant_sentences"
+        "app.logic.rag_logic.get_relevant_sentences"
     ) as mock_search:  # pylint: disable=redefined-outer-name
         mock_search.side_effect = ValueError("Simulated error")
 
