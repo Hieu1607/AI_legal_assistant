@@ -9872,3 +9872,130 @@ See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-3243
 2025-08-29 15:11:49,293 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
 2025-08-29 15:11:49,294 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
 2025-08-29 15:11:49,572 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
+2025-09-03 15:04:47,353 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-03 15:04:48,416 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-03 15:04:48,416 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-03 15:04:48,434 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-03 15:04:48,460 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:04:48,460 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-03 15:04:48,460 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:04:48,460 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-03 15:04:48,463 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-03 15:04:48,463 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-03 15:04:58,558 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:05:16,131 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:05:16,191 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-03 15:05:16,191 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:05:17,532 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-09-03 15:05:19,197 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:05:43,736 - test_rag - INFO - Theo Chương II Điều 29, Tàu biển Việt Nam hoạt động tuyến quốc tế được kiểm định, phân cấp, đánh giá và cấp giấy chứng nhận theo quy định của pháp luật và điều ước quốc tế mà Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên.
+2025-09-03 15:05:43,752 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:05:43,946 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:05:44,110 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-03 15:05:44,110 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-03 15:05:44,110 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:05:44,297 - app.logic.rag_logic - INFO - Network error: Network errored, retrying...
+2025-09-03 15:05:44,335 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:05:44,509 - app.logic.rag_logic - INFO - retrieving_time = 0.1734, prompting_time = 0.0000, llm_time = 0.0009, total_time = 0.1743 
+2025-09-03 15:05:44,509 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-03 15:05:44,509 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-03 15:12:46,339 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-03 15:12:47,351 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-03 15:12:47,351 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-03 15:12:47,370 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-03 15:12:47,383 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:12:47,383 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-03 15:12:47,383 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:12:47,399 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-03 15:12:47,399 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-03 15:12:47,399 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-03 15:13:01,674 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:13:14,731 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:13:14,762 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-03 15:13:14,762 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:13:15,860 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-09-03 15:13:16,783 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:13:35,430 - test_rag - INFO - Theo Chương II Điều 29 bộ luật hàng hải, Nguyên tắc đăng kiểm tàu biển Việt Nam: Tàu biển Việt Nam hoạt động tuyến quốc tế được kiểm định, phân cấp, đánh giá và cấp giấy chứng nhận theo quy định của pháp luật và điều ước quốc tế mà Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên.
+2025-09-03 15:13:35,446 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:13:35,633 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:13:35,829 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-03 15:13:35,829 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-03 15:13:35,837 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:13:35,984 - app.logic.rag_logic - INFO - Network error: Network errored, retrying...
+2025-09-03 15:13:36,026 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:13:36,197 - app.logic.rag_logic - INFO - retrieving_time = 0.1725, prompting_time = 0.0000, llm_time = 0.0008, total_time = 0.1733 
+2025-09-03 15:13:36,197 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-03 15:13:36,197 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-03 15:13:36,207 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
+2025-09-03 15:13:36,214 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
+2025-09-03 15:13:36,215 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
+2025-09-03 15:15:36,351 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-03 15:15:37,274 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-03 15:15:37,274 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-03 15:15:37,301 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-03 15:15:37,306 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:15:37,306 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-03 15:15:37,306 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:15:37,306 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-03 15:15:37,322 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-03 15:15:37,322 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-03 15:15:50,765 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:16:02,645 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:16:02,677 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-03 15:16:02,677 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-03 15:16:03,604 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-09-03 15:16:04,792 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:16:42,925 - test_rag - INFO - Theo Chương II Điều 29 bộ luật hàng hải, nội dung là: Tàu biển Việt Nam hoạt động tuyến quốc tế được kiểm định, phân cấp, đánh giá và cấp giấy chứng nhận theo quy định của pháp luật và điều ước quốc tế mà Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên.
+2025-09-03 15:16:42,946 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:16:43,134 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:16:43,408 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-03 15:16:43,408 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-03 15:16:43,412 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:16:43,591 - app.logic.rag_logic - INFO - Network error: Lỗi mạng, retrying...
+2025-09-03 15:16:43,621 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:16:43,797 - app.logic.rag_logic - INFO - retrieving_time = 0.1722, prompting_time = 0.0000, llm_time = 0.0010, total_time = 0.1732 
+2025-09-03 15:16:43,797 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-03 15:16:43,797 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-03 15:16:43,806 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
+2025-09-03 15:16:43,811 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
+2025-09-03 15:16:43,813 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
+2025-09-03 15:19:43,363 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-03 15:19:44,354 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-03 15:19:44,354 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-03 15:19:44,378 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-03 15:19:44,381 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:19:44,395 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:20:19,926 - test_rag - INFO - Theo Chương II, Điều 29, tài liệu cung cấp hai nội dung: Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường; và Nguyên tắc đăng kiểm tàu biển Việt Nam.
+2025-09-03 15:20:19,926 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:20:19,953 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:20:19,953 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-03 15:20:19,955 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-03 15:20:19,957 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:20:19,957 - app.logic.rag_logic - INFO - Network error: Lỗi mạng, retrying...
+2025-09-03 15:20:19,981 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:20:19,982 - app.logic.rag_logic - INFO - retrieving_time = 0.0003, prompting_time = 0.0000, llm_time = 0.0007, total_time = 0.0010 
+2025-09-03 15:20:19,983 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-03 15:20:19,984 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-03 15:20:19,985 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
+2025-09-03 15:20:19,992 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
+2025-09-03 15:20:19,992 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
+2025-09-03 15:20:49,320 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-03 15:20:50,012 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-03 15:20:50,012 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-03 15:20:50,023 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-03 15:20:50,029 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:20:50,029 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:21:33,239 - test_rag - INFO - Theo CHƯƠNG II TÀU BIỂN, Điều 29, nội dung là Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.
+2025-09-03 15:21:33,260 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:21:33,265 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:21:33,267 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-03 15:21:33,267 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-03 15:21:33,269 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:21:33,271 - app.logic.rag_logic - INFO - Network error: Lỗi mạng, retrying...
+2025-09-03 15:21:33,279 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-03 15:21:33,291 - app.logic.rag_logic - INFO - retrieving_time = 0.0003, prompting_time = 0.0000, llm_time = 0.0008, total_time = 0.0011 
+2025-09-03 15:21:33,291 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-03 15:21:33,294 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-03 15:21:33,297 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
+2025-09-03 15:21:33,297 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
+2025-09-03 15:21:33,305 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
