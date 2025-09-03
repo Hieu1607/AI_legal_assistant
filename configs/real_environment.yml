@@ -10,18 +10,18 @@ dependencies:
   - setuptools=80.9.0
   - wheel=0.45.1
 
-  # Web framework và server
+  # Web framework and server
   - fastapi=0.115.9
   - uvicorn=0.35.0
   - starlette=0.45.3
 
-  # HTTP và networking
+  # HTTP and networking
   - aiohttp=3.12.12
   - requests=2.32.4
   - httpx=0.28.1
   - urllib3=2.4.0
 
-  # Machine Learning và AI
+  # Machine Learning and AI
   - sentence-transformers=5.0.0
   - transformers=4.52.4
   - pytorch=2.6.0
@@ -39,7 +39,7 @@ dependencies:
   # Vector database
   - chromadb=1.0.15
 
-  # Configuration và environment
+  # Configuration and environment
   - python-dotenv=1.1.0
   - pyyaml=6.0.2
 
