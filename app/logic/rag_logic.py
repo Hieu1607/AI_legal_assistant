@@ -64,14 +64,14 @@ async def ask_LLM(relevant_sentences: list, question: str):
     start_prompting_time = time.perf_counter()
 
     if not relevant_sentences:
-        return "Can't find the information about your question"
+        return "Không tìm thấy thông tin liên quan để trả lời câu hỏi của bạn."
 
     # Create relevant sentences set
     context = ""
     for i, sentence in enumerate(relevant_sentences, 1):
         context += f"Đoạn {i}: {sentence}\n\n"
 
-    prompt = f"""Với vai trò là 1 trợ lý ảo pháp luật chuyên nghiệp, dựa trên các nội dung sau:
+    prompt = f"""Với vai trò là 1 trợ lý ảo pháp luật, dựa trên các nội dung sau:
         {context}
         Câu hỏi: {question}
         Vui lòng trả lời câu hỏi dựa trên thông tin được cung cấp ở trên.
@@ -97,7 +97,7 @@ async def ask_LLM(relevant_sentences: list, question: str):
         )
         return response.text
     except asyncio.TimeoutError:
-        return "The system is busy now. Please try again."
+        return "Hệ thống đang bận vui lòng thử lại sau."
     except ConnectionError as e:
         logger.info("Network error: %s, retrying...", e)
         try:
@@ -109,10 +109,13 @@ async def ask_LLM(relevant_sentences: list, question: str):
             )
             return response.text
         except asyncio.TimeoutError:
-            return "The system is busy now. Please try again."
+            return "Hệ thống đang bận vui lòng thử lại sau."
         except ConnectionError:
             logger.info("Retry failed: %s", e)
-            return "Network errored"
+            return "Lỗi mạng"
+    except Exception as e:  # pylint: disable = broad-exception-caught
+        logger.info("An error occured: %s", e)
+        return "Lỗi hệ thống, vui lòng thử lại sau."
 
 
 async def process_rag_query(question: str):
