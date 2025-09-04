@@ -123,11 +123,11 @@ This document outlines the integration test cases for the AI Legal Assistant API
 
 **Expected Output**:
 - Status: 200 OK
-- Response: `[]` (empty array)
+- Response: `[5 chunks with low score]`
 
 **Test Steps**:
 1. Send query for topic not in legal database
-2. Verify empty array response
+2. Verify 5 chunks with low score
 3. Verify status code is still 200 (valid request, no results)
 4. Verify no error messages in logs
 
