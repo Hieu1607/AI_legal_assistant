@@ -1,58 +1,198 @@
-# AI Legal Assistant
+# AI Legal Assistant Production
 
-A comprehensive AI-powered legal document processing and retrieval system with containerized deployment and staging environment support. The system features document retrieval, RAG (Retrieval-Augmented Generation), and multi-step AI Agent capabilities.
+🤖 **AI Legal Assistant** - An intelligent legal assistant system using RAG (Retrieval-Augmented Generation) with ChromaDB and sentence transformers.
 
-## 🏗️ Project Structure
+## 📋 Features
 
-```
-AI_legal_assistant/
-├── app/                    # FastAPI applications
-│   ├── main.py            # Main application router
-│   ├── retrieve.py        # Document retrieval service
-│   ├── rag.py            # RAG service
-│   └── agent.py          # Multi-step AI Agent
-├── services/              # Core business logic
-├── configs/               # Configuration and logging
-├── data/                  # Data storage (mounted in containers)
-├── docs/                  # Documentation
-├── postman/               # API testing collections
-├── tests/                 # Test suites
-├── Dockerfile             # Container definition
-├── docker-compose.yml     # Multi-container orchestration
-├── smoke_test.sh         # Deployment verification
-├── DEPLOYMENT.md         # Deployment documentation
-└── requirements.txt      # Python dependencies
-```
+- **🔍 Legal Text Search**: Intelligent search within legal document database
+- **🗄️ Vector Database**: Using ChromaDB for storing and searching embeddings
+- **🚀 RESTful API**: FastAPI with automatic documentation
+- **🐳 Docker**: Containerized deployment with automatic double warm-up
+- **⚡ RAG System**: Retrieval-Augmented Generation for accurate search
+
+## 🛠️ Tech Stack
+
+- **Backend**: FastAPI, Python 3.11
+- **AI/ML**: API-based Embedding (BAAI/bge-m3 via Gradio), Google Generative AI
+- **Database**: ChromaDB (Vector Database)
+- **Containerization**: Docker, Docker Compose
+- **Data Processing**: BeautifulSoup, Pandas
+- **Logging**: Structured logging with ColoredLogs
 
 ## 🚀 Quick Start
 
-### Local Development
+### Prerequisites
+
+Ensure your machine has:
+- [Git](https://git-scm.com/)
+- [Python 3.11+](https://python.org/)
+- [Docker Desktop](https://docker.com/products/docker-desktop/) - **Note: Must start Docker Desktop before running**
+- `gdown` (for Google Drive downloads): `pip install gdown`
+
+**Important**: Ensure Docker Desktop is running before setup!
+
+### Option 1: One-Click Install (Windows)
+
+```powershell
+Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_production/main/install.ps1").Content
+```
+
+### Option 1b: One-Click Install (Linux/macOS)
 
 ```bash
+curl -sSL https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_production/main/install.sh | bash
+```
+
+### Option 2: Manual Setup
+
+#### Linux/macOS:
+```bash
+# Clone repository
+git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
+cd AI_legal_assistant_production
+
+# Run setup script
+chmod +x setup.sh
+./setup.sh
+```
+
+#### Windows:
+```powershell
+# Clone repository
+git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
+cd AI_legal_assistant_production
+
+# Run setup script
+.\setup.ps1
+```
+
+### Option 3: Step-by-Step
+
+```bash
+# 1. Clone repository
+git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
+cd AI_legal_assistant_production
+
+# 2. Download data
+python scripts/download_gdown.py
+
+# 3. Build and run with Docker
+docker-compose build
+docker-compose up -d
+```
+
+**⏳ Note**: The system runs with smoke test by default, startup takes about 2-3 minutes:
+1. Warm up ChromaDB (~30s)
+2. Start server (~30s) 
+3. Wait for server stabilization (60s)
+4. Run automatic smoke tests (~30s)
+
+Monitor the process: `docker-compose logs -f`
+
+### Option 3: Run without Smoke Test
+
+If you want to skip smoke test for faster startup:
+
+```bash
+# Override command to run warmup only
+docker run -p 8000:8000 -v $(pwd)/data:/app/data your-image /app/scripts/start_with_warmup.sh
+```
+
+## 📱 Usage
+
+After successful startup, you can access:
+
+- **🌐 API Documentation**: http://localhost:8000/docs
+- **💚 Health Check**: http://localhost:8000/
+- **🔍 Search Endpoint**: http://localhost:8000/retrieve
+
+### Example API Calls
+
+```bash
+# Health check
+curl http://localhost:8000/
+
+# Search legal documents
+curl -X POST "http://localhost:8000/retrieve" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "employee rights", "top_k": 5}'
+```
+
+## 📁 Project Structure
+
+```
+AI_legal_assistant_production/
+├── app/                    # FastAPI application
+├── src/                    # Source code modules
+│   ├── embedding/          # Embedding generation
+│   ├── store_vector/       # ChromaDB operations
+│   ├── retrieval/          # Data fetching
+│   └── preprocess/         # Data preprocessing
+├── scripts/                # Utility scripts
+│   ├── warmup_chromadb.py  # Database warm-up
+│   ├── download_gdown.py   # Data download
+│   └── start_with_warmup.sh # Container startup
+├── configs/                # Configuration files
+├── data/                   # Data storage
+│   └── processed/          # Processed data & vector store
+├── logs/                   # Application logs
+├── docker-compose.yml      # Docker services
+├── Dockerfile             # Container definition
+└── requirements.txt       # Python dependencies
+```
+
+## 🔧 Development
+
+### Local Development Setup
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# or
+venv\Scripts\activate     # Windows
+
 # Install dependencies
 pip install -r requirements.txt
 
+# Install gdown for Google Drive downloads
+pip install gdown
+
+# Set environment variables
+cp .env_example .env
+# Edit .env with your actual API keys:
+# - Replace your_openai_api_key_here with your OpenAI API key
+# - Replace your_gemini_api_key_here with your Gemini API key
+
+# Initialize ChromaDB and load sample data
+cd scripts
+python download_data_and_build_vector_store.py
+cd ..
+
 # Run development server
-python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Docker Deployment (Week 9)
+### Database Management
 
-#### Single Container
 ```bash
-# Build Docker image
-docker build -t ai-legal-assistant .
+# Initialize ChromaDB
+python src/store_vector/init_index.py
 
-# Run container
-docker run -p 8000:8000 \
-  -v $(pwd)/data:/app/data \
-  -v $(pwd)/logs:/app/logs \
-  ai-legal-assistant
+# Build embeddings
+python src/embedding/build_embeddings_with_local_model.py
+
+# Index embeddings
+python src/store_vector/index_embeddings_streaming.py
 ```
 
-#### Docker Compose Orchestration
+## 🐳 Docker Commands
+
 ```bash
-# Start all services
+# Build image
+docker-compose build
+
+# Start services
 docker-compose up -d
 
 # View logs
@@ -60,228 +200,105 @@ docker-compose logs -f
 
 # Stop services
 docker-compose down
-```
 
-#### Container Features
-- **Optimized Build**: Python 3.12 slim base image
-- **Volume Mounting**: Persistent data and logs storage
-- **Health Checks**: Built-in service monitoring
-- **Environment Configuration**: Flexible API key management
-- **Auto-restart**: Automatic service recovery
-
-## 📡 API Services
-
-### Main Application (`/`)
-- **Health Check**: Service status and availability
-- **Interactive Docs**: Swagger UI at `/docs`
-
-### Document Retrieval (`/retrieve`)
-**Endpoint**: `POST /retrieve`
-
-Semantic search for relevant legal document chunks.
-
-```json
-{
-  "question": "What are contract regulations?",
-  "top_k": 5
-}
-```
-
-### RAG Service (`/rag`)
-**Endpoint**: `POST /rag`
-
-Retrieval-Augmented Generation for comprehensive legal answers.
-
-```json
-{
-  "question": "What are the requirements for a valid contract?"
-}
-```
-
-### AI Agent (`/agent`)
-**Endpoint**: `POST /agent`
-
-Multi-step orchestrated legal query processing.
-
-```json
-{
-  "question": "Contract law requirements",
-  "top_k": 5,
-  "total_steps": 3,
-  "timeout_sec": 30
-}
-```
-
-## 🚀 Staging Deployment
-
-### Deployment Platforms
-The system supports deployment on multiple platforms:
-- **Heroku Container Registry**
-- **Railway**
-- **VPS with Docker**
-- **Local Docker Compose**
-
-### Environment Configuration
-```bash
-# Required environment variables
-export GEMINI_API_KEY=your_api_key
-export PORT=8000
-export PYTHONPATH=/app
-
-# Optional configuration
-export RETRIEVAL_TIMEOUT=30
-export RAG_TIMEOUT=60
-```
-
-### Container Health Monitoring
-```yaml
-healthcheck:
-  test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-  interval: 30s
-  timeout: 10s
-  retries: 3
-  start_period: 40s
-```
-
-## 🧪 Testing & Verification
-
-### Smoke Testing
-Automated deployment verification:
-
-```bash
-# Run smoke tests
-./smoke_test.sh
-
-# Expected output
-Testing API
-API /retrieve thành công!
-API /rag thành công!
-API /agent thành công!
-All tests passed!
-```
-
-### Smoke Test Coverage
-- ✅ **Service Availability**: Health check endpoint
-- ✅ **Retrieve Functionality**: Document search verification
-- ✅ **RAG Integration**: Answer generation testing
-- ✅ **Agent Orchestration**: Multi-step workflow validation
-- ✅ **Error Handling**: Graceful failure responses
-
-### Integration Testing
-```bash
-# Postman collection testing
-npm install -g newman
-npx newman run postman/LegalQA_Integration.postman_collection.json
-
-# Unit testing
-python -m pytest tests/ -v --cov=app
-```
-
-## 🔧 Development & Operations
-
-### Container Management
-```bash
-# View running containers
-docker-compose ps
-
-# Scale services (if needed)
-docker-compose up -d --scale ai-legal-assistant=2
-
-# Update service
-docker-compose pull
+# Rebuild from scratch
+docker-compose down -v
+docker-compose build --no-cache
 docker-compose up -d
-
-# Clean up
-docker-compose down --volumes --remove-orphans
 ```
 
-### Log Monitoring
-```bash
-# Real-time logs
-docker-compose logs -f ai-legal-assistant
+## 📊 Monitoring & Logs
 
-# Service-specific logs
-docker logs <container_id>
+- **Container logs**: `docker-compose logs -f ai-legal-assistant`
+- **Application logs**: `./logs/app.log`
+- **Error logs**: `./logs/errors.log`
+- **Health check**: http://localhost:8000/health
 
-# Log files (mounted volumes)
-tail -f logs/app.log
-tail -f logs/errors.log
-```
+## 🔒 Security
 
-### Performance Monitoring
-- **Resource Usage**: Container memory and CPU monitoring
-- **Response Times**: API endpoint performance tracking
-- **Health Status**: Automated health check reporting
-- **Error Rates**: Service reliability metrics
-
-## 🔄 Rollback Strategy
-
-### Rollback Plan
-In case of deployment issues:
-
-1. **Immediate Rollback**:
-   ```bash
-   docker-compose down
-   git checkout previous-stable-tag
-   docker-compose up -d
-   ```
-
-2. **Version-specific Rollback**:
-   ```bash
-   docker-compose down
-   docker pull ai-legal-assistant:v1.0.0
-   docker-compose up -d
-   ```
-
-3. **Data Recovery**:
-   ```bash
-   # Restore data from backup
-   docker-compose down
-   cp -r backup/data ./data
-   docker-compose up -d
-   ```
-
-### Deployment Verification
-- **Pre-deployment**: Smoke test execution
-- **Post-deployment**: Health check validation
-- **Monitoring**: Continuous service monitoring
-- **Alerts**: Automated failure notifications
-
-## 📊 Container Specifications
-
-### Resource Requirements
-- **CPU**: 1-2 cores
-- **Memory**: 2-4 GB RAM
-- **Storage**: 10-20 GB (including data volumes)
-- **Network**: Port 8000 exposed
-
-### Volume Mounts
-- `./data:/app/data` - Document and vector storage
-- `./logs:/app/logs` - Application logs
-- `./configs:/app/configs` - Configuration files
-
-## 🏷️ Current Development
-
-**Week 9 Focus**: Packaging & Staging Deployment
-- ✅ Docker containerization with optimized builds
-- ✅ Docker Compose orchestration for service management
-- ✅ Staging deployment with health monitoring
-- ✅ Automated smoke testing for deployment verification
-- ✅ Comprehensive rollback planning and procedures
-- ✅ Production-ready container configuration
-
-## 📄 License
-
-[Add your license information here]
+- Non-root user in container
+- Security vulnerabilities scanned and mitigated
+- Environment variables for sensitive data
+- CORS protection enabled
 
 ## 🤝 Contributing
 
-[Add contribution guidelines here]
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+**1. gdown installation fails:**
+```bash
+# Try upgrading pip first
+pip install --upgrade pip
+pip install gdown
+
+# Or install with user flag
+pip install --user gdown
+```
+
+**2. Google Drive download fails:**
+```bash
+# Manual download if automated fails
+# Download from: https://drive.google.com/your-file-id
+# Place in data/ directory
+```
+
+**3. ChromaDB permission issues:**
+```bash
+# Check data directory permissions
+chmod 755 data/
+chmod 755 data/processed/
+```
+
+**4. Docker container fails to start:**
+```bash
+# Check if Docker Desktop is running
+docker info
+
+# If Docker is not running, start Docker Desktop:
+# Windows: Start Docker Desktop from Start menu
+# macOS: Open Docker Desktop application
+# Linux: sudo systemctl start docker
+
+# Check port availability
+netstat -tulpn | grep 8000
+```
+
+**5. Docker daemon not running:**
+```bash
+# Windows: 
+# - Open Docker Desktop from Start menu
+# - Wait for the whale icon to become stable in system tray
+
+# Linux:
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# macOS:
+# - Open Docker Desktop application
+# - Wait for Docker to start completely
+```
+
+## �📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 📞 Support
 
-For deployment issues or questions:
-1. Check the logs: `docker-compose logs -f`
-2. Run smoke tests: `./smoke_test.sh`
-3. Verify health: `curl http://localhost:8000/`
-4. Consult DEPLOYMENT.md for detailed instructions
+- **Issues**: [GitHub Issues](https://github.com/Hieu1607/AI_legal_assistant_production/issues)
+- **Documentation**: [API Docs](http://localhost:8000/docs)
+- **Email**: [Contact](mailto:your-email@example.com)
+
+## 🙏 Acknowledgments
+
+- [ChromaDB](https://chromadb.ai/) for vector database
+- [Sentence Transformers](https://sentence-transformers.net/) for embeddings
+- [FastAPI](https://fastapi.tiangolo.com/) for web framework
+- [Docker](https://docker.com/) for containerization

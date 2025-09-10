@@ -20,8 +20,8 @@ prompting_time = 0
 llm_time = 0
 
 # Set up logging
-root = os.path.dirname(os.getcwd())
-sys.path.insert(0, str(root))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, str(project_root))
 
 from configs.logger import get_logger_app, setup_logging
 from src.store_vector.search_embeddings import search_relevant_embeddings

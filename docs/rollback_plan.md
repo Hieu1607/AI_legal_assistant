@@ -8,8 +8,6 @@ Tài liệu này mô tả các bước rollback cho Docker deployment của hệ
 ### 1. Container startup failures
 ### 2. Docker image build errors
 ### 3. Service connectivity issues
-### 4. Resource allocation problems
-### 5. Configuration errors trong Docker Compose
 
 ---
 
@@ -208,19 +206,6 @@ docker-compose up -d --scale ai-legal-assistant=1
 
 # Remove old containers
 docker-compose ps -q ai-legal-assistant | head -1 | xargs docker stop
-```
-
-### 6.3 Blue-Green Deployment
-```bash
-# Prepare green environment (use different ports)
-docker-compose up -d
-
-# Test green environment
-curl http://localhost:8000/health
-
-# Switch traffic (update nginx/load balancer config)
-# If issues, rollback by switching back to blue environment
-```
 
 ---
 

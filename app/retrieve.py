@@ -8,9 +8,8 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-sys.path.insert(0, str(root))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, str(project_root))
 
 from configs.logger import get_logger, setup_logging
 from src.store_vector.search_embeddings import search_relevant_embeddings
@@ -24,11 +23,6 @@ router = APIRouter()
 class QueryRequest(BaseModel):
     question: str
     top_k: int = Field(default=5, description="Number of top results to return", ge=1)
-
-
-@router.get("/")
-def index():
-    return {"Hello muhehehehe"}
 
 
 @router.post("/retrieve")
@@ -53,7 +47,7 @@ def retrieve_embeddings(request: QueryRequest):
             return JSONResponse(status_code=200, content=[])
         logger.info("Found %s valid chunk", len(result))
         end_time = time.time()
-        logger.info("All time: %s", start_time - end_time)
+        logger.info(f"All time: {start_time-end_time}")
         return result
     except (IndexError, KeyError, FileNotFoundError, ImportError, ValueError) as e:
         logger.info(
