@@ -9999,3 +9999,141 @@ See the vulnerability report here https://nvd.nist.gov/vuln/detail/CVE-2025-3243
 2025-09-03 15:21:33,297 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
 2025-09-03 15:21:33,297 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
 2025-09-03 15:21:33,305 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
+2025-09-05 09:15:41,129 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-05 09:15:42,398 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-05 09:15:42,398 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-05 09:15:42,418 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-05 09:15:42,655 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:15:42,658 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:15:42,676 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:15:42,678 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-05 09:15:42,678 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-05 09:15:42,678 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-05 09:15:42,687 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-05 09:15:42,687 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-05 09:15:54,192 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-05 09:16:05,288 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-05 09:16:05,328 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-05 09:16:05,328 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-05 09:16:06,344 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-09-05 09:16:07,822 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:16:23,836 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:16:23,862 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:16:23,866 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:16:23,884 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:16:23,922 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-05 09:16:23,942 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-05 09:16:23,942 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-05 09:17:14,999 - test_rag - INFO - Theo Chương II Điều 29, nội dung là Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.
+2025-09-05 09:17:15,020 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-05 09:17:15,027 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-05 09:17:15,030 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-05 09:17:15,039 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-05 09:17:15,039 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-05 09:17:15,039 - app.logic.rag_logic - INFO - Network error: Lỗi mạng, retrying...
+2025-09-05 09:17:15,049 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-05 09:17:15,049 - app.logic.rag_logic - INFO - retrieving_time = 0.0003, prompting_time = 0.0000, llm_time = 0.0009, total_time = 0.0012 
+2025-09-05 09:17:15,049 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-05 09:17:15,049 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-05 09:17:15,069 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
+2025-09-05 09:17:15,069 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
+2025-09-05 09:17:15,069 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
+2025-09-05 09:17:55,410 - test_tools - INFO - answer='Theo chương II điều 29 Bộ luật Hàng hải, nội dung là Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.'
+2025-09-08 10:32:12,672 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-08 10:32:17,384 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-08 10:32:17,384 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-08 10:32:17,450 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-08 10:32:18,086 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:32:18,118 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:32:18,153 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:32:18,183 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-08 10:32:18,184 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:32:18,184 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-08 10:32:18,200 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-08 10:32:18,201 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-08 10:32:40,195 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:33:21,791 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:33:21,981 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-08 10:33:21,985 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:33:25,357 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-09-08 10:33:28,312 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:33:44,153 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:33:44,191 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:33:44,225 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:33:44,246 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:33:44,374 - httpx - INFO - HTTP Request: POST http://testserver/agent "HTTP/1.1 200 OK"
+2025-09-08 10:33:44,442 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-08 10:33:44,446 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-08 10:34:13,639 - test_rag - INFO - Theo Chương II Tàu biển, Điều 29 bộ luật hàng hải là về Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.
+2025-09-08 10:34:13,670 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-08 10:34:13,685 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-08 10:34:13,688 - app.logic.rag_logic - INFO - Network error: , retrying...
+2025-09-08 10:34:13,760 - app.logic.rag_logic - INFO - Retry failed: 
+2025-09-08 10:34:13,766 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-08 10:34:13,774 - app.logic.rag_logic - INFO - Network error: Lỗi mạng, retrying...
+2025-09-08 10:34:13,817 - app.logic.rag_logic - INFO - The question is Chương II điều 29 bộ luật hàng hải là gì?
+2025-09-08 10:34:13,817 - app.logic.rag_logic - INFO - retrieving_time = 0.0019, prompting_time = 0.0004, llm_time = 0.0024, total_time = 0.0047 
+2025-09-08 10:34:13,817 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-08 10:34:13,829 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 200 OK"
+2025-09-08 10:34:13,852 - httpx - INFO - HTTP Request: POST http://testserver/rag/ "HTTP/1.1 307 Temporary Redirect"
+2025-09-08 10:34:13,852 - app.routers.rag - INFO - An error occurred during asking model: Simulated error
+2025-09-08 10:34:13,864 - httpx - INFO - HTTP Request: POST http://testserver/rag "HTTP/1.1 500 Internal Server Error"
+2025-09-08 10:34:49,158 - test_tools - INFO - answer='Theo chương II điều 29 bộ luật hàng hải, nội dung là Thanh tra, kiểm tra về an toàn hàng hải, an ninh hàng hải và phòng ngừa ô nhiễm môi trường.'
+2025-09-08 10:38:24,274 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-09-08 10:38:25,334 - chromadb.telemetry.product.posthog - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-09-08 10:38:25,478 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-08 10:38:25,478 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-08 10:38:25,501 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-08 10:48:45,743 - src.store_vector.init_index - INFO - Client ChromaDB created successfully.
+2025-09-08 10:48:45,746 - src.store_vector.init_index - INFO - Checking or creating collection: 'legal_assistant_collection'...
+2025-09-08 10:48:45,810 - src.store_vector.init_index - INFO - Collection 'legal_assistant_collection' is ready.
+2025-09-08 10:48:47,840 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-09-08 10:48:47,841 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
+2025-09-08 10:48:47,842 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-08 10:48:47,842 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:48:47,844 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-08 10:48:47,891 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-08 10:48:47,891 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-08 10:48:50,295 - app.main - INFO - An error occured: [{'type': 'greater_than_equal', 'loc': ('body', 'top_k'), 'msg': 'Input should be greater than or equal to 1', 'input': 0, 'ctx': {'ge': 1}}]
+2025-09-08 10:48:52,844 - app.logic.rag_logic - INFO - The question is Luật lao động cho trẻ vị thành niên?
+2025-09-08 10:48:52,845 - src.store_vector.search_embeddings - INFO - Checking for BAAI/bge-m3 model in local directory...
+2025-09-08 10:48:52,845 - src.store_vector.search_embeddings - INFO - Model directory: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:48:52,845 - src.store_vector.search_embeddings - INFO - Model not found locally, downloading...
+2025-09-08 10:48:52,851 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-08 10:48:52,852 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: BAAI/bge-m3
+2025-09-08 10:49:07,571 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:49:18,960 - sentence_transformers.SentenceTransformer - INFO - Save model to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:49:19,137 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:49:22,400 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-08 10:49:22,492 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:49:28,923 - src.store_vector.search_embeddings - INFO - Model downloaded and saved to C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:49:29,025 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-09-08 10:49:29,025 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: C:\Users\HP\Desktop\AI_legal_assistant\models\BAAI_bge-m3
+2025-09-08 10:49:30,485 - src.store_vector.search_embeddings - INFO - Model loaded successfully from saved location
+2025-09-08 10:49:34,225 - app.logic.rag_logic - INFO - The question is Con mèo thích meo meo
+2025-09-08 10:49:34,629 - app.logic.rag_logic - INFO - The question is 
+2025-09-08 10:49:35,451 - app.logic.rag_logic - INFO - An error occured: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 24
+}
+]
+2025-09-08 10:49:35,453 - app.logic.rag_logic - INFO - retrieving_time = 0.2102, prompting_time = 0.0005, llm_time = 0.6134, total_time = 0.8241 
+2025-09-08 10:49:35,453 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-08 10:49:37,839 - src.store_vector.search_embeddings - ERROR - Failed to load/download model: Cannot copy out of meta tensor; no data! Please use torch.nn.Module.to_empty() instead of torch.nn.Module.to() when moving module from meta to a different device.
+2025-09-08 10:49:38,146 - src.store_vector.search_embeddings - ERROR - Model is not loaded. Cannot perform embedding search.
+2025-09-08 10:49:45,777 - app.logic.rag_logic - INFO - retrieving_time = 0.3952, prompting_time = 0.0005, llm_time = 11.1567, total_time = 11.5523 
+2025-09-08 10:49:45,778 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-08 10:49:54,835 - app.logic.rag_logic - INFO - retrieving_time = 41.3395, prompting_time = 0.0005, llm_time = 20.6518, total_time = 61.9918 
+2025-09-08 10:49:54,837 - app.logic.rag_logic - INFO - RAG answer successfully
+2025-09-08 10:49:55,651 - app.logic.retrieve_logic - INFO - The question is Hợp đồng là gì?
+2025-09-08 10:49:55,651 - app.logic.retrieve_logic - INFO - The number of returning chunks is 5
+2025-09-08 10:49:55,841 - app.logic.retrieve_logic - INFO - Found 5 valid chunk
+2025-09-08 10:50:13,527 - app.main - INFO - An error occured: [{'type': 'greater_than_equal', 'loc': ('body', 'top_k'), 'msg': 'Input should be greater than or equal to 1', 'input': 0, 'ctx': {'ge': 1}}]
+2025-09-08 10:51:03,962 - app.logic.rag_logic - INFO - The question is 
+2025-09-08 10:51:14,643 - app.logic.rag_logic - INFO - retrieving_time = 0.0933, prompting_time = 0.0000, llm_time = 10.5872, total_time = 10.6805 
+2025-09-08 10:51:14,643 - app.logic.rag_logic - INFO - RAG answer successfully

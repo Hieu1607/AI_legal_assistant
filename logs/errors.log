@@ -10,3 +10,5 @@
 2025-08-29 14:13:55,150 - src.store_vector.search_embeddings - ERROR - search_embeddings - search_relevant_embeddings - Model is not loaded. Cannot perform embedding search.
 2025-08-29 14:19:27,150 - src.store_vector.search_embeddings - ERROR - search_embeddings - load_model - Failed to load/download model: Error while serializing: IoError(Os { code: 1224, kind: Uncategorized, message: "The requested operation cannot be performed on a file with a user-mapped section open." })
 2025-08-29 14:19:27,157 - src.store_vector.search_embeddings - ERROR - search_embeddings - search_relevant_embeddings - Model is not loaded. Cannot perform embedding search.
+2025-09-08 10:49:37,839 - src.store_vector.search_embeddings - ERROR - search_embeddings - load_model - Failed to load/download model: Cannot copy out of meta tensor; no data! Please use torch.nn.Module.to_empty() instead of torch.nn.Module.to() when moving module from meta to a different device.
+2025-09-08 10:49:38,146 - src.store_vector.search_embeddings - ERROR - search_embeddings - search_relevant_embeddings - Model is not loaded. Cannot perform embedding search.
