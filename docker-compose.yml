@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+  # Service chính với warm up tích hợp
   ai-legal-assistant:
     build:
       context: .
@@ -10,16 +9,18 @@ services:
     environment:
       - PORT=8000
       - PYTHONPATH=/app
+      - ANONYMIZED_TELEMETRY=False
+      - CHROMA_SERVER_NOFILE=65536
     volumes:
       # Mount data directory để persist dữ liệu
       - ./data:/app/data
       - ./logs:/app/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+      timeout: 15s
+      retries: 8
+      start_period: 90s  # Increased for double warm up time
     restart: unless-stopped
     networks:
       - ai-legal-network

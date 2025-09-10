@@ -2,19 +2,18 @@ import os
 import sys
 
 import chromadb
+from dotenv import load_dotenv
 
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
-
+load_dotenv()
 from configs.logger import get_logger, setup_logging
 
 setup_logging()
 logger = get_logger(__name__)
 
-CHROMA_DB_PATH = os.path.join(root, "data/processed/filtered_vector_store")
-# COLLECTION_NAME = "legal_assistant_collection_bge"
+CHROMA_DB_PATH = os.path.join(root, "data/processed/vector_store")
 COLLECTION_NAME = "legal_assistant_collection"
-# COLLECTION_NAME = "legal_assistant_collection_all-MiniLM-L6-v2"
 INDEX_CONFIG = {
     "collection_name": COLLECTION_NAME,
     "db_path": CHROMA_DB_PATH,
@@ -27,7 +26,16 @@ INDEX_CONFIG = {
 
 def init_chroma_index():
     # print(f"Kiểm tra thư mục lưu trữ Chroma tại: {CHROMA_DB_PATH}")
-    client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+    chroma_token = os.getenv("x-chromadb-token")
+    if chroma_token is None:
+        raise ValueError("Environment variable 'x-chromadb-token' is not set.")
+    client = chromadb.HttpClient(
+        ssl=True,
+        host="api.trychroma.com",
+        tenant="eacc7fce-0948-49c8-a52b-5ed4969db763",
+        database="AI legal assistant ChromaDB",
+        headers={"x-chroma-token": chroma_token},
+    )
     logger.info("Client ChromaDB created successfully.")
     logger.info("Kiểm tra hoặc tạo collection: '%s'...", COLLECTION_NAME)
     collection = client.get_or_create_collection(

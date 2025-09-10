@@ -9,20 +9,24 @@ requests==2.32.4
 httpx==0.28.1
 urllib3==2.4.0
 
-# Machine Learning và AI
-sentence-transformers==5.0.0
-torch==2.7.1
-transformers==4.52.4
+# Machine Learning và AI (API-based embedding)
+gradio_client==1.4.2
 numpy==2.3.0
 scikit-learn==1.7.0
-huggingface_hub==0.33.0
-tokenizers==0.21.1
 tiktoken==0.9.0
+
+# Optional: Keep for compatibility (remove if not needed)
+# sentence-transformers==5.0.0
+# torch==2.7.1
+# transformers==4.52.4
+# huggingface_hub==0.33.0
+# tokenizers==0.21.1
 
 # Data processing
 pandas==2.3.0
 beautifulsoup4==4.13.4
 lxml==5.4.0
+gdown==5.2.0
 
 # Vector database
 chromadb==1.0.15
@@ -49,8 +53,5 @@ certifi==2025.7.14
 google-generativeai==0.8.5
 google-auth==2.40.3
 
-# Development tools (optional - loại bỏ trong production)
-black==25.1.0
-pytest==8.4.1
-pytest-asyncio==0.25.3
-pytest-cov==6.0.0
+gradio_client
+
