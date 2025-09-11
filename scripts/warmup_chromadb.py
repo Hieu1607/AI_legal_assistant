@@ -119,7 +119,7 @@ def warmup_sentence_transformer(logger):
 
 def main():
     """
-    Main warm up function - chỉ warm up trước khi start
+    Main warm up function - only warm up before starting
     """
     # Setup path and logging
     setup_path()
