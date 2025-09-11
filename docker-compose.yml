@@ -1,5 +1,4 @@
 services:
-  # Service chính với warm up tích hợp
   ai-legal-assistant:
     build:
       context: .
@@ -12,7 +11,6 @@ services:
       - ANONYMIZED_TELEMETRY=False
       - CHROMA_SERVER_NOFILE=65536
     volumes:
-      # Mount data directory để persist dữ liệu
       - ./data:/app/data
       - ./logs:/app/logs
     healthcheck:

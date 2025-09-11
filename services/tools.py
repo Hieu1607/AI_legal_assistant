@@ -49,7 +49,7 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
     try:
         logger.info("Question: %s, number of chunks: %d", data.question, data.top_k)
         relevant_embeddings = search_relevant_embeddings(data.question, data.top_k)
-        # relevant_embeddings["documents"] trả về nested list, cần flatten nó
+        # relevant_embeddings["documents"] returns nested list, need to flatten it
         chunks = (
             relevant_embeddings["documents"][0]
             if relevant_embeddings["documents"]
@@ -111,7 +111,7 @@ async def generate_answer(data: GenerateInput) -> GenerateOutput:
         return GenerateOutput(
             answer="Không tìm thấy thông tin liên quan để trả lời câu hỏi của bạn."
         )
-    # Tạo một chuỗi chứa tất cả các câu từ relevant_sentences
+    # Create a string containing all sentences from relevant_sentences
     context = ""
     for i, sentence in enumerate(relevant_sentences, 1):
         context += f"Đoạn {i}: {sentence}\n"
@@ -128,10 +128,10 @@ async def generate_answer(data: GenerateInput) -> GenerateOutput:
         Trả lời ngắn gọn.
     """
     try:
-        # Sử dụng hàm riêng để chạy generate_content trong một executor
+        # Use separate function to run generate_content in an executor
         model = genai.GenerativeModel(model_name="gemini-2.5-pro")  # type: ignore
 
-        # Sử dụng loop.run_in_executor để chạy hàm đồng bộ trong một thread riêng
+        # Use loop.run_in_executor to run sync function in a separate thread
         loop = asyncio.get_event_loop()
         response = await asyncio.wait_for(
             loop.run_in_executor(None, lambda: model.generate_content(prompt)),

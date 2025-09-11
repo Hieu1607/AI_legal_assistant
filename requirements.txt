@@ -1,15 +1,15 @@
-# Core FastAPI và ASGI server
+# Core FastAPI and ASGI server
 fastapi==0.115.9
 uvicorn==0.35.0
 starlette==0.45.3
 
-# HTTP và networking
+# HTTP and networking
 aiohttp==3.12.12
 requests==2.32.4
 httpx==0.28.1
 urllib3==2.4.0
 
-# Machine Learning và AI (API-based embedding)
+# Machine Learning and AI (API-based embedding)
 gradio_client==1.4.2
 numpy==2.3.0
 scikit-learn==1.7.0
@@ -31,7 +31,7 @@ gdown==5.2.0
 # Vector database
 chromadb==1.0.15
 
-# Configuration và environment
+# Configuration and environment
 python-dotenv==1.1.0
 pyyaml==6.0.2
 

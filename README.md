@@ -34,13 +34,13 @@ Ensure your machine has:
 ### Option 1: One-Click Install (Windows)
 
 ```powershell
-Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_production/main/install.ps1").Content
+Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_9_cloud_simple/install.ps1").Content
 ```
 
 ### Option 1b: One-Click Install (Linux/macOS)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_production/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_9_cloud_simple/install.sh | bash
 ```
 
 ### Option 2: Manual Setup
@@ -48,8 +48,8 @@ curl -sSL https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_producti
 #### Linux/macOS:
 ```bash
 # Clone repository
-git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
-cd AI_legal_assistant_production
+git clone https://github.com/Hieu1607/AI_legal_assistant.git
+cd AI_legal_assistant
 
 # Run setup script
 chmod +x setup.sh
@@ -59,8 +59,8 @@ chmod +x setup.sh
 #### Windows:
 ```powershell
 # Clone repository
-git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
-cd AI_legal_assistant_production
+git clone https://github.com/Hieu1607/AI_legal_assistant.git
+cd AI_legal_assistant
 
 # Run setup script
 .\setup.ps1
@@ -70,13 +70,16 @@ cd AI_legal_assistant_production
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
-cd AI_legal_assistant_production
+git clone https://github.com/Hieu1607/AI_legal_assistant.git
+cd AI_legal_assistant
 
-# 2. Download data
+# 2. Switch to the correct branch
+git checkout week_9_cloud_simple
+
+# 3. Download data
 python scripts/download_gdown.py
 
-# 3. Build and run with Docker
+# 4. Build and run with Docker
 docker-compose build
 docker-compose up -d
 ```
@@ -121,7 +124,7 @@ curl -X POST "http://localhost:8000/retrieve" \
 ## 📁 Project Structure
 
 ```
-AI_legal_assistant_production/
+AI_legal_assistant/
 ├── app/                    # FastAPI application
 ├── src/                    # Source code modules
 │   ├── embedding/          # Embedding generation
@@ -292,7 +295,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/Hieu1607/AI_legal_assistant_production/issues)
+- **Issues**: [GitHub Issues](https://github.com/Hieu1607/AI_legal_assistant/issues)
 - **Documentation**: [API Docs](http://localhost:8000/docs)
 - **Email**: [Contact](mailto:your-email@example.com)
 

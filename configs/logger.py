@@ -136,18 +136,18 @@ def get_logger_app(name="app"):
     # pylint: disable=global-statement
     global _APP_LOG_HANDLER, _APP_LOG_PATH
 
-    # Tạo một singleton app handler cho toàn bộ ứng dụng nếu chưa tồn tại
+    # Create a singleton app handler for the entire application if it doesn't exist
     if _APP_LOG_HANDLER is None:
-        # Tạo logs directory nếu chưa tồn tại
+        # Create logs directory if it doesn't exist
         logs_dir = get_project_root() / "logs"
         logs_dir.mkdir(exist_ok=True)
 
-        # Tạo một formatter
+        # Create a formatter
         formatter = logging.Formatter(
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
 
-        # Tạo một rotating file handler cho app.log
+        # Create a rotating file handler for app.log
         app_log_path = str(logs_dir / "app.log")
         handler = RotatingFileHandler(
             filename=app_log_path,
@@ -156,33 +156,33 @@ def get_logger_app(name="app"):
             encoding="utf8",
         )
 
-        # Thiết lập level và formatter
+        # Set level and formatter
         handler.setLevel(logging.INFO)
         handler.setFormatter(formatter)
 
-        # Lưu trữ handler như một singleton
+        # Store handler as a singleton
         _APP_LOG_HANDLER = handler
         _APP_LOG_PATH = app_log_path
 
     # Get the logger with the specified name
     logger = logging.getLogger(name)
 
-    # Đặt propagate=False để tránh log bị duplicate khi truyền lên root logger
+    # Set propagate=False to avoid duplicate logs when passing to root logger
     logger.propagate = False
 
-    # Đảm bảo logger có ít nhất một level, mặc định là INFO
+    # Ensure logger has at least one level, default is INFO
     if not logger.level:
         logger.setLevel(logging.INFO)
 
-    # Kiểm tra xem logger này đã có app handler chưa
-    # bằng cách kiểm tra baseFilename của tất cả các handlers
+    # Check if this logger already has an app handler
+    # by checking baseFilename of all handlers
     app_handler_exists = any(
         isinstance(handler, logging.FileHandler)
         and getattr(handler, "baseFilename", "") == _APP_LOG_PATH
         for handler in logger.handlers
     )
 
-    # Thêm handler nếu chưa có
+    # Add handler if it doesn't exist
     if not app_handler_exists:
         logger.addHandler(_APP_LOG_HANDLER)
 
@@ -209,18 +209,18 @@ def get_logger_agent(name="agent"):
     # pylint: disable=global-statement
     global _AGENT_LOG_HANDLER, _AGENT_LOG_PATH
 
-    # Tạo một singleton agent handler cho toàn bộ ứng dụng nếu chưa tồn tại
+    # Create a singleton agent handler for the entire application if it doesn't exist
     if _AGENT_LOG_HANDLER is None:
-        # Tạo logs directory nếu chưa tồn tại
+        # Create logs directory if it doesn't exist
         logs_dir = get_project_root() / "logs"
         logs_dir.mkdir(exist_ok=True)
 
-        # Tạo một formatter
+        # Create a formatter
         formatter = logging.Formatter(
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
 
-        # Tạo một rotating file handler cho agent.log
+        # Create a rotating file handler for agent.log
         agent_log_path = str(logs_dir / "agent.log")
         handler = RotatingFileHandler(
             filename=agent_log_path,
@@ -229,33 +229,33 @@ def get_logger_agent(name="agent"):
             encoding="utf8",
         )
 
-        # Thiết lập level và formatter
+        # Set level and formatter
         handler.setLevel(logging.INFO)
         handler.setFormatter(formatter)
 
-        # Lưu trữ handler như một singleton
+        # Store handler as a singleton
         _AGENT_LOG_HANDLER = handler
         _AGENT_LOG_PATH = agent_log_path
 
     # Get the logger with the specified name
     logger = logging.getLogger(name)
 
-    # Đặt propagate=False để tránh log bị duplicate khi truyền lên root logger
+    # Set propagate=False to avoid duplicate logs when passing to root logger
     logger.propagate = False
 
-    # Đảm bảo logger có ít nhất một level, mặc định là INFO
+    # Ensure logger has at least one level, default is INFO
     if not logger.level:
         logger.setLevel(logging.INFO)
 
-    # Kiểm tra xem logger này đã có agent handler chưa
-    # bằng cách kiểm tra baseFilename của tất cả các handlers
+    # Check if this logger already has an agent handler
+    # by checking baseFilename of all handlers
     agent_handler_exists = any(
         isinstance(handler, logging.FileHandler)
         and getattr(handler, "baseFilename", "") == _AGENT_LOG_PATH
         for handler in logger.handlers
     )
 
-    # Thêm handler nếu chưa có
+    # Add handler if it doesn't exist
     if not agent_handler_exists:
         logger.addHandler(_AGENT_LOG_HANDLER)
 

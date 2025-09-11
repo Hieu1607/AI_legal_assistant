@@ -17,10 +17,10 @@ setup_logging()
 logger = get_logger(__name__)
 collection = init_chroma_index()[1]
 
-# Cấu hình API embedding
+# API embedding configuration
 EMBEDDING_API_ENDPOINT = "hieuailearning/BAAI_bge_m3_api"
 
-# Backup models configuration for reference (không sử dụng nữa)
+# Backup models configuration for reference (no longer used)
 # DEFAULT_MODEL = "BAAI/bge-m3"
 # ALTERNATIVE_MODELS = {
 #     "vietnamese": "keepitreal/vietnamese-sbert",
@@ -98,12 +98,12 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
     results = collection.query(
         query_embeddings=embedding_from_text,
         n_results=n_results,
-        # where={"source": "article"},        # Tùy chọn: Lọc theo metadata (AND logic)
-        # where_document={"$contains":"leave"} # Tùy chọn: Lọc theo nội dung document
+        # where={"source": "article"},        # Optional: Filter by metadata (AND logic)
+        # where_document={"$contains":"leave"} # Optional: Filter by document content
     )
     end_query_time = time.time()
 
-    # Tính cosine similarity từ distances (ChromaDB trả về cosine distances)
+    # Calculate cosine similarity from distances (ChromaDB returns cosine distances)
     # Cosine similarity = 1 - cosine distance
     logger.info(
         "Time to run with retrieving is %f",
@@ -112,7 +112,7 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
     cosine_similarities = []
     if results["distances"] and len(results["distances"][0]) > 0:
         cosine_similarities = [1 - distance for distance in results["distances"][0]]
-    # Tạo dictionary mới với cosine similarities
+    # Create new dictionary with cosine similarities
     enhanced_results = {
         "ids": results["ids"],
         "distances": results["distances"],
@@ -129,11 +129,11 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
 if __name__ == "__main__":
     test_text = "Chương I điều 2 bộ luật hình sự."
 
-    # Test với API embedding
+    # Test with API embedding
     print("=== Testing with API embedding ===")
     res = search_relevant_embeddings(test_text, 5)
 
-    # Test với text khác để kiểm tra API
+    # Test with different text to check API
     print("\n=== Testing with different text ===")
     try:
         res_vn = search_relevant_embeddings("Điều 3 Luật Hình sự quy định gì?", 5)
