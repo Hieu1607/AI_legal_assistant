@@ -25,7 +25,7 @@ INDEX_CONFIG = {
 
 
 def init_chroma_index():
-    # print(f"Kiểm tra thư mục lưu trữ Chroma tại: {CHROMA_DB_PATH}")
+    # print(f"Check Chroma storage directory at: {CHROMA_DB_PATH}")
     chroma_token = os.getenv("x-chromadb-token")
     if chroma_token is None:
         raise ValueError("Environment variable 'x-chromadb-token' is not set.")
@@ -41,18 +41,18 @@ def init_chroma_index():
     collection = client.get_or_create_collection(
         name=COLLECTION_NAME,
         metadata={
-            "hnsw:space": "cosine",  # Độ đo cosine cho tìm kiếm văn bản
-            "hnsw:construction_ef": 200,  # Tăng exploration khi xây dựng để đảm bảo độ chính xác cao
-            "hnsw:M": 32,  # Tăng số kết nối để cải thiện chất lượng index
-            "hnsw:search_ef": 50,  # Tăng exploration khi tìm kiếm để cân bằng tốc độ và độ chính xác
-            "hnsw:num_threads": 8,  # Sử dụng 8 luồng để tăng tốc xử lý
-            "hnsw:resize_factor": 1.5,  # Tỷ lệ tăng trưởng lớn để hỗ trợ mở rộng dữ liệu
-            "hnsw:batch_size": 200,  # Batch size lớn hơn để xử lý dữ liệu nhanh
-            "hnsw:sync_threshold": 1000,  # Đồng bộ sau mỗi 1000 vector để giảm I/O
+            "hnsw:space": "cosine",  # Cosine metric for text search
+            "hnsw:construction_ef": 200,  # Increase exploration during construction for high accuracy
+            "hnsw:M": 32,  # Increase connections to improve index quality
+            "hnsw:search_ef": 50,  # Increase exploration during search to balance speed and accuracy
+            "hnsw:num_threads": 8,  # Use 8 threads to speed up processing
+            "hnsw:resize_factor": 1.5,  # Large growth ratio to support data expansion
+            "hnsw:batch_size": 200,  # Larger batch size for faster data processing
+            "hnsw:sync_threshold": 1000,  # Sync after every 1000 vectors to reduce I/O
         },
     )
     logger.info("Collection '%s' đã sẵn sàng.", COLLECTION_NAME)
-    # print("\n--- Cấu hình Index của ChromaDB ---")
+    # print("\n--- ChromaDB Index Configuration ---")
     # print(json.dumps(INDEX_CONFIG, indent=4, ensure_ascii=False))
 
     return client, collection
@@ -61,5 +61,5 @@ def init_chroma_index():
 if __name__ == "__main__":
     chroma_client, legal_collection = init_chroma_index()
     print(f"Số lượng documents: {legal_collection.count()}")
-    results = legal_collection.peek(limit=5)  # Lấy 5 item đầu tiên
+    results = legal_collection.peek(limit=5)  # Get first 5 items
     print(results)

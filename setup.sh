@@ -12,10 +12,14 @@ echo "Docker is running: OK"
 
 # Clone repository
 echo "Cloning repository..."
-git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
+git clone https://github.com/Hieu1607/AI_legal_assistant.git
 
 # Change to project directory
-cd AI_legal_assistant_production
+cd AI_legal_assistant
+
+# Switch to the correct branch
+echo "Switching to week_9_cloud_simple branch..."
+git checkout week_9_cloud_simple
 
 # Build Docker image
 echo "Building Docker image..."

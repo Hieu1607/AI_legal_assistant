@@ -10,10 +10,14 @@ try {
 
 # Clone repository
 Write-Host "Cloning repository..."
-git clone https://github.com/Hieu1607/AI_legal_assistant_production.git
+git clone https://github.com/Hieu1607/AI_legal_assistant.git
 
 # Change to project directory
-Set-Location AI_legal_assistant_production
+Set-Location AI_legal_assistant
+
+# Switch to the correct branch
+Write-Host "Switching to week_9_cloud_simple branch..."
+git checkout week_9_cloud_simple
 
 # Build Docker image
 Write-Host "Building Docker image..."

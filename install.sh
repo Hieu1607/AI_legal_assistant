@@ -73,13 +73,13 @@ originalLocation=$(pwd)
 
 # Download and run setup script
 echo "Downloading setup script..."
-if wget -q "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_production/main/setup.sh" -O "ai_legal_setup.sh" 2>/dev/null; then
+if wget -q "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_9_cloud_simple/setup.sh" -O "ai_legal_setup.sh" 2>/dev/null; then
     echo "Running setup..."
     chmod +x ai_legal_setup.sh
     ./ai_legal_setup.sh
     cd "$originalLocation"
     rm -f ai_legal_setup.sh
-elif curl -s "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant_production/main/setup.sh" -o "ai_legal_setup.sh" 2>/dev/null; then
+elif curl -s "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_9_cloud_simple/setup.sh" -o "ai_legal_setup.sh" 2>/dev/null; then
     echo "Running setup..."
     chmod +x ai_legal_setup.sh
     ./ai_legal_setup.sh

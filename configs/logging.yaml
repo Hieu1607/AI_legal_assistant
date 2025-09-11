@@ -46,17 +46,17 @@ loggers:
   app:
     level: INFO
     handlers: [console, info_file_handler, error_file_handler]
-    propagate: False  # Không propagate để tránh duplicate logs
+    propagate: False  # Don't propagate to avoid duplicate logs
 
   app.rag:
     level: INFO
-    handlers: []  # Không cần handlers vì đã được thêm trong get_logger_app
-    propagate: False  # Không propagate để tránh duplicate logs
+    handlers: []  # No handlers needed as they are added in get_logger_app
+    propagate: False  # Don't propagate to avoid duplicate logs
 
   app.retrieve:
     level: INFO
-    handlers: []  # Không cần handlers vì đã được thêm trong get_logger_app
-    propagate: False  # Không propagate để tránh duplicate logs
+    handlers: []  # No handlers needed as they are added in get_logger_app
+    propagate: False  # Don't propagate to avoid duplicate logs
 
 root:
   level: INFO
