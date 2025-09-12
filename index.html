@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ Lý Pháp Lý AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>Trợ Lý Pháp Lý AI</h1>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <!-- Welcome screen -->
+            <div class="welcome-screen" id="welcome-screen">
+                <div class="welcome-content">
+                    <div class="welcome-icon">⚖️</div>
+                    <h2 class="welcome-title">Trợ Lý Pháp Lý AI</h2>
+                    <p class="welcome-message">Hôm nay tôi có thể giúp gì cho bạn?</p>
+                    <div class="welcome-suggestions">
+                        <div class="suggestion-item">Tư vấn pháp lý và hỗ trợ</div>
+                        <div class="suggestion-item">Xem xét và phân tích tài liệu</div>
+                        <div class="suggestion-item">Hỗ trợ nghiên cứu pháp luật</div>
+                    </div>
+                </div>
+            </div>
+            <!-- AI and user messages will be appended here -->
+        </div>
+        <div class="input-area">
+            <textarea id="userInput" placeholder="Hãy đặt câu hỏi pháp lý của bạn tại đây..." rows="1"></textarea>
+            <button id="sendButton">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2 .01 7z"/></svg>
+            </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
