@@ -1,32 +1,33 @@
+# Docker Compose file for running Prometheus
+version: '3.8'
+
 services:
-  ai-legal-assistant:
+  prometheus:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: prometheus
     ports:
-      - "8000:8000"
-    environment:
-      - PORT=8000
-      - PYTHONPATH=/app
-      - ANONYMIZED_TELEMETRY=False
-      - CHROMA_SERVER_NOFILE=65536
+      - "9090:9090"
     volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 15s
-      retries: 8
-      start_period: 90s  # Increased for double warm up time
-    restart: unless-stopped
+      - prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     networks:
-      - ai-legal-network
-
-networks:
-  ai-legal-network:
-    driver: bridge
+      - monitoring
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+      - '--web.external-url=http://localhost:9090'
 
 volumes:
-  ai-legal-data:
-    driver: local
+  prometheus_data:
+
+networks:
+  monitoring:
+    driver: bridge

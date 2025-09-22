@@ -1,46 +1,20 @@
-# Super minimal Dockerfile
-# pragma: allowlist nextline critical_high_vulnerabilities
-FROM python:3.11-slim
+# Prometheus Dockerfile
+FROM prom/prometheus:v2.45.0
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app \
-    PORT=8000
+# Copy configuration file
+COPY prometheus.yml /etc/prometheus/prometheus.yml
 
-WORKDIR /app
+# Expose port 9090
+EXPOSE 9090
 
-# Install system dependencies including curl for smoke tests
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-    
-    # Copy requirements files
-COPY requirements.txt ./
+# Set user to prometheus
+USER nobody
 
-# Install Python packages from requirements.txt
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Copy source code
-COPY app/ ./app/
-COPY src/ ./src/
-COPY configs/ ./configs/
-COPY services/ ./services/
-COPY scripts/ ./scripts/
-COPY .env.example .env
-
-# Create basic directories
-RUN mkdir -p logs
-
-# Fix line endings and make startup scripts executable
-RUN chmod +x /app/scripts/start_with_warmup.sh && \
-    chmod +x /app/scripts/smoke_test.sh && \
-    sed -i 's/\r$//' /app/scripts/start_with_warmup.sh && \
-    sed -i 's/\r$//' /app/scripts/smoke_test.sh 
-
-EXPOSE 8000
-
-# For local development with warmup, use: docker run ... /app/scripts/start_with_warmup.sh
-CMD ["/app/scripts/start_with_warmup.sh"]
-
-
+# Command to run Prometheus
+CMD ["--config.file=/etc/prometheus/prometheus.yml", \
+     "--storage.tsdb.path=/prometheus", \
+     "--web.console.libraries=/etc/prometheus/console_libraries", \
+     "--web.console.templates=/etc/prometheus/consoles", \
+     "--storage.tsdb.retention.time=200h", \
+     "--web.enable-lifecycle", \
+     "--web.enable-admin-api"]

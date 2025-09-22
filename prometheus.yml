@@ -1,0 +1,36 @@
+# Prometheus Configuration File
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Scrape metrics from AI Legal Assistant
+  - job_name: "ai-legal-assistant"
+    metrics_path: "/metrics"
+    scrape_interval: 30s
+    static_configs:
+      # Update this to match your application host and port
+      - targets: ["host.docker.internal:8000"]  # For Docker Desktop on Windows/Mac
+      # Alternative for Linux: 
+      # - targets: ["172.17.0.1:8000"]  # Docker bridge network
+    scrape_timeout: 10s
