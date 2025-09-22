@@ -18,8 +18,8 @@ git clone https://github.com/Hieu1607/AI_legal_assistant.git
 cd AI_legal_assistant
 
 # Switch to the correct branch
-echo "Switching to week_9_cloud_simple branch..."
-git checkout week_9_cloud_simple
+echo "Switching to week_10 branch..."
+git checkout week_10
 
 # Build Docker image
 echo "Building Docker image..."
@@ -31,9 +31,16 @@ docker-compose up -d
 
 echo "Setup complete!"
 echo ""
-echo "Application is starting up..."
+echo "Application is starting up with enhanced cache system..."
 echo "You can access the application at:"
 echo "- API Documentation: http://localhost:8000/docs"
 echo "- Health Check: http://localhost:8000/"
+echo "- RAG Endpoint: http://localhost:8000/rag"
+echo "- Metrics: http://localhost:8000/metrics"
 echo ""
 echo "Wait a few moments for the containers to fully start, then check the health endpoint."
+echo ""
+echo "New in this version:"
+echo "- Smart caching system for improved response times"
+echo "- Enhanced RAG capabilities with Groq LLM"
+echo "- Performance monitoring and metrics"
