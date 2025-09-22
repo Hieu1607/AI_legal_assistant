@@ -5,16 +5,19 @@
 ## 📋 Features
 
 - **🔍 Legal Text Search**: Intelligent search within legal document database
+- **🤖 RAG System**: Retrieval-Augmented Generation for accurate legal responses
+- **⚡ Smart Caching**: Thread-safe cache system for improved response times
 - **🗄️ Vector Database**: Using ChromaDB for storing and searching embeddings
 - **🚀 RESTful API**: FastAPI with automatic documentation
 - **🐳 Docker**: Containerized deployment with automatic double warm-up
-- **⚡ RAG System**: Retrieval-Augmented Generation for accurate search
+- **📊 Performance Monitoring**: Built-in metrics and logging system
 
 ## 🛠️ Tech Stack
 
 - **Backend**: FastAPI, Python 3.11
-- **AI/ML**: API-based Embedding (BAAI/bge-m3 via Gradio), Google Generative AI
+- **AI/ML**: API-based Embedding (BAAI/bge-m3 via Gradio), Groq LLM (Llama 3.3 70B)
 - **Database**: ChromaDB (Vector Database)
+- **Caching**: Thread-safe in-memory cache with TTL and LRU eviction
 - **Containerization**: Docker, Docker Compose
 - **Data Processing**: BeautifulSoup, Pandas
 - **Logging**: Structured logging with ColoredLogs
@@ -34,13 +37,13 @@ Ensure your machine has:
 ### Option 1: One-Click Install (Windows)
 
 ```powershell
-Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_9_cloud_simple/install.ps1").Content
+Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_10/install.ps1").Content
 ```
 
 ### Option 1b: One-Click Install (Linux/macOS)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_9_cloud_simple/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/Hieu1607/AI_legal_assistant/week_10/install.sh | bash
 ```
 
 ### Option 2: Manual Setup
@@ -74,7 +77,7 @@ git clone https://github.com/Hieu1607/AI_legal_assistant.git
 cd AI_legal_assistant
 
 # 2. Switch to the correct branch
-git checkout week_9_cloud_simple
+git checkout week_10
 
 # 3. Download data
 python scripts/download_gdown.py
@@ -108,6 +111,8 @@ After successful startup, you can access:
 - **🌐 API Documentation**: http://localhost:8000/docs
 - **💚 Health Check**: http://localhost:8000/
 - **🔍 Search Endpoint**: http://localhost:8000/retrieve
+- **🤖 RAG Endpoint**: http://localhost:8000/rag
+- **📊 Metrics**: http://localhost:8000/metrics
 
 ### Example API Calls
 
@@ -119,6 +124,14 @@ curl http://localhost:8000/
 curl -X POST "http://localhost:8000/retrieve" \
   -H "Content-Type: application/json" \
   -d '{"query": "employee rights", "top_k": 5}'
+
+# Ask legal questions (RAG)
+curl -X POST "http://localhost:8000/rag" \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Quyền lợi của người lao động khi nghỉ việc là gì?"}'
+
+# Get system metrics
+curl http://localhost:8000/metrics
 ```
 
 ## 📁 Project Structure
@@ -126,11 +139,15 @@ curl -X POST "http://localhost:8000/retrieve" \
 ```
 AI_legal_assistant/
 ├── app/                    # FastAPI application
+│   ├── main.py            # Application entry point
+│   ├── constants/         # HTTP status constants
+│   ├── logic/             # Business logic layer
+│   ├── models/            # Pydantic models
+│   └── routers/           # API route handlers
 ├── src/                    # Source code modules
-│   ├── embedding/          # Embedding generation
-│   ├── store_vector/       # ChromaDB operations
-│   ├── retrieval/          # Data fetching
-│   └── preprocess/         # Data preprocessing
+│   ├── cache/             # Cache management system
+│   ├── store_vector/      # ChromaDB operations
+│   └── ...                # Other modules
 ├── scripts/                # Utility scripts
 │   ├── warmup_chromadb.py  # Database warm-up
 │   ├── download_gdown.py   # Data download
@@ -139,6 +156,7 @@ AI_legal_assistant/
 ├── data/                   # Data storage
 │   └── processed/          # Processed data & vector store
 ├── logs/                   # Application logs
+├── services/               # External service integrations
 ├── docker-compose.yml      # Docker services
 ├── Dockerfile             # Container definition
 └── requirements.txt       # Python dependencies
@@ -165,6 +183,40 @@ pip install gdown
 cp .env_example .env
 # Edit .env with your actual API keys:
 # - Replace with your Groq API key for GROQ_API_KEY
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+Key configuration options in `.env`:
+
+```bash
+# API Keys
+GROQ_API_KEY="your_groq_api_key_here"
+
+# LLM Configuration
+LLM_MODEL="llama-3.3-70b-versatile"
+
+# Cache Settings
+CACHE_TTL_SECONDS=3600        # Cache expiration time (1 hour)
+CACHE_MAX_SIZE=1000           # Maximum cached entries
+
+# Database Settings
+CHROMA_DB_PATH=data/processed/vector_store
+COLLECTION_NAME=legal_assistant_collection_all-MiniLM-L6-v2
+
+# Embedding API Settings
+EMBEDDING_API_ENDPOINT=hieuailearning/BAAI_bge_m3_api
+EMBEDDING_API_TIMEOUT=30
+```
+
+### Cache System
+
+The application includes an intelligent caching system:
+- **TTL-based expiration**: Configurable cache lifetime
+- **LRU eviction**: Automatic removal of least-used entries
+- **Thread-safe**: Concurrent access protection
+- **Performance tracking**: Cache hit/miss monitoring
 
 # Initialize ChromaDB and load sample data
 cd scripts
@@ -214,7 +266,17 @@ docker-compose up -d
 - **Container logs**: `docker-compose logs -f ai-legal-assistant`
 - **Application logs**: `./logs/app.log`
 - **Error logs**: `./logs/errors.log`
+- **Agent logs**: `./logs/agent.log`
 - **Health check**: http://localhost:8000/health
+- **Metrics endpoint**: http://localhost:8000/metrics
+
+### Performance Metrics
+
+The system provides detailed performance tracking:
+- Response times for embedding and LLM operations
+- Cache hit rates and performance
+- Request/response metrics
+- Error tracking and debugging information
 
 ## 🔒 Security
 
@@ -286,6 +348,17 @@ sudo systemctl enable docker
 # macOS:
 # - Open Docker Desktop application
 # - Wait for Docker to start completely
+```
+
+**6. Cache-related issues:**
+```bash
+# Clear application cache (if needed)
+# Cache automatically expires based on TTL settings
+# Check cache statistics via metrics endpoint
+
+# Adjust cache settings in .env
+CACHE_TTL_SECONDS=7200    # Increase to 2 hours
+CACHE_MAX_SIZE=2000       # Increase max entries
 ```
 
 ## �📝 License

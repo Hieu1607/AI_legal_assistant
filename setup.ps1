@@ -16,8 +16,8 @@ git clone https://github.com/Hieu1607/AI_legal_assistant.git
 Set-Location AI_legal_assistant
 
 # Switch to the correct branch
-Write-Host "Switching to week_9_cloud_simple branch..."
-git checkout week_9_cloud_simple
+Write-Host "Switching to week_10 branch..."
+git checkout week_10
 
 # Build Docker image
 Write-Host "Building Docker image..."
@@ -29,9 +29,16 @@ docker-compose up -d
 
 Write-Host "Setup complete!"
 Write-Host ""
-Write-Host "Application is starting up..."
+Write-Host "Application is starting up with enhanced cache system..."
 Write-Host "You can access the application at:"
 Write-Host "- API Documentation: http://localhost:8000/docs"
 Write-Host "- Health Check: http://localhost:8000/"
+Write-Host "- RAG Endpoint: http://localhost:8000/rag"
+Write-Host "- Metrics: http://localhost:8000/metrics"
 Write-Host ""
 Write-Host "Wait a few moments for the containers to fully start, then check the health endpoint."
+Write-Host ""
+Write-Host "New in this version:"
+Write-Host "- Smart caching system for improved response times"
+Write-Host "- Enhanced RAG capabilities with Groq LLM"
+Write-Host "- Performance monitoring and metrics"
