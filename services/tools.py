@@ -2,11 +2,10 @@ import asyncio
 import os
 import sys
 
-import google.generativeai as genai
 from dotenv import load_dotenv
+from groq import Groq
 
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 from pydantic import BaseModel
 
 root = os.getcwd()
@@ -60,50 +59,6 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
         logger.error("An error occurred: %s", e)
         return RetrieveOutput(chunks=[])
 
-
-# The comments under here is the funcion generate answer with local LLM, but I can't run that cause of the weak hardware
-
-# def generate_answer(data: GenerateInput) -> GenerateOutput:
-#     relevant_sentences = data.chunks
-#     if not relevant_sentences:
-#         return GenerateOutput(
-#             answer="Không tìm thấy thông tin liên quan để trả lời câu hỏi của bạn."
-#         )
-#     # Tạo một chuỗi chứa tất cả các câu từ relevant_sentences
-#     context = ""
-#     for i, sentence in enumerate(relevant_sentences, 1):
-#         context += f"Đoạn {i}: {sentence}\n\n"
-
-#     prompt = f"""Với vai trò là 1 trợ lý ảo pháp luật chuyên nghiệp, dựa trên các nội dung sau:
-#         {context}
-#         Câu hỏi: {data.question}
-#         Vui lòng trả lời câu hỏi dựa trên thông tin được cung cấp ở trên.
-
-#         Trả lời câu hỏi theo 2 trường hợp
-#         Trường hợp 1: Nếu tìm thấy nội dung thích hợp trong tài liệu, trả lời 'Theo chương ... điều ... bộ luật abc ..., nội dung'
-#         Trường hợp 2: Nếu không tìm thấy nội dung thích hợp trong tài liệu, trả lời: 'Không tìm thấy thông tin liên quan đến câu hỏi'
-#         Trả lời ngắn gọn.
-#     """
-#     try:
-#         response = requests.post(
-#             "http://localhost:11434/api/generate",
-#             json={"model": "openhermes", "prompt": prompt, "stream": False},
-#             timeout=60,
-#         )
-#         response.raise_for_status()
-#         return GenerateOutput(answer=response.json()["response"])
-#     except requests.exceptions.HTTPError as e:
-#         return GenerateOutput(answer=f"Đã xảy ra lỗi khi truy xuất dữ liệu: {e}")
-#     except requests.exceptions.Timeout:
-#         return GenerateOutput(answer="Hệ thống đang bận, vui lòng thử lại sau.")
-#     except requests.exceptions.ConnectionError:
-#         return GenerateOutput(
-#             answer="Không thể kết nối đến server Ollama. Vui lòng kiểm tra xem Ollama đã được khởi động chưa."
-#         )
-#     except requests.exceptions.RequestException as e:
-#         return GenerateOutput(answer=f"Đã xảy ra lỗi không xác định: {e}")
-
-
 async def generate_answer(data: GenerateInput) -> GenerateOutput:
     relevant_sentences = data.chunks
     logger.info("Question: %s, chunks: %s", data.question, data.chunks)
@@ -116,41 +71,87 @@ async def generate_answer(data: GenerateInput) -> GenerateOutput:
     for i, sentence in enumerate(relevant_sentences, 1):
         context += f"Đoạn {i}: {sentence}\n"
 
-    prompt = f"""Với vai trò là 1 trợ lý ảo pháp luật, dựa trên các nội dung sau:
-        {context}
-        Câu hỏi: {data.question}
-        Vui lòng trả lời câu hỏi dựa trên thông tin được cung cấp ở trên.
+    prompt = f"""Bạn là một trợ lý ảo pháp luật chuyên nghiệp. Phân tích kỹ câu hỏi và ngữ liệu pháp luật được cung cấp, sau đó trả lời CHÍNH XÁC theo một trong ba trường hợp:
+NGỮ LIỆU PHÁP LUẬT:
+{context}
+CÂU HỎI: {data.question}
 
-        Trả lời câu hỏi theo 3 trường hợp
-        Trường hợp 1: Nếu tìm thấy nội dung thích hợp trong tài liệu, trả lời 'Theo chương ... điều ... bộ luật abc ..., nội dung'
-        Trường hợp 2: Nếu không tìm thấy nội dung thích hợp trong tài liệu, trả lời: 'Không tìm thấy thông tin liên quan đến câu hỏi.'
-        Trường hợp 3: Nếu câu hỏi linh tinh hoặc không liên quan đến pháp luật, trả lời: "Chào bạn, tôi đã sẵn sàng trả lời với vai trò là một trợ lý ảo pháp luật.Tuy nhiên, có vẻ như bạn chưa cung cấp câu hỏi cụ thể hoặc câu hỏi của bạn không liên quan đến pháp luật. Vui lòng đặt câu hỏi lại để tôi có thể trả lời."
-        Trả lời ngắn gọn.
-    """
+HƯỚNG DẪN XỬ LÝ:
+1. ĐỌC KỸ từng đoạn ngữ liệu pháp luật trên
+2. TÌM KIẾM thông tin trực tiếp liên quan đến câu hỏi
+3. XÁC ĐỊNH chương, điều, bộ luật từ nội dung văn bản (KHÔNG sử dụng "Đoạn 1, Đoạn 2...")
+
+QUY TẮC TRẢ LỜI - TUÂN THỦ NGHIÊM NGẶT:
+
+TRƯỜNG HỢP 1: Tìm thấy thông tin phù hợp trong ngữ liệu
+→ Format bắt buộc: "Theo [tên chương cụ thể] [tên điều cụ thể] [tên bộ luật cụ thể], [nội dung trả lời]"
+→ VÍ DỤ: "Theo Chương II điều 29 Bộ luật Hàng hải, việc thanh tra kiểm tra về an toàn hàng hải..."
+→ LƯU Ý: PHẢI trích xuất tên chương/điều/bộ luật THỰC TẾ từ văn bản, KHÔNG dùng "Đoạn X"
+
+TRƯỜNG HỢP 2: KHÔNG tìm thấy thông tin phù hợp
+→ Trả lời CHÍNH XÁC: "Không tìm thấy thông tin liên quan đến câu hỏi."
+
+TRƯỜNG HỢP 3: Câu hỏi không liên quan pháp luật hoặc không rõ ràng  
+→ Trả lời CHÍNH XÁC: "Chào bạn, tôi đã sẵn sàng trả lời với vai trò là một trợ lý ảo pháp luật. Tuy nhiên, có vẻ như bạn chưa cung cấp câu hỏi cụ thể hoặc câu hỏi của bạn không liên quan đến pháp luật. Vui lòng đặt câu hỏi lại để tôi có thể trả lời."
+
+CẤM TUYỆT ĐỐI:
+- KHÔNG sử dụng "Theo Đoạn 1", "Theo Đoạn 2" trong câu trả lời
+- KHÔNG thêm bất kỳ thông tin nào ngoài 3 trường hợp trên
+- KHÔNG giải thích lý do chọn trường hợp nào
+
+
+BẮT ĐẦU TRẢ LỜI:"""
     try:
-        # Use separate function to run generate_content in an executor
-        model = genai.GenerativeModel(model_name="gemini-2.5-pro")  # type: ignore
-
+        # Initialize Groq client
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        
         # Use loop.run_in_executor to run sync function in a separate thread
         loop = asyncio.get_event_loop()
         response = await asyncio.wait_for(
-            loop.run_in_executor(None, lambda: model.generate_content(prompt)),
+            loop.run_in_executor(
+                None,
+                lambda: client.chat.completions.create(
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": prompt
+                        }
+                    ],
+                    model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
+                    max_tokens=1024,
+                    temperature=0.1
+                )
+            ),
             timeout=60,
         )
-        logger.info("The answer from LLM is %s", response.text)
-        return GenerateOutput(answer=response.text)
+        answer = response.choices[0].message.content
+        logger.info("The answer from LLM is %s", answer)
+        return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
         return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
     except ConnectionError as e:
         logger.info("Network error: %s, retrying...", e)
         try:
-            model = genai.GenerativeModel(model_name="gemini-2.5-pro")  # type: ignore
+            client = Groq(api_key=os.getenv("GROQ_API_KEY"))
             loop = asyncio.get_event_loop()
             response = await asyncio.wait_for(
-                loop.run_in_executor(None, lambda: model.generate_content(prompt)),
+                loop.run_in_executor(
+                    None,
+                    lambda: client.chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prompt
+                            }
+                        ],
+                        model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
+                        max_tokens=1024,
+                        temperature=0.1
+                    )
+                ),
                 timeout=15,
             )
-            return GenerateOutput(answer=response.text)
+            return GenerateOutput(answer=response.choices[0].message.content)
         except asyncio.TimeoutError:
             return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
         except ConnectionError:

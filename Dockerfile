@@ -34,7 +34,9 @@ RUN mkdir -p logs
 
 # Fix line endings and make startup scripts executable
 RUN chmod +x /app/scripts/start_with_warmup.sh && \
-    sed -i 's/\r$//' /app/scripts/start_with_warmup.sh 
+    chmod +x /app/scripts/smoke_test.sh && \
+    sed -i 's/\r$//' /app/scripts/start_with_warmup.sh && \
+    sed -i 's/\r$//' /app/scripts/smoke_test.sh 
 
 EXPOSE 8000
 

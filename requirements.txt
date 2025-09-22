@@ -45,13 +45,15 @@ email-validator==2.2.0
 # Logging
 coloredlogs==15.0.1
 
+# Monitoring and metrics
+prometheus_client==0.21.1
+
 # Security
 cryptography==44.0.1
 certifi==2025.7.14
 
 # AI services
-google-generativeai==0.8.5
-google-auth==2.40.3
+groq==0.15.0
 
 gradio_client
 

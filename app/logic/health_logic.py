@@ -1,13 +1,12 @@
 import os
 import sys
 
-import google.generativeai as genai
 from dotenv import load_dotenv
+from groq import Groq
 from huggingface_hub import hf_hub_download
 
-# Load environment variables and configure Gemini API
+# Load environment variables
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
@@ -30,6 +29,10 @@ def health_check():
     collection_count = legal_collection.count()
     results = legal_collection.peek(limit=5)
 
-    # Check Gemini API
-    model = genai.GenerativeModel("gemini-2.5-pro")  # type: ignore
-    model.generate_content("Hello")
+    # Check Groq API
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    client.chat.completions.create(
+        messages=[{"role": "user", "content": "Hello"}],
+        model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
+        max_tokens=10
+    )

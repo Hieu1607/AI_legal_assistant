@@ -5,16 +5,14 @@ Router/Controller for health check endpoint
 import os
 import sys
 
-import google.generativeai as genai
 from dotenv import load_dotenv
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from google.api_core.exceptions import GoogleAPICallError
+from groq import Groq
 from huggingface_hub.errors import HfHubHTTPError
 
-# Load environment variables and configure Gemini API
+# Load environment variables
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
@@ -44,7 +42,7 @@ def process_health_check():
                         "message": "Model files available locally",
                     },
                     "chroma_db": {"status": "healthy"},
-                    "gemini_api": {
+                    "groq_api": {
                         "status": "healthy",
                         "message": "API responding correctly",
                     },
@@ -61,19 +59,12 @@ def process_health_check():
                 "error": f"HuggingFace Hub error: {str(e)}",
             },
         )
-    except GoogleAPICallError as e:
-        return JSONResponse(
-            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
-            content={
-                "service": "AI Legal Assistant",
-                "status": "unhealthy",
-                "error": f"Gemini API error: {str(e)}",
-            },
-        )
     except Exception as e:  # pylint: disable=broad-except
-        # This will catch ChromaDB errors and other unexpected errors
+        # This will catch Groq API errors, ChromaDB errors and other unexpected errors
         error_message = str(e)
-        if "chroma" in error_message.lower():
+        if "groq" in error_message.lower():
+            error_type = "Groq API error"
+        elif "chroma" in error_message.lower():
             error_type = "ChromaDB error"
         else:
             error_type = "Unexpected error"

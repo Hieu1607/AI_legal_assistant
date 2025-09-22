@@ -164,8 +164,7 @@ pip install gdown
 # Set environment variables
 cp .env_example .env
 # Edit .env with your actual API keys:
-# - Replace your_openai_api_key_here with your OpenAI API key
-# - Replace your_gemini_api_key_here with your Gemini API key
+# - Replace with your Groq API key for GROQ_API_KEY
 
 # Initialize ChromaDB and load sample data
 cd scripts

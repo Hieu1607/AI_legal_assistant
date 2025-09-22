@@ -1,22 +1,20 @@
 import os
 import sys
 
-import google.generativeai as genai
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-# Load environment variables and configure Gemini API
+# Load environment variables
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
 from app.constants.http_status import HTTP_STATUS_UNPROCESSABLE_ENTITY
-from app.routers import agent, health, rag, retrieve
+from app.routers import agent, health, metrics, rag, retrieve
 from configs.logger import get_logger, setup_logging
 
 setup_logging()
@@ -24,15 +22,9 @@ logger = get_logger(__name__)
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-    "https://ai-legal-assistant-ui.onrender.com",
-    "http://127.0.0.1:3000",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,6 +34,7 @@ app.include_router(retrieve.router)
 app.include_router(rag.router)
 app.include_router(agent.router)
 app.include_router(health.router)
+app.include_router(metrics.router)
 
 
 @app.get("/")
@@ -56,6 +49,7 @@ def root():
             "retrieve": "/retrieve",
             "rag": "/rag",
             "agent": "/agent",
+            "metrics": "/metrics",
         },
     }
 
