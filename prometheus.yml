@@ -30,7 +30,7 @@ scrape_configs:
     scrape_interval: 30s
     static_configs:
       # Update this to match your application host and port
-      - targets: ["host.docker.internal:8000"]  # For Docker Desktop on Windows/Mac
+      - targets: ["https://ai-legal-assistant-8g4g.onrender.com:8000"]  # For Docker Desktop on Windows/Mac
       # Alternative for Linux: 
       # - targets: ["172.17.0.1:8000"]  # Docker bridge network
     scrape_timeout: 10s
