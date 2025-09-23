@@ -26,6 +26,25 @@ def get_metrics_data() -> Dict[str, Any]:
     try:
         logger.info("Retrieving metrics data")
         
+        # Initialize some sample data if metrics are empty
+        # This ensures metrics appear in Prometheus
+        try:
+            # Initialize with zero values if not already set
+            REQUEST_COUNTER.labels(method="GET", endpoint="/health", status_code="200").inc(0)
+            REQUEST_COUNTER.labels(method="POST", endpoint="/agent", status_code="200").inc(0)
+            REQUEST_COUNTER.labels(method="GET", endpoint="/metrics", status_code="200").inc(0)
+            
+            LATENCY_HIST.labels(method="GET", endpoint="/health").observe(0)
+            LATENCY_HIST.labels(method="POST", endpoint="/agent").observe(0)
+            
+            GROQ_TOKENS.labels(type="input").inc(0)
+            GROQ_TOKENS.labels(type="output").inc(0)
+            GROQ_TOKENS.labels(type="total").inc(0)
+            
+            logger.info("Metrics initialized successfully")
+        except Exception as e:
+            logger.warning(f"Error initializing sample metrics: {str(e)}")
+        
         # Get current metric values (this is mainly for logging/monitoring)
         metrics_info = {
             "request_counter": "Available",

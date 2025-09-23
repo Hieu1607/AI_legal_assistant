@@ -16,6 +16,14 @@ setup_logging()
 logger = get_logger_app(__name__)
 from src.store_vector.search_embeddings import search_relevant_embeddings
 
+# Import metrics functions
+try:
+    from app.logic.metrics_logic import increment_groq_tokens
+except ImportError:
+    # Fallback if import fails
+    def increment_groq_tokens(token_type: str, count: int = 1):
+        pass
+
 
 class RetrieveInput(BaseModel):
     question: str
@@ -125,6 +133,16 @@ BẮT ĐẦU TRẢ LỜI:"""
             timeout=60,
         )
         answer = response.choices[0].message.content
+        
+        # Track token usage if available
+        if hasattr(response, 'usage') and response.usage:
+            if hasattr(response.usage, 'prompt_tokens'):
+                increment_groq_tokens("input", response.usage.prompt_tokens)
+            if hasattr(response.usage, 'completion_tokens'):
+                increment_groq_tokens("output", response.usage.completion_tokens)
+            if hasattr(response.usage, 'total_tokens'):
+                increment_groq_tokens("total", response.usage.total_tokens)
+        
         logger.info("The answer from LLM is %s", answer)
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
@@ -151,6 +169,16 @@ BẮT ĐẦU TRẢ LỜI:"""
                 ),
                 timeout=15,
             )
+            
+            # Track token usage if available
+            if hasattr(response, 'usage') and response.usage:
+                if hasattr(response.usage, 'prompt_tokens'):
+                    increment_groq_tokens("input", response.usage.prompt_tokens)
+                if hasattr(response.usage, 'completion_tokens'):
+                    increment_groq_tokens("output", response.usage.completion_tokens)
+                if hasattr(response.usage, 'total_tokens'):
+                    increment_groq_tokens("total", response.usage.total_tokens)
+            
             return GenerateOutput(answer=response.choices[0].message.content)
         except asyncio.TimeoutError:
             return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
