@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (event) => {
         if (event.target.classList.contains('suggestion-item')) {
             const suggestionText = event.target.textContent.trim();
-            userInput.value = `Hãy cho tôi biết về ${suggestionText.toLowerCase()}`;
+            userInput.value = `${suggestionText.toLowerCase()}`;
             sendMessage();
         }
     });
