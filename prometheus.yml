@@ -28,9 +28,10 @@ scrape_configs:
   - job_name: "ai-legal-assistant"
     metrics_path: "/metrics"
     scrape_interval: 30s
+    scheme: https  # Render uses HTTPS
     static_configs:
       # Update this to match your application host and port
-      - targets: ["ai-legal-assistant-8g4g.onrender.com:8000"]  
+      - targets: ["ai-legal-assistant-8g4g.onrender.com"]
       # Alternative for Linux: 
       # - targets: ["172.17.0.1:8000"]  # Docker bridge network
     scrape_timeout: 10s
