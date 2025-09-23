@@ -15,8 +15,8 @@ load_dotenv()
 project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
 from app.constants.http_status import HTTP_STATUS_UNPROCESSABLE_ENTITY
-from app.routers import agent, health, metrics, rag, retrieve
 from app.logic.metrics_logic import increment_request_counter, record_request_latency
+from app.routers import agent, health, metrics, rag, retrieve
 from configs.logger import get_logger, setup_logging
 
 setup_logging()
@@ -24,31 +24,33 @@ logger = get_logger(__name__)
 
 app = FastAPI()
 
+
 # Middleware to track metrics
 @app.middleware("http")
 async def metrics_middleware(request: Request, call_next):
     """Middleware to track HTTP request metrics"""
     start_time = time.time()
-    
+
     # Process the request
     response = await call_next(request)
-    
+
     # Calculate latency
     latency = time.time() - start_time
-    
+
     # Extract request info
     method = request.method
     endpoint = request.url.path
     status_code = str(response.status_code)
-    
+
     # Record metrics
     try:
         increment_request_counter(method, endpoint, status_code)
         record_request_latency(method, endpoint, latency)
     except Exception as e:
         logger.error(f"Error recording metrics: {str(e)}")
-    
+
     return response
+
 
 app.add_middleware(
     CORSMiddleware,

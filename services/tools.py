@@ -67,6 +67,7 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
         logger.error("An error occurred: %s", e)
         return RetrieveOutput(chunks=[])
 
+
 async def generate_answer(data: GenerateInput) -> GenerateOutput:
     relevant_sentences = data.chunks
     logger.info("Question: %s, chunks: %s", data.question, data.chunks)
@@ -112,37 +113,32 @@ BẮT ĐẦU TRẢ LỜI:"""
     try:
         # Initialize Groq client
         client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        
+
         # Use loop.run_in_executor to run sync function in a separate thread
         loop = asyncio.get_event_loop()
         response = await asyncio.wait_for(
             loop.run_in_executor(
                 None,
                 lambda: client.chat.completions.create(
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": prompt
-                        }
-                    ],
+                    messages=[{"role": "user", "content": prompt}],
                     model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
                     max_tokens=1024,
-                    temperature=0.1
-                )
+                    temperature=0.1,
+                ),
             ),
             timeout=60,
         )
         answer = response.choices[0].message.content
-        
+
         # Track token usage if available
-        if hasattr(response, 'usage') and response.usage:
-            if hasattr(response.usage, 'prompt_tokens'):
+        if hasattr(response, "usage") and response.usage:
+            if hasattr(response.usage, "prompt_tokens"):
                 increment_groq_tokens("input", response.usage.prompt_tokens)
-            if hasattr(response.usage, 'completion_tokens'):
+            if hasattr(response.usage, "completion_tokens"):
                 increment_groq_tokens("output", response.usage.completion_tokens)
-            if hasattr(response.usage, 'total_tokens'):
+            if hasattr(response.usage, "total_tokens"):
                 increment_groq_tokens("total", response.usage.total_tokens)
-        
+
         logger.info("The answer from LLM is %s", answer)
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
@@ -156,29 +152,24 @@ BẮT ĐẦU TRẢ LỜI:"""
                 loop.run_in_executor(
                     None,
                     lambda: client.chat.completions.create(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": prompt
-                            }
-                        ],
+                        messages=[{"role": "user", "content": prompt}],
                         model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
                         max_tokens=1024,
-                        temperature=0.1
-                    )
+                        temperature=0.1,
+                    ),
                 ),
                 timeout=15,
             )
-            
+
             # Track token usage if available
-            if hasattr(response, 'usage') and response.usage:
-                if hasattr(response.usage, 'prompt_tokens'):
+            if hasattr(response, "usage") and response.usage:
+                if hasattr(response.usage, "prompt_tokens"):
                     increment_groq_tokens("input", response.usage.prompt_tokens)
-                if hasattr(response.usage, 'completion_tokens'):
+                if hasattr(response.usage, "completion_tokens"):
                     increment_groq_tokens("output", response.usage.completion_tokens)
-                if hasattr(response.usage, 'total_tokens'):
+                if hasattr(response.usage, "total_tokens"):
                     increment_groq_tokens("total", response.usage.total_tokens)
-            
+
             return GenerateOutput(answer=response.choices[0].message.content)
         except asyncio.TimeoutError:
             return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
