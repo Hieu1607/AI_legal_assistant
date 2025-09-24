@@ -49,3 +49,13 @@ def process_health_check():
                 },
             },
         )
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        return JSONResponse(
+            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
+            content={
+                "service": "AI Legal Assistant",
+                "status": "unhealthy",
+                "error": str(e),
+            },
+        )
