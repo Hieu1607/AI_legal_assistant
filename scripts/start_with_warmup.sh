@@ -20,7 +20,7 @@ echo "Starting FastAPI server..."
 export ENVIRONMENT=production
 
 # Start the main application with uvicorn in background for smoke test
-cd /app && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 2 &
+cd /app && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 &
 SERVER_PID=$!
 
 # Wait for server to be ready
