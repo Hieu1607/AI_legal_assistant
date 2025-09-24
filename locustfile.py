@@ -1,7 +1,7 @@
 import random
 
 import pandas as pd
-from locust import HttpUser, between, task
+from locust import HttpUser, constant, task
 
 df = pd.read_excel("Bộ câu hỏi pháp luật.xlsx")
 questions = df["Nội dung"].tolist()
@@ -9,7 +9,7 @@ questions = df["Nội dung"].tolist()
 
 class MyUserBehavior(HttpUser):
     host = "https://ai-legal-assistant-8g4g.onrender.com"
-    wait_time = between(3, 10)  # Time between requests to reduce load
+    wait_time = constant(5)  # Time between requests to reduce load
 
     connection_timeout = 10
     network_timeout = 60

@@ -49,31 +49,3 @@ def process_health_check():
                 },
             },
         )
-
-    except HfHubHTTPError as e:
-        return JSONResponse(
-            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
-            content={
-                "service": "AI Legal Assistant",
-                "status": "unhealthy",
-                "error": f"HuggingFace Hub error: {str(e)}",
-            },
-        )
-    except Exception as e:  # pylint: disable=broad-except
-        # This will catch Groq API errors, ChromaDB errors and other unexpected errors
-        error_message = str(e)
-        if "groq" in error_message.lower():
-            error_type = "Groq API error"
-        elif "chroma" in error_message.lower():
-            error_type = "ChromaDB error"
-        else:
-            error_type = "Unexpected error"
-
-        return JSONResponse(
-            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
-            content={
-                "service": "AI Legal Assistant",
-                "status": "unhealthy",
-                "error": f"{error_type}: {error_message}",
-            },
-        )

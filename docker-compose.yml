@@ -19,6 +19,7 @@ services:
       timeout: 15s
       retries: 8
       start_period: 90s  # Increased for double warm up time
+    # restart: no
     restart: unless-stopped
     networks:
       - ai-legal-network

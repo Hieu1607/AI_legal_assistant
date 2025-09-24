@@ -176,6 +176,9 @@ BẮT ĐẦU TRẢ LỜI:"""
         except ConnectionError:
             logger.info("Retry failed: %s", e)
             return GenerateOutput(answer="Lỗi mạng")
+    except Exception as e:  # pylint: disable = broad-exception-caught
+        logger.info("An error occured: %s", e)
+        return GenerateOutput(answer="Lỗi hệ thống, vui lòng thử lại sau.")
 
 
 def format_citation(data: FormatInput) -> FormatOutput:
