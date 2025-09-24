@@ -17,6 +17,7 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
+from services.metrics import CHROMADB_EXCEPTIONS, GROQ_LLM_EXCEPTIONS
 from src.store_vector.search_embeddings import search_relevant_embeddings
 
 setup_logging()
@@ -43,6 +44,7 @@ def get_relevant_sentences(question: str):
             relevant_sentences.append(sentence)
         return relevant_sentences
     except (IndexError, KeyError, FileNotFoundError, ImportError, ValueError) as e:
+        CHROMADB_EXCEPTIONS.labels(operation="search").inc()
         logger.info(
             "An error occurred during embedding retrieval: %s", e, exc_info=True
         )
@@ -105,35 +107,36 @@ BẮT ĐẦU TRẢ LỜI:"""
     end_propting_time = time.perf_counter()
     global prompting_time  # pylint: disable=global-statement
     prompting_time = end_propting_time - start_prompting_time
-    
+
     try:
         # Initialize Groq client
         client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        
+
         # Create chat completion
         response = await asyncio.wait_for(
             asyncio.get_event_loop().run_in_executor(
                 None,
                 lambda: client.chat.completions.create(
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": prompt
-                        }
-                    ],
+                    messages=[{"role": "user", "content": prompt}],
                     model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
                     max_tokens=1024,
-                    temperature=0.1
-                )
+                    temperature=0.1,
+                ),
             ),
             timeout=60,
         )
-        
+
         return response.choices[0].message.content
-        
+
     except asyncio.TimeoutError:
+        GROQ_LLM_EXCEPTIONS.labels(
+            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+        ).inc()
         return "Hệ thống đang bận vui lòng thử lại sau."
     except ConnectionError as e:
+        GROQ_LLM_EXCEPTIONS.labels(
+            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+        ).inc()
         logger.info("Network error: %s, retrying...", e)
         try:
             client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -141,26 +144,30 @@ BẮT ĐẦU TRẢ LỜI:"""
                 asyncio.get_event_loop().run_in_executor(
                     None,
                     lambda: client.chat.completions.create(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": prompt
-                            }
-                        ],
+                        messages=[{"role": "user", "content": prompt}],
                         model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
                         max_tokens=1024,
-                        temperature=0.1
-                    )
+                        temperature=0.1,
+                    ),
                 ),
                 timeout=15,
             )
             return response.choices[0].message.content
         except asyncio.TimeoutError:
+            GROQ_LLM_EXCEPTIONS.labels(
+                model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            ).inc()
             return "Hệ thống đang bận vui lòng thử lại sau."
         except ConnectionError:
+            GROQ_LLM_EXCEPTIONS.labels(
+                model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            ).inc()
             logger.info("Retry failed: %s", e)
             return "Lỗi mạng"
     except Exception as e:  # pylint: disable = broad-exception-caught
+        GROQ_LLM_EXCEPTIONS.labels(
+            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+        ).inc()
         logger.info("An error occured: %s", e)
         return "Lỗi hệ thống, vui lòng thử lại sau."
 

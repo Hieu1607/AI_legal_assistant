@@ -14,6 +14,11 @@ from configs.logger import get_logger_app, setup_logging
 
 setup_logging()
 logger = get_logger_app(__name__)
+from services.metrics import (
+    CHROMADB_EXCEPTIONS,
+    GROQ_LLM_EXCEPTIONS,
+    HF_EMBEDDINGS_EXCEPTIONS,
+)
 from src.store_vector.search_embeddings import search_relevant_embeddings
 
 # Import metrics functions
@@ -64,6 +69,7 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
         )
         return RetrieveOutput(chunks=chunks)
     except (ValueError, KeyError, ImportError, OSError) as e:
+        CHROMADB_EXCEPTIONS.labels(operation="retrieve").inc()
         logger.error("An error occurred: %s", e)
         return RetrieveOutput(chunks=[])
 
@@ -142,8 +148,14 @@ BẮT ĐẦU TRẢ LỜI:"""
         logger.info("The answer from LLM is %s", answer)
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
+        GROQ_LLM_EXCEPTIONS.labels(
+            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+        ).inc()
         return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
     except ConnectionError as e:
+        GROQ_LLM_EXCEPTIONS.labels(
+            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+        ).inc()
         logger.info("Network error: %s, retrying...", e)
         try:
             client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -172,11 +184,20 @@ BẮT ĐẦU TRẢ LỜI:"""
 
             return GenerateOutput(answer=response.choices[0].message.content)
         except asyncio.TimeoutError:
+            GROQ_LLM_EXCEPTIONS.labels(
+                model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            ).inc()
             return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
         except ConnectionError:
+            GROQ_LLM_EXCEPTIONS.labels(
+                model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            ).inc()
             logger.info("Retry failed: %s", e)
             return GenerateOutput(answer="Lỗi mạng")
     except Exception as e:  # pylint: disable = broad-exception-caught
+        GROQ_LLM_EXCEPTIONS.labels(
+            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+        ).inc()
         logger.info("An error occured: %s", e)
         return GenerateOutput(answer="Lỗi hệ thống, vui lòng thử lại sau.")
 

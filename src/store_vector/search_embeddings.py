@@ -11,6 +11,7 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
+from services.metrics import CHROMADB_EXCEPTIONS, HF_EMBEDDINGS_EXCEPTIONS
 from src.store_vector.init_index import init_chroma_index
 
 setup_logging()
@@ -60,6 +61,7 @@ def get_embedding_from_api(text, max_retries=3, timeout=30):
             return embedding
 
         except Exception as e:
+            HF_EMBEDDINGS_EXCEPTIONS.labels(model=EMBEDDING_API_ENDPOINT).inc()
             logger.warning(
                 "Attempt %d failed to get embedding from API: %s", attempt + 1, str(e)
             )
@@ -95,12 +97,17 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
     embedding_from_text = get_embedding_from_api(text)
 
     start_query_time = time.time()
-    results = collection.query(
-        query_embeddings=embedding_from_text,
-        n_results=n_results,
-        # where={"source": "article"},        # Optional: Filter by metadata (AND logic)
-        # where_document={"$contains":"leave"} # Optional: Filter by document content
-    )
+    try:
+        results = collection.query(
+            query_embeddings=embedding_from_text,
+            n_results=n_results,
+            # where={"source": "article"},        # Optional: Filter by metadata (AND logic)
+            # where_document={"$contains":"leave"} # Optional: Filter by document content
+        )
+    except Exception as e:
+        CHROMADB_EXCEPTIONS.labels(operation="query").inc()
+        logger.error("ChromaDB query failed: %s", str(e))
+        raise e
     end_query_time = time.time()
 
     # Calculate cosine similarity from distances (ChromaDB returns cosine distances)
