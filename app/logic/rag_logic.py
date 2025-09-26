@@ -115,7 +115,7 @@ CẤM TUYỆT ĐỐI:
 - KHÔNG thêm bất kỳ thông tin nào ngoài 2 trường hợp trên
 - KHÔNG giải thích lý do chọn trường hợp nào
 - Chỉ trả lời trong 1 dòng duy nhất, không cách dòng
-
+- Chỉ sử dụng các luật từ năm 2024 trở về trước
 BẮT ĐẦU TRẢ LỜI:"""
 
     end_propting_time = time.perf_counter()
