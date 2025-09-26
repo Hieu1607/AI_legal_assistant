@@ -62,11 +62,31 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
         logger.info("Question: %s, number of chunks: %d", data.question, data.top_k)
         relevant_embeddings = search_relevant_embeddings(data.question, data.top_k)
         # relevant_embeddings["documents"] returns nested list, need to flatten it
-        chunks = (
+        documents = (
             relevant_embeddings["documents"][0]
             if relevant_embeddings["documents"]
             else []
         )
+        metadatas = (
+            relevant_embeddings["metadatas"][0]
+            if relevant_embeddings["metadatas"]
+            else []
+        )
+        
+        # Combine documents with metadata for document names
+        chunks = []
+        for i, sentence in enumerate(documents):
+            # Extract document name from metadata
+            document_name = "Unknown Document"
+            if i < len(metadatas) and metadatas[i]:
+                metadata = metadatas[i]
+                # Use title field which contains the legal document name
+                document_name = metadata.get("title", "Unknown Document")
+            
+            # Format: "sentence [Document: document_name]"
+            formatted_chunk = f"{sentence} [Nguồn: {document_name}]"
+            chunks.append(formatted_chunk)
+        
         return RetrieveOutput(chunks=chunks)
     except (ValueError, KeyError, ImportError, OSError) as e:
         CHROMADB_EXCEPTIONS.labels(operation="retrieve").inc()
@@ -86,32 +106,31 @@ async def generate_answer(data: GenerateInput) -> GenerateOutput:
     for i, sentence in enumerate(relevant_sentences, 1):
         context += f"Đoạn {i}: {sentence}\n"
 
-    prompt = f"""Bạn là một trợ lý ảo pháp luật chuyên nghiệp. Phân tích kỹ câu hỏi và ngữ liệu pháp luật được cung cấp, sau đó trả lời CHÍNH XÁC theo một trong ba trường hợp:
+    prompt = f"""Bạn là một trợ lý ảo pháp luật chuyên nghiệp. Phân tích kỹ câu hỏi và ngữ liệu pháp luật được cung cấp, sau đó trả lời CHÍNH XÁC theo một trong hai trường hợp:
 NGỮ LIỆU PHÁP LUẬT:
 {context}
 CÂU HỎI: {data.question}
 
 HƯỚNG DẪN XỬ LÝ:
-1. ĐỌC KỸ từng đoạn ngữ liệu pháp luật trên
-2. TÌM KIẾM thông tin trực tiếp liên quan đến câu hỏi
-3. XÁC ĐỊNH chương, điều, bộ luật từ nội dung văn bản (KHÔNG sử dụng "Đoạn 1, Đoạn 2...")
+1. ĐỌC KỸ từng đoạn ngữ liệu pháp luật trên cùng với nguồn văn bản đi kèm
+2. TÌM KIẾM thông tin trực tiếp liên quan đến câu hỏi  
+3. XÁC ĐỊNH chương, điều, và TÊN VĂN BẢN CHÍNH XÁC từ thông tin được cung cấp
 
 QUY TẮC TRẢ LỜI - TUÂN THỦ NGHIÊM NGẶT:
 
 TRƯỜNG HỢP 1: Tìm thấy thông tin phù hợp trong ngữ liệu
-→ Format bắt buộc: "Theo [tên chương cụ thể] [tên điều cụ thể] [tên bộ luật cụ thể], [nội dung trả lời]"
-→ VÍ DỤ: "Theo Chương II điều 29 Bộ luật Hàng hải, việc thanh tra kiểm tra về an toàn hàng hải..."
-→ LƯU Ý: PHẢI trích xuất tên chương/điều/bộ luật THỰC TẾ từ văn bản, KHÔNG dùng "Đoạn X"
-
-TRƯỜNG HỢP 2: KHÔNG tìm thấy thông tin phù hợp
-→ Trả lời CHÍNH XÁC: "Không tìm thấy thông tin liên quan đến câu hỏi."
-
-TRƯỜNG HỢP 3: Câu hỏi không liên quan pháp luật hoặc không rõ ràng  
-→ Trả lời CHÍNH XÁC: "Chào bạn, tôi đã sẵn sàng trả lời với vai trò là một trợ lý ảo pháp luật. Tuy nhiên, có vẻ như bạn chưa cung cấp câu hỏi cụ thể hoặc câu hỏi của bạn không liên quan đến pháp luật. Vui lòng đặt câu hỏi lại để tôi có thể trả lời."
+→ Format bắt buộc: "Theo [điểm cụ thể nếu có] [khoản cụ thể nếu có] [điều cụ thể] [chương cụ thể] của [tên văn bản chính xác], [nội dung trả lời]"
+→ VÍ DỤ: "Theo điểm 1 khoản 1 Điều 29 chương II của Luật Hàng hải Việt Nam, việc thanh tra kiểm tra về an toàn hàng hải..."
+→ LƯU Ý 1: PHẢI sử dụng tên văn bản CHÍNH XÁC từ thông tin được cung cấp trong [Nguồn: ...] , đồng thời diễn tả lại nội dung trả lời cho dễ nghe, không sao chép nguyên văn
+→ LƯU Ý 2: Có thể kết hợp nhiều điều luật, chương luật từ các đoạn khác nhau nếu cần thiết để trả lời đầy đủ câu hỏi
+→ LƯU Ý 3: Nếu trong Ngữ liệu pháp luật không có thông tin liên quan đến câu hỏi, tự trả lời 'Tôi không có đủ thông tin để trả lời câu hỏi của bạn.'
+TRƯỜNG HỢP 2: Câu hỏi không liên quan đến pháp luật hoặc không rõ ràng
+→ Trả lời CHÍNH XÁC: "Câu hỏi không liên quan đến pháp luật hoặc không rõ ràng. Vui lòng đặt câu hỏi lại."
 
 CẤM TUYỆT ĐỐI:
 - KHÔNG sử dụng "Theo Đoạn 1", "Theo Đoạn 2" trong câu trả lời
-- KHÔNG thêm bất kỳ thông tin nào ngoài 3 trường hợp trên
+- KHÔNG sử dụng "[Nguồn: ...]" trong câu trả lời, chỉ sử dụng để xác định tên văn bản
+- KHÔNG thêm bất kỳ thông tin nào ngoài 2 trường hợp trên
 - KHÔNG giải thích lý do chọn trường hợp nào
 
 

@@ -83,3 +83,5 @@ ehthumbs.db
 Thumbs.db
 
 data/processed/vector_store/
+
+.env.example
