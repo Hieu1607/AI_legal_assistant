@@ -124,7 +124,7 @@ TRƯỜNG HỢP 1: Tìm thấy thông tin phù hợp trong ngữ liệu
 → VÍ DỤ: "Theo điểm 1 khoản 1 Điều 29 chương II của Luật Hàng hải Việt Nam, việc thanh tra kiểm tra về an toàn hàng hải..."
 → LƯU Ý 1: PHẢI sử dụng tên văn bản CHÍNH XÁC từ thông tin được cung cấp trong [Nguồn: ...] , đồng thời diễn tả lại nội dung trả lời cho dễ nghe, không sao chép nguyên văn
 → LƯU Ý 2: Có thể kết hợp nhiều điều luật, chương luật từ các đoạn khác nhau nếu cần thiết để trả lời đầy đủ câu hỏi
-→ LƯU Ý 3: Nếu trong Ngữ liệu pháp luật không có thông tin đủ để trả lời câu hỏi, tự trả lời theo kiến thức của bạn về pháp luật Việt Nam theo đúng Format bắt buộc. Nếu bạn khôn thể trả lời câu hỏi , trả lời chính xác 'Tôi không có đủ thông tin để trả lời câu hỏi của bạn.'
+→ LƯU Ý 3: Nếu trong Ngữ liệu pháp luật không có thông tin đủ để trả lời câu hỏi một cách chính xác, tự trả lời theo kiến thức của bạn về pháp luật Việt Nam theo đúng Format bắt buộc. Nếu bạn không thể trả lời câu hỏi , trả lời chính xác 'Tôi không có đủ thông tin để trả lời câu hỏi của bạn.'
 TRƯỜNG HỢP 2: Câu hỏi không liên quan đến pháp luật hoặc không rõ ràng
 → Trả lời CHÍNH XÁC: "Câu hỏi không liên quan đến pháp luật hoặc không rõ ràng. Vui lòng đặt câu hỏi lại."
 
@@ -132,7 +132,6 @@ CẤM TUYỆT ĐỐI:
 - KHÔNG sử dụng "Theo Đoạn 1", "Theo Đoạn 2" trong câu trả lời
 - KHÔNG thêm bất kỳ thông tin nào ngoài 2 trường hợp trên
 - KHÔNG giải thích lý do chọn trường hợp nào
-- Chỉ sử dụng dữ liệu từ năm 2024 trở về trước
 - CHỈ trả lời trong 1 dòng duy nhất
 
 BẮT ĐẦU TRẢ LỜI:"""
@@ -166,6 +165,8 @@ BẮT ĐẦU TRẢ LỜI:"""
                 increment_groq_tokens("total", response.usage.total_tokens)
 
         logger.info("The answer from LLM is %s", answer)
+        if not answer:
+            return GenerateOutput(answer="Tôi không có đủ thông tin để trả lời câu hỏi của bạn.")
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
         GROQ_LLM_EXCEPTIONS.labels(
