@@ -40,7 +40,7 @@ def get_relevant_sentences(question: str):
     """
     logger.info("The question is %s", question)
     try:
-        relevant_embeddings = search_relevant_embeddings(question, 5)
+        relevant_embeddings = search_relevant_embeddings(question, 10)
         relevant_sentences = []
         documents = relevant_embeddings["documents"][0] if relevant_embeddings["documents"] else []
         metadatas = relevant_embeddings["metadatas"][0] if relevant_embeddings["metadatas"] else []
