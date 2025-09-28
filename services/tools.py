@@ -110,7 +110,6 @@ async def generate_answer(data: GenerateInput) -> GenerateOutput:
 
 NGỮ LIỆU PHÁP LUẬT:
 {context}
-CÂU HỎI: {data.question}
 
 HƯỚNG DẪN XỬ LÝ:
 1. ĐỌC KỸ từng đoạn ngữ liệu pháp luật trên cùng với tên văn bản đi kèm
@@ -145,9 +144,9 @@ BẮT ĐẦU TRẢ LỜI:"""
             loop.run_in_executor(
                 None,
                 lambda: client.chat.completions.create(
-                    messages=[{"role": "user", "content": prompt}],
+                    messages=[{"role": "system", "content": prompt}, {"role": "user", "content": data.question}],
                     model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=1024,
+                    max_tokens=2048,
                     temperature=0.1,
                 ),
             ),
@@ -166,7 +165,7 @@ BẮT ĐẦU TRẢ LỜI:"""
 
         logger.info("The answer from LLM is %s", answer)
         if not answer:
-            return GenerateOutput(answer="Tôi không có đủ thông tin để trả lời câu hỏi của bạn.")
+            return GenerateOutput(answer="Quá tải LLM, vui lòng thử lại sau ít phút.")
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
         GROQ_LLM_EXCEPTIONS.labels(
@@ -187,7 +186,7 @@ BẮT ĐẦU TRẢ LỜI:"""
                     lambda: client.chat.completions.create(
                         messages=[{"role": "user", "content": prompt}],
                         model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                        max_tokens=1024,
+                        max_tokens=10000,
                         temperature=0.1,
                     ),
                 ),
@@ -220,7 +219,7 @@ BẮT ĐẦU TRẢ LỜI:"""
             model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
         ).inc()
         logger.info("An error occured: %s", e)
-        return GenerateOutput(answer="Lỗi hệ thống, vui lòng thử lại sau.")
+        return GenerateOutput(answer="Quá tải LLM, vui lòng thử lại sau ít phút.")
 
 
 def format_citation(data: FormatInput) -> FormatOutput:

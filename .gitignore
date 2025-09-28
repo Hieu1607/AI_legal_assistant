@@ -47,6 +47,9 @@ htmlcov/
 *.log
 logs/
 
+# Test files
+test.py
+
 # Documentation
 docs/_build/
 

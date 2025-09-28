@@ -44,11 +44,11 @@ def get_relevant_sentences(question: str):
         relevant_sentences = []
         documents = relevant_embeddings["documents"][0] if relevant_embeddings["documents"] else []
         metadatas = relevant_embeddings["metadatas"][0] if relevant_embeddings["metadatas"] else []
-        
+        cosines_similarities = relevant_embeddings["cosine_similarities"][0] if relevant_embeddings["cosine_similarities"] else []
         for i, sentence in enumerate(documents):
             # Extract document name from metadata, default to "Unknown Document" if not available
             document_name = "Unknown Document"
-            if i < len(metadatas) and metadatas[i]:
+            if i < len(metadatas) and metadatas[i] and cosines_similarities[i] >= 0.6:
                 metadata = metadatas[i]
                 # Use title field from metadata which contains the document name
                 document_name = metadata.get("title", "Unknown Document")
@@ -97,7 +97,6 @@ async def ask_LLM(relevant_sentences: list, question: str):
 
 NGỮ LIỆU PHÁP LUẬT:
 {context}
-CÂU HỎI: {question}
 
 HƯỚNG DẪN XỬ LÝ:
 1. ĐỌC KỸ từng đoạn ngữ liệu pháp luật trên cùng với tên văn bản đi kèm
@@ -136,9 +135,9 @@ BẮT ĐẦU TRẢ LỜI:"""
             asyncio.get_event_loop().run_in_executor(
                 None,
                 lambda: client.chat.completions.create(
-                    messages=[{"role": "user", "content": prompt}],
+                    messages=[{"role": "system", "content": prompt}, {"role": "user", "content": question}],
                     model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=1024,
+                    max_tokens=10000,
                     temperature=0.1,
                 ),
             ),
@@ -146,7 +145,7 @@ BẮT ĐẦU TRẢ LỜI:"""
         )
         answer = response.choices[0].message.content
         if not answer:
-            return "Tôi không có đủ thông tin để trả lời câu hỏi của bạn."
+            return "Quá tải LLM, vui lòng thử lại sau ít phút."
         return answer
 
     except asyncio.TimeoutError:
@@ -190,7 +189,7 @@ BẮT ĐẦU TRẢ LỜI:"""
             model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
         ).inc()
         logger.info("An error occured: %s", e)
-        return "Lỗi hệ thống, vui lòng thử lại sau."
+        return "Quá tải LLM, vui lòng thử lại sau ít phút."
 
 
 async def process_rag_query(question: str):
