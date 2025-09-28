@@ -26,7 +26,7 @@ COPY app/ ./app/
 COPY src/ ./src/
 COPY configs/ ./configs/
 COPY services/ ./services/
-COPY scripts/ ./scripts/S
+COPY scripts/ ./scripts/
 
 # Create basic directories
 RUN mkdir -p logs
