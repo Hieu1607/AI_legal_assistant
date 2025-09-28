@@ -33,6 +33,6 @@ def health_check():
     client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     client.chat.completions.create(
         messages=[{"role": "user", "content": "Hello"}],
-        model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
+        model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
         max_tokens=10
     )

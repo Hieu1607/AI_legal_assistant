@@ -195,7 +195,7 @@ Key configuration options in `.env`:
 GROQ_API_KEY="your_groq_api_key_here"
 
 # LLM Configuration
-LLM_MODEL="llama-3.3-70b-versatile"
+LLM_MODEL="openai/gpt-oss-20b"
 
 # Cache Settings
 CACHE_TTL_SECONDS=3600        # Cache expiration time (1 hour)

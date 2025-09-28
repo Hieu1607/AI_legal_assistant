@@ -63,7 +63,7 @@ def get_metrics_data() -> Dict[str, Any]:
                 0
             )
 
-            GROQ_LLM_EXCEPTIONS.labels(model="llama-3.3-70b-versatile").inc(0)
+            GROQ_LLM_EXCEPTIONS.labels(model="openai/gpt-oss-20b").inc(0)
 
             logger.info("Metrics initialized successfully")
         except Exception as e:

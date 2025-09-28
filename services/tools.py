@@ -132,6 +132,7 @@ CẤM TUYỆT ĐỐI:
 - KHÔNG sử dụng "Theo Đoạn 1", "Theo Đoạn 2" trong câu trả lời
 - KHÔNG thêm bất kỳ thông tin nào ngoài 2 trường hợp trên
 - KHÔNG giải thích lý do chọn trường hợp nào
+- Chỉ sử dụng dữ liệu từ năm 2024 trở về trước
 - CHỈ trả lời trong 1 dòng duy nhất
 
 BẮT ĐẦU TRẢ LỜI:"""
@@ -168,12 +169,12 @@ BẮT ĐẦU TRẢ LỜI:"""
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
         GROQ_LLM_EXCEPTIONS.labels(
-            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
         ).inc()
         return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
     except ConnectionError as e:
         GROQ_LLM_EXCEPTIONS.labels(
-            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
         ).inc()
         logger.info("Network error: %s, retrying...", e)
         try:
@@ -184,7 +185,7 @@ BẮT ĐẦU TRẢ LỜI:"""
                     None,
                     lambda: client.chat.completions.create(
                         messages=[{"role": "user", "content": prompt}],
-                        model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile"),
+                        model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
                         max_tokens=1024,
                         temperature=0.1,
                     ),
@@ -204,18 +205,18 @@ BẮT ĐẦU TRẢ LỜI:"""
             return GenerateOutput(answer=response.choices[0].message.content)
         except asyncio.TimeoutError:
             GROQ_LLM_EXCEPTIONS.labels(
-                model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+                model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
             ).inc()
             return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
         except ConnectionError:
             GROQ_LLM_EXCEPTIONS.labels(
-                model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+                model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
             ).inc()
             logger.info("Retry failed: %s", e)
             return GenerateOutput(answer="Lỗi mạng")
     except Exception as e:  # pylint: disable = broad-exception-caught
         GROQ_LLM_EXCEPTIONS.labels(
-            model=os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+            model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
         ).inc()
         logger.info("An error occured: %s", e)
         return GenerateOutput(answer="Lỗi hệ thống, vui lòng thử lại sau.")
