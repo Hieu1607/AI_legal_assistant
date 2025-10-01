@@ -63,7 +63,7 @@ Từ khóa cho câu hỏi trên:"""
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=100,
+                    max_tokens=2000,
                     temperature=0.1,
                 ),
             ),
@@ -117,7 +117,7 @@ Câu hỏi được cải thiện:"""
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=200,
+                    max_tokens=2000,
                     temperature=0.1,
                 ),
             ),
