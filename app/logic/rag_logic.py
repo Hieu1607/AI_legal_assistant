@@ -26,9 +26,183 @@ logger = get_logger(__name__)
 prompting_time = 0
 
 
+async def extract_keywords(question: str) -> list:
+    """
+    Extract 3 most relevant legal keywords from the question using LLM
+
+    Args:
+        question (str): The input question
+
+    Returns:
+        list: List of 3 keywords related to legal topics
+    """
+    prompt = f"""Từ câu hỏi pháp luật sau, hãy trích xuất chính xác 3 từ khóa/cụm từ quan trọng nhất liên quan đến pháp luật Việt Nam.
+
+Câu hỏi: {question}
+
+Yêu cầu:
+- Chỉ trả về 3 từ khóa/cụm từ, mỗi từ khóa trên 1 dòng
+- Không giải thích, không đánh số
+- Tập trung vào khái niệm pháp luật cốt lõi
+- Ưu tiên thuật ngữ pháp lý chính thức
+
+Ví dụ:
+Câu hỏi: "Nam giới phải đi nghĩa vụ quân sự như nào?"
+Từ khóa:
+nghĩa vụ quân sự
+độ tuổi nghĩa vụ
+nam giới
+
+Từ khóa cho câu hỏi trên:"""
+
+    try:
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        response = await asyncio.wait_for(
+            asyncio.get_event_loop().run_in_executor(
+                None,
+                lambda: client.chat.completions.create(
+                    messages=[{"role": "user", "content": prompt}],
+                    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
+                    max_tokens=100,
+                    temperature=0.1,
+                ),
+            ),
+            timeout=15,
+        )
+        
+        content = response.choices[0].message.content
+        if content:
+            # Parse keywords from response - split by lines and clean
+            keywords = [kw.strip() for kw in content.strip().split('\n') if kw.strip()]
+            return keywords[:3]  # Ensure only 3 keywords
+        return []
+        
+    except Exception as e:
+        logger.error("Error extracting keywords: %s", e)
+        return []
+
+
+async def enhance_question(question: str) -> str:
+    """
+    Enhance the original question for better embedding search
+
+    Args:
+        question (str): The original question
+
+    Returns:
+        str: Enhanced question optimized for embedding search
+    """
+    prompt = f"""Hãy viết lại câu hỏi sau để tối ưu cho việc tìm kiếm trong cơ sở dữ liệu pháp luật Việt Nam.
+
+Câu hỏi gốc: {question}
+
+Yêu cầu:
+- Sử dụng thuật ngữ pháp lý chính thức
+- Mở rộng ngữ cảnh để bao gồm các khái niệm liên quan
+- Làm rõ ý định tìm kiếm
+- Giữ nguyên ý nghĩa chính
+- Trả về chỉ câu hỏi được cải thiện, không giải thích
+
+Ví dụ:
+Gốc: "Tuổi nghỉ hưu là bao nhiêu?"
+Cải thiện: "Tuổi nghỉ hưu theo quy định pháp luật lao động Việt Nam đối với nam giới và nữ giới trong các ngành nghề khác nhau"
+
+Câu hỏi được cải thiện:"""
+
+    try:
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        response = await asyncio.wait_for(
+            asyncio.get_event_loop().run_in_executor(
+                None,
+                lambda: client.chat.completions.create(
+                    messages=[{"role": "user", "content": prompt}],
+                    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
+                    max_tokens=200,
+                    temperature=0.1,
+                ),
+            ),
+            timeout=15,
+        )
+        
+        enhanced = response.choices[0].message.content
+        return enhanced.strip() if enhanced else question
+        
+    except Exception as e:
+        logger.error("Error enhancing question: %s", e)
+        return question
+
+
+async def get_relevant_sentences_enhanced(question: str, keywords: list, enhanced_question: str):
+    """
+    Retrieve relevant sentences using keywords and enhanced question
+
+    Args:
+        question (str): Original question
+        keywords (list): List of extracted keywords
+        enhanced_question (str): Enhanced version of the question
+
+    Returns:
+        list: List of dictionaries containing sentence and document name
+    """
+    logger.info("Original question: %s", question)
+    logger.info("Keywords: %s", keywords)
+    logger.info("Enhanced question: %s", enhanced_question)
+    
+    try:
+        # Search with enhanced question and keywords
+        search_queries = [enhanced_question] + keywords
+        all_relevant_sentences = []
+        
+        # Use asyncio.gather to search all queries concurrently
+        search_tasks = []
+        for query in search_queries:
+            task = asyncio.get_event_loop().run_in_executor(
+                None, lambda q=query: search_relevant_embeddings(q, 3)
+            )
+            search_tasks.append(task)
+        
+        search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
+        
+        # Process results from all searches
+        seen_sentences = set()  # To avoid duplicates
+        
+        for result in search_results:
+            if isinstance(result, Exception):
+                logger.warning("Search failed for a query: %s", result)
+                continue
+                
+            documents = result["documents"][0] if result["documents"] else []
+            metadatas = result["metadatas"][0] if result["metadatas"] else []
+            
+            for i, sentence in enumerate(documents):
+                # Skip duplicates
+                if sentence in seen_sentences:
+                    continue
+                seen_sentences.add(sentence)
+                
+                # Extract document name from metadata
+                document_name = "Unknown Document"
+                if i < len(metadatas) and metadatas[i]:
+                    metadata = metadatas[i]
+                    document_name = metadata.get("title", "Unknown Document")
+                
+                all_relevant_sentences.append({
+                    "sentence": sentence,
+                    "document_name": document_name
+                })
+        
+        # Limit to top 10 results to avoid too much context
+        return all_relevant_sentences[:10]
+        
+    except Exception as e:
+        CHROMADB_EXCEPTIONS.labels(operation="search").inc()
+        logger.error("Error in enhanced sentence retrieval: %s", e, exc_info=True)
+        return []
+
+
 def get_relevant_sentences(question: str):
     """
-    Retrieve relevant sentences for a given question
+    Retrieve relevant sentences for a given question (fallback method)
 
     Args:
         question (str): The input question
@@ -38,7 +212,7 @@ def get_relevant_sentences(question: str):
               or empty list if error occurs
               Format: [{"sentence": str, "document_name": str}, ...]
     """
-    logger.info("The question is %s", question)
+    logger.info("Using fallback method for question: %s", question)
     try:
         relevant_embeddings = search_relevant_embeddings(question, 5)
         relevant_sentences = []
@@ -193,7 +367,7 @@ BẮT ĐẦU TRẢ LỜI:"""
 
 async def process_rag_query(question: str):
     """
-    Process a complete RAG query including retrieval and generation
+    Process a complete RAG query with enhanced retrieval pipeline
 
     Args:
         question (str): The user's question
@@ -201,32 +375,113 @@ async def process_rag_query(question: str):
     Returns:
         dict: Response containing answer, timing info, and metadata
     """
-    start_retrieve_time = time.perf_counter()
-    relevant_sentences = get_relevant_sentences(question)
-    end_retrieve_time = time.perf_counter()
-    retrieving_time = end_retrieve_time - start_retrieve_time
+    total_start_time = time.perf_counter()
+    
+    # Step 1 & 2: Extract keywords and enhance question concurrently
+    logger.info("Starting keyword extraction and question enhancement")
+    step1_start = time.perf_counter()
+    
+    try:
+        # Run keyword extraction and question enhancement in parallel
+        keywords_task = extract_keywords(question)
+        enhanced_question_task = enhance_question(question)
+        
+        keywords, enhanced_question = await asyncio.gather(
+            keywords_task, enhanced_question_task, return_exceptions=True
+        )
+        
+        # Handle exceptions
+        if isinstance(keywords, Exception):
+            logger.warning("Keyword extraction failed: %s", keywords)
+            keywords = []
+        if isinstance(enhanced_question, Exception):
+            logger.warning("Question enhancement failed: %s", enhanced_question)
+            enhanced_question = question
+            
+        step1_end = time.perf_counter()
+        enhancement_time = step1_end - step1_start
+        
+        logger.info("Enhancement completed in %.4f seconds", enhancement_time)
+        logger.info("Keywords: %s", keywords)
+        logger.info("Enhanced question: %s", enhanced_question)
+        
+        # Step 3: Enhanced retrieval
+        start_retrieve_time = time.perf_counter()
+        
+        if keywords and enhanced_question != question:
+            # Use enhanced retrieval if both steps succeeded
+            relevant_sentences = await get_relevant_sentences_enhanced(
+                question, keywords, enhanced_question
+            )
+        else:
+            # Fallback to original method
+            logger.info("Using fallback retrieval method")
+            relevant_sentences = get_relevant_sentences(question)
+            
+        end_retrieve_time = time.perf_counter()
+        retrieving_time = end_retrieve_time - start_retrieve_time
 
-    start_ask_LLM_time = time.perf_counter()
-    answer = await ask_LLM(relevant_sentences, question)
-    end_ask_LLM_time = time.perf_counter()
-    llm_time = end_ask_LLM_time - start_ask_LLM_time - prompting_time
+        # Generate answer
+        start_ask_LLM_time = time.perf_counter()
+        answer = await ask_LLM(relevant_sentences, question)
+        end_ask_LLM_time = time.perf_counter()
+        llm_time = end_ask_LLM_time - start_ask_LLM_time - prompting_time
 
-    logger.info(
-        "retrieving_time = %.4f, prompting_time = %.4f, llm_time = %.4f, total_time = %.4f ",
-        retrieving_time,
-        prompting_time,
-        llm_time,
-        retrieving_time + prompting_time + llm_time,
-    )
-    logger.info("RAG answer successfully")
+        total_time = time.perf_counter() - total_start_time
 
-    return {
-        "answer": answer.strip(),
-        "question": question,
-        "context_count": len(relevant_sentences),
-        "timing": {
-            "retrieving_time": retrieving_time,
-            "llm_time": llm_time,
-            "total_time": retrieving_time + prompting_time + llm_time,
-        },
-    }
+        logger.info(
+            "Pipeline timing - enhancement: %.4f, retrieving: %.4f, prompting: %.4f, llm: %.4f, total: %.4f",
+            enhancement_time,
+            retrieving_time,
+            prompting_time,
+            llm_time,
+            total_time,
+        )
+        logger.info("Enhanced RAG pipeline completed successfully")
+
+        return {
+            "answer": answer.strip(),
+            "question": question,
+            "enhanced_question": enhanced_question,
+            "keywords": keywords,
+            "context_count": len(relevant_sentences),
+            "relevant_chunks": relevant_sentences,
+            "timing": {
+                "enhancement_time": enhancement_time,
+                "retrieving_time": retrieving_time,
+                "llm_time": llm_time,
+                "total_time": total_time,
+            },
+        }
+        
+    except Exception as e:
+        logger.error("Error in enhanced RAG pipeline: %s", e, exc_info=True)
+        # Fallback to original simple method
+        logger.info("Falling back to simple RAG pipeline")
+        
+        start_retrieve_time = time.perf_counter()
+        relevant_sentences = get_relevant_sentences(question)
+        end_retrieve_time = time.perf_counter()
+        retrieving_time = end_retrieve_time - start_retrieve_time
+
+        start_ask_LLM_time = time.perf_counter()
+        answer = await ask_LLM(relevant_sentences, question)
+        end_ask_LLM_time = time.perf_counter()
+        llm_time = end_ask_LLM_time - start_ask_LLM_time - prompting_time
+
+        total_time = time.perf_counter() - total_start_time
+
+        return {
+            "answer": answer.strip(),
+            "question": question,
+            "enhanced_question": question,  # Same as original
+            "keywords": [],
+            "context_count": len(relevant_sentences),
+            "relevant_chunks": relevant_sentences,
+            "timing": {
+                "enhancement_time": 0,
+                "retrieving_time": retrieving_time,
+                "llm_time": llm_time,
+                "total_time": total_time,
+            },
+        }

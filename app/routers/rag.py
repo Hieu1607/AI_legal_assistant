@@ -64,6 +64,7 @@ async def ask_model(request: QueryQuestion):
                         "answer": answer,
                         "question": question,
                         "context_count": context_count,
+                        "relevant_chunks": [],  # Không có chunks khi từ cache
                         "from_cache": True,
                     },
                 },
@@ -87,7 +88,10 @@ async def ask_model(request: QueryQuestion):
                 "data": {
                     "answer": result["answer"],
                     "question": result["question"],
+                    "enhanced_question": result.get("enhanced_question", result["question"]),
+                    "keywords": result.get("keywords", []),
                     "context_count": result["context_count"],
+                    "relevant_chunks": result.get("relevant_chunks", []),
                     "from_cache": False,
                     "timing": result.get("timing", {}),
                 },
