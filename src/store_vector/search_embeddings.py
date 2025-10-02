@@ -79,7 +79,7 @@ def get_embedding_from_api(text, max_retries=3, timeout=30):
                 )
 
 
-def search_relevant_embeddings(text, n_results=5, model_name=None):
+def search_relevant_embeddings(text, n_results=5, model_name=None, title=None):
     """
     Search for relevant embeddings using API-based embedding.
 
@@ -87,6 +87,7 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
         text (str): Query text
         n_results (int): Number of results to return
         model_name (str): Deprecated, kept for compatibility
+        title (str): Optional title to filter by metadata. If None, search without metadata filter
 
     Returns:
         dict: Search results with cosine similarities
@@ -98,12 +99,20 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
 
     start_query_time = time.time()
     try:
-        results = collection.query(
-            query_embeddings=embedding_from_text,
-            n_results=n_results,
-            # where={"source": "article"},        # Optional: Filter by metadata (AND logic)
-            # where_document={"$contains":"leave"} # Optional: Filter by document content
-        )
+        # Prepare query parameters
+        query_params = {
+            "query_embeddings": embedding_from_text,
+            "n_results": n_results,
+        }
+
+        # Add metadata filter if title is provided
+        if title:
+            query_params["where"] = {"title": title}
+            logger.info("Searching with metadata filter - title: %s", title)
+        else:
+            logger.info("Searching without metadata filter")
+
+        results = collection.query(**query_params)
     except Exception as e:
         CHROMADB_EXCEPTIONS.labels(operation="query").inc()
         logger.error("ChromaDB query failed: %s", str(e))
@@ -136,12 +145,23 @@ def search_relevant_embeddings(text, n_results=5, model_name=None):
 if __name__ == "__main__":
     test_text = "Chương I điều 2 bộ luật hình sự."
 
-    # Test with API embedding
-    print("=== Testing with API embedding ===")
+    # Test with API embedding (no title filter)
+    print("=== Testing with API embedding (no title filter) ===")
     res = search_relevant_embeddings(test_text, 5)
 
+    # Test with title filter
+    print("\n=== Testing with title filter ===")
+    try:
+        res_with_title = search_relevant_embeddings(
+            test_text, 5, title="Bộ luật Hình sự"
+        )
+        print("API embedding test with title filter successful")
+    except Exception as e:
+        print(f"API embedding test with title filter failed: {e}")
+        res_with_title = res
+
     # Test with different text to check API
-    print("\n=== Testing with different text ===")
+    print("\n=== Testing with different text (no title filter) ===")
     try:
         res_vn = search_relevant_embeddings("Điều 3 Luật Hình sự quy định gì?", 5)
         print("API embedding test 2 successful")

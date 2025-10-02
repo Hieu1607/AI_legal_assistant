@@ -21,7 +21,7 @@ from fastapi.responses import JSONResponse
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
 
-from app.constants.http_status import HTTP_STATUS_OK, HTTP_STATUS_INTERNAL_SERVER_ERROR
+from app.constants.http_status import HTTP_STATUS_INTERNAL_SERVER_ERROR, HTTP_STATUS_OK
 from app.logic.rag_logic import process_rag_query
 from app.models.base_model import QueryQuestion
 from configs.logger import get_logger, setup_logging
@@ -48,14 +48,16 @@ async def ask_model(request: QueryQuestion):
         # Initialize cache manager
         cache_ttl = int(os.getenv("CACHE_TTL_SECONDS", "3600"))
         cache_max_size = int(os.getenv("CACHE_MAX_SIZE", "1000"))
-        cache_manager = get_cache_manager(ttl_seconds=cache_ttl, max_size=cache_max_size)
-        
+        cache_manager = get_cache_manager(
+            ttl_seconds=cache_ttl, max_size=cache_max_size
+        )
+
         # Check cache first
         cached_result = cache_manager.get(request.question)
         if cached_result:
             answer, question, context_count = cached_result
             logger.info("Cache hit for question: %s", question[:50])
-            
+
             return JSONResponse(
                 status_code=HTTP_STATUS_OK,
                 content={
@@ -69,16 +71,16 @@ async def ask_model(request: QueryQuestion):
                     },
                 },
             )
-        
+
         # Cache miss - process query normally
         logger.info("Cache miss for question: %s", request.question[:50])
         result = await process_rag_query(request.question)
-        
+
         # Cache the result
         cache_manager.set(
             question=result["question"],
             answer=result["answer"],
-            context_count=result["context_count"]
+            context_count=result["context_count"],
         )
 
         return JSONResponse(
@@ -88,8 +90,11 @@ async def ask_model(request: QueryQuestion):
                 "data": {
                     "answer": result["answer"],
                     "question": result["question"],
-                    "enhanced_question": result.get("enhanced_question", result["question"]),
+                    "enhanced_question": result.get(
+                        "enhanced_question", result["question"]
+                    ),
                     "keywords": result.get("keywords", []),
+                    "relevant_titles": result.get("relevant_titles", []),
                     "context_count": result["context_count"],
                     "relevant_chunks": result.get("relevant_chunks", []),
                     "from_cache": False,

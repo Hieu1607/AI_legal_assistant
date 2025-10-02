@@ -17,6 +17,7 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
+from services.find_titles import find_exact_law_titles
 from services.metrics import CHROMADB_EXCEPTIONS, GROQ_LLM_EXCEPTIONS
 from src.store_vector.search_embeddings import search_relevant_embeddings
 
@@ -36,22 +37,23 @@ async def extract_keywords(question: str) -> list:
     Returns:
         list: List of 3 keywords related to legal topics
     """
-    prompt = f"""Từ câu hỏi pháp luật sau, hãy trích xuất chính xác 3 từ khóa/cụm từ quan trọng nhất liên quan đến pháp luật Việt Nam và bộ luật mới nhất đi kèm.
+    prompt = f"""Từ câu hỏi pháp luật sau, hãy trích xuất chính xác 3 từ khóa/cụm từ quan trọng nhất liên quan đến pháp luật Việt Nam
 
 Câu hỏi: {question}
 
 Yêu cầu:
-- Chỉ trả về 3 từ khóa/cụm từ + Luật đi kèm, mỗi từ khóa trên 1 dòng
+- Chỉ trả về 3 từ khóa/cụm từ, mỗi từ khóa trên 1 dòng
 - Không giải thích, không đánh số
 - Tập trung vào khái niệm pháp luật cốt lõi
 - Ưu tiên thuật ngữ pháp lý chính thức
+- Không trả về luật số bao nhiêu. 
 
 Ví dụ:
 Câu hỏi: "Nam giới phải đi nghĩa vụ quân sự như nào?"
 Từ khóa:
-Nghĩa vụ quân sự Luật nghĩa vụ quân sự 2015
-Độ tuổi nghĩa vụ Luật nghĩa vụ quân sự 2015
-Nam giới Luật nghĩa vụ quân sự 2015
+Nghĩa vụ quân sự
+Độ tuổi nghĩa vụ
+Nam giới
 
 Từ khóa cho câu hỏi trên:"""
 
@@ -63,7 +65,7 @@ Từ khóa cho câu hỏi trên:"""
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=2000,
+                    max_tokens=10000,
                     temperature=0.1,
                 ),
             ),
@@ -117,7 +119,7 @@ Câu hỏi được cải thiện:"""
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
                     model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=2000,
+                    max_tokens=10000,
                     temperature=0.1,
                 ),
             ),
@@ -132,11 +134,113 @@ Câu hỏi được cải thiện:"""
         return question
 
 
-async def get_relevant_sentences_enhanced(
+async def get_relevant_sentences_with_titles(
     question: str, keywords: list, enhanced_question: str
 ):
     """
-    Retrieve relevant sentences using keywords and enhanced question
+    Retrieve relevant sentences using title-based filtering with keywords and enhanced question
+
+    Args:
+        question (str): Original question
+        keywords (list): List of extracted keywords
+        enhanced_question (str): Enhanced version of the question
+
+    Returns:
+        tuple: (list of sentences, list of relevant titles)
+            - sentences: List of dictionaries containing sentence and document name
+            - titles: List of relevant law titles found
+    """
+    logger.info("Original question: %s", question)
+    logger.info("Keywords: %s", keywords)
+    logger.info("Enhanced question: %s", enhanced_question)
+
+    try:
+        # Step 1: Find relevant law titles using find_titles.py logic
+        logger.info("Finding relevant law titles...")
+        relevant_titles = find_exact_law_titles(question, verbose=False)
+        logger.info(
+            "Found %d relevant titles: %s", len(relevant_titles), relevant_titles
+        )
+
+        # Step 2: Search with each title using metadata filtering
+        all_relevant_sentences = []
+        seen_sentences = set()  # To avoid duplicates
+
+        # Prepare search queries: enhanced question + keywords
+        search_queries = [enhanced_question] + keywords
+
+        # Search with each relevant title
+        for title in relevant_titles:
+            logger.info("Searching with title filter: %s", title)
+
+            # Search each query with the current title filter
+            for query in search_queries:
+                try:
+                    # Search with title metadata filter
+                    result = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: search_relevant_embeddings(query, 3, title=title)
+                    )
+
+                    documents = result["documents"][0] if result["documents"] else []
+                    metadatas = result["metadatas"][0] if result["metadatas"] else []
+
+                    for i, sentence in enumerate(documents):
+                        # Skip duplicates
+                        if sentence in seen_sentences:
+                            continue
+                        seen_sentences.add(sentence)
+
+                        # Extract document name from metadata
+                        document_name = title  # Use the filtered title
+                        if i < len(metadatas) and metadatas[i]:
+                            metadata = metadatas[i]
+                            document_name = metadata.get("title", title)
+
+                        all_relevant_sentences.append(
+                            {"sentence": sentence, "document_name": document_name}
+                        )
+
+                except Exception as search_error:
+                    logger.warning(
+                        "Search failed for query '%s' with title '%s': %s",
+                        query,
+                        title,
+                        search_error,
+                    )
+                    continue
+
+        # If no results with title filtering, fallback to general search
+        if not all_relevant_sentences:
+            logger.info(
+                "No results with title filtering, falling back to general search"
+            )
+            fallback_sentences = await get_relevant_sentences_enhanced_fallback(
+                question, keywords, enhanced_question
+            )
+            return fallback_sentences, []
+
+        logger.info(
+            "Found %d relevant sentences with title filtering",
+            len(all_relevant_sentences),
+        )
+        return all_relevant_sentences, relevant_titles
+
+    except Exception as e:  # pylint: disable = broad-exception-caught
+        CHROMADB_EXCEPTIONS.labels(operation="search").inc()
+        logger.error("Error in title-based sentence retrieval: %s", e, exc_info=True)
+        # Fallback to original method
+        fallback_sentences = await get_relevant_sentences_enhanced_fallback(
+            question, keywords, enhanced_question
+        )
+        return fallback_sentences, []
+
+
+async def get_relevant_sentences_enhanced_fallback(
+    question: str, keywords: list, enhanced_question: str
+):
+    """
+    Fallback method for retrieving relevant sentences using keywords and enhanced question
+    (Original implementation without title filtering)
 
     Args:
         question (str): Original question
@@ -146,9 +250,7 @@ async def get_relevant_sentences_enhanced(
     Returns:
         list: List of dictionaries containing sentence and document name
     """
-    logger.info("Original question: %s", question)
-    logger.info("Keywords: %s", keywords)
-    logger.info("Enhanced question: %s", enhanced_question)
+    logger.info("Using fallback enhanced search method")
 
     try:
         # Search with enhanced question and keywords
@@ -196,7 +298,9 @@ async def get_relevant_sentences_enhanced(
 
     except Exception as e:  # pylint: disable = broad-exception-caught
         CHROMADB_EXCEPTIONS.labels(operation="search").inc()
-        logger.error("Error in enhanced sentence retrieval: %s", e, exc_info=True)
+        logger.error(
+            "Error in fallback enhanced sentence retrieval: %s", e, exc_info=True
+        )
         return []
 
 
@@ -346,7 +450,7 @@ BẮT ĐẦU TRẢ LỜI:"""
                     lambda: client.chat.completions.create(
                         messages=[{"role": "user", "content": prompt}],
                         model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                        max_tokens=1024,
+                        max_tokens=10000,
                         temperature=0.1,
                     ),
                 ),
@@ -412,18 +516,21 @@ async def process_rag_query(question: str):
         logger.info("Keywords: %s", keywords)
         logger.info("Enhanced question: %s", enhanced_question)
 
-        # Step 3: Enhanced retrieval
+        # Step 3: Enhanced retrieval with title-based filtering
         start_retrieve_time = time.perf_counter()
 
         if keywords and enhanced_question != question:
-            # Use enhanced retrieval if both steps succeeded
-            relevant_sentences = await get_relevant_sentences_enhanced(
-                question, keywords, enhanced_question
+            # Use title-based enhanced retrieval if both steps succeeded
+            relevant_sentences, relevant_titles = (
+                await get_relevant_sentences_with_titles(
+                    question, keywords, enhanced_question
+                )
             )
         else:
             # Fallback to original method
             logger.info("Using fallback retrieval method")
             relevant_sentences = get_relevant_sentences(question)
+            relevant_titles = []
 
         end_retrieve_time = time.perf_counter()
         retrieving_time = end_retrieve_time - start_retrieve_time
@@ -447,10 +554,11 @@ async def process_rag_query(question: str):
         logger.info("Enhanced RAG pipeline completed successfully")
 
         return {
-            "answer": answer.strip(),
+            "answer": answer.strip() if answer else "Không thể tạo câu trả lời.",
             "question": question,
             "enhanced_question": enhanced_question,
             "keywords": keywords,
+            "relevant_titles": relevant_titles,
             "context_count": len(relevant_sentences),
             "relevant_chunks": relevant_sentences,
             "timing": {
@@ -479,10 +587,11 @@ async def process_rag_query(question: str):
         total_time = time.perf_counter() - total_start_time
 
         return {
-            "answer": answer.strip(),
+            "answer": answer.strip() if answer else "Không thể tạo câu trả lời.",
             "question": question,
             "enhanced_question": question,  # Same as original
             "keywords": [],
+            "relevant_titles": [],
             "context_count": len(relevant_sentences),
             "relevant_chunks": relevant_sentences,
             "timing": {
@@ -492,3 +601,26 @@ async def process_rag_query(question: str):
                 "total_time": total_time,
             },
         }
+
+
+async def test_title_based_rag(question: str):
+    """
+    Test function for the new title-based RAG pipeline
+
+    Args:
+        question (str): Test question
+
+    Returns:
+        dict: Complete RAG response with title-based filtering
+    """
+    logger.info("Testing title-based RAG with question: %s", question)
+    result = await process_rag_query(question)
+
+    logger.info(
+        "Test completed. Found %d relevant chunks from %d titles: %s",
+        result["context_count"],
+        len(result["relevant_titles"]),
+        result["relevant_titles"],
+    )
+
+    return result
