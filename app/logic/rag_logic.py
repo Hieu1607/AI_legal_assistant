@@ -36,7 +36,7 @@ async def extract_keywords(question: str) -> list:
     Returns:
         list: List of 3 keywords related to legal topics
     """
-    prompt = f"""Từ câu hỏi pháp luật sau, hãy trích xuất chính xác 3 từ khóa/cụm từ quan trọng nhất liên quan đến pháp luật Việt Nam.
+    prompt = f"""Từ câu hỏi pháp luật sau, hãy trích xuất chính xác 3 từ khóa/cụm từ quan trọng nhất liên quan đến pháp luật Việt Nam và bộ luật mới nhất đi kèm.
 
 Câu hỏi: {question}
 
@@ -49,9 +49,9 @@ Yêu cầu:
 Ví dụ:
 Câu hỏi: "Nam giới phải đi nghĩa vụ quân sự như nào?"
 Từ khóa:
-nghĩa vụ quân sự
-độ tuổi nghĩa vụ
-nam giới
+nghĩa vụ quân sự, Luật nghĩa vụ quân sự 2015
+độ tuổi nghĩa vụ, Luật nghĩa vụ quân sự 2015
+nam giới, Luật nghĩa vụ quân sự 2015
 
 Từ khóa cho câu hỏi trên:"""
 
@@ -69,14 +69,14 @@ Từ khóa cho câu hỏi trên:"""
             ),
             timeout=15,
         )
-        
+
         content = response.choices[0].message.content
         if content:
             # Parse keywords from response - split by lines and clean
-            keywords = [kw.strip() for kw in content.strip().split('\n') if kw.strip()]
+            keywords = [kw.strip() for kw in content.strip().split("\n") if kw.strip()]
             return keywords[:3]  # Ensure only 3 keywords
         return []
-        
+
     except Exception as e:
         logger.error("Error extracting keywords: %s", e)
         return []
@@ -123,16 +123,18 @@ Câu hỏi được cải thiện:"""
             ),
             timeout=15,
         )
-        
+
         enhanced = response.choices[0].message.content
         return enhanced.strip() if enhanced else question
-        
+
     except Exception as e:
         logger.error("Error enhancing question: %s", e)
         return question
 
 
-async def get_relevant_sentences_enhanced(question: str, keywords: list, enhanced_question: str):
+async def get_relevant_sentences_enhanced(
+    question: str, keywords: list, enhanced_question: str
+):
     """
     Retrieve relevant sentences using keywords and enhanced question
 
@@ -147,12 +149,12 @@ async def get_relevant_sentences_enhanced(question: str, keywords: list, enhance
     logger.info("Original question: %s", question)
     logger.info("Keywords: %s", keywords)
     logger.info("Enhanced question: %s", enhanced_question)
-    
+
     try:
         # Search with enhanced question and keywords
         search_queries = [enhanced_question] + keywords
         all_relevant_sentences = []
-        
+
         # Use asyncio.gather to search all queries concurrently
         search_tasks = []
         for query in search_queries:
@@ -160,41 +162,39 @@ async def get_relevant_sentences_enhanced(question: str, keywords: list, enhance
                 None, lambda q=query: search_relevant_embeddings(q, 3)
             )
             search_tasks.append(task)
-        
+
         search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
-        
+
         # Process results from all searches
         seen_sentences = set()  # To avoid duplicates
-        
+
         for result in search_results:
             if isinstance(result, Exception):
                 logger.warning("Search failed for a query: %s", result)
                 continue
-                
+
             documents = result["documents"][0] if result["documents"] else []
             metadatas = result["metadatas"][0] if result["metadatas"] else []
-            
+
             for i, sentence in enumerate(documents):
                 # Skip duplicates
                 if sentence in seen_sentences:
                     continue
                 seen_sentences.add(sentence)
-                
+
                 # Extract document name from metadata
                 document_name = "Unknown Document"
                 if i < len(metadatas) and metadatas[i]:
                     metadata = metadatas[i]
                     document_name = metadata.get("title", "Unknown Document")
-                
-                all_relevant_sentences.append({
-                    "sentence": sentence,
-                    "document_name": document_name
-                })
-        
-        # Limit to top 10 results to avoid too much context
-        return all_relevant_sentences[:10]
-        
-    except Exception as e:
+
+                all_relevant_sentences.append(
+                    {"sentence": sentence, "document_name": document_name}
+                )
+
+        return all_relevant_sentences
+
+    except Exception as e:  # pylint: disable = broad-exception-caught
         CHROMADB_EXCEPTIONS.labels(operation="search").inc()
         logger.error("Error in enhanced sentence retrieval: %s", e, exc_info=True)
         return []
@@ -208,7 +208,7 @@ def get_relevant_sentences(question: str):
         question (str): The input question
 
     Returns:
-        list: List of dictionaries containing sentence and document name, 
+        list: List of dictionaries containing sentence and document name,
               or empty list if error occurs
               Format: [{"sentence": str, "document_name": str}, ...]
     """
@@ -216,9 +216,17 @@ def get_relevant_sentences(question: str):
     try:
         relevant_embeddings = search_relevant_embeddings(question, 5)
         relevant_sentences = []
-        documents = relevant_embeddings["documents"][0] if relevant_embeddings["documents"] else []
-        metadatas = relevant_embeddings["metadatas"][0] if relevant_embeddings["metadatas"] else []
-        
+        documents = (
+            relevant_embeddings["documents"][0]
+            if relevant_embeddings["documents"]
+            else []
+        )
+        metadatas = (
+            relevant_embeddings["metadatas"][0]
+            if relevant_embeddings["metadatas"]
+            else []
+        )
+
         for i, sentence in enumerate(documents):
             # Extract document name from metadata, default to "Unknown Document" if not available
             document_name = "Unknown Document"
@@ -226,11 +234,10 @@ def get_relevant_sentences(question: str):
                 metadata = metadatas[i]
                 # Use title field from metadata which contains the document name
                 document_name = metadata.get("title", "Unknown Document")
-            
-            relevant_sentences.append({
-                "sentence": sentence,
-                "document_name": document_name
-            })
+
+            relevant_sentences.append(
+                {"sentence": sentence, "document_name": document_name}
+            )
         return relevant_sentences
     except (IndexError, KeyError, FileNotFoundError, ImportError, ValueError) as e:
         CHROMADB_EXCEPTIONS.labels(operation="search").inc()
@@ -376,20 +383,20 @@ async def process_rag_query(question: str):
         dict: Response containing answer, timing info, and metadata
     """
     total_start_time = time.perf_counter()
-    
+
     # Step 1 & 2: Extract keywords and enhance question concurrently
     logger.info("Starting keyword extraction and question enhancement")
     step1_start = time.perf_counter()
-    
+
     try:
         # Run keyword extraction and question enhancement in parallel
         keywords_task = extract_keywords(question)
         enhanced_question_task = enhance_question(question)
-        
+
         keywords, enhanced_question = await asyncio.gather(
             keywords_task, enhanced_question_task, return_exceptions=True
         )
-        
+
         # Handle exceptions
         if isinstance(keywords, Exception):
             logger.warning("Keyword extraction failed: %s", keywords)
@@ -397,17 +404,17 @@ async def process_rag_query(question: str):
         if isinstance(enhanced_question, Exception):
             logger.warning("Question enhancement failed: %s", enhanced_question)
             enhanced_question = question
-            
+
         step1_end = time.perf_counter()
         enhancement_time = step1_end - step1_start
-        
+
         logger.info("Enhancement completed in %.4f seconds", enhancement_time)
         logger.info("Keywords: %s", keywords)
         logger.info("Enhanced question: %s", enhanced_question)
-        
+
         # Step 3: Enhanced retrieval
         start_retrieve_time = time.perf_counter()
-        
+
         if keywords and enhanced_question != question:
             # Use enhanced retrieval if both steps succeeded
             relevant_sentences = await get_relevant_sentences_enhanced(
@@ -417,7 +424,7 @@ async def process_rag_query(question: str):
             # Fallback to original method
             logger.info("Using fallback retrieval method")
             relevant_sentences = get_relevant_sentences(question)
-            
+
         end_retrieve_time = time.perf_counter()
         retrieving_time = end_retrieve_time - start_retrieve_time
 
@@ -453,12 +460,12 @@ async def process_rag_query(question: str):
                 "total_time": total_time,
             },
         }
-        
+
     except Exception as e:
         logger.error("Error in enhanced RAG pipeline: %s", e, exc_info=True)
         # Fallback to original simple method
         logger.info("Falling back to simple RAG pipeline")
-        
+
         start_retrieve_time = time.perf_counter()
         relevant_sentences = get_relevant_sentences(question)
         end_retrieve_time = time.perf_counter()
