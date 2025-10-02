@@ -49,9 +49,9 @@ Yêu cầu:
 Ví dụ:
 Câu hỏi: "Nam giới phải đi nghĩa vụ quân sự như nào?"
 Từ khóa:
-nghĩa vụ quân sự, Luật nghĩa vụ quân sự 2015
-độ tuổi nghĩa vụ, Luật nghĩa vụ quân sự 2015
-nam giới, Luật nghĩa vụ quân sự 2015
+Nghĩa vụ quân sự Luật nghĩa vụ quân sự 2015
+Độ tuổi nghĩa vụ Luật nghĩa vụ quân sự 2015
+Nam giới Luật nghĩa vụ quân sự 2015
 
 Từ khóa cho câu hỏi trên:"""
 
