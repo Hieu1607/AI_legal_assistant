@@ -41,7 +41,7 @@ async def extract_keywords(question: str) -> list:
 Câu hỏi: {question}
 
 Yêu cầu:
-- Chỉ trả về 3 từ khóa/cụm từ, mỗi từ khóa trên 1 dòng
+- Chỉ trả về 3 từ khóa/cụm từ + Luật đi kèm, mỗi từ khóa trên 1 dòng
 - Không giải thích, không đánh số
 - Tập trung vào khái niệm pháp luật cốt lõi
 - Ưu tiên thuật ngữ pháp lý chính thức
