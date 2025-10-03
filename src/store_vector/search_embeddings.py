@@ -142,6 +142,124 @@ def search_relevant_embeddings(text, n_results=5, model_name=None, title=None):
     return enhanced_results
 
 
+def batch_search_relevant_embeddings(queries_and_titles, n_results=5):
+    """
+    Batch search for multiple queries with their corresponding title filters.
+    This is more efficient than individual searches as it reduces API calls for embeddings.
+
+    Args:
+        queries_and_titles (list): List of tuples (query_text, title), where title can be None
+        n_results (int): Number of results to return per query
+
+    Returns:
+        list: List of search results, same order as input queries
+    """
+    start_time = time.time()
+
+    if not queries_and_titles:
+        return []
+
+    # Extract unique queries to minimize embedding API calls
+    unique_queries = {}
+    query_embeddings = {}
+
+    for query_text, title in queries_and_titles:
+        if query_text not in unique_queries:
+            unique_queries[query_text] = True
+
+    # Get embeddings for all unique queries
+    logger.info(
+        "Getting embeddings for %d unique queries in batch", len(unique_queries)
+    )
+
+    for query_text in unique_queries.keys():
+        try:
+            query_embeddings[query_text] = get_embedding_from_api(query_text)
+        except Exception as e:
+            logger.error(
+                "Failed to get embedding for query '%s': %s", query_text, str(e)
+            )
+            query_embeddings[query_text] = None
+
+    # Perform searches for each query-title combination
+    results = []
+    start_query_time = time.time()
+
+    for query_text, title in queries_and_titles:
+        if query_embeddings[query_text] is None:
+            # Return empty result for failed embedding
+            empty_result = {
+                "ids": [[]],
+                "distances": [[]],
+                "metadatas": [[]],
+                "documents": [[]],
+                "embeddings": [[]],
+                "cosine_similarities": [[]],
+            }
+            results.append(empty_result)
+            continue
+
+        try:
+            # Prepare query parameters
+            query_params = {
+                "query_embeddings": query_embeddings[query_text],
+                "n_results": n_results,
+            }
+
+            # Add metadata filter if title is provided
+            if title:
+                query_params["where"] = {"title": title}
+
+            search_result = collection.query(**query_params)
+
+            # Calculate cosine similarities
+            cosine_similarities = []
+            if search_result["distances"] and len(search_result["distances"][0]) > 0:
+                cosine_similarities = [
+                    1 - distance for distance in search_result["distances"][0]
+                ]
+
+            # Create enhanced result
+            enhanced_result = {
+                "ids": search_result["ids"],
+                "distances": search_result["distances"],
+                "metadatas": search_result["metadatas"],
+                "documents": search_result["documents"],
+                "embeddings": search_result["embeddings"],
+                "cosine_similarities": [cosine_similarities],
+            }
+            results.append(enhanced_result)
+
+        except Exception as e:
+            CHROMADB_EXCEPTIONS.labels(operation="query").inc()
+            logger.error(
+                "ChromaDB batch query failed for query '%s' with title '%s': %s",
+                query_text,
+                title,
+                str(e),
+            )
+            # Return empty result for failed query
+            empty_result = {
+                "ids": [[]],
+                "distances": [[]],
+                "metadatas": [[]],
+                "documents": [[]],
+                "embeddings": [[]],
+                "cosine_similarities": [[]],
+            }
+            results.append(empty_result)
+
+    end_time = time.time()
+    logger.info(
+        "Batch search completed for %d queries in %.4f seconds",
+        len(queries_and_titles),
+        end_time - start_time,
+    )
+    logger.info("Query execution time: %.4f seconds", end_time - start_query_time)
+
+    return results
+
+
 if __name__ == "__main__":
     test_text = "Chương I điều 2 bộ luật hình sự."
 

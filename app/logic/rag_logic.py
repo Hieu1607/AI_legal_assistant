@@ -19,7 +19,10 @@ sys.path.insert(0, str(root))
 from configs.logger import get_logger, setup_logging
 from services.find_titles import find_exact_law_titles
 from services.metrics import CHROMADB_EXCEPTIONS, GROQ_LLM_EXCEPTIONS
-from src.store_vector.search_embeddings import search_relevant_embeddings
+from src.store_vector.search_embeddings import (
+    batch_search_relevant_embeddings,
+    search_relevant_embeddings,
+)
 
 setup_logging()
 logger = get_logger(__name__)
@@ -169,18 +172,37 @@ async def get_relevant_sentences_with_titles(
         # Prepare search queries: enhanced question + keywords
         search_queries = [enhanced_question] + keywords
 
-        # Search with each relevant title
+        # Prepare batch search with optimized parameters
+        queries_and_titles = []
+
+        # Optimize: Use higher number of results per query for better coverage
+        results_per_query = min(
+            5, max(3, 15 // (len(relevant_titles) * len(search_queries)))
+        )
+
         for title in relevant_titles:
-            logger.info("Searching with title filter: %s", title)
-
-            # Search each query with the current title filter
             for query in search_queries:
-                try:
-                    # Search with title metadata filter
-                    result = await asyncio.get_event_loop().run_in_executor(
-                        None, lambda: search_relevant_embeddings(query, 3, title=title)
-                    )
+                queries_and_titles.append((query, title))
 
+        logger.info(
+            "Executing batch vector database search for %d query-title combinations",
+            len(queries_and_titles),
+        )
+
+        # Execute batch search asynchronously
+        try:
+            search_results = await asyncio.get_event_loop().run_in_executor(
+                None,
+                lambda: batch_search_relevant_embeddings(
+                    queries_and_titles, results_per_query
+                ),
+            )
+
+            # Process results from batch search
+            for idx, result in enumerate(search_results):
+                query, title = queries_and_titles[idx]
+
+                try:
                     documents = result["documents"][0] if result["documents"] else []
                     metadatas = result["metadatas"][0] if result["metadatas"] else []
 
@@ -200,14 +222,18 @@ async def get_relevant_sentences_with_titles(
                             {"sentence": sentence, "document_name": document_name}
                         )
 
-                except Exception as search_error:
+                except Exception as processing_error:
                     logger.warning(
-                        "Search failed for query '%s' with title '%s': %s",
+                        "Error processing batch search result for query '%s' with title '%s': %s",
                         query,
                         title,
-                        search_error,
+                        processing_error,
                     )
                     continue
+
+        except Exception as batch_error:
+            logger.error("Error in batch vector database search: %s", batch_error)
+            # Continue with whatever results we have
 
         # If no results with title filtering, fallback to general search
         if not all_relevant_sentences:
@@ -257,42 +283,54 @@ async def get_relevant_sentences_enhanced_fallback(
         search_queries = [enhanced_question] + keywords
         all_relevant_sentences = []
 
-        # Use asyncio.gather to search all queries concurrently
-        search_tasks = []
-        for query in search_queries:
-            task = asyncio.get_event_loop().run_in_executor(
-                None, lambda q=query: search_relevant_embeddings(q, 3)
-            )
-            search_tasks.append(task)
+        # Optimize: Use higher number of results per query for better fallback coverage
+        results_per_query = min(7, max(4, 20 // len(search_queries)))
 
-        search_results = await asyncio.gather(*search_tasks, return_exceptions=True)
+        # Prepare batch search for fallback (no title filtering)
+        queries_and_titles = [(query, None) for query in search_queries]
 
-        # Process results from all searches
+        logger.info(
+            "Executing batch fallback vector database search for %d queries",
+            len(queries_and_titles),
+        )
+
+        # Execute batch search asynchronously
+        search_results = await asyncio.get_event_loop().run_in_executor(
+            None,
+            lambda: batch_search_relevant_embeddings(
+                queries_and_titles, results_per_query
+            ),
+        )
+
+        # Process results from batch search
         seen_sentences = set()  # To avoid duplicates
 
         for result in search_results:
-            if isinstance(result, Exception):
-                logger.warning("Search failed for a query: %s", result)
-                continue
+            try:
+                documents = result["documents"][0] if result["documents"] else []
+                metadatas = result["metadatas"][0] if result["metadatas"] else []
 
-            documents = result["documents"][0] if result["documents"] else []
-            metadatas = result["metadatas"][0] if result["metadatas"] else []
+                for i, sentence in enumerate(documents):
+                    # Skip duplicates
+                    if sentence in seen_sentences:
+                        continue
+                    seen_sentences.add(sentence)
 
-            for i, sentence in enumerate(documents):
-                # Skip duplicates
-                if sentence in seen_sentences:
-                    continue
-                seen_sentences.add(sentence)
+                    # Extract document name from metadata
+                    document_name = "Unknown Document"
+                    if i < len(metadatas) and metadatas[i]:
+                        metadata = metadatas[i]
+                        document_name = metadata.get("title", "Unknown Document")
 
-                # Extract document name from metadata
-                document_name = "Unknown Document"
-                if i < len(metadatas) and metadatas[i]:
-                    metadata = metadatas[i]
-                    document_name = metadata.get("title", "Unknown Document")
-
-                all_relevant_sentences.append(
-                    {"sentence": sentence, "document_name": document_name}
+                    all_relevant_sentences.append(
+                        {"sentence": sentence, "document_name": document_name}
+                    )
+            except Exception as processing_error:
+                logger.warning(
+                    "Error processing fallback batch search result: %s",
+                    processing_error,
                 )
+                continue
 
         return all_relevant_sentences
 

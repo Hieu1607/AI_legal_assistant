@@ -1,9 +1,10 @@
+import asyncio
 import os
 import re
 from difflib import SequenceMatcher
 
 from dotenv import load_dotenv
-from groq import Groq
+from groq import AsyncGroq, Groq
 
 # Load environment variables
 load_dotenv()
