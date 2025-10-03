@@ -381,7 +381,13 @@ def find_exact_law_titles(question, verbose=True):
     # Step 2: Read list of all titles
     if verbose:
         print("Step 2: Read list of all laws from titles.txt...")
-    all_titles = load_titles_from_file("titles.txt")
+
+    # Get absolute path to titles.txt file (in the root directory)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    titles_path = os.path.join(project_root, "titles.txt")
+
+    all_titles = load_titles_from_file(titles_path)
     if verbose:
         print(f"Loaded {len(all_titles)} laws from titles.txt file\n")
 
