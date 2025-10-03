@@ -260,7 +260,7 @@ CÂU HỎI CẦN PHÂN TÍCH:"""
             client = Groq(api_key=api_key)
 
             completion = client.chat.completions.create(
-                model="openai/gpt-oss-120b",
+                model="llama-3.1-8b-instant",  # Temporary change for debugging
                 messages=[
                     {"role": "system", "content": enhanced_prompt},
                     {"role": "user", "content": question.strip()},

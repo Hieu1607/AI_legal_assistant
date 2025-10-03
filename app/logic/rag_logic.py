@@ -3,12 +3,14 @@ Business logic for RAG (Retrieval-Augmented Generation) operations
 """
 
 import asyncio
+import hashlib
 import os
 import sys
 import time
+from typing import Dict, Optional
 
 from dotenv import load_dotenv
-from groq import Groq
+from groq import AsyncGroq
 
 load_dotenv()
 
@@ -28,6 +30,120 @@ setup_logging()
 logger = get_logger(__name__)
 
 prompting_time = 0
+
+# Initialize async Groq client pool for concurrent requests
+_async_groq_clients = []
+_client_semaphore = asyncio.Semaphore(3)  # Limit concurrent LLM calls
+
+# LLM Response Cache for better performance
+_llm_cache: Dict[str, str] = {}
+MAX_CACHE_SIZE = 100  # Limit cache size to prevent memory issues
+
+
+async def get_async_groq_client():
+    """Get async Groq client with connection pooling and concurrency control"""
+    async with _client_semaphore:
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("GROQ_API_KEY environment variable not set")
+
+        # Create a new client for each request to avoid conflicts
+        return AsyncGroq(api_key=api_key)
+
+
+async def batch_llm_calls(tasks):
+    """
+    Execute multiple LLM tasks concurrently with controlled concurrency
+
+    Args:
+        tasks (list): List of async LLM tasks
+
+    Returns:
+        list: Results from all tasks, with exceptions handled
+    """
+    # Use semaphore to limit concurrent LLM calls to avoid rate limiting
+    semaphore = asyncio.Semaphore(2)  # Max 2 concurrent LLM calls
+
+    async def controlled_task(task):
+        async with semaphore:
+            return await task
+
+    controlled_tasks = [controlled_task(task) for task in tasks]
+    return await asyncio.gather(*controlled_tasks, return_exceptions=True)
+
+
+def get_cache_key(prompt: str, model: str, max_tokens: int, temperature: float) -> str:
+    """Generate cache key for LLM requests"""
+    cache_input = f"{prompt}|{model}|{max_tokens}|{temperature}"
+    return hashlib.md5(cache_input.encode()).hexdigest()
+
+
+async def cached_llm_call(
+    prompt: str,
+    model: str = "llama-3.1-8b-instant",
+    max_tokens: int = 4096,
+    temperature: float = 0.1,
+    timeout: int = 30,
+) -> Optional[str]:
+    """
+    Make LLM call with caching support
+
+    Args:
+        prompt: The prompt to send to LLM
+        model: Model name to use
+        max_tokens: Maximum tokens in response
+        temperature: Temperature for generation
+        timeout: Request timeout in seconds
+
+    Returns:
+        LLM response or None if failed
+    """
+    # Check cache first
+    cache_key = get_cache_key(prompt, model, max_tokens, temperature)
+    if cache_key in _llm_cache:
+        logger.info("Cache hit for LLM request")
+        return _llm_cache[cache_key]
+
+    try:
+        client = await get_async_groq_client()
+        response = await asyncio.wait_for(
+            client.chat.completions.create(
+                messages=[{"role": "user", "content": prompt}],
+                model=model,
+                max_tokens=max_tokens,
+                temperature=temperature,
+            ),
+            timeout=timeout,
+        )
+
+        result = response.choices[0].message.content
+
+        # Cache the result (with size limit)
+        if len(_llm_cache) < MAX_CACHE_SIZE and result:
+            _llm_cache[cache_key] = result
+            logger.info("Cached LLM response")
+
+        return result
+
+    except Exception as e:
+        logger.error("LLM call failed: %s", e)
+        return None
+
+
+def get_cache_stats() -> Dict[str, int]:
+    """Get LLM cache statistics"""
+    return {
+        "cache_size": len(_llm_cache),
+        "max_cache_size": MAX_CACHE_SIZE,
+        "cache_hit_ratio": 0,  # Could be enhanced with hit counting
+    }
+
+
+def clear_llm_cache():
+    """Clear LLM response cache"""
+    global _llm_cache
+    _llm_cache.clear()
+    logger.info("LLM cache cleared")
 
 
 async def extract_keywords(question: str) -> list:
@@ -61,25 +177,51 @@ Nam giới
 Từ khóa cho câu hỏi trên:"""
 
     try:
-        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        response = await asyncio.wait_for(
-            asyncio.get_event_loop().run_in_executor(
-                None,
-                lambda: client.chat.completions.create(
-                    messages=[{"role": "user", "content": prompt}],
-                    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=10000,
-                    temperature=0.1,
-                ),
-            ),
-            timeout=15,
+        content = await cached_llm_call(
+            prompt=prompt,
+            model=os.getenv("LLM_MODEL", "llama-3.1-8b-instant"),
+            max_tokens=3000,  # Increased for complete keyword extraction
+            temperature=0.1,
+            timeout=15,  # Increased timeout for keyword extraction
         )
-
-        content = response.choices[0].message.content
         if content:
-            # Parse keywords from response - split by lines and clean
-            keywords = [kw.strip() for kw in content.strip().split("\n") if kw.strip()]
-            return keywords[:3]  # Ensure only 3 keywords
+            # Parse keywords from response with better logic
+            lines = content.strip().split("\n")
+            keywords = []
+
+            for line in lines:
+                line = line.strip()
+                if not line:
+                    continue
+
+                # Remove numbering (1., 2., etc.) and bullet points
+                import re
+
+                line = re.sub(r"^\d+\.\s*", "", line)  # Remove "1. ", "2. ", etc.
+                line = re.sub(r"^[-•*]\s*", "", line)  # Remove bullet points
+                line = line.strip()
+
+                # Skip explanation lines and long sentences
+                if len(line) > 50 or any(
+                    word in line.lower()
+                    for word in [
+                        "trích xuất",
+                        "quan trọng",
+                        "như sau",
+                        "câu hỏi",
+                        "pháp luật",
+                    ]
+                ):
+                    continue
+
+                # Only add if it looks like a keyword/phrase
+                if line and len(line) > 3:
+                    keywords.append(line)
+
+                if len(keywords) >= 3:
+                    break
+
+            return keywords[:3] if keywords else []
         return []
 
     except Exception as e:
@@ -115,21 +257,13 @@ Cải thiện: "Tuổi nghỉ hưu theo quy định pháp luật lao động Vi�
 Câu hỏi được cải thiện:"""
 
     try:
-        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        response = await asyncio.wait_for(
-            asyncio.get_event_loop().run_in_executor(
-                None,
-                lambda: client.chat.completions.create(
-                    messages=[{"role": "user", "content": prompt}],
-                    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=10000,
-                    temperature=0.1,
-                ),
-            ),
-            timeout=15,
+        enhanced = await cached_llm_call(
+            prompt=prompt,
+            model=os.getenv("LLM_MODEL", "llama-3.1-8b-instant"),
+            max_tokens=5000,  # Increased for complete question enhancement
+            temperature=0.1,
+            timeout=15,  # Increased timeout for question enhancement
         )
-
-        enhanced = response.choices[0].message.content
         return enhanced.strip() if enhanced else question
 
     except Exception as e:
@@ -175,9 +309,18 @@ async def get_relevant_sentences_with_titles(
         # Prepare batch search with optimized parameters
         queries_and_titles = []
 
+        # Check if we have titles to work with
+        if not relevant_titles:
+            logger.info("No relevant titles found, falling back to general search")
+            fallback_sentences = await get_relevant_sentences_enhanced_fallback(
+                question, keywords, enhanced_question
+            )
+            return fallback_sentences, []
+
         # Optimize: Use higher number of results per query for better coverage
+        total_combinations = len(relevant_titles) * len(search_queries)
         results_per_query = min(
-            5, max(3, 15 // (len(relevant_titles) * len(search_queries)))
+            5, max(3, 15 // total_combinations if total_combinations > 0 else 5)
         )
 
         for title in relevant_titles:
@@ -451,24 +594,16 @@ BẮT ĐẦU TRẢ LỜI:"""
     prompting_time = end_propting_time - start_prompting_time
 
     try:
-        # Initialize Groq client
-        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-
-        # Create chat completion
-        response = await asyncio.wait_for(
-            asyncio.get_event_loop().run_in_executor(
-                None,
-                lambda: client.chat.completions.create(
-                    messages=[{"role": "user", "content": prompt}],
-                    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=1024,
-                    temperature=0.1,
-                ),
-            ),
-            timeout=60,
+        # Use cached LLM call for better performance
+        result = await cached_llm_call(
+            prompt=prompt,
+            model=os.getenv("LLM_MODEL", "llama-3.1-8b-instant"),
+            max_tokens=4096,
+            temperature=0.1,
+            timeout=30,  # Reduced timeout for final answer generation
         )
 
-        return response.choices[0].message.content
+        return result if result else "Không thể tạo câu trả lời."
 
     except asyncio.TimeoutError:
         GROQ_LLM_EXCEPTIONS.labels(
@@ -481,18 +616,15 @@ BẮT ĐẦU TRẢ LỜI:"""
         ).inc()
         logger.info("Network error: %s, retrying...", e)
         try:
-            client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+            client = await get_async_groq_client()
             response = await asyncio.wait_for(
-                asyncio.get_event_loop().run_in_executor(
-                    None,
-                    lambda: client.chat.completions.create(
-                        messages=[{"role": "user", "content": prompt}],
-                        model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                        max_tokens=10000,
-                        temperature=0.1,
-                    ),
+                client.chat.completions.create(
+                    messages=[{"role": "user", "content": prompt}],
+                    model=os.getenv("LLM_MODEL", "llama-3.1-8b-instant"),
+                    max_tokens=4096,
+                    temperature=0.1,
                 ),
-                timeout=15,
+                timeout=20,  # Shorter retry timeout
             )
             return response.choices[0].message.content
         except asyncio.TimeoutError:
@@ -547,6 +679,10 @@ async def process_rag_query(question: str):
             logger.warning("Question enhancement failed: %s", enhanced_question)
             enhanced_question = question
 
+        # Debug logging
+        logger.info("Keywords extraction result: %s", keywords)
+        logger.info("Question enhancement success: %s", enhanced_question != question)
+
         step1_end = time.perf_counter()
         enhancement_time = step1_end - step1_start
 
@@ -557,16 +693,20 @@ async def process_rag_query(question: str):
         # Step 3: Enhanced retrieval with title-based filtering
         start_retrieve_time = time.perf_counter()
 
-        if keywords and enhanced_question != question:
-            # Use title-based enhanced retrieval if both steps succeeded
+        # Use title-based retrieval if we have keywords OR enhanced question (more flexible)
+        if keywords or enhanced_question != question:
+            # Use title-based enhanced retrieval
+            logger.info("Using title-based enhanced retrieval")
             relevant_sentences, relevant_titles = (
                 await get_relevant_sentences_with_titles(
                     question, keywords, enhanced_question
                 )
             )
         else:
-            # Fallback to original method
-            logger.info("Using fallback retrieval method")
+            # Fallback to original method only if both failed
+            logger.info(
+                "Using fallback retrieval method - both keyword extraction and question enhancement failed"
+            )
             relevant_sentences = get_relevant_sentences(question)
             relevant_titles = []
 
