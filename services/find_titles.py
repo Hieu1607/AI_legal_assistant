@@ -4,7 +4,7 @@ import re
 from difflib import SequenceMatcher
 
 from dotenv import load_dotenv
-from groq import AsyncGroq, Groq
+from openai import AsyncOpenAI, OpenAI
 
 # Load environment variables
 load_dotenv()
@@ -231,9 +231,9 @@ def get_llm_analysis(question, max_retries=3):
     if not question or not question.strip():
         return []
 
-    api_key = os.getenv("GROQ_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        print("Error: GROQ_API_KEY environment variable not set")
+        print("Error: OPENAI_API_KEY environment variable not set")
         return []
 
     # Enhanced system prompt for better accuracy
@@ -257,24 +257,16 @@ CÂU HỎI CẦN PHÂN TÍCH:"""
 
     for attempt in range(max_retries):
         try:
-            client = Groq(api_key=api_key)
+            client = OpenAI(api_key=api_key)
 
             completion = client.chat.completions.create(
-                model="openai/gpt-oss-120b",
+                model="gpt-4o-mini",
                 messages=[
                     {"role": "system", "content": enhanced_prompt},
                     {"role": "user", "content": question.strip()},
                 ],
-                temperature=0.05,  # Lower temperature for more consistent results
-                max_completion_tokens=10000,  # Reduced for focused responses
-                top_p=0.8,  # More focused sampling
-                frequency_penalty=0.1,  # Reduce repetition
-                presence_penalty=0.1,  # Encourage diversity
-                stop=[
-                    "\n\n",
-                    "Giải thích:",
-                    "Lý do:",
-                ],  # Stop tokens to prevent explanations
+                temperature=0.1,
+                max_tokens=4096,
             )
 
             # Get result from LLM

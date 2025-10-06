@@ -11,7 +11,9 @@ REQUEST_COUNTER = Counter(
 LATENCY_HIST = Histogram(
     "request_latency_seconds", "Histogram of request latency", ["method", "endpoint"]
 )
-GROQ_TOKENS = Counter("groq_tokens_total", "Total tokens used in Groq API", ["type"])
+OPENAI_TOKENS = Counter(
+    "openai_tokens_total", "Total tokens used in OpenAI API", ["type"]
+)
 CHROMADB_EXCEPTIONS = Counter(
     "chromadb_exceptions_total", "Total ChromaDB exceptions", ["operation"]
 )
@@ -20,6 +22,6 @@ HF_EMBEDDINGS_EXCEPTIONS = Counter(
     "Total Hugging Face embeddings exceptions",
     ["model"],
 )
-GROQ_LLM_EXCEPTIONS = Counter(
-    "groq_llm_exceptions_total", "Total Groq LLM exceptions", ["model"]
+OPENAI_LLM_EXCEPTIONS = Counter(
+    "openai_llm_exceptions_total", "Total OpenAI LLM exceptions", ["model"]
 )

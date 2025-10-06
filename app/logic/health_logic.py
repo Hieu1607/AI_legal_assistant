@@ -2,8 +2,8 @@ import os
 import sys
 
 from dotenv import load_dotenv
-from groq import Groq
 from huggingface_hub import hf_hub_download
+from openai import OpenAI
 
 # Load environment variables
 load_dotenv()
@@ -29,10 +29,10 @@ def health_check():
     collection_count = legal_collection.count()
     results = legal_collection.peek(limit=5)
 
-    # Check Groq API
-    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    # Check OpenAI API
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     client.chat.completions.create(
         messages=[{"role": "user", "content": "Hello"}],
-        model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-        max_tokens=10
+        model="gpt-4o-mini",
+        max_tokens=10,
     )

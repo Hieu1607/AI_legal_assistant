@@ -3,7 +3,7 @@ import os
 import sys
 
 from dotenv import load_dotenv
-from groq import Groq
+from openai import OpenAI
 
 load_dotenv()
 from pydantic import BaseModel
@@ -16,17 +16,17 @@ setup_logging()
 logger = get_logger_app(__name__)
 from services.metrics import (
     CHROMADB_EXCEPTIONS,
-    GROQ_LLM_EXCEPTIONS,
     HF_EMBEDDINGS_EXCEPTIONS,
+    OPENAI_LLM_EXCEPTIONS,
 )
 from src.store_vector.search_embeddings import search_relevant_embeddings
 
 # Import metrics functions
 try:
-    from app.logic.metrics_logic import increment_groq_tokens
+    from app.logic.metrics_logic import increment_openai_tokens
 except ImportError:
     # Fallback if import fails
-    def increment_groq_tokens(token_type: str, count: int = 1):
+    def increment_openai_tokens(token_type: str, count: int = 1):
         pass
 
 
@@ -72,7 +72,7 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
             if relevant_embeddings["metadatas"]
             else []
         )
-        
+
         # Combine documents with metadata for document names
         chunks = []
         for i, sentence in enumerate(documents):
@@ -82,11 +82,11 @@ def retrieve_laws(data: RetrieveInput) -> RetrieveOutput:
                 metadata = metadatas[i]
                 # Use title field which contains the legal document name
                 document_name = metadata.get("title", "Unknown Document")
-            
+
             # Format: "sentence [Document: document_name]"
             formatted_chunk = f"{sentence} [Nguồn: {document_name}]"
             chunks.append(formatted_chunk)
-        
+
         return RetrieveOutput(chunks=chunks)
     except (ValueError, KeyError, ImportError, OSError) as e:
         CHROMADB_EXCEPTIONS.labels(operation="retrieve").inc()
@@ -136,8 +136,8 @@ CẤM TUYỆT ĐỐI:
 
 BẮT ĐẦU TRẢ LỜI:"""
     try:
-        # Initialize Groq client
-        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        # Initialize OpenAI client
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
         # Use loop.run_in_executor to run sync function in a separate thread
         loop = asyncio.get_event_loop()
@@ -146,8 +146,8 @@ BẮT ĐẦU TRẢ LỜI:"""
                 None,
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                    max_tokens=1024,
+                    model="gpt-4o-mini",
+                    max_tokens=4096,
                     temperature=0.1,
                 ),
             ),
@@ -158,34 +158,30 @@ BẮT ĐẦU TRẢ LỜI:"""
         # Track token usage if available
         if hasattr(response, "usage") and response.usage:
             if hasattr(response.usage, "prompt_tokens"):
-                increment_groq_tokens("input", response.usage.prompt_tokens)
+                increment_openai_tokens("input", response.usage.prompt_tokens)
             if hasattr(response.usage, "completion_tokens"):
-                increment_groq_tokens("output", response.usage.completion_tokens)
+                increment_openai_tokens("output", response.usage.completion_tokens)
             if hasattr(response.usage, "total_tokens"):
-                increment_groq_tokens("total", response.usage.total_tokens)
+                increment_openai_tokens("total", response.usage.total_tokens)
 
         logger.info("The answer from LLM is %s", answer)
         return GenerateOutput(answer=answer)
     except asyncio.TimeoutError:
-        GROQ_LLM_EXCEPTIONS.labels(
-            model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
-        ).inc()
+        OPENAI_LLM_EXCEPTIONS.labels(model="gpt-4o-mini").inc()
         return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
     except ConnectionError as e:
-        GROQ_LLM_EXCEPTIONS.labels(
-            model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
-        ).inc()
+        OPENAI_LLM_EXCEPTIONS.labels(model="gpt-4o-mini").inc()
         logger.info("Network error: %s, retrying...", e)
         try:
-            client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+            client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
             loop = asyncio.get_event_loop()
             response = await asyncio.wait_for(
                 loop.run_in_executor(
                     None,
                     lambda: client.chat.completions.create(
                         messages=[{"role": "user", "content": prompt}],
-                        model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
-                        max_tokens=1024,
+                        model="gpt-4o-mini",
+                        max_tokens=4096,
                         temperature=0.1,
                     ),
                 ),
@@ -195,28 +191,22 @@ BẮT ĐẦU TRẢ LỜI:"""
             # Track token usage if available
             if hasattr(response, "usage") and response.usage:
                 if hasattr(response.usage, "prompt_tokens"):
-                    increment_groq_tokens("input", response.usage.prompt_tokens)
+                    increment_openai_tokens("input", response.usage.prompt_tokens)
                 if hasattr(response.usage, "completion_tokens"):
-                    increment_groq_tokens("output", response.usage.completion_tokens)
+                    increment_openai_tokens("output", response.usage.completion_tokens)
                 if hasattr(response.usage, "total_tokens"):
-                    increment_groq_tokens("total", response.usage.total_tokens)
+                    increment_openai_tokens("total", response.usage.total_tokens)
 
             return GenerateOutput(answer=response.choices[0].message.content)
         except asyncio.TimeoutError:
-            GROQ_LLM_EXCEPTIONS.labels(
-                model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
-            ).inc()
+            OPENAI_LLM_EXCEPTIONS.labels(model="gpt-4o-mini").inc()
             return GenerateOutput(answer="Hệ thống đang bận vui lòng thử lại sau.")
         except ConnectionError:
-            GROQ_LLM_EXCEPTIONS.labels(
-                model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
-            ).inc()
+            OPENAI_LLM_EXCEPTIONS.labels(model="gpt-4o-mini").inc()
             logger.info("Retry failed: %s", e)
             return GenerateOutput(answer="Lỗi mạng")
     except Exception as e:  # pylint: disable = broad-exception-caught
-        GROQ_LLM_EXCEPTIONS.labels(
-            model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
-        ).inc()
+        OPENAI_LLM_EXCEPTIONS.labels(model="gpt-4o-mini").inc()
         logger.info("An error occured: %s", e)
         return GenerateOutput(answer="Lỗi hệ thống, vui lòng thử lại sau.")
 

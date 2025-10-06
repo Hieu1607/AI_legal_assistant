@@ -128,14 +128,43 @@ def search_relevant_embeddings(text, n_results=5, model_name=None, title=None):
     cosine_similarities = []
     if results["distances"] and len(results["distances"][0]) > 0:
         cosine_similarities = [1 - distance for distance in results["distances"][0]]
-    # Create new dictionary with cosine similarities
+
+    # Filter results based on cosine similarity > 0.6
+    filtered_ids = []
+    filtered_distances = []
+    filtered_metadatas = []
+    filtered_documents = []
+    filtered_embeddings = []
+    filtered_similarities = []
+
+    if results["ids"] and len(results["ids"][0]) > 0:
+        for i, similarity in enumerate(cosine_similarities):
+            if similarity > 0.6:
+                filtered_ids.append(results["ids"][0][i])
+                if results["distances"] and results["distances"][0]:
+                    filtered_distances.append(results["distances"][0][i])
+                if results["metadatas"] and results["metadatas"][0]:
+                    filtered_metadatas.append(results["metadatas"][0][i])
+                if results["documents"] and results["documents"][0]:
+                    filtered_documents.append(results["documents"][0][i])
+                if results["embeddings"] and results["embeddings"][0]:
+                    filtered_embeddings.append(results["embeddings"][0][i])
+                filtered_similarities.append(similarity)
+
+    logger.info(
+        "Filtered %d results with cosine similarity > 0.6 from %d total results",
+        len(filtered_similarities),
+        len(cosine_similarities),
+    )
+
+    # Create new dictionary with filtered results
     enhanced_results = {
-        "ids": results["ids"],
-        "distances": results["distances"],
-        "metadatas": results["metadatas"],
-        "documents": results["documents"],
-        "embeddings": results["embeddings"],
-        "cosine_similarities": [cosine_similarities],
+        "ids": [filtered_ids],
+        "distances": [filtered_distances],
+        "metadatas": [filtered_metadatas],
+        "documents": [filtered_documents],
+        "embeddings": [filtered_embeddings],
+        "cosine_similarities": [filtered_similarities],
     }
     end_time = time.time()
     logger.info("Time to run search_embeddings is %f", float(end_time - start_time))
@@ -162,7 +191,7 @@ def batch_search_relevant_embeddings(queries_and_titles, n_results=5):
     # Extract unique queries to minimize embedding API calls
     unique_queries = {}
     query_embeddings = {}
-
+    # Check consine similarity for each query
     for query_text, title in queries_and_titles:
         if query_text not in unique_queries:
             unique_queries[query_text] = True
@@ -219,14 +248,41 @@ def batch_search_relevant_embeddings(queries_and_titles, n_results=5):
                     1 - distance for distance in search_result["distances"][0]
                 ]
 
-            # Create enhanced result
+            # Filter results based on cosine similarity > 0.6
+            filtered_ids = []
+            filtered_distances = []
+            filtered_metadatas = []
+            filtered_documents = []
+            filtered_embeddings = []
+            filtered_similarities = []
+
+            if search_result["ids"] and len(search_result["ids"][0]) > 0:
+                for i, similarity in enumerate(cosine_similarities):
+                    if similarity > 0.6:
+                        filtered_ids.append(search_result["ids"][0][i])
+                        if search_result["distances"] and search_result["distances"][0]:
+                            filtered_distances.append(search_result["distances"][0][i])
+                        if search_result["metadatas"] and search_result["metadatas"][0]:
+                            filtered_metadatas.append(search_result["metadatas"][0][i])
+                        if search_result["documents"] and search_result["documents"][0]:
+                            filtered_documents.append(search_result["documents"][0][i])
+                        if (
+                            search_result["embeddings"]
+                            and search_result["embeddings"][0]
+                        ):
+                            filtered_embeddings.append(
+                                search_result["embeddings"][0][i]
+                            )
+                        filtered_similarities.append(similarity)
+
+            # Create enhanced result with filtered data
             enhanced_result = {
-                "ids": search_result["ids"],
-                "distances": search_result["distances"],
-                "metadatas": search_result["metadatas"],
-                "documents": search_result["documents"],
-                "embeddings": search_result["embeddings"],
-                "cosine_similarities": [cosine_similarities],
+                "ids": [filtered_ids],
+                "distances": [filtered_distances],
+                "metadatas": [filtered_metadatas],
+                "documents": [filtered_documents],
+                "embeddings": [filtered_embeddings],
+                "cosine_similarities": [filtered_similarities],
             }
             results.append(enhanced_result)
 
