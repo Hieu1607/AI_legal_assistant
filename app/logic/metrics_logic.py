@@ -12,10 +12,10 @@ sys.path.insert(0, str(project_root))
 from configs.logger import get_logger, setup_logging
 from services.metrics import (
     CHROMADB_EXCEPTIONS,
-    GROQ_LLM_EXCEPTIONS,
-    GROQ_TOKENS,
     HF_EMBEDDINGS_EXCEPTIONS,
     LATENCY_HIST,
+    OPENAI_LLM_EXCEPTIONS,
+    OPENAI_TOKENS,
     REQUEST_COUNTER,
 )
 
@@ -50,9 +50,9 @@ def get_metrics_data() -> Dict[str, Any]:
             LATENCY_HIST.labels(method="GET", endpoint="/health").observe(0)
             LATENCY_HIST.labels(method="POST", endpoint="/agent").observe(0)
 
-            GROQ_TOKENS.labels(type="input").inc(0)
-            GROQ_TOKENS.labels(type="output").inc(0)
-            GROQ_TOKENS.labels(type="total").inc(0)
+            OPENAI_TOKENS.labels(type="input").inc(0)
+            OPENAI_TOKENS.labels(type="output").inc(0)
+            OPENAI_TOKENS.labels(type="total").inc(0)
 
             # Initialize new exception metrics
             CHROMADB_EXCEPTIONS.labels(operation="search").inc(0)
@@ -63,7 +63,7 @@ def get_metrics_data() -> Dict[str, Any]:
                 0
             )
 
-            GROQ_LLM_EXCEPTIONS.labels(model="openai/gpt-oss-20b").inc(0)
+            OPENAI_LLM_EXCEPTIONS.labels(model="gpt-4o-mini").inc(0)
 
             logger.info("Metrics initialized successfully")
         except Exception as e:
@@ -73,10 +73,10 @@ def get_metrics_data() -> Dict[str, Any]:
         metrics_info = {
             "request_counter": "Available",
             "latency_histogram": "Available",
-            "groq_tokens": "Available",
+            "openai_tokens": "Available",
             "chromadb_exceptions": "Available",
             "hf_embeddings_exceptions": "Available",
-            "groq_llm_exceptions": "Available",
+            "openai_llm_exceptions": "Available",
             "status": "healthy",
         }
 
@@ -122,19 +122,19 @@ def record_request_latency(method: str, endpoint: str, latency: float) -> None:
         logger.error(f"Error recording latency: {str(e)}")
 
 
-def increment_groq_tokens(token_type: str, count: int = 1) -> None:
+def increment_openai_tokens(token_type: str, count: int = 1) -> None:
     """
-    Increment Groq token usage counter
+    Increment OpenAI token usage counter
 
     Args:
         token_type: Type of tokens (input, output, etc.)
         count: Number of tokens to increment by
     """
     try:
-        GROQ_TOKENS.labels(type=token_type).inc(count)
-        logger.debug(f"Incremented Groq tokens: {token_type} +{count}")
+        OPENAI_TOKENS.labels(type=token_type).inc(count)
+        logger.debug(f"Incremented OpenAI tokens: {token_type} +{count}")
     except Exception as e:
-        logger.error(f"Error incrementing Groq tokens: {str(e)}")
+        logger.error(f"Error incrementing OpenAI tokens: {str(e)}")
 
 
 def increment_chromadb_exceptions(operation: str, count: int = 1) -> None:
@@ -167,16 +167,16 @@ def increment_hf_embeddings_exceptions(model: str, count: int = 1) -> None:
         logger.error(f"Error incrementing HF embeddings exceptions: {str(e)}")
 
 
-def increment_groq_llm_exceptions(model: str, count: int = 1) -> None:
+def increment_openai_llm_exceptions(model: str, count: int = 1) -> None:
     """
-    Increment Groq LLM exception counter
+    Increment OpenAI LLM exception counter
 
     Args:
         model: Model name
         count: Number of exceptions to increment by
     """
     try:
-        GROQ_LLM_EXCEPTIONS.labels(model=model).inc(count)
-        logger.debug(f"Incremented Groq LLM exceptions: {model} +{count}")
+        OPENAI_LLM_EXCEPTIONS.labels(model=model).inc(count)
+        logger.debug(f"Incremented OpenAI LLM exceptions: {model} +{count}")
     except Exception as e:
-        logger.error(f"Error incrementing Groq LLM exceptions: {str(e)}")
+        logger.error(f"Error incrementing OpenAI LLM exceptions: {str(e)}")

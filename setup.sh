@@ -42,5 +42,5 @@ echo "Wait a few moments for the containers to fully start, then check the healt
 echo ""
 echo "New in this version:"
 echo "- Smart caching system for improved response times"
-echo "- Enhanced RAG capabilities with Groq LLM"
+echo "- Enhanced RAG capabilities with OpenAI LLM"
 echo "- Performance monitoring and metrics"
