@@ -10,7 +10,7 @@ httpx==0.28.1
 urllib3==2.4.0
 
 # Machine Learning and AI (API-based embedding)
-openai==1.54.4
+openai==1.77.0
 gradio_client==1.4.2
 numpy==2.3.0
 scikit-learn==1.7.0
