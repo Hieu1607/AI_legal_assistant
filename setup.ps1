@@ -40,5 +40,5 @@ Write-Host "Wait a few moments for the containers to fully start, then check the
 Write-Host ""
 Write-Host "New in this version:"
 Write-Host "- Smart caching system for improved response times"
-Write-Host "- Enhanced RAG capabilities with Groq LLM"
+Write-Host "- Enhanced RAG capabilities with OpenAI LLM"
 Write-Host "- Performance monitoring and metrics"

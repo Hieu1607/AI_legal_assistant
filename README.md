@@ -15,7 +15,7 @@
 ## 🛠️ Tech Stack
 
 - **Backend**: FastAPI, Python 3.11
-- **AI/ML**: API-based Embedding (BAAI/bge-m3 via Gradio), Groq LLM (Llama 3.3 70B)
+- **AI/ML**: API-based Embedding (BAAI/bge-m3 via Gradio), OpenAI LLM (Llama 3.3 70B)
 - **Database**: ChromaDB (Vector Database)
 - **Caching**: Thread-safe in-memory cache with TTL and LRU eviction
 - **Containerization**: Docker, Docker Compose
@@ -182,7 +182,6 @@ pip install gdown
 # Set environment variables
 cp .env_example .env
 # Edit .env with your actual API keys:
-# - Replace with your Groq API key for GROQ_API_KEY
 
 ## ⚙️ Configuration
 
@@ -191,8 +190,6 @@ cp .env_example .env
 Key configuration options in `.env`:
 
 ```bash
-# API Keys
-GROQ_API_KEY="your_groq_api_key_here"
 
 # LLM Configuration
 LLM_MODEL="openai/gpt-oss-20b"

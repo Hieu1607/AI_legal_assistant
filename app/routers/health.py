@@ -8,7 +8,6 @@ import sys
 from dotenv import load_dotenv
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from groq import Groq
 from huggingface_hub.errors import HfHubHTTPError
 
 # Load environment variables
@@ -42,7 +41,7 @@ def process_health_check():
                         "message": "Model files available locally",
                     },
                     "chroma_db": {"status": "healthy"},
-                    "groq_api": {
+                    "openai_api": {
                         "status": "healthy",
                         "message": "API responding correctly",
                     },
