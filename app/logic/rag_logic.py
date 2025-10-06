@@ -316,7 +316,13 @@ Câu hỏi:"""
             return False, []
 
     except Exception as e:
-        logger.error("Lỗi khi gọi LLM tìm bộ luật: %s", str(e))
+        logger.error(
+            "Lỗi khi gọi LLM tìm bộ luật - Question: '%s', Error type: %s, Error: %s",
+            question,
+            type(e).__name__,
+            str(e),
+            exc_info=True,
+        )
         return False, []
 
 
