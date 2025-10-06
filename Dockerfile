@@ -28,6 +28,9 @@ COPY configs/ ./configs/
 COPY services/ ./services/
 COPY scripts/ ./scripts/
 
+# Copy essential data files
+COPY titles.txt ./
+
 # Create basic directories
 RUN mkdir -p logs
 
