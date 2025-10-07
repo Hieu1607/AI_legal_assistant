@@ -29,12 +29,10 @@ def init_chroma_index():
     chroma_token = os.getenv("x-chromadb-token")
     if chroma_token is None:
         raise ValueError("Environment variable 'x-chromadb-token' is not set.")
-    client = chromadb.HttpClient(
-        ssl=True,
-        host="api.trychroma.com",
-        tenant="eacc7fce-0948-49c8-a52b-5ed4969db763",
-        database="AI legal assistant ChromaDB",
-        headers={"x-chroma-token": chroma_token},
+    client = chromadb.CloudClient(
+        api_key="ck-AUYSBFn4sdFQx19yBiMFrDNJ2m8xp6FHLWRrR5pQvPs4",
+        tenant="d40f9c23-a637-4bf6-9608-d5b48b5dc739",
+        database="AI legal assistant",
     )
     logger.info("Client ChromaDB created successfully.")
     logger.info("Kiểm tra hoặc tạo collection: '%s'...", COLLECTION_NAME)

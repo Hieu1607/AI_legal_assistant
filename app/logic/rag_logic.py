@@ -339,22 +339,24 @@ async def step3_find_exact_titles(llm_laws: list):
     # Read list of all titles
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(os.path.dirname(current_dir))
-    
+
     # Try multiple possible paths for titles.txt (local dev vs Docker)
     possible_paths = [
         os.path.join(project_root, "titles.txt"),  # Local development
-        "/app/titles.txt",                         # Docker container
-        os.path.join(os.getcwd(), "titles.txt")   # Current working directory
+        "/app/titles.txt",  # Docker container
+        os.path.join(os.getcwd(), "titles.txt"),  # Current working directory
     ]
-    
+
     titles_path = None
     for path in possible_paths:
         if os.path.exists(path):
             titles_path = path
             break
-    
+
     if not titles_path:
-        logger.error("titles.txt file not found in any of these locations: %s", possible_paths)
+        logger.error(
+            "titles.txt file not found in any of these locations: %s", possible_paths
+        )
         return []
 
     logger.info("Using titles.txt from: %s", titles_path)
