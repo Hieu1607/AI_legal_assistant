@@ -85,7 +85,7 @@ def extract_keywords_from_title(text):
     # Remove unimportant words but keep important legal terms
     stop_words = {
         "của",
-        "về", 
+        "về",
         "và",
         "các",
         "năm",
@@ -100,7 +100,7 @@ def extract_keywords_from_title(text):
         "qh13",
         "qh15",
         "qh12",
-        "qh11"
+        "qh11",
     }
 
     # Split words and remove punctuation
@@ -164,23 +164,23 @@ def find_best_matches(llm_results, all_titles, threshold=0.3):
             # Check if important keywords appear in title
             keywords = extract_keywords_from_title(llm_law_clean)
             keyword_match_score = calculate_keyword_match(keywords, title)
-            
+
             # Special boost for exact legal domain matches
             domain_boost = 0
             llm_lower = llm_law_clean.lower()
             title_lower = title.lower()
-            
+
             # Criminal law boost
-            if ("hình sự" in llm_lower and "hình sự" in title_lower):
+            if "hình sự" in llm_lower and "hình sự" in title_lower:
                 domain_boost += 0.3
-            # Civil law boost  
-            elif ("dân sự" in llm_lower and "dân sự" in title_lower):
+            # Civil law boost
+            elif "dân sự" in llm_lower and "dân sự" in title_lower:
                 domain_boost += 0.3
             # Commercial law boost
-            elif ("thương mại" in llm_lower and "thương mại" in title_lower):
+            elif "thương mại" in llm_lower and "thương mại" in title_lower:
                 domain_boost += 0.3
             # Labor law boost
-            elif ("lao động" in llm_lower and "lao động" in title_lower):
+            elif "lao động" in llm_lower and "lao động" in title_lower:
                 domain_boost += 0.3
 
             # Combined score with domain boost
@@ -197,7 +197,7 @@ def find_best_matches(llm_results, all_titles, threshold=0.3):
             # Select the candidate with highest score and most recent year directly
             # Skip grouping for now as it's causing matching issues
             best_candidate = max(candidates, key=lambda x: (x["score"], x["year"]))
-            
+
             matches.append(
                 {
                     "llm_input": llm_law_clean,
@@ -237,7 +237,7 @@ async def step1_find_relevant_laws(question: str):
         return False, []
 
     # Simplified prompt to increase stability
-    enhanced_prompt = f"""Hãy xác định bộ luật Việt Nam liên quan đến câu hỏi sau. 
+    enhanced_prompt = f"""Hãy xác định bộ luật Việt Nam liên quan đến câu hỏi sau. Chỉ nêu tên các bộ luật chính, không nêu các loại văn bản khác như nghị định, thông tư, quyết định, luật bổ sung, sửa đổi.
 Câu hỏi:
 {question}
 
@@ -255,7 +255,7 @@ Luật nghĩa vụ quân sự
         completion = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "user", "content":enhanced_prompt},
+                {"role": "user", "content": enhanced_prompt},
             ],
             temperature=0.1,
             max_tokens=4096,
@@ -614,9 +614,11 @@ async def step5_search_embeddings(
                     metadata = metadatas[i] if i < len(metadatas) else {}
                     document_name = metadata.get("title", "Không xác định")
                     sentence_key = f"{sentence}||{document_name}"
-                    
+
                     if sentence_key not in seen_sentences:
-                        seen_sentences.add(sentence_key)  # Sử dụng add() thay vì assignment
+                        seen_sentences.add(
+                            sentence_key
+                        )  # Sử dụng add() thay vì assignment
                         similarity_score = (
                             similarities[i] if i < len(similarities) else 0.0
                         )
@@ -631,7 +633,9 @@ async def step5_search_embeddings(
 
         # Sort by similarity and get top results
         all_relevant_sentences.sort(key=lambda x: x.get("similarity", 0), reverse=True)
-        final_results = all_relevant_sentences[:15]  # Giữ nguyên 15 results để có nhiều context hơn
+        final_results = all_relevant_sentences[
+            :15
+        ]  # Giữ nguyên 15 results để có nhiều context hơn
 
         logger.info(
             "Tìm thấy %d sentences liên quan từ %d titles",
