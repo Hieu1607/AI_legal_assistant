@@ -82,12 +82,10 @@ def is_same_law_type(base_name, title):
 
 def extract_keywords_from_title(text):
     """Extract important keywords from law name"""
-    # Remove unimportant words
+    # Remove unimportant words but keep important legal terms
     stop_words = {
-        "luật",
-        "bộ",
         "của",
-        "về",
+        "về", 
         "và",
         "các",
         "năm",
@@ -96,6 +94,13 @@ def extract_keywords_from_title(text):
         "đổi",
         "bổ",
         "sung",
+        "việt",
+        "nam",
+        "qh14",
+        "qh13",
+        "qh15",
+        "qh12",
+        "qh11"
     }
 
     # Split words and remove punctuation
@@ -159,9 +164,27 @@ def find_best_matches(llm_results, all_titles, threshold=0.3):
             # Check if important keywords appear in title
             keywords = extract_keywords_from_title(llm_law_clean)
             keyword_match_score = calculate_keyword_match(keywords, title)
+            
+            # Special boost for exact legal domain matches
+            domain_boost = 0
+            llm_lower = llm_law_clean.lower()
+            title_lower = title.lower()
+            
+            # Criminal law boost
+            if ("hình sự" in llm_lower and "hình sự" in title_lower):
+                domain_boost += 0.3
+            # Civil law boost  
+            elif ("dân sự" in llm_lower and "dân sự" in title_lower):
+                domain_boost += 0.3
+            # Commercial law boost
+            elif ("thương mại" in llm_lower and "thương mại" in title_lower):
+                domain_boost += 0.3
+            # Labor law boost
+            elif ("lao động" in llm_lower and "lao động" in title_lower):
+                domain_boost += 0.3
 
-            # Combined score
-            combined_score = score * 0.7 + keyword_match_score * 0.3
+            # Combined score with domain boost
+            combined_score = score * 0.5 + keyword_match_score * 0.3 + domain_boost
 
             if combined_score >= threshold:
                 year = extract_year_from_title(title)
@@ -171,25 +194,17 @@ def find_best_matches(llm_results, all_titles, threshold=0.3):
 
         # Sort candidates by score and year (prioritize high score and recent year)
         if candidates:
-            # Group candidates of the same law type
-            grouped_candidates = group_similar_laws(candidates, llm_law_clean)
-
-            if grouped_candidates:
-                # Select the candidate with highest score and most recent year
-                best_candidate = max(
-                    grouped_candidates, key=lambda x: (x["score"], x["year"])
-                )
-                matches.append(
-                    {
-                        "llm_input": llm_law_clean,
-                        "exact_title": best_candidate["title"],
-                        "confidence": best_candidate["score"],
-                    }
-                )
-            else:
-                matches.append(
-                    {"llm_input": llm_law_clean, "exact_title": None, "confidence": 0}
-                )
+            # Select the candidate with highest score and most recent year directly
+            # Skip grouping for now as it's causing matching issues
+            best_candidate = max(candidates, key=lambda x: (x["score"], x["year"]))
+            
+            matches.append(
+                {
+                    "llm_input": llm_law_clean,
+                    "exact_title": best_candidate["title"],
+                    "confidence": best_candidate["score"],
+                }
+            )
         else:
             matches.append(
                 {"llm_input": llm_law_clean, "exact_title": None, "confidence": 0}
