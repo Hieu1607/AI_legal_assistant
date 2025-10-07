@@ -43,7 +43,11 @@ INDEX_CONFIG = {
 
 def init_chroma_index():
     # print(f"Check Chroma storage directory at: {CHROMA_DB_PATH}")
-    client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
+    client = chromadb.CloudClient(
+        api_key='ck-AUYSBFn4sdFQx19yBiMFrDNJ2m8xp6FHLWRrR5pQvPs4',
+        tenant='d40f9c23-a637-4bf6-9608-d5b48b5dc739',
+        database='AI legal assistant'
+        )
     logger.info("Client ChromaDB created successfully.")
     logger.info("Checking or creating collection: '%s'...", COLLECTION_NAME)
     collection = client.get_or_create_collection(
