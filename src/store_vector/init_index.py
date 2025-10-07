@@ -26,9 +26,6 @@ INDEX_CONFIG = {
 
 def init_chroma_index():
     # print(f"Check Chroma storage directory at: {CHROMA_DB_PATH}")
-    chroma_token = os.getenv("x-chromadb-token")
-    if chroma_token is None:
-        raise ValueError("Environment variable 'x-chromadb-token' is not set.")
     client = chromadb.CloudClient(
         api_key="ck-AUYSBFn4sdFQx19yBiMFrDNJ2m8xp6FHLWRrR5pQvPs4",
         tenant="d40f9c23-a637-4bf6-9608-d5b48b5dc739",

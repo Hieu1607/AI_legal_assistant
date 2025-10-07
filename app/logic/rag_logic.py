@@ -238,20 +238,15 @@ async def step1_find_relevant_laws(question: str):
 
     # Simplified prompt to increase stability
     enhanced_prompt = f"""Hãy xác định bộ luật Việt Nam liên quan đến câu hỏi sau. 
+Câu hỏi:
+{question}
 
 Nếu câu hỏi liên quan đến pháp luật Việt Nam, trả lời tên bộ luật (từ 1-2 bộ luật, mỗi bộ luật trên 1 dòng). 
 Nếu câu hỏi không liên quan đến pháp luật, hoặc bạn không thể tìm thấy bộ luật nào, trả lời "Không tìm thấy".
-
 Ví dụ: 
-
 Câu hỏi: "Nam giới phải đi nghĩa vụ quân sự như nào?"
-
 Câu trả lời:
 Luật nghĩa vụ quân sự
-
-
-Câu hỏi:
-{question}
 """
 
     try:
@@ -269,6 +264,7 @@ Câu hỏi:
         result = completion.choices[0].message.content
 
         # DEBUG: Log raw response
+        logger.info("User question: %s", enhanced_prompt.strip())
         logger.info("RAW LLM RESPONSE for '%s': '%s'", question, result)
 
         if not result or not result.strip():
@@ -494,7 +490,7 @@ Câu hỏi được cải thiện:"""
                 None,
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model="gpt-4o-mini",
+                    model="gpt-4o",
                     max_tokens=4096,
                     temperature=0.1,
                 ),
@@ -577,9 +573,7 @@ async def step5_search_embeddings(
 
         # Prepare batch search with title filtering
         queries_and_titles = []
-        results_per_query = min(
-            5, max(3, 15 // (len(exact_titles) * len(search_queries)))
-        )
+        results_per_query = 8  # Tăng từ 5 lên 8 để có nhiều kết quả hơn
 
         for title in exact_titles:
             for query in search_queries:
@@ -605,9 +599,9 @@ async def step5_search_embeddings(
             logger.warning("Batch search timeout sau 60 giây, chuyển sang fallback")
             raise Exception("Embedding search timeout")
 
-        # Process results and remove duplicates
+        # Process results and remove duplicates (cải thiện để tránh bỏ qua nhiều câu)
         all_relevant_sentences = []
-        seen_sentences = set()
+        seen_sentences = set()  # Sử dụng set để track các key đã thấy
 
         for result in search_results:
             if result and result.get("documents") and result["documents"][0]:
@@ -616,12 +610,13 @@ async def step5_search_embeddings(
                 similarities = result.get("cosine_similarities", [[]])[0]
 
                 for i, sentence in enumerate(documents):
-                    if sentence not in seen_sentences:
-                        seen_sentences.add(sentence)
-
-                        # Get metadata information
-                        metadata = metadatas[i] if i < len(metadatas) else {}
-                        document_name = metadata.get("title", "Không xác định")
+                    # Tạo key dựa trên sentence và document để cho phép cùng sentence từ nguồn khác nhau
+                    metadata = metadatas[i] if i < len(metadatas) else {}
+                    document_name = metadata.get("title", "Không xác định")
+                    sentence_key = f"{sentence}||{document_name}"
+                    
+                    if sentence_key not in seen_sentences:
+                        seen_sentences.add(sentence_key)  # Sử dụng add() thay vì assignment
                         similarity_score = (
                             similarities[i] if i < len(similarities) else 0.0
                         )
@@ -636,7 +631,7 @@ async def step5_search_embeddings(
 
         # Sort by similarity and get top results
         all_relevant_sentences.sort(key=lambda x: x.get("similarity", 0), reverse=True)
-        final_results = all_relevant_sentences[:15]  # Get top 15 results
+        final_results = all_relevant_sentences[:15]  # Giữ nguyên 15 results để có nhiều context hơn
 
         logger.info(
             "Tìm thấy %d sentences liên quan từ %d titles",
@@ -656,11 +651,11 @@ async def step5_search_embeddings(
             queries_and_titles = [(query, None) for query in search_queries]
 
             search_results = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: batch_search_relevant_embeddings(queries_and_titles, 5)
+                None, lambda: batch_search_relevant_embeddings(queries_and_titles, 8)
             )
 
             fallback_sentences = []
-            seen_sentences = set()
+            seen_sentences = set()  # Sử dụng set thay vì dict
 
             for result in search_results:
                 if result and result.get("documents") and result["documents"][0]:
@@ -669,7 +664,7 @@ async def step5_search_embeddings(
 
                     for i, sentence in enumerate(documents):
                         if sentence not in seen_sentences:
-                            seen_sentences.add(sentence)
+                            seen_sentences.add(sentence)  # Sử dụng add() method
                             metadata = metadatas[i] if i < len(metadatas) else {}
 
                             fallback_sentences.append(
@@ -681,7 +676,7 @@ async def step5_search_embeddings(
                                 }
                             )
 
-            return fallback_sentences[:10]  # Lấy top 10 cho fallback
+            return fallback_sentences[:15]  # Tăng từ 10 lên 15 cho fallback
 
         except Exception as fallback_error:
             logger.error("Fallback search cũng thất bại: %s", str(fallback_error))
@@ -733,10 +728,8 @@ TRƯỜNG HỢP 1: Tìm thấy thông tin phù hợp trong ngữ liệu
 → VÍ DỤ: "Theo điểm 1 khoản 1 Điều 29 chương II của Luật Hàng hải Việt Nam, việc thanh tra kiểm tra về an toàn hàng hải..."
 → LƯU Ý 1: PHẢI sử dụng tên văn bản CHÍNH XÁC từ thông tin được cung cấp trong [Nguồn: ...] , đồng thời diễn tả lại nội dung trả lời cho dễ nghe, không sao chép nguyên văn
 → LƯU Ý 2: Có thể kết hợp nhiều điều luật, chương luật từ các đoạn khác nhau nếu cần thiết để trả lời đầy đủ câu hỏi
-→ LƯU Ý 3: Nếu trong Ngữ liệu pháp luật không có thông tin liên quan đến câu hỏi, tự trả lời 'Tôi không có đủ thông tin để trả lời câu hỏi của bạn.'
 
-TRƯỜNG HỢP 2: Câu hỏi không liên quan đến pháp luật hoặc không rõ ràng
-→ Trả lời CHÍNH XÁC: "Câu hỏi không liên quan đến pháp luật hoặc không rõ ràng. Vui lòng đặt câu hỏi lại."
+TRƯỜNG HỢP 2: Nếu trong Ngữ liệu pháp luật không có thông tin liên quan đến câu hỏi, tự trả lời 'Tôi không có đủ thông tin để trả lời câu hỏi của bạn.'
 
 CẤM TUYỆT ĐỐI:
 - KHÔNG sử dụng "Theo Đoạn 1", "Theo Đoạn 2" trong câu trả lời
@@ -759,7 +752,7 @@ BẮT ĐẦU TRẢ LỜI:"""
                 None,
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model="gpt-4o-mini",
+                    model="gpt-4o-2024-05-13",
                     max_tokens=4096,
                     temperature=0.1,
                 ),
@@ -935,11 +928,11 @@ async def process_rag_query_new(question: str):
             queries_and_titles = [(query, None) for query in search_queries]
 
             search_results = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: batch_search_relevant_embeddings(queries_and_titles, 5)
+                None, lambda: batch_search_relevant_embeddings(queries_and_titles, 8)
             )
 
             relevant_sentences = []
-            seen_sentences = set()
+            seen_sentences = set()  # Sử dụng set thay vì dict
 
             for result in search_results:
                 if result and result.get("documents") and result["documents"][0]:
@@ -948,7 +941,7 @@ async def process_rag_query_new(question: str):
 
                     for i, sentence in enumerate(documents):
                         if sentence not in seen_sentences:
-                            seen_sentences.add(sentence)
+                            seen_sentences.add(sentence)  # Sử dụng add() method
                             metadata = metadatas[i] if i < len(metadatas) else {}
 
                             relevant_sentences.append(
@@ -960,7 +953,7 @@ async def process_rag_query_new(question: str):
                                 }
                             )
 
-            relevant_sentences = relevant_sentences[:10]
+            relevant_sentences = relevant_sentences[:15]  # Tăng từ 10 lên 15
 
         step5_time = time.perf_counter() - step5_start
 

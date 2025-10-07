@@ -129,7 +129,7 @@ def search_relevant_embeddings(text, n_results=5, model_name=None, title=None):
     if results["distances"] and len(results["distances"][0]) > 0:
         cosine_similarities = [1 - distance for distance in results["distances"][0]]
 
-    # Filter results based on cosine similarity > 0.6
+    # Filter results based on cosine similarity > 0.5
     filtered_ids = []
     filtered_distances = []
     filtered_metadatas = []
@@ -139,7 +139,7 @@ def search_relevant_embeddings(text, n_results=5, model_name=None, title=None):
 
     if results["ids"] and len(results["ids"][0]) > 0:
         for i, similarity in enumerate(cosine_similarities):
-            if similarity > 0.6:
+            if similarity > 0.5:
                 filtered_ids.append(results["ids"][0][i])
                 if results["distances"] and results["distances"][0]:
                     filtered_distances.append(results["distances"][0][i])
@@ -152,7 +152,7 @@ def search_relevant_embeddings(text, n_results=5, model_name=None, title=None):
                 filtered_similarities.append(similarity)
 
     logger.info(
-        "Filtered %d results with cosine similarity > 0.6 from %d total results",
+        "Filtered %d results with cosine similarity > 0.5 from %d total results",
         len(filtered_similarities),
         len(cosine_similarities),
     )
@@ -258,7 +258,7 @@ def batch_search_relevant_embeddings(queries_and_titles, n_results=5):
 
             if search_result["ids"] and len(search_result["ids"][0]) > 0:
                 for i, similarity in enumerate(cosine_similarities):
-                    if similarity > 0.6:
+                    if similarity > 0.3:  
                         filtered_ids.append(search_result["ids"][0][i])
                         if search_result["distances"] and search_result["distances"][0]:
                             filtered_distances.append(search_result["distances"][0][i])
