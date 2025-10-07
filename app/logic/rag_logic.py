@@ -237,10 +237,10 @@ async def step1_find_relevant_laws(question: str):
         return False, []
 
     # Simplified prompt to increase stability
-    enhanced_prompt = """Hãy xác định bộ luật Việt Nam liên quan đến câu hỏi sau. 
+    enhanced_prompt = f"""Hãy xác định bộ luật Việt Nam liên quan đến câu hỏi sau. 
 
 Nếu câu hỏi liên quan đến pháp luật Việt Nam, trả lời tên bộ luật (từ 1-2 bộ luật, mỗi bộ luật trên 1 dòng). 
-Nếu không liên quan đến pháp luật, trả lời "Không tìm thấy".
+Nếu câu hỏi không liên quan đến pháp luật, hoặc bạn không thể tìm thấy bộ luật nào, trả lời "Không tìm thấy".
 
 Ví dụ: 
 
@@ -250,15 +250,17 @@ Câu trả lời:
 Luật nghĩa vụ quân sự
 
 
-Câu hỏi:"""
+Câu hỏi:
+{question}
+"""
 
     try:
         client = OpenAI(api_key=api_key)
 
         completion = client.chat.completions.create(
-            model="gpt-4o-mini",  # Using cost-effective model as recommended
+            model="gpt-4o-mini",
             messages=[
-                {"role": "user", "content": f"{enhanced_prompt}\n\n{question.strip()}"},
+                {"role": "user", "content":enhanced_prompt},
             ],
             temperature=0.1,
             max_tokens=4096,
