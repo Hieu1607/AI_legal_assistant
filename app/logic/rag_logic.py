@@ -859,12 +859,12 @@ async def process_rag_query_new(question: str):
     logger.info("Bắt đầu pipeline RAG mới cho câu hỏi: %s", question)
 
     try:
-        # BƯỚC 1: Tìm kiếm 1-2 bộ luật liên quan
+
         step1_start = time.perf_counter()
         has_laws, llm_laws = await step1_find_relevant_laws(question)
         step1_time = time.perf_counter() - step1_start
 
-        # BƯỚC 2: Kiểm tra kết quả bước 1
+
         if not has_laws:
             logger.info("Bước 1: Không tìm thấy bộ luật liên quan")
             return {
@@ -889,7 +889,7 @@ async def process_rag_query_new(question: str):
 
         logger.info("Bước 1: Tìm thấy %d bộ luật: %s", len(llm_laws), llm_laws)
 
-        # BƯỚC 3: Tìm exact titles trong titles.txt
+
         step3_start = time.perf_counter()
         exact_titles = await step3_find_exact_titles(llm_laws)
         step3_time = time.perf_counter() - step3_start
@@ -900,7 +900,7 @@ async def process_rag_query_new(question: str):
 
         logger.info("Bước 3: Tìm thấy %d exact titles", len(exact_titles))
 
-        # BƯỚC 4: Extract keywords và enhance question song song
+
         step4_start = time.perf_counter()
         try:
             keywords_result, enhanced_question_result = (
@@ -921,14 +921,14 @@ async def process_rag_query_new(question: str):
 
         logger.info("Bước 4: Extract %d keywords, enhanced question", len(keywords))
 
-        # BƯỚC 5: Search embeddings với metadata filtering
+
         step5_start = time.perf_counter()
         if exact_titles:
             relevant_sentences = await step5_search_embeddings(
                 question, keywords, enhanced_question, exact_titles
             )
         else:
-            # Fallback: search không có title filtering
+
             search_queries = [enhanced_question] + keywords
             queries_and_titles = [(query, None) for query in search_queries]
 
@@ -937,7 +937,7 @@ async def process_rag_query_new(question: str):
             )
 
             relevant_sentences = []
-            seen_sentences = set()  # Sử dụng set thay vì dict
+            seen_sentences = set()
 
             for result in search_results:
                 if result and result.get("documents") and result["documents"][0]:
@@ -946,7 +946,7 @@ async def process_rag_query_new(question: str):
 
                     for i, sentence in enumerate(documents):
                         if sentence not in seen_sentences:
-                            seen_sentences.add(sentence)  # Sử dụng add() method
+                            seen_sentences.add(sentence)
                             metadata = metadatas[i] if i < len(metadatas) else {}
 
                             relevant_sentences.append(
@@ -958,13 +958,13 @@ async def process_rag_query_new(question: str):
                                 }
                             )
 
-            relevant_sentences = relevant_sentences[:15]  # Tăng từ 10 lên 15
+            relevant_sentences = relevant_sentences[:15]
 
         step5_time = time.perf_counter() - step5_start
 
         logger.info("Bước 5: Tìm thấy %d relevant sentences", len(relevant_sentences))
 
-        # BƯỚC 6: Tạo prompt và hỏi LLM
+
         step6_start = time.perf_counter()
         answer = await ask_LLM(relevant_sentences, question)
         step6_time = time.perf_counter() - step6_start
@@ -973,7 +973,6 @@ async def process_rag_query_new(question: str):
 
         logger.info("Pipeline hoàn thành trong %.4f giây", total_time)
 
-        # BƯỚC 7: Return kết quả
         return {
             "answer": answer.strip() if answer else "Không thể tạo câu trả lời.",
             "question": question,
@@ -997,7 +996,7 @@ async def process_rag_query_new(question: str):
     except Exception as e:
         logger.error("Lỗi trong pipeline RAG mới: %s", str(e), exc_info=True)
 
-        # Fallback về method cũ đơn giản
+
         logger.info("Fallback về method đơn giản")
 
         start_retrieve_time = time.perf_counter()
@@ -1033,7 +1032,6 @@ async def process_rag_query_new(question: str):
         }
 
 
-# Main function - sử dụng pipeline mới
 async def process_rag_query(question: str):
     """
     Entry point cho RAG query - sử dụng pipeline mới 7 bước
@@ -1046,10 +1044,10 @@ async def test_title_based_rag(question: str):
     Test function cho pipeline RAG mới
 
     Args:
-        question (str): Câu hỏi test
+        question (str): Test question
 
     Returns:
-        dict: Kết quả RAG response với pipeline mới
+        dict: Result from process_rag_query_new
     """
     logger.info("Testing new RAG pipeline với câu hỏi: %s", question)
     result = await process_rag_query_new(question)
