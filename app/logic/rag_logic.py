@@ -723,7 +723,7 @@ CÂU HỎI: {question}
 HƯỚNG DẪN XỬ LÝ:
 1. ĐỌC KỸ từng đoạn ngữ liệu pháp luật trên cùng với tên văn bản đi kèm
 2. TÌM KIẾM thông tin trực tiếp liên quan đến câu hỏi
-3. XÁC ĐỊNH chương, điều, và TÊN VĂN BẢN CHÍNH XÁC từ thông tin được cung cấp
+3. XÁC ĐỊNH chương, điều, và TÊN VĂN BẢN CHÍNH XÁC có liên quan từ thông tin được cung cấp
 
 QUY TẮC TRẢ LỜI - TUÂN THỦ NGHIÊM NGẶT:
 
@@ -732,6 +732,7 @@ TRƯỜNG HỢP 1: Tìm thấy thông tin phù hợp trong ngữ liệu
 → VÍ DỤ: "Theo điểm 1 khoản 1 Điều 29 chương II của Luật Hàng hải Việt Nam, việc thanh tra kiểm tra về an toàn hàng hải..."
 → LƯU Ý 1: PHẢI sử dụng tên văn bản CHÍNH XÁC từ thông tin được cung cấp trong [Nguồn: ...] , đồng thời diễn tả lại nội dung trả lời cho dễ nghe, không sao chép nguyên văn
 → LƯU Ý 2: Có thể kết hợp nhiều điều luật, chương luật từ các đoạn khác nhau nếu cần thiết để trả lời đầy đủ câu hỏi
+→ LƯU Ý 3: Liệt kê tất cả các điều luật liên quan, sau đó rồi kết luận.
 
 TRƯỜNG HỢP 2: Nếu trong Ngữ liệu pháp luật không có thông tin liên quan đến câu hỏi, tự trả lời 'Tôi không có đủ thông tin để trả lời câu hỏi của bạn.'
 
@@ -756,7 +757,7 @@ BẮT ĐẦU TRẢ LỜI:"""
                 None,
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model="gpt-4o-2024-05-13",
+                    model="gpt-5",
                     max_tokens=4096,
                     temperature=0.1,
                 ),
