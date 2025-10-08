@@ -757,7 +757,7 @@ BẮT ĐẦU TRẢ LỜI:"""
                 None,
                 lambda: client.chat.completions.create(
                     messages=[{"role": "user", "content": prompt}],
-                    model="gpt-5",
+                    model="gpt-4o-2024-05-13",
                     max_tokens=4096,
                     temperature=0.1,
                 ),
