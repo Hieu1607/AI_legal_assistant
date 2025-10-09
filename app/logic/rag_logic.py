@@ -596,7 +596,9 @@ async def step5_search_embeddings(
                 timeout=60.0,  # 60 second timeout
             )
         except asyncio.TimeoutError:
-            logger.warning("Batch search timeout after 60 seconds, switching to fallback")
+            logger.warning(
+                "Batch search timeout after 60 seconds, switching to fallback"
+            )
             raise Exception("Embedding search timeout")
 
         # Process results and remove duplicates (improved to avoid skipping many sentences)
@@ -633,9 +635,7 @@ async def step5_search_embeddings(
 
         # Sort by similarity and get top results
         all_relevant_sentences.sort(key=lambda x: x.get("similarity", 0), reverse=True)
-        final_results = all_relevant_sentences[
-            :15
-        ]  # Keep 15 results for more context
+        final_results = all_relevant_sentences[:15]  # Keep 15 results for more context
 
         logger.info(
             "Found %d relevant sentences from %d titles",
