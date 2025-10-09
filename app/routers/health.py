@@ -39,11 +39,7 @@ def process_health_check():
                 "service": "AI Legal Assistant",
                 "status": "healthy",
                 "services": {
-                    "bge_m3_model": {
-                        "status": "healthy",
-                        "message": "Model files available locally",
-                    },
-                    "chroma_db": {"status": "healthy"},
+                    "weaviate_cloud": {"status": "healthy"},
                     "gemini_api": {
                         "status": "healthy",
                         "message": "API responding correctly",
@@ -71,10 +67,10 @@ def process_health_check():
             },
         )
     except Exception as e:  # pylint: disable=broad-except
-        # This will catch ChromaDB errors and other unexpected errors
+        # This will catch Weaviate errors and other unexpected errors
         error_message = str(e)
-        if "chroma" in error_message.lower():
-            error_type = "ChromaDB error"
+        if "weaviate" in error_message.lower():
+            error_type = "Weaviate error"
         else:
             error_type = "Unexpected error"
 

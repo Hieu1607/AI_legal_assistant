@@ -44,7 +44,7 @@ jobs:
           pip install fastapi uvicorn requests beautifulsoup4 lxml
           pip install sentence-transformers transformers torch
           pip install python-dotenv aiohttp pandas numpy pydantic
-          pip install google-generativeai chromadb
+          pip install google-generativeai "weaviate-client[agents]"
 
       - name: Create required directories
         run: |

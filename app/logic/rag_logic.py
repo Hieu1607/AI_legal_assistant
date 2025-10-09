@@ -18,7 +18,7 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
-from src.store_vector.search_embeddings import search_relevant_embeddings
+from src.store_vector.weaviate_search import search_relevant_embeddings, get_searcher
 
 setup_logging()
 logger = get_logger(__name__)
@@ -118,9 +118,64 @@ async def ask_LLM(relevant_sentences: list, question: str):
         return "Lỗi hệ thống, vui lòng thử lại sau."
 
 
+async def process_rag_query_with_agent(question: str):
+    """
+    Process a RAG query using Weaviate Query Agent (retrieval + generation in one step)
+
+    Args:
+        question (str): The user's question
+
+    Returns:
+        dict: Response containing answer, timing info, metadata, and relevant chunks
+    """
+    start_time = time.perf_counter()
+    searcher = None
+    
+    try:
+        # Use Weaviate Query Agent for integrated retrieval and generation
+        searcher = get_searcher()
+        result = await searcher.ask_question_with_context(question)
+        
+        end_time = time.perf_counter()
+        total_time = end_time - start_time
+        
+        logger.info("Query Agent processing time = %.4f", total_time)
+        logger.info("RAG answer successfully processed by Query Agent")
+        
+        return {
+            "answer": result["answer"].strip(),
+            "question": question,
+            "relevant_chunks": result["relevant_chunks"],
+            "context_count": len(result["relevant_chunks"]),
+            "timing": {
+                "retrieving_time": 0.0,  # Integrated in Query Agent
+                "llm_time": total_time,
+                "total_time": total_time,
+            },
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in Query Agent processing: {e}")
+        return {
+            "answer": "Đã xảy ra lỗi khi xử lý câu hỏi. Vui lòng thử lại.",
+            "question": question,
+            "relevant_chunks": [],
+            "context_count": 0,
+            "timing": {
+                "retrieving_time": 0.0,
+                "llm_time": 0.0,
+                "total_time": 0.0,
+            },
+        }
+    finally:
+        # Clean up connections for RAG endpoint
+        if searcher:
+            searcher.close()
+
+
 async def process_rag_query(question: str):
     """
-    Process a complete RAG query including retrieval and generation
+    Process a complete RAG query - now uses Query Agent by default
 
     Args:
         question (str): The user's question
@@ -128,32 +183,5 @@ async def process_rag_query(question: str):
     Returns:
         dict: Response containing answer, timing info, and metadata
     """
-    start_retrieve_time = time.perf_counter()
-    relevant_sentences = get_relevant_sentences(question)
-    end_retrieve_time = time.perf_counter()
-    retrieving_time = end_retrieve_time - start_retrieve_time
-
-    start_ask_LLM_time = time.perf_counter()
-    answer = await ask_LLM(relevant_sentences, question)
-    end_ask_LLM_time = time.perf_counter()
-    llm_time = end_ask_LLM_time - start_ask_LLM_time - prompting_time
-
-    logger.info(
-        "retrieving_time = %.4f, prompting_time = %.4f, llm_time = %.4f, total_time = %.4f ",
-        retrieving_time,
-        prompting_time,
-        llm_time,
-        retrieving_time + prompting_time + llm_time,
-    )
-    logger.info("RAG answer successfully")
-
-    return {
-        "answer": answer.strip(),
-        "question": question,
-        "context_count": len(relevant_sentences),
-        "timing": {
-            "retrieving_time": retrieving_time,
-            "llm_time": llm_time,
-            "total_time": retrieving_time + prompting_time + llm_time,
-        },
-    }
+    # Use the new Query Agent method by default
+    return await process_rag_query_with_agent(question)

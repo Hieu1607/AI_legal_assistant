@@ -37,7 +37,8 @@ dependencies:
   - lxml=5.4.0
 
   # Vector database
-  - chromadb=1.0.15
+  - pip:
+    - "weaviate-client[agents]==4.17.0"
 
   # Configuration and environment
   - python-dotenv=1.1.0

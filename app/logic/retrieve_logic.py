@@ -10,7 +10,7 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
-from src.store_vector.search_embeddings import search_relevant_embeddings
+from src.store_vector.weaviate_search import search_relevant_embeddings
 
 setup_logging()
 logger = get_logger(__name__)

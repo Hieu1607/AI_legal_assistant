@@ -28,11 +28,12 @@ while True:
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
-from src.store_vector.init_index import init_chroma_index
+# from src.store_vector.init_index import init_chroma_index  # Disabled - using Weaviate
 
 setup_logging()
 logger = get_logger(__name__)
-collection = init_chroma_index()[1]
+# collection = init_chroma_index()[1]  # Disabled - using Weaviate
+collection = None  # Placeholder for legacy compatibility
 
 # Global model variable to cache the loaded model
 model = None

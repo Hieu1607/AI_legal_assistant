@@ -5,13 +5,17 @@ root = os.getcwd()
 
 sys.path.insert(0, str(root))
 
-from src.store_vector.search_embeddings import search_relevant_embeddings
+from src.store_vector.weaviate_search import get_searcher
 
 example_text = "Chương 2 điều 7 Bộ luật hình sự là gì ?"
 
-relevant_embeddings = search_relevant_embeddings(example_text, 5)
+# Use Weaviate Query Agent instead of separate search
+searcher = get_searcher()
+answer = searcher.ask_question(example_text)
 
-if relevant_embeddings["documents"] is not None:
-    for index, rule in enumerate(relevant_embeddings["documents"][0]):
-        print(rule, "\n", relevant_embeddings["cosine_similarities"][0][index])
-    # print(relevant_embeddings["documents"])
+print("Question:", example_text)
+print("\nAnswer from Weaviate Query Agent:")
+print(answer)
+
+# Close connection
+searcher.close()

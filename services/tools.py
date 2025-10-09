@@ -15,7 +15,7 @@ from configs.logger import get_logger_app, setup_logging
 
 setup_logging()
 logger = get_logger_app(__name__)
-from src.store_vector.search_embeddings import search_relevant_embeddings
+from src.store_vector.weaviate_search import search_relevant_embeddings
 
 
 class RetrieveInput(BaseModel):

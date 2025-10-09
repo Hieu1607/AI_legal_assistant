@@ -222,7 +222,7 @@ This document outlines the integration test cases for the AI Legal Assistant API
       "status": "healthy",
       "message": "Model files available locally"
     },
-    "chroma_db": {"status": "healthy"},
+    "weaviate_cloud": {"status": "healthy"},
     "gemini_api": {
       "status": "healthy", 
       "message": "API responding correctly"
@@ -238,13 +238,13 @@ This document outlines the integration test cases for the AI Legal Assistant API
 {
   "service": "AI Legal Assistant",
   "status": "unhealthy",
-  "error": "ChromaDB error: Connection failed"
+  "error": "Weaviate error: Connection failed"
 }
 ```
 
 **Test Steps**:
 1. Verify health check when all services are available
-2. Test with disabled/unavailable services (ChromaDB, Gemini API)
+2. Test with disabled/unavailable services (Weaviate Cloud, Gemini API)
 3. Verify proper error reporting for each service
 4. Verify status codes match service health
 

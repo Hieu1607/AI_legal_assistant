@@ -1,0 +1,32 @@
+# Core dependencies
+fastapi==0.115.9
+uvicorn==0.35.0
+python-dotenv==1.1.0
+pydantic==2.11.7
+requests==2.32.4
+
+# AI and ML
+sentence-transformers==5.0.0
+transformers==4.52.4
+torch==2.6.0
+numpy==2.3.0
+
+# Vector Database
+weaviate-client[agents]==4.17.0
+
+# Data processing
+pandas==2.3.0
+beautifulsoup4==4.13.4
+lxml==5.4.0
+
+# Google API
+google-generativeai
+
+# Logging and configuration
+pyyaml==6.0.2
+
+# File handling
+python-multipart==0.0.20
+
+# Testing
+pytest==8.4.1

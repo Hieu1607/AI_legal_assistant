@@ -45,7 +45,7 @@ AI_legal_assistant/
 pip install fastapi uvicorn pytest pytest-cov
 pip install sentence-transformers transformers torch
 pip install python-dotenv aiohttp pandas numpy pydantic
-pip install google-generativeai chromadb
+pip install google-generativeai "weaviate-client[agents]"
 ```
 
 #### Environment Setup
