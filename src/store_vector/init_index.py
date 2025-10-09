@@ -17,10 +17,10 @@ COLLECTION_NAME = "legal_assistant_collection"
 INDEX_CONFIG = {
     "collection_name": COLLECTION_NAME,
     "db_path": CHROMA_DB_PATH,
-    "notes": "ChromaDB tự động quản lý dimension và sử dụng Cosine Similarity mặc định. "
-    "Dimension sẽ được suy luận khi vector đầu tiên được thêm vào. "
-    "Để đảm bảo collection được khởi tạo với dimension mong muốn, "
-    "chúng ta có thể thêm một vector placeholder hoặc đảm bảo vector đầu tiên có đúng kích thước.",
+    "notes": "ChromaDB automatically manages dimension and uses Cosine Similarity by default. "
+    "Dimension will be inferred when the first vector is added. "
+    "To ensure collection is initialized with desired dimension, "
+    "we can add a placeholder vector or ensure the first vector has correct size.",
 }
 
 
@@ -32,7 +32,7 @@ def init_chroma_index():
         database="AI legal assistant",
     )
     logger.info("Client ChromaDB created successfully.")
-    logger.info("Kiểm tra hoặc tạo collection: '%s'...", COLLECTION_NAME)
+    logger.info("Checking or creating collection: '%s'...", COLLECTION_NAME)
     collection = client.get_or_create_collection(
         name=COLLECTION_NAME,
         metadata={
@@ -46,7 +46,7 @@ def init_chroma_index():
             "hnsw:sync_threshold": 1000,  # Sync after every 1000 vectors to reduce I/O
         },
     )
-    logger.info("Collection '%s' đã sẵn sàng.", COLLECTION_NAME)
+    logger.info("Collection '%s' is ready.", COLLECTION_NAME)
     # print("\n--- ChromaDB Index Configuration ---")
     # print(json.dumps(INDEX_CONFIG, indent=4, ensure_ascii=False))
 
@@ -55,6 +55,6 @@ def init_chroma_index():
 
 if __name__ == "__main__":
     chroma_client, legal_collection = init_chroma_index()
-    print(f"Số lượng documents: {legal_collection.count()}")
+    print(f"Number of documents: {legal_collection.count()}")
     results = legal_collection.peek(limit=5)  # Get first 5 items
     print(results)

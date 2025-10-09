@@ -277,7 +277,7 @@ Luật nghĩa vụ quân sự
         # Check if LLM returns "Not found"
         if "không tìm thấy" in result.lower():
             logger.info(
-                "LLM không tìm thấy bộ luật liên quan cho câu hỏi: %s", question
+                "LLM did not find relevant law codes for question: %s", question
             )
             return False, []
 
@@ -322,15 +322,15 @@ Luật nghĩa vụ quân sự
                     break
 
         if law_names:
-            logger.info("Tìm thấy %d bộ luật: %s", len(law_names), law_names)
+            logger.info("Found %d law codes: %s", len(law_names), law_names)
             return True, law_names
         else:
-            logger.info("Không tìm thấy bộ luật hợp lệ từ LLM response")
+            logger.info("No valid law codes found from LLM response")
             return False, []
 
     except Exception as e:
         logger.error(
-            "Lỗi khi gọi LLM tìm bộ luật - Question: '%s', Error type: %s, Error: %s",
+            "Error calling LLM to find law codes - Question: '%s', Error type: %s, Error: %s",
             question,
             type(e).__name__,
             str(e),
@@ -374,10 +374,10 @@ async def step3_find_exact_titles(llm_laws: list):
 
     logger.info("Using titles.txt from: %s", titles_path)
     all_titles = load_titles_from_file(titles_path)
-    logger.info("Đã load %d titles từ titles.txt", len(all_titles))
+    logger.info("Loaded %d titles from titles.txt", len(all_titles))
 
     if not all_titles:
-        logger.warning("Không thể load titles từ file")
+        logger.warning("Unable to load titles from file")
         return []
 
     # Find the best matching titles
@@ -389,12 +389,12 @@ async def step3_find_exact_titles(llm_laws: list):
         if match["exact_title"]:
             found_exact_titles.append(match["exact_title"])
             logger.info(
-                "Tìm thấy exact title: %s (confidence: %.2f)",
+                "Found exact title: %s (confidence: %.2f)",
                 match["exact_title"],
                 match["confidence"],
             )
         else:
-            logger.warning("Không tìm thấy exact title cho: %s", match["llm_input"])
+            logger.warning("Could not find exact title for: %s", match["llm_input"])
 
     return found_exact_titles
 
@@ -529,13 +529,13 @@ async def step4_extract_keywords_and_enhance(question: str):
 
         # Handle exceptions and ensure type safety
         if isinstance(keywords_result, Exception):
-            logger.error("Lỗi extract keywords: %s", keywords_result)
+            logger.error("Error extracting keywords: %s", keywords_result)
             keywords = []
         else:
             keywords = keywords_result if keywords_result else []
 
         if isinstance(enhanced_question_result, Exception):
-            logger.error("Lỗi enhance question: %s", enhanced_question_result)
+            logger.error("Error enhancing question: %s", enhanced_question_result)
             enhanced_question = question
         else:
             enhanced_question = (
@@ -545,7 +545,7 @@ async def step4_extract_keywords_and_enhance(question: str):
         return keywords, enhanced_question
 
     except Exception as e:
-        logger.error("Lỗi trong step 4: %s", str(e))
+        logger.error("Error in step 4: %s", str(e))
         return [], question
 
 
@@ -564,7 +564,7 @@ async def step5_search_embeddings(
     Returns:
         list: List of relevant sentences
     """
-    logger.info("Bắt đầu search embeddings với %d titles", len(exact_titles))
+    logger.info("Starting embedding search with %d titles", len(exact_titles))
 
     # Prepare search queries: enhanced question + keywords
     search_queries = [enhanced_question] + keywords
@@ -573,14 +573,14 @@ async def step5_search_embeddings(
 
         # Prepare batch search with title filtering
         queries_and_titles = []
-        results_per_query = 8  # Tăng từ 5 lên 8 để có nhiều kết quả hơn
+        results_per_query = 8  # Increased from 5 to 8 for more results
 
         for title in exact_titles:
             for query in search_queries:
                 queries_and_titles.append((query, title))
 
         logger.info(
-            "Thực hiện batch search cho %d query-title combinations",
+            "Performing batch search for %d query-title combinations",
             len(queries_and_titles),
         )
 
@@ -596,12 +596,12 @@ async def step5_search_embeddings(
                 timeout=60.0,  # 60 second timeout
             )
         except asyncio.TimeoutError:
-            logger.warning("Batch search timeout sau 60 giây, chuyển sang fallback")
+            logger.warning("Batch search timeout after 60 seconds, switching to fallback")
             raise Exception("Embedding search timeout")
 
-        # Process results and remove duplicates (cải thiện để tránh bỏ qua nhiều câu)
+        # Process results and remove duplicates (improved to avoid skipping many sentences)
         all_relevant_sentences = []
-        seen_sentences = set()  # Sử dụng set để track các key đã thấy
+        seen_sentences = set()
 
         for result in search_results:
             if result and result.get("documents") and result["documents"][0]:
@@ -610,15 +610,15 @@ async def step5_search_embeddings(
                 similarities = result.get("cosine_similarities", [[]])[0]
 
                 for i, sentence in enumerate(documents):
-                    # Tạo key dựa trên sentence và document để cho phép cùng sentence từ nguồn khác nhau
+                    # Create key based on sentence and document to allow same sentence from different sources
                     metadata = metadatas[i] if i < len(metadatas) else {}
-                    document_name = metadata.get("title", "Không xác định")
+                    document_name = metadata.get("title", "Unknown")
                     sentence_key = f"{sentence}||{document_name}"
 
                     if sentence_key not in seen_sentences:
                         seen_sentences.add(
                             sentence_key
-                        )  # Sử dụng add() thay vì assignment
+                        )  # Use add() instead of assignment
                         similarity_score = (
                             similarities[i] if i < len(similarities) else 0.0
                         )
@@ -635,10 +635,10 @@ async def step5_search_embeddings(
         all_relevant_sentences.sort(key=lambda x: x.get("similarity", 0), reverse=True)
         final_results = all_relevant_sentences[
             :15
-        ]  # Giữ nguyên 15 results để có nhiều context hơn
+        ]  # Keep 15 results for more context
 
         logger.info(
-            "Tìm thấy %d sentences liên quan từ %d titles",
+            "Found %d relevant sentences from %d titles",
             len(final_results),
             len(exact_titles),
         )
@@ -680,10 +680,10 @@ async def step5_search_embeddings(
                                 }
                             )
 
-            return fallback_sentences[:15]  # Tăng từ 10 lên 15 cho fallback
+            return fallback_sentences[:15]  # Increased from 10 to 15 for fallback
 
         except Exception as fallback_error:
-            logger.error("Fallback search cũng thất bại: %s", str(fallback_error))
+            logger.error("Fallback search also failed: %s", str(fallback_error))
             return []
 
 
@@ -846,17 +846,17 @@ def get_relevant_sentences(question: str):
 
 async def process_rag_query_new(question: str):
     """
-    PIPELINE RAG MỚI - 7 BƯỚC THEO YÊU CẦU
+    NEW RAG PIPELINE - 7 STEPS AS REQUESTED
 
     Args:
-        question (str): Câu hỏi từ người dùng
+        question (str): User's question
 
     Returns:
-        dict: Response chứa answer, timing info và metadata
+        dict: Response containing answer, timing info and metadata
     """
     total_start_time = time.perf_counter()
 
-    logger.info("Bắt đầu pipeline RAG mới cho câu hỏi: %s", question)
+    logger.info("Starting new RAG pipeline for question: %s", question)
 
     try:
 
@@ -864,9 +864,8 @@ async def process_rag_query_new(question: str):
         has_laws, llm_laws = await step1_find_relevant_laws(question)
         step1_time = time.perf_counter() - step1_start
 
-
         if not has_laws:
-            logger.info("Bước 1: Không tìm thấy bộ luật liên quan")
+            logger.info("Step 1: No relevant law codes found")
             return {
                 "answer": "Câu hỏi không rõ ràng hoặc không liên quan đến pháp luật. Vui lòng thử lại.",
                 "question": question,
@@ -887,19 +886,17 @@ async def process_rag_query_new(question: str):
                 "pipeline_stopped_at": "step_2",
             }
 
-        logger.info("Bước 1: Tìm thấy %d bộ luật: %s", len(llm_laws), llm_laws)
-
+        logger.info("Step 1: Found %d law codes: %s", len(llm_laws), llm_laws)
 
         step3_start = time.perf_counter()
         exact_titles = await step3_find_exact_titles(llm_laws)
         step3_time = time.perf_counter() - step3_start
 
         if not exact_titles:
-            logger.warning("Bước 3: Không tìm thấy exact titles, dùng fallback")
+            logger.warning("Step 3: No exact titles found, using fallback")
             exact_titles = []
 
-        logger.info("Bước 3: Tìm thấy %d exact titles", len(exact_titles))
-
+        logger.info("Step 3: Found %d exact titles", len(exact_titles))
 
         step4_start = time.perf_counter()
         try:
@@ -913,14 +910,13 @@ async def process_rag_query_new(question: str):
                 else question
             )
         except Exception as e:
-            logger.error("Lỗi trong step 4: %s", str(e))
+            logger.error("Error in step 4: %s", str(e))
             keywords = []
             enhanced_question = question
 
         step4_time = time.perf_counter() - step4_start
 
-        logger.info("Bước 4: Extract %d keywords, enhanced question", len(keywords))
-
+        logger.info("Step 4: Extracted %d keywords, enhanced question", len(keywords))
 
         step5_start = time.perf_counter()
         if exact_titles:
@@ -962,8 +958,7 @@ async def process_rag_query_new(question: str):
 
         step5_time = time.perf_counter() - step5_start
 
-        logger.info("Bước 5: Tìm thấy %d relevant sentences", len(relevant_sentences))
-
+        logger.info("Step 5: Found %d relevant sentences", len(relevant_sentences))
 
         step6_start = time.perf_counter()
         answer = await ask_LLM(relevant_sentences, question)
@@ -971,7 +966,7 @@ async def process_rag_query_new(question: str):
 
         total_time = time.perf_counter() - total_start_time
 
-        logger.info("Pipeline hoàn thành trong %.4f giây", total_time)
+        logger.info("Pipeline completed in %.4f seconds", total_time)
 
         return {
             "answer": answer.strip() if answer else "Không thể tạo câu trả lời.",
@@ -994,8 +989,7 @@ async def process_rag_query_new(question: str):
         }
 
     except Exception as e:
-        logger.error("Lỗi trong pipeline RAG mới: %s", str(e), exc_info=True)
-
+        logger.error("Error in new RAG pipeline: %s", str(e), exc_info=True)
 
         logger.info("Fallback về method đơn giản")
 
@@ -1034,14 +1028,14 @@ async def process_rag_query_new(question: str):
 
 async def process_rag_query(question: str):
     """
-    Entry point cho RAG query - sử dụng pipeline mới 7 bước
+    Entry point for RAG query - using new 7-step pipeline
     """
     return await process_rag_query_new(question)
 
 
 async def test_title_based_rag(question: str):
     """
-    Test function cho pipeline RAG mới
+    Test function for new RAG pipeline
 
     Args:
         question (str): Test question
@@ -1049,11 +1043,11 @@ async def test_title_based_rag(question: str):
     Returns:
         dict: Result from process_rag_query_new
     """
-    logger.info("Testing new RAG pipeline với câu hỏi: %s", question)
+    logger.info("Testing new RAG pipeline with question: %s", question)
     result = await process_rag_query_new(question)
 
     logger.info(
-        "Test hoàn thành. Tìm thấy %d chunks từ %d titles: %s",
+        "Test completed. Found %d chunks from %d titles: %s",
         result["context_count"],
         len(result["relevant_titles"]),
         result["relevant_titles"],
