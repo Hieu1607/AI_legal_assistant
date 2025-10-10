@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             removeTypingIndicator(typingElement);
             
             if (result.status === 'success' && result.data && result.data.answer) {
-                await displayTypingMessage(result.data.answer, 'bot');
+                const relevantChunks = result.data.relevant_chunks || [];
+                await displayTypingMessage(result.data.answer, 'bot', relevantChunks);
             } else {
                 await displayTypingMessage('Xin lỗi, tôi không thể tìm thấy câu trả lời.', 'bot');
             }
@@ -66,11 +67,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const displayMessage = (message, sender) => {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', `${sender}-message`);
-        messageElement.textContent = message;
-        chatBox.appendChild(messageElement);
+    const displayMessage = (message, sender, relevantChunks = null) => {
+        if (sender === 'bot' && relevantChunks && relevantChunks.length > 0) {
+            // Create container for bot message with source button
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('bot-message-container');
+            
+            // Create message element
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'bot-message');
+            messageElement.textContent = message;
+            
+            // Create source button
+            const sourceButton = document.createElement('button');
+            sourceButton.classList.add('source-button');
+            sourceButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+                Xem nguồn (${relevantChunks.length})
+            `;
+            
+            // Add click event to source button
+            sourceButton.addEventListener('click', () => {
+                showSourceModal(relevantChunks);
+            });
+            
+            messageContainer.appendChild(messageElement);
+            messageContainer.appendChild(sourceButton);
+            chatBox.appendChild(messageContainer);
+        } else {
+            // Regular message display
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', `${sender}-message`);
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+        }
         chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     };
 
@@ -96,31 +128,82 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const displayTypingMessage = async (message, sender) => {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', `${sender}-message`);
-        chatBox.appendChild(messageElement);
-        
-        // Split message into words for more natural typing effect
-        const words = message.split(' ');
-        let currentText = '';
-        
-        for (let i = 0; i < words.length; i++) {
-            currentText += (i > 0 ? ' ' : '') + words[i];
-            messageElement.textContent = currentText;
-            chatBox.scrollTop = chatBox.scrollHeight;
+    const displayTypingMessage = async (message, sender, relevantChunks = null) => {
+        if (sender === 'bot' && relevantChunks && relevantChunks.length > 0) {
+            // Create container for bot message with source button
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('bot-message-container');
             
-            // Add delay between words (adjust speed here)
-            await new Promise(resolve => setTimeout(resolve, 50));
+            // Create message element
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'bot-message');
+            chatBox.appendChild(messageContainer);
+            messageContainer.appendChild(messageElement);
+            
+            // Split message into words for more natural typing effect
+            const words = message.split(' ');
+            let currentText = '';
+            
+            for (let i = 0; i < words.length; i++) {
+                currentText += (i > 0 ? ' ' : '') + words[i];
+                messageElement.textContent = currentText;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                // Add delay between words (adjust speed here)
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            
+            // Add a cursor effect at the end
+            messageElement.innerHTML = currentText + '<span class="typing-cursor">|</span>';
+            
+            // Remove cursor after a short delay and add source button
+            setTimeout(() => {
+                messageElement.textContent = currentText;
+                
+                // Create and add source button
+                const sourceButton = document.createElement('button');
+                sourceButton.classList.add('source-button');
+                sourceButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                    </svg>
+                    Xem nguồn (${relevantChunks.length})
+                `;
+                
+                // Add click event to source button
+                sourceButton.addEventListener('click', () => {
+                    showSourceModal(relevantChunks);
+                });
+                
+                messageContainer.appendChild(sourceButton);
+            }, 1000);
+        } else {
+            // Regular typing message display
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', `${sender}-message`);
+            chatBox.appendChild(messageElement);
+            
+            // Split message into words for more natural typing effect
+            const words = message.split(' ');
+            let currentText = '';
+            
+            for (let i = 0; i < words.length; i++) {
+                currentText += (i > 0 ? ' ' : '') + words[i];
+                messageElement.textContent = currentText;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                // Add delay between words (adjust speed here)
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            
+            // Add a cursor effect at the end
+            messageElement.innerHTML = currentText + '<span class="typing-cursor">|</span>';
+            
+            // Remove cursor after a short delay
+            setTimeout(() => {
+                messageElement.textContent = currentText;
+            }, 1000);
         }
-        
-        // Add a cursor effect at the end
-        messageElement.innerHTML = currentText + '<span class="typing-cursor">|</span>';
-        
-        // Remove cursor after a short delay
-        setTimeout(() => {
-            messageElement.textContent = currentText;
-        }, 1000);
     };
 
     sendButton.addEventListener('click', sendMessage);
@@ -145,4 +228,70 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput.style.height = 'auto';
         userInput.style.height = `${userInput.scrollHeight}px`;
     });
+
+    // Source modal functions
+    const showSourceModal = (relevantChunks) => {
+        // Create modal overlay if it doesn't exist
+        let modalOverlay = document.getElementById('source-modal');
+        if (!modalOverlay) {
+            modalOverlay = document.createElement('div');
+            modalOverlay.id = 'source-modal';
+            modalOverlay.classList.add('modal-overlay');
+            document.body.appendChild(modalOverlay);
+        }
+
+        // Create modal content
+        modalOverlay.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Nguồn thông tin liên quan (${relevantChunks.length} đoạn)</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    ${relevantChunks.map((chunk, index) => `
+                        <div class="chunk-item">
+                            <div class="chunk-source">${chunk.document_name || 'Không xác định'}</div>
+                            <div class="chunk-content">${chunk.sentence || ''}</div>
+                            <div class="chunk-similarity">${(chunk.similarity * 100).toFixed(1)}%</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        // Show modal
+        setTimeout(() => {
+            modalOverlay.classList.add('show');
+        }, 10);
+
+        // Add close event listeners
+        const closeBtn = modalOverlay.querySelector('.modal-close');
+        closeBtn.addEventListener('click', hideSourceModal);
+        
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                hideSourceModal();
+            }
+        });
+
+        // Add keyboard event listener
+        document.addEventListener('keydown', handleModalKeydown);
+    };
+
+    const hideSourceModal = () => {
+        const modalOverlay = document.getElementById('source-modal');
+        if (modalOverlay) {
+            modalOverlay.classList.remove('show');
+            setTimeout(() => {
+                modalOverlay.remove();
+            }, 300);
+        }
+        document.removeEventListener('keydown', handleModalKeydown);
+    };
+
+    const handleModalKeydown = (e) => {
+        if (e.key === 'Escape') {
+            hideSourceModal();
+        }
+    };
 });
