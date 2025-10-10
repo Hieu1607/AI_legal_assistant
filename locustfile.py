@@ -29,48 +29,59 @@ global_counter = GlobalCounter()
 
 class MyUserBehavior(HttpUser):
     host = "https://ai-legal-assistant-8g4g.onrender.com"
-    wait_time = constant(1)  # Minimal wait time
+    wait_time = constant(2)  # Wait between requests
 
-    connection_timeout = 20
-    network_timeout = 120
+    connection_timeout = 30
+    network_timeout = 180  # Increased timeout for slow responses
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.has_asked = False
-        self.my_question = random.choice(
-            questions
-        )  # Each user gets one random question
+        self.my_question = random.choice(questions)
 
     @task
     def post_rag(self):
-        # Each user only asks one question
-        if self.has_asked:
+        # Check if we've reached the limit first
+        if not global_counter.increment_and_check():
+            print("Reached maximum requests, user stopping...")
             return
 
-        # Check if we've reached the limit
-        if not global_counter.increment_and_check():
+        # Each user only asks one question
+        if self.has_asked:
             return
 
         self.has_asked = True
         print(f"User asking: {self.my_question[:50]}...")
 
-        # Ask the RAG question
-        response = self.client.post(
-            "/rag",
-            json={"question": self.my_question},
-            timeout=(self.connection_timeout, self.network_timeout),
-        )
+        try:
+            # Ask the RAG question
+            response = self.client.post(
+                "/rag",
+                json={"question": self.my_question},
+                timeout=(self.connection_timeout, self.network_timeout),
+            )
 
-        print(f"Response status: {response.status_code}")
+            if response.status_code == 200:
+                print(
+                    f"✅ Response success: {response.status_code}, Time: {response.elapsed.total_seconds():.2f}s"
+                )
+            else:
+                print(f"❌ Response failed: {response.status_code}")
+
+        except Exception as e:
+            print(f"❌ Request failed with exception: {str(e)}")
 
         # Check if we've reached 30 requests, then stop the test
         with global_counter.lock:
             if global_counter.rag_count >= 30:
-                print("Reached 30 requests. Stopping test...")
+                print("🎉 Reached 30 requests. Stopping test...")
                 self.environment.runner.stop()
                 return
 
 
-# Usage: locust -f locustfile.py --users=30 --spawn-rate=0.5 --run-time=300s
-# This will create 30 users over 60 seconds (0.5 users/second), each asking one random RAG question
-# All 30 requests will be spread across 1 minute, then stop automatically
+# Usage: locust -f locustfile.py --users=30 --spawn-rate=2 --run-time=300s
+# This will create 30 users over 15 seconds (2 users/second), each asking one random RAG question
+# Test will run until 30 requests are completed or timeout is reached
+#
+# Alternative headless mode:
+# locust -f locustfile.py --users=30 --spawn-rate=2 --run-time=300s --headless --html=results.html

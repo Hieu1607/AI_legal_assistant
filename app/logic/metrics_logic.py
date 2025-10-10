@@ -132,9 +132,31 @@ def increment_openai_tokens(token_type: str, count: int = 1) -> None:
     """
     try:
         OPENAI_TOKENS.labels(type=token_type).inc(count)
-        logger.debug(f"Incremented OpenAI tokens: {token_type} +{count}")
+        # Change to info level to see in logs
+        logger.info(f"Incremented OpenAI tokens: {token_type} +{count}")
+        # Log current total for debugging
+        try:
+            current_value = OPENAI_TOKENS.labels(type=token_type)._value._value
+            logger.info(f"Current {token_type} token count: {current_value}")
+        except:
+            pass
     except Exception as e:
         logger.error(f"Error incrementing OpenAI tokens: {str(e)}")
+
+
+def log_current_token_usage() -> None:
+    """
+    Log current token usage for debugging
+    """
+    try:
+        input_tokens = OPENAI_TOKENS.labels(type="input")._value._value
+        output_tokens = OPENAI_TOKENS.labels(type="output")._value._value
+        total_tokens = OPENAI_TOKENS.labels(type="total")._value._value
+        logger.info(
+            f"Current token usage - Input: {input_tokens}, Output: {output_tokens}, Total: {total_tokens}"
+        )
+    except Exception as e:
+        logger.error(f"Error logging token usage: {str(e)}")
 
 
 def increment_chromadb_exceptions(operation: str, count: int = 1) -> None:

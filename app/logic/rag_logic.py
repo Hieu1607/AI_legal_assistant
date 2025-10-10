@@ -25,6 +25,15 @@ from src.store_vector.search_embeddings import (
     search_relevant_embeddings,
 )
 
+# Import token tracking function
+try:
+    from app.logic.metrics_logic import increment_openai_tokens
+except ImportError:
+    # Fallback if import fails
+    def increment_openai_tokens(token_type: str, count: int = 1):
+        pass
+
+
 setup_logging()
 logger = get_logger(__name__)
 
@@ -261,6 +270,17 @@ Luật nghĩa vụ quân sự
             max_tokens=4096,
         )
 
+        # Log token usage for step1_find_relevant_laws
+        if hasattr(completion, "usage") and completion.usage:
+            logger.info(
+                f"[STEP1_FIND_LAWS] Token usage: input={completion.usage.prompt_tokens}, output={completion.usage.completion_tokens}, total={completion.usage.total_tokens}"
+            )
+            increment_openai_tokens("input", completion.usage.prompt_tokens)
+            increment_openai_tokens("output", completion.usage.completion_tokens)
+            increment_openai_tokens("total", completion.usage.total_tokens)
+        else:
+            logger.warning("[STEP1_FIND_LAWS] No token usage information available")
+
         result = completion.choices[0].message.content
 
         # DEBUG: Log raw response
@@ -444,6 +464,17 @@ Từ khóa cho câu hỏi trên:"""
             timeout=15,
         )
 
+        # Log token usage for extract_keywords
+        if hasattr(response, "usage") and response.usage:
+            logger.info(
+                f"[EXTRACT_KEYWORDS] Token usage: input={response.usage.prompt_tokens}, output={response.usage.completion_tokens}, total={response.usage.total_tokens}"
+            )
+            increment_openai_tokens("input", response.usage.prompt_tokens)
+            increment_openai_tokens("output", response.usage.completion_tokens)
+            increment_openai_tokens("total", response.usage.total_tokens)
+        else:
+            logger.warning("[EXTRACT_KEYWORDS] No token usage information available")
+
         content = response.choices[0].message.content
         if content:
             # Parse keywords from response - split by lines and clean
@@ -497,6 +528,17 @@ Câu hỏi được cải thiện:"""
             ),
             timeout=15,
         )
+
+        # Log token usage for enhance_question
+        if hasattr(response, "usage") and response.usage:
+            logger.info(
+                f"[ENHANCE_QUESTION] Token usage: input={response.usage.prompt_tokens}, output={response.usage.completion_tokens}, total={response.usage.total_tokens}"
+            )
+            increment_openai_tokens("input", response.usage.prompt_tokens)
+            increment_openai_tokens("output", response.usage.completion_tokens)
+            increment_openai_tokens("total", response.usage.total_tokens)
+        else:
+            logger.warning("[ENHANCE_QUESTION] No token usage information available")
 
         enhanced = response.choices[0].message.content
         return enhanced.strip() if enhanced else question
@@ -765,6 +807,17 @@ BẮT ĐẦU TRẢ LỜI:"""
             timeout=60,
         )
 
+        # Log token usage for ask_LLM (main response generation)
+        if hasattr(response, "usage") and response.usage:
+            logger.info(
+                f"[ASK_LLM_MAIN] Token usage: input={response.usage.prompt_tokens}, output={response.usage.completion_tokens}, total={response.usage.total_tokens}"
+            )
+            increment_openai_tokens("input", response.usage.prompt_tokens)
+            increment_openai_tokens("output", response.usage.completion_tokens)
+            increment_openai_tokens("total", response.usage.total_tokens)
+        else:
+            logger.warning("[ASK_LLM_MAIN] No token usage information available")
+
         return response.choices[0].message.content
 
     except asyncio.TimeoutError:
@@ -788,6 +841,18 @@ BẮT ĐẦU TRẢ LỜI:"""
                 ),
                 timeout=60,
             )
+
+            # Log token usage for ask_LLM retry
+            if hasattr(response, "usage") and response.usage:
+                logger.info(
+                    f"[ASK_LLM_RETRY] Token usage: input={response.usage.prompt_tokens}, output={response.usage.completion_tokens}, total={response.usage.total_tokens}"
+                )
+                increment_openai_tokens("input", response.usage.prompt_tokens)
+                increment_openai_tokens("output", response.usage.completion_tokens)
+                increment_openai_tokens("total", response.usage.total_tokens)
+            else:
+                logger.warning("[ASK_LLM_RETRY] No token usage information available")
+
             return response.choices[0].message.content
         except asyncio.TimeoutError:
             return "Hệ thống đang bận vui lòng thử lại sau."

@@ -157,12 +157,20 @@ BẮT ĐẦU TRẢ LỜI:"""
 
         # Track token usage if available
         if hasattr(response, "usage") and response.usage:
+            logger.info(f"OpenAI Response Usage: {response.usage}")
             if hasattr(response.usage, "prompt_tokens"):
+                logger.info(f"Recording {response.usage.prompt_tokens} input tokens")
                 increment_openai_tokens("input", response.usage.prompt_tokens)
             if hasattr(response.usage, "completion_tokens"):
+                logger.info(
+                    f"Recording {response.usage.completion_tokens} output tokens"
+                )
                 increment_openai_tokens("output", response.usage.completion_tokens)
             if hasattr(response.usage, "total_tokens"):
+                logger.info(f"Recording {response.usage.total_tokens} total tokens")
                 increment_openai_tokens("total", response.usage.total_tokens)
+        else:
+            logger.warning("No usage information available in OpenAI response")
 
         logger.info("The answer from LLM is %s", answer)
         return GenerateOutput(answer=answer)
@@ -190,6 +198,7 @@ BẮT ĐẦU TRẢ LỜI:"""
 
             # Track token usage if available
             if hasattr(response, "usage") and response.usage:
+                logger.info(f"OpenAI Retry Response Usage: {response.usage}")
                 if hasattr(response.usage, "prompt_tokens"):
                     increment_openai_tokens("input", response.usage.prompt_tokens)
                 if hasattr(response.usage, "completion_tokens"):
