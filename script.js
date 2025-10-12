@@ -250,9 +250,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="modal-body">
                     ${relevantChunks.map((chunk, index) => `
                         <div class="chunk-item">
-                            <div class="chunk-source">${chunk.document_name || 'Không xác định'}</div>
-                            <div class="chunk-content">${chunk.sentence || ''}</div>
-                            <div class="chunk-similarity">${(chunk.similarity * 100).toFixed(1)}%</div>
+                            <div class="chunk-header">
+                                <div class="chunk-source">${chunk.title || 'Không xác định'}</div>
+                                <div class="chunk-number">Đoạn ${index + 1}</div>
+                            </div>
+                            <div class="chunk-content">${chunk.text || ''}</div>
+                            <div class="chunk-info">
+                                ${chunk.date_of_issue ? `<span class="chunk-date">Ngày ban hành: ${chunk.date_of_issue}</span>` : ''}
+                                ${chunk.update_day ? `<span class="chunk-update">Cập nhật: ${chunk.update_day}</span>` : ''}
+                                ${chunk.chunk_id ? `<span class="chunk-id">ID: ${chunk.chunk_id}</span>` : ''}
+                            </div>
                         </div>
                     `).join('')}
                 </div>
