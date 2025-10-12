@@ -7,11 +7,9 @@ import os
 import sys
 import time
 
-import google.generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 
 # Set up logging
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -86,39 +84,13 @@ async def ask_LLM(relevant_sentences: list, question: str):
     end_propting_time = time.perf_counter()
     global prompting_time  # pylint: disable=global-statement
     prompting_time = end_propting_time - start_prompting_time
-    try:
-        model = genai.GenerativeModel(model_name="gemini-2.5-pro")  # type: ignore
-
-        # Use loop.run_in_executor to run synchronous function in a separate thread
-        loop = asyncio.get_event_loop()
-        response = await asyncio.wait_for(
-            loop.run_in_executor(None, lambda: model.generate_content(prompt)),
-            timeout=60,
-        )
-        return response.text
-    except asyncio.TimeoutError:
-        return "Hệ thống đang bận vui lòng thử lại sau."
-    except ConnectionError as e:
-        logger.info("Network error: %s, retrying...", e)
-        try:
-            model = genai.GenerativeModel(model_name="gemini-2.5-pro")  # type: ignore
-            loop = asyncio.get_event_loop()
-            response = await asyncio.wait_for(
-                loop.run_in_executor(None, lambda: model.generate_content(prompt)),
-                timeout=15,
-            )
-            return response.text
-        except asyncio.TimeoutError:
-            return "Hệ thống đang bận vui lòng thử lại sau."
-        except ConnectionError:
-            logger.info("Retry failed: %s", e)
-            return "Lỗi mạng"
-    except Exception as e:  # pylint: disable = broad-exception-caught
-        logger.info("An error occured: %s", e)
-        return "Lỗi hệ thống, vui lòng thử lại sau."
+    # Note: This function is deprecated as we now use Weaviate Query Agent for RAG
+    # The Weaviate Query Agent handles both retrieval and generation in one step
+    logger.warning("generate_answer_llm is deprecated, use process_rag_query_with_weaviate instead")
+    return "Chức năng này đã được thay thế bởi Weaviate Query Agent. Vui lòng sử dụng endpoint RAG mới."
 
 
-async def process_rag_query_with_agent(question: str):
+async def process_rag_query_with_weaviate(question: str):
     """
     Process a RAG query using Weaviate Query Agent (retrieval + generation in one step)
 
@@ -175,7 +147,7 @@ async def process_rag_query_with_agent(question: str):
 
 async def process_rag_query(question: str):
     """
-    Process a complete RAG query - now uses Query Agent by default
+    Process a complete RAG query - now uses Weaviate Query Agent by default
 
     Args:
         question (str): The user's question
@@ -183,5 +155,5 @@ async def process_rag_query(question: str):
     Returns:
         dict: Response containing answer, timing info, and metadata
     """
-    # Use the new Query Agent method by default
-    return await process_rag_query_with_agent(question)
+    # Use the new Weaviate Query Agent method by default
+    return await process_rag_query_with_weaviate(question)

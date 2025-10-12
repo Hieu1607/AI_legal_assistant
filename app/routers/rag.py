@@ -22,7 +22,7 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from app.constants.http_status import HTTP_STATUS_OK
-from app.logic.rag_logic import process_rag_query, process_rag_query_with_agent
+from app.logic.rag_logic import process_rag_query, process_rag_query_with_weaviate
 from app.models.base_model import QueryQuestion
 from configs.logger import get_logger, setup_logging
 
@@ -44,7 +44,7 @@ async def ask_model(request: QueryQuestion):
         JSONResponse: Response containing answer and metadata or error response
     """
     try:
-        result = await process_rag_query_with_agent(request.question)
+        result = await process_rag_query_with_weaviate(request.question)
 
         return JSONResponse(
             status_code=HTTP_STATUS_OK,

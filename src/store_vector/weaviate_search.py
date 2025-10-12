@@ -112,7 +112,7 @@ class WeaviateSearcher:
             # Extract the text response from the QueryAgentResponse object
             answer = self._extract_answer_from_response(response)
             
-            # Extract relevant chunks from response
+            # Extract relevant chunks from response (now returns dict with metadata)
             relevant_chunks = self._extract_chunks_from_response(response)
             
             logger.info(f"Query Agent successfully processed question: {query}")
@@ -174,8 +174,8 @@ class WeaviateSearcher:
                 logger.error(f"Error extracting answer from response: {e}")
                 return "Lỗi khi xử lý phản hồi từ Query Agent."
     
-    def _extract_chunks_from_response(self, response) -> List[str]:
-        """Extract relevant document chunks from Query Agent response"""
+    def _extract_chunks_from_response(self, response) -> List[Dict[str, Any]]:
+        """Extract relevant document chunks with metadata from Query Agent response"""
         try:
             chunks = []
             
@@ -199,9 +199,19 @@ class WeaviateSearcher:
                                 for prop_name in ['text', 'content', 'chunk', 'data']:
                                     if prop_name in properties:
                                         text_content = properties[prop_name]
-                                        if text_content and text_content not in chunks:
-                                            chunks.append(text_content)
-                                            logger.info(f"Added chunk from property '{prop_name}': {text_content[:100]}...")
+                                        if text_content:
+                                            chunk_info = {
+                                                'text': text_content,
+                                                'title': properties.get('title', 'Không có tiêu đề'),
+                                                'chunk_id': properties.get('chunk_id', f'chunk_{len(chunks)}'),
+                                                'date_of_issue': properties.get('date_of_issue', ''),
+                                                'update_day': properties.get('update_day', ''),
+                                                'uuid': str(obj.uuid) if hasattr(obj, 'uuid') else ''
+                                            }
+                                            # Check if this chunk is not already added
+                                            if not any(existing['text'] == text_content for existing in chunks):
+                                                chunks.append(chunk_info)
+                                                logger.info(f"Added chunk from property '{prop_name}': {text_content[:100]}...")
                                             break
             
             # Method 2: Extract chunks from sources using object_id (fallback)
@@ -227,9 +237,19 @@ class WeaviateSearcher:
                                 for prop_name in ['text', 'content', 'chunk', 'data']:
                                     if prop_name in properties:
                                         text_content = properties[prop_name]
-                                        if text_content and text_content not in chunks:
-                                            chunks.append(text_content)
-                                            logger.info(f"Added chunk from fetched object property '{prop_name}': {text_content[:100]}...")
+                                        if text_content:
+                                            chunk_info = {
+                                                'text': text_content,
+                                                'title': properties.get('title', 'Không có tiêu đề'),
+                                                'chunk_id': properties.get('chunk_id', object_id),
+                                                'date_of_issue': properties.get('date_of_issue', ''),
+                                                'update_day': properties.get('update_day', ''),
+                                                'uuid': object_id
+                                            }
+                                            # Check if this chunk is not already added
+                                            if not any(existing['text'] == text_content for existing in chunks):
+                                                chunks.append(chunk_info)
+                                                logger.info(f"Added chunk from fetched object property '{prop_name}': {text_content[:100]}...")
                                             break
                                         
                         except Exception as e:
@@ -252,9 +272,19 @@ class WeaviateSearcher:
                             for prop_name in ['text', 'content', 'chunk', 'data']:
                                 if prop_name in properties:
                                     text_content = properties[prop_name]
-                                    if text_content and text_content not in chunks:
-                                        chunks.append(text_content)
-                                        logger.info(f"Added fallback chunk from BM25 search: {text_content[:100]}...")
+                                    if text_content:
+                                        chunk_info = {
+                                            'text': text_content,
+                                            'title': properties.get('title', 'Không có tiêu đề'),
+                                            'chunk_id': properties.get('chunk_id', f'fallback_{len(chunks)}'),
+                                            'date_of_issue': properties.get('date_of_issue', ''),
+                                            'update_day': properties.get('update_day', ''),
+                                            'uuid': str(obj.uuid) if hasattr(obj, 'uuid') else ''
+                                        }
+                                        # Check if this chunk is not already added
+                                        if not any(existing['text'] == text_content for existing in chunks):
+                                            chunks.append(chunk_info)
+                                            logger.info(f"Added fallback chunk from BM25 search: {text_content[:100]}...")
                                         break
                 except Exception as e:
                     logger.error(f"Error in fallback BM25 search: {e}")
@@ -266,7 +296,7 @@ class WeaviateSearcher:
             logger.error(f"Error extracting chunks from response: {e}")
             return []
 
-    def search_relevant_documents(self, query: str, limit: int = 5) -> List[str]:
+    def search_relevant_documents(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         """
         Search for relevant documents using direct Weaviate vector search (not Query Agent).
         
@@ -275,7 +305,7 @@ class WeaviateSearcher:
             limit (int): Maximum number of results to return
             
         Returns:
-            List[str]: List of relevant document chunks
+            List[Dict[str, Any]]: List of document dictionaries with text, title, chunk_id, etc.
         """
         try:
             if not self.client:
@@ -291,16 +321,29 @@ class WeaviateSearcher:
                 limit=limit
             )
             
-            # Extract text content from results
+            # Extract document information from results
             documents = []
             for obj in response.objects:
                 if hasattr(obj, 'properties'):
-                    # Try different property names for text content
+                    properties = obj.properties
+                    
+                    # Extract text content
+                    text_content = None
                     for prop_name in ['text', 'content', 'chunk', 'data']:
-                        if prop_name in obj.properties and obj.properties[prop_name]:
-                            text_content = obj.properties[prop_name]
-                            documents.append(text_content)
+                        if prop_name in properties and properties[prop_name]:
+                            text_content = properties[prop_name]
                             break
+                    
+                    if text_content:
+                        doc_info = {
+                            'text': text_content,
+                            'title': properties.get('title', 'Không có tiêu đề'),
+                            'chunk_id': properties.get('chunk_id', f'chunk_{len(documents)}'),
+                            'date_of_issue': properties.get('date_of_issue', ''),
+                            'update_day': properties.get('update_day', ''),
+                            'uuid': str(obj.uuid) if hasattr(obj, 'uuid') else ''
+                        }
+                        documents.append(doc_info)
             
             logger.info(f"Found {len(documents)} relevant documents for query: {query}")
             return documents
@@ -346,13 +389,29 @@ def search_relevant_embeddings(query: str, limit: int = 5) -> Dict[str, Any]:
     searcher = None
     try:
         searcher = get_searcher()
-        relevant_texts = searcher.search_relevant_documents(query, limit)
+        document_infos = searcher.search_relevant_documents(query, limit)
+        
+        # Extract text and metadata from document info dictionaries
+        relevant_texts = [doc['text'] for doc in document_infos]
+        
+        # Enhanced metadata with title and other information
+        metadatas = []
+        for i, doc in enumerate(document_infos):
+            metadata = {
+                "source": "weaviate",
+                "chunk_id": doc.get('chunk_id', f'chunk_{i}'),
+                "title": doc.get('title', 'Không có tiêu đề'),
+                "date_of_issue": doc.get('date_of_issue', ''),
+                "update_day": doc.get('update_day', ''),
+                "uuid": doc.get('uuid', '')
+            }
+            metadatas.append(metadata)
         
         # Format response for compatibility with existing RAG logic
         response = {
-            "ids": [[f"chunk_{i}" for i in range(len(relevant_texts))]],
+            "ids": [[doc.get('chunk_id', f'chunk_{i}') for i, doc in enumerate(document_infos)]],
             "documents": [relevant_texts],
-            "metadatas": [[{"source": "weaviate", "chunk_id": f"chunk_{i}"} for i in range(len(relevant_texts))]],
+            "metadatas": [metadatas],
             "distances": [[0.1 * (i + 1) for i in range(len(relevant_texts))]],  # Placeholder distances
             "cosine_similarities": [[1.0 - (0.1 * (i + 1)) for i in range(len(relevant_texts))]]  # Calculated similarities
         }

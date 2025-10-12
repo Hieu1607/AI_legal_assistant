@@ -111,8 +111,7 @@ _APP_LOG_HANDLER = None
 _APP_LOG_PATH = None
 
 
-_AGENT_LOG_HANDLER = None
-_AGENT_LOG_PATH = None
+
 
 
 def get_logger_app(name="app"):
@@ -176,66 +175,7 @@ def get_logger_app(name="app"):
     return logger
 
 
-def get_logger_agent(name="agent"):
-    """
-    Get a logger specifically configured to write to agent.log.
 
-    This function creates a logger with the given name and adds a
-    RotatingFileHandler that writes to logs/agent.log. It ensures that
-    only one handler is added to prevent duplicate logs.
-
-    Args:
-        name: The name of the logger. Defaults to "agent".
-
-    Returns:
-        logging.Logger: A configured logger that writes to agent.log
-    """
-
-    setup_logging()
-
-    # pylint: disable=global-statement
-    global _AGENT_LOG_HANDLER, _AGENT_LOG_PATH
-
-    if _AGENT_LOG_HANDLER is None:
-        logs_dir = get_project_root() / "logs"
-        logs_dir.mkdir(exist_ok=True)
-
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
-
-        agent_log_path = str(logs_dir / "agent.log")
-        handler = RotatingFileHandler(
-            filename=agent_log_path,
-            maxBytes=10485760,  # 10MB
-            backupCount=5,
-            encoding="utf8",
-        )
-
-        handler.setLevel(logging.INFO)
-        handler.setFormatter(formatter)
-
-        _AGENT_LOG_HANDLER = handler
-        _AGENT_LOG_PATH = agent_log_path
-
-    # Get the logger with the specified name
-    logger = logging.getLogger(name)
-
-    logger.propagate = False
-
-    if not logger.level:
-        logger.setLevel(logging.INFO)
-
-    agent_handler_exists = any(
-        isinstance(handler, logging.FileHandler)
-        and getattr(handler, "baseFilename", "") == _AGENT_LOG_PATH
-        for handler in logger.handlers
-    )
-
-    if not agent_handler_exists:
-        logger.addHandler(_AGENT_LOG_HANDLER)
-
-    return logger
 
 
 def reset_logging():
@@ -255,10 +195,4 @@ if __name__ == "__main__":
     app_logger = get_logger_app()
     app_logger.info("App logger working correctly - check logs/app.log")
 
-    # Agent logger (writes to agent.log)
-    agent_logger = get_logger_agent()
-    agent_logger.info("Agent logger working correctly - check logs/agent.log")
 
-    # Agent logger (writes to agent.log)
-    agent_logger = get_logger_agent()
-    agent_logger.info("Agent logger working correctly - check logs/agent.log")

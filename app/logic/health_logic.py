@@ -1,13 +1,10 @@
 import os
 import sys
 
-import google.generativeai as genai
 from dotenv import load_dotenv
-from huggingface_hub import hf_hub_download
 
-# Load environment variables and configure Gemini API
+# Load environment variables
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
@@ -30,9 +27,7 @@ def health_check():
     if not test_response:
         raise Exception("Weaviate collection not responding properly")
 
-    # Check Gemini API
-    model = genai.GenerativeModel("gemini-2.5-pro")  # type: ignore
-    model.generate_content("Hello")
+    # Note: Gemini API check removed to eliminate dependency
     
     # Close Weaviate connection
     searcher.close()

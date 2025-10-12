@@ -5,16 +5,12 @@ Router/Controller for health check endpoint
 import os
 import sys
 
-import google.generativeai as genai
 from dotenv import load_dotenv
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from google.api_core.exceptions import GoogleAPICallError
-from huggingface_hub.errors import HfHubHTTPError
 
-# Load environment variables and configure Gemini API
+# Load environment variables
 load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_API_KEY"))  # type: ignore
 
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
@@ -48,24 +44,8 @@ def process_health_check():
             },
         )
 
-    except HfHubHTTPError as e:
-        return JSONResponse(
-            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
-            content={
-                "service": "AI Legal Assistant",
-                "status": "unhealthy",
-                "error": f"HuggingFace Hub error: {str(e)}",
-            },
-        )
-    except GoogleAPICallError as e:
-        return JSONResponse(
-            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
-            content={
-                "service": "AI Legal Assistant",
-                "status": "unhealthy",
-                "error": f"Gemini API error: {str(e)}",
-            },
-        )
+
+
     except Exception as e:  # pylint: disable=broad-except
         # This will catch Weaviate errors and other unexpected errors
         error_message = str(e)
