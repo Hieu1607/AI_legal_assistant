@@ -1,0 +1,3 @@
+2025-10-13 01:34:15,063 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Missing Weaviate configuration. Please set WEAVIATE_URL and WEAVIATE_API_KEY
+2025-10-13 01:37:24,059 - src.store_vector.weaviate_search - ERROR - weaviate_search - ask_question_with_context - Failed to initialize Query Agent: No module named 'weaviate_agents'
+2025-10-13 01:38:50,842 - src.store_vector.weaviate_search - ERROR - weaviate_search - ask_question_with_context - Error in search process: 'WeaviateSearcher' object has no attribute '_search_relevant_chunks'

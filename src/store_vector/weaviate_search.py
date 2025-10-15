@@ -110,7 +110,7 @@ class WeaviateSearcher:
                     }
 
             # Add custom prompt to the query
-            prompt = """Với vai trò là 1 trợ lý ảo pháp luật, vui lòng trả lời câu hỏi dựa trên thông tin được cung cấp.
+            prompt = """Với vai trò là 1 trợ lý ảo pháp luật, vui lòng trả lời câu hỏi dựa trên thông tin được cung cấp. Chỉ sử dụng thông tin trong các bộ luật mới nhất để trả lời câu hỏi.
 
 Trả lời câu hỏi theo 3 trường hợp:
 Trường hợp 1: Nếu tìm thấy nội dung thích hợp trong tài liệu, trả lời 'Theo chương ... điều ... bộ luật abc ..., nội dung'
