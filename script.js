@@ -20,9 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const disableInput = () => {
+        userInput.disabled = true;
+        sendButton.disabled = true;
+        userInput.placeholder = 'Đang chờ phản hồi...';
+        sendButton.style.opacity = '0.5';
+        sendButton.style.cursor = 'not-allowed';
+    };
+
+    const enableInput = () => {
+        userInput.disabled = false;
+        sendButton.disabled = false;
+        userInput.placeholder = 'Nhập câu hỏi của bạn...';
+        sendButton.style.opacity = '1';
+        sendButton.style.cursor = 'pointer';
+        userInput.focus(); // Auto focus for convenience
+    };
+
     const sendMessage = async () => {
         const question = userInput.value.trim();
         if (question === '') return;
+
+        // Disable input and button while processing
+        disableInput();
 
         // Start chat mode on first message
         startChat();
@@ -64,6 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove typing indicator
             removeTypingIndicator(typingElement);
             await displayTypingMessage('Đã xảy ra lỗi khi kết nối với trợ lý. Vui lòng thử lại sau.', 'bot');
+        } finally {
+            // Re-enable input after response is complete
+            enableInput();
         }
     };
 
@@ -217,6 +240,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle suggestion clicks
     document.addEventListener('click', (event) => {
         if (event.target.classList.contains('suggestion-item')) {
+            // Don't process if input is disabled (bot is responding)
+            if (userInput.disabled) return;
+            
             const suggestionText = event.target.textContent.trim();
             userInput.value = `${suggestionText.toLowerCase()}`;
             sendMessage();
