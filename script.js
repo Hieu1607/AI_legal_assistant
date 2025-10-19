@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
     const welcomeScreen = document.getElementById('welcome-screen');
 
-    const API_ENDPOINT = 'https://ai-legal-assistant-2-e4lj.onrender.com/rag';
+    const API_ENDPOINT = 'https://ai-legal-assistant-zswt.onrender.com/rag';
 
     let isFirstMessage = true; // Track if this is the first message
 
