@@ -415,19 +415,35 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.chunk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
 .chunk-source {
     font-weight: 600;
     color: #1a73e8;
     font-size: 14px;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 5px;
+    flex: 1;
 }
 
 .chunk-source::before {
     content: "📄";
     font-size: 12px;
+}
+
+.chunk-number {
+    font-size: 12px;
+    color: #666;
+    background-color: #f1f3f4;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
 }
 
 .chunk-content {
@@ -437,15 +453,40 @@ body {
     margin-bottom: 10px;
 }
 
-.chunk-similarity {
+.chunk-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
     font-size: 12px;
     color: #666;
-    text-align: right;
-    font-style: italic;
 }
 
-.chunk-similarity::before {
-    content: "Độ tương đồng: ";
+.chunk-date,
+.chunk-update,
+.chunk-id {
+    padding: 4px 8px;
+    background-color: #e8f0fe;
+    border-radius: 6px;
+    border: 1px solid #d2e3fc;
+    margin-right: 8px;
+    font-size: 11px;
+}
+
+.chunk-date {
+    color: #1967d2;
+}
+
+.chunk-update {
+    color: #ea4335;
+    background-color: #fce8e6;
+    border-color: #f9b4ab;
+}
+
+.chunk-id {
+    color: #137333;
+    background-color: #e6f4ea;
+    border-color: #ceead6;
 }
 
 /* Responsive modal */
@@ -466,5 +507,23 @@ body {
     
     .chunk-item {
         padding: 12px;
+    }
+    
+    .chunk-header {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .chunk-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    
+    .chunk-date,
+    .chunk-update,
+    .chunk-id {
+        margin-right: 0;
+        margin-bottom: 4px;
     }
 }
