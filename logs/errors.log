@@ -1,3 +1,12 @@
 2025-10-13 01:34:15,063 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Missing Weaviate configuration. Please set WEAVIATE_URL and WEAVIATE_API_KEY
 2025-10-13 01:37:24,059 - src.store_vector.weaviate_search - ERROR - weaviate_search - ask_question_with_context - Failed to initialize Query Agent: No module named 'weaviate_agents'
 2025-10-13 01:38:50,842 - src.store_vector.weaviate_search - ERROR - weaviate_search - ask_question_with_context - Error in search process: 'WeaviateSearcher' object has no attribute '_search_relevant_chunks'
+2025-10-19 20:45:28,482 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Error connecting to Weaviate: Meta endpoint! Unexpected status code: 404, with response body: None.
+2025-10-19 20:45:43,899 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Error connecting to Weaviate: Meta endpoint! Unexpected status code: 404, with response body: None.
+2025-10-19 21:36:11,916 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Missing Weaviate configuration. Please set WEAVIATE_URL and WEAVIATE_API_KEY
+2025-10-19 21:37:27,575 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Missing Weaviate configuration. Please set WEAVIATE_URL and WEAVIATE_API_KEY
+2025-10-19 21:37:27,575 - src.store_vector.weaviate_search - ERROR - weaviate_search - connect - Missing Weaviate configuration. Please set WEAVIATE_URL and WEAVIATE_API_KEY
+2025-10-19 21:43:30,053 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
+2025-10-19 21:43:30,053 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
+2025-10-20 06:57:28,029 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
+2025-10-20 06:57:28,030 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized

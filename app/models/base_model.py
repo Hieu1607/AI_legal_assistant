@@ -3,7 +3,7 @@ Base models for API request/response schemas.
 Contains all Pydantic models for the application.
 """
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 
 class QueryRequest(BaseModel):
@@ -22,6 +22,3 @@ class QueryQuestion(BaseModel):
     """Request model for RAG queries"""
 
     question: str
-
-
-

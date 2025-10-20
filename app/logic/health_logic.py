@@ -21,13 +21,10 @@ def health_check():
     searcher = get_searcher()
     if not searcher.connect():
         raise Exception("Cannot connect to Weaviate Cloud")
-    
+
     # Test basic query to check collection
     test_response = searcher.ask_question("test")
     if not test_response:
         raise Exception("Weaviate collection not responding properly")
-
-    # Note: Gemini API check removed to eliminate dependency
-    
     # Close Weaviate connection
     searcher.close()

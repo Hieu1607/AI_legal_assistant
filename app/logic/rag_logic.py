@@ -2,7 +2,6 @@
 Business logic for RAG (Retrieval-Augmented Generation) operations
 """
 
-import asyncio
 import os
 import sys
 import time
@@ -16,10 +15,14 @@ root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, str(root))
 
 from configs.logger import get_logger, setup_logging
-from src.store_vector.weaviate_search import search_relevant_embeddings, get_searcher
+from src.cache.cache_manager import get_cache_manager
+from src.store_vector.weaviate_search import get_searcher, search_relevant_embeddings
 
 setup_logging()
 logger = get_logger(__name__)
+
+# Initialize cache manager (1 hour TTL, max 1000 entries)
+cache_manager = get_cache_manager(ttl_seconds=3600, max_size=1000)
 
 prompting_time = 0
 
@@ -86,13 +89,16 @@ async def ask_LLM(relevant_sentences: list, question: str):
     prompting_time = end_propting_time - start_prompting_time
     # Note: This function is deprecated as we now use Weaviate Query Agent for RAG
     # The Weaviate Query Agent handles both retrieval and generation in one step
-    logger.warning("generate_answer_llm is deprecated, use process_rag_query_with_weaviate instead")
+    logger.warning(
+        "generate_answer_llm is deprecated, use process_rag_query_with_weaviate instead"
+    )
     return "Chức năng này đã được thay thế bởi Weaviate Query Agent. Vui lòng sử dụng endpoint RAG mới."
 
 
 async def process_rag_query_with_weaviate(question: str):
     """
     Process a RAG query using Weaviate Query Agent (retrieval + generation in one step)
+    Includes caching to avoid redundant API calls for same questions.
 
     Args:
         question (str): The user's question
@@ -101,19 +107,53 @@ async def process_rag_query_with_weaviate(question: str):
         dict: Response containing answer, timing info, metadata, and relevant chunks
     """
     start_time = time.perf_counter()
+
+    # Try to get from cache first
+    cached_result = cache_manager.get(question)
+    if cached_result:
+        answer, original_question, context_count = cached_result
+        cache_time = time.perf_counter() - start_time
+
+        logger.info(
+            "Cache HIT for question: %s (took %.4f seconds)", question[:50], cache_time
+        )
+
+        return {
+            "answer": answer,
+            "question": question,
+            "relevant_chunks": [],  # Cache doesn't store chunks to save memory
+            "context_count": context_count,
+            "timing": {
+                "retrieving_time": 0.0,
+                "llm_time": 0.0,
+                "total_time": cache_time,
+            },
+            "cached": True,  # Indicate this is from cache
+        }
+
+    logger.info("Cache MISS for question: %s", question[:50])
+
     searcher = None
-    
+
     try:
         # Use Weaviate Query Agent for integrated retrieval and generation
         searcher = get_searcher()
         result = await searcher.ask_question_with_context(question)
-        
+
         end_time = time.perf_counter()
         total_time = end_time - start_time
-        
+
         logger.info("Query Agent processing time = %.4f", total_time)
         logger.info("RAG answer successfully processed by Query Agent")
-        
+
+        # Cache the result for future use
+        cache_manager.set(
+            question=question,
+            answer=result["answer"].strip(),
+            context_count=len(result["relevant_chunks"]),
+        )
+        logger.info("Cached answer for question: %s", question[:50])
+
         return {
             "answer": result["answer"].strip(),
             "question": question,
@@ -124,10 +164,11 @@ async def process_rag_query_with_weaviate(question: str):
                 "llm_time": total_time,
                 "total_time": total_time,
             },
+            "cached": False,  # Fresh result
         }
-        
+
     except Exception as e:
-        logger.error(f"Error in Query Agent processing: {e}")
+        logger.error("Error in Query Agent processing: %s", e)
         return {
             "answer": "Đã xảy ra lỗi khi xử lý câu hỏi. Vui lòng thử lại.",
             "question": question,
@@ -138,11 +179,13 @@ async def process_rag_query_with_weaviate(question: str):
                 "llm_time": 0.0,
                 "total_time": 0.0,
             },
+            "cached": False,
         }
     finally:
-        # Clean up connections for RAG endpoint
-        if searcher:
-            searcher.close()
+        # NOTE: No longer calling searcher.close() here
+        # Connection cleanup is handled internally by ask_question_with_context
+        # to ensure chunks are extracted before connection is closed
+        pass
 
 
 async def process_rag_query(question: str):

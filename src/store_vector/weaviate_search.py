@@ -2,15 +2,16 @@
 Weaviate Cloud search functionality for RAG using Query Agent
 """
 
+import io
 import os
 import sys
 from typing import Any, Dict, List
 
+import weaviate
+
 # Add project root to path
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
-
-import weaviate
 
 from configs.logger import get_logger
 
@@ -21,12 +22,25 @@ _searcher = None
 
 
 class WeaviateSearcher:
+    """
+    Weaviate Cloud searcher for legal documents using Query Agent.
+
+    This class handles connection to Weaviate Cloud and provides
+    RAG (Retrieval-Augmented Generation) functionality for legal queries.
+    """
+
     def __init__(self):
+        """Initialize Weaviate searcher with empty client and query agent."""
         self.client = None
         self.query_agent = None
 
     def connect(self) -> bool:
-        """Connect to Weaviate Cloud"""
+        """
+        Connect to Weaviate Cloud.
+
+        Returns:
+            bool: True if connection successful, False otherwise
+        """
         try:
             # Read Weaviate configuration from environment
             weaviate_url = os.getenv("WEAVIATE_URL")
@@ -34,7 +48,8 @@ class WeaviateSearcher:
 
             if not weaviate_url or not weaviate_api_key:
                 logger.error(
-                    "Missing Weaviate configuration. Please set WEAVIATE_URL and WEAVIATE_API_KEY"
+                    "Missing Weaviate configuration. "
+                    "Please set WEAVIATE_URL and WEAVIATE_API_KEY"
                 )
                 return False
 
@@ -57,14 +72,14 @@ class WeaviateSearcher:
                 return False
 
         except Exception as e:
-            logger.error(f"Error connecting to Weaviate: {str(e)}")
+            logger.error("Error connecting to Weaviate: %s", str(e))
             self.client = None
             self.query_agent = None
             return False
 
     async def ask_question_with_context(self, query: str) -> dict:
         """
-        Ask a question using Weaviate Query Agent and return both answer and context chunks.
+        Ask a question using Weaviate Query Agent and return answer with context.
 
         Args:
             query (str): The user's question
@@ -72,6 +87,7 @@ class WeaviateSearcher:
         Returns:
             dict: Contains both 'answer' and 'relevant_chunks'
         """
+        connection_opened = False
         try:
             # Ensure connection is established
             if not self.client:
@@ -80,30 +96,32 @@ class WeaviateSearcher:
                         "answer": "Không thể kết nối đến cơ sở dữ liệu pháp luật.",
                         "relevant_chunks": [],
                     }
+                connection_opened = True
 
             # Initialize Query Agent if not already done
             if not self.query_agent:
                 try:
+                    # pylint: disable=import-outside-toplevel
                     import weaviate_agents.query as wq
 
                     # Get the WeaviateQueryAgent class
-                    WeaviateQueryAgent = getattr(wq, "WeaviateQueryAgent", None)
-                    if not WeaviateQueryAgent:
+                    weaviate_query_agent = getattr(wq, "WeaviateQueryAgent", None)
+                    if not weaviate_query_agent:
                         # Try alternative names
                         for name in dir(wq):
                             if "QueryAgent" in name:
-                                WeaviateQueryAgent = getattr(wq, name)
+                                weaviate_query_agent = getattr(wq, name)
                                 break
 
-                    if WeaviateQueryAgent:
-                        self.query_agent = WeaviateQueryAgent(
+                    if weaviate_query_agent:
+                        self.query_agent = weaviate_query_agent(
                             client=self.client, collections=["LegalDocument"]
                         )
                     else:
                         raise Exception("Could not find QueryAgent class")
 
                 except Exception as e:
-                    logger.error(f"Failed to initialize Query Agent: {e}")
+                    logger.error("Failed to initialize Query Agent: %s", e)
                     return {
                         "answer": "Không thể khởi tạo Query Agent.",
                         "relevant_chunks": [],
@@ -118,7 +136,7 @@ Trường hợp 2: Nếu không tìm thấy nội dung thích hợp trong tài l
 Trường hợp 3: Nếu câu hỏi linh tinh hoặc không liên quan đến pháp luật, trả lời: "Chào bạn, tôi đã sẵn sàng trả lời với vai trò là một trợ lý ảo pháp luật. Tuy nhiên, có vẻ như bạn chưa cung cấp câu hỏi cụ thể hoặc câu hỏi của bạn không liên quan đến pháp luật. Vui lòng đặt câu hỏi lại để tôi có thể trả lời."
 Trả lời ngắn gọn.
 
-Câu hỏi: """
+Câu hỏi: """  # pylint: disable=line-too-long
 
             # Combine prompt with original query
             new_query = prompt + query
@@ -130,17 +148,30 @@ Câu hỏi: """
             answer = self._extract_answer_from_response(response)
 
             # Extract relevant chunks from response (now returns dict with metadata)
+            # IMPORTANT: Extract chunks while client connection is still active
             relevant_chunks = self._extract_chunks_from_response(response)
 
-            logger.info(f"Query Agent successfully processed question: {query}")
+            logger.info("Query Agent successfully processed question: %s", query)
             return {"answer": answer.strip(), "relevant_chunks": relevant_chunks}
 
         except Exception as e:
-            logger.error(f"Error with Query Agent: {str(e)}")
+            logger.error("Error with Query Agent: %s", str(e))
             return {
                 "answer": "Đã xảy ra lỗi khi xử lý câu hỏi. Vui lòng thử lại.",
                 "relevant_chunks": [],
             }
+        finally:
+            # Only close connection if we opened it in this method call
+            # This prevents premature closing when used from rag_logic
+            if connection_opened and self.client:
+                try:
+                    self.client.close()
+                    logger.info("Closed Weaviate connection")
+                except Exception as e:
+                    logger.warning("Error closing Weaviate connection: %s", e)
+                finally:
+                    self.client = None
+                    self.query_agent = None
 
     async def ask_question(self, query: str) -> str:
         """
@@ -156,7 +187,15 @@ Câu hỏi: """
         return result["answer"]
 
     def _extract_answer_from_response(self, response) -> str:
-        """Extract answer text from Query Agent response"""
+        """
+        Extract answer text from Query Agent response.
+
+        Args:
+            response: Query Agent response object
+
+        Returns:
+            str: Extracted answer text
+        """
         if hasattr(response, "response") and hasattr(response.response, "content"):
             return response.response.content
         elif hasattr(response, "content"):
@@ -173,9 +212,6 @@ Câu hỏi: """
                 else:
                     # If response has display method, use that
                     if hasattr(response, "display"):
-                        # Capture the display output as string
-                        import io
-                        import sys
 
                         old_stdout = sys.stdout
                         sys.stdout = buffer = io.StringIO()
@@ -184,35 +220,46 @@ Câu hỏi: """
                         return buffer.getvalue()
                     else:
                         logger.warning(
-                            f"Could not extract answer from response type: {type(response)}"
+                            "Could not extract answer from response type: %s",
+                            type(response),
                         )
                         return "Không thể trích xuất câu trả lời từ Query Agent."
             except Exception as e:
-                logger.error(f"Error extracting answer from response: {e}")
+                logger.error("Error extracting answer from response: %s", e)
                 return "Lỗi khi xử lý phản hồi từ Query Agent."
 
     def _extract_chunks_from_response(self, response) -> List[Dict[str, Any]]:
-        """Extract relevant document chunks with metadata from Query Agent response"""
+        """
+        Extract relevant document chunks with metadata from Query Agent response.
+
+        Args:
+            response: Query Agent response object
+
+        Returns:
+            List[Dict[str, Any]]: List of document chunks with metadata
+        """
         try:
             chunks = []
 
             # Debug logging to understand response structure
-            logger.info(f"Response type: {type(response)}")
-            logger.info(f"Response attributes: {dir(response)}")
+            logger.info("Response type: %s", type(response))
+            logger.info("Response attributes: %s", dir(response))
 
             # Method 1: Try to extract from response.searches (recommended approach)
             if hasattr(response, "searches") and response.searches:
-                logger.info(f"Found {len(response.searches)} searches in response")
+                logger.info("Found %d searches in response", len(response.searches))
                 for i, search in enumerate(response.searches):
-                    logger.info(f"Search {i} attributes: {dir(search)}")
+                    logger.info("Search %d attributes: %s", i, dir(search))
                     # Check if search has objects with content
                     if hasattr(search, "objects") and search.objects:
-                        logger.info(f"Search {i} has {len(search.objects)} objects")
+                        logger.info("Search %d has %d objects", i, len(search.objects))
                         for j, obj in enumerate(search.objects):
                             if hasattr(obj, "properties"):
                                 properties = obj.properties
                                 logger.info(
-                                    f"Object {j} properties keys: {list(properties.keys())}"
+                                    "Object %d properties keys: %s",
+                                    j,
+                                    list(properties.keys()),
                                 )
                                 # Look for text content in common property names
                                 for prop_name in ["text", "content", "chunk", "data"]:
@@ -245,33 +292,54 @@ Câu hỏi: """
                                                 for existing in chunks
                                             ):
                                                 chunks.append(chunk_info)
+                                                text_preview = (
+                                                    str(text_content)[:100]
+                                                    if text_content
+                                                    else ""
+                                                )
                                                 logger.info(
-                                                    f"Added chunk from property '{prop_name}': {text_content[:100]}..."
+                                                    "Added chunk from property '%s': %s...",
+                                                    prop_name,
+                                                    text_preview,
                                                 )
                                             break
 
             # Method 2: Extract chunks from sources using object_id (fallback)
             if not chunks and hasattr(response, "sources") and response.sources:
-                logger.info(f"Found {len(response.sources)} sources in response")
+                logger.info("Found %d sources in response", len(response.sources))
                 for i, source in enumerate(response.sources):
-                    logger.info(f"Source {i} attributes: {dir(source)}")
-                    # Get content using object_id from Weaviate
+                    logger.info("Source %d attributes: %s", i, dir(source))
+                    # Extract object_id and collection from source
                     if hasattr(source, "object_id") and hasattr(source, "collection"):
                         object_id = source.object_id
                         collection_name = source.collection
                         logger.info(
-                            f"Source {i}: object_id={object_id}, collection={collection_name}"
+                            "Source %d: object_id=%s, collection=%s",
+                            i,
+                            object_id,
+                            collection_name,
                         )
 
                         try:
                             # Query Weaviate directly to get object content
+                            if not self.client:
+                                logger.error("Weaviate client not initialized")
+                                continue
+
+                            if not hasattr(self.client, "collections"):
+                                logger.error(
+                                    "Weaviate client does not have collections"
+                                )
+                                continue
+
                             collection = self.client.collections.get(collection_name)
                             obj = collection.query.fetch_object_by_id(object_id)
 
                             if obj and hasattr(obj, "properties"):
                                 properties = obj.properties
                                 logger.info(
-                                    f"Fetched object properties keys: {list(properties.keys())}"
+                                    "Fetched object properties keys: %s",
+                                    list(properties.keys()),
                                 )
                                 # Look for text content in common property names
                                 for prop_name in ["text", "content", "chunk", "data"]:
@@ -300,13 +368,20 @@ Câu hỏi: """
                                                 for existing in chunks
                                             ):
                                                 chunks.append(chunk_info)
+                                                text_preview = (
+                                                    str(text_content)[:100]
+                                                    if text_content
+                                                    else ""
+                                                )
                                                 logger.info(
-                                                    f"Added chunk from fetched object property '{prop_name}': {text_content[:100]}..."
+                                                    "Added chunk from fetched object property '%s': %s...",
+                                                    prop_name,
+                                                    text_preview,
                                                 )
                                             break
 
                         except Exception as e:
-                            logger.error(f"Error fetching object {object_id}: {e}")
+                            logger.error("Error fetching object %s: %s", object_id, e)
 
             # Method 3: If we still don't have chunks, try a simple BM25 search as fallback
             if not chunks:
@@ -315,6 +390,14 @@ Câu hỏi: """
                 )
                 try:
                     # Get a simple BM25 search result as context
+                    if not self.client:
+                        logger.error("Weaviate client not initialized")
+                        return chunks
+
+                    if not hasattr(self.client, "collections"):
+                        logger.error("Weaviate client does not have collections")
+                        return chunks
+
                     collection = self.client.collections.get("LegalDocument")
                     bm25_response = collection.query.bm25(
                         query=(
@@ -359,18 +442,24 @@ Câu hỏi: """
                                             for existing in chunks
                                         ):
                                             chunks.append(chunk_info)
+                                            text_preview = (
+                                                str(text_content)[:100]
+                                                if text_content
+                                                else ""
+                                            )
                                             logger.info(
-                                                f"Added fallback chunk from BM25 search: {text_content[:100]}..."
+                                                "Added fallback chunk from BM25 search: %s...",
+                                                text_preview,
                                             )
                                         break
                 except Exception as e:
-                    logger.error(f"Error in fallback BM25 search: {e}")
+                    logger.error("Error in fallback BM25 search: %s", e)
 
-            logger.info(f"Total chunks extracted: {len(chunks)}")
-            return chunks[:5] if chunks else []
+            logger.info("Total chunks extracted: %d", len(chunks))
+            return chunks
 
         except Exception as e:
-            logger.error(f"Error extracting chunks from response: {e}")
+            logger.error("Error extracting chunks from response: %s", e)
             return []
 
     def search_relevant_documents(
@@ -392,7 +481,11 @@ Câu hỏi: """
                     return []
 
             # Get the collection
-            collection = self.client.collections.get("LegalDocument")
+            if self.client and hasattr(self.client, "collections"):
+                collection = self.client.collections.get("LegalDocument")
+            else:
+                logger.error("Weaviate client not initialized")
+                return []
 
             # Perform BM25 keyword search (since vector search is not configured)
             response = collection.query.bm25(query=query, limit=limit)
@@ -423,11 +516,13 @@ Câu hỏi: """
                         }
                         documents.append(doc_info)
 
-            logger.info(f"Found {len(documents)} relevant documents for query: {query}")
+            logger.info(
+                "Found %d relevant documents for query: %s", len(documents), query
+            )
             return documents
 
         except Exception as e:
-            logger.error(f"Error in search_relevant_documents: {str(e)}")
+            logger.error("Error in search_relevant_documents: %s", str(e))
             return []
 
     def close(self):
@@ -437,7 +532,7 @@ Câu hỏi: """
                 self.client.close()
                 logger.info("Closed Weaviate connection")
             except Exception as e:
-                logger.warning(f"Error closing Weaviate connection: {e}")
+                logger.warning("Error closing Weaviate connection: %s", e)
             finally:
                 self.client = None
                 self.query_agent = None
@@ -445,7 +540,7 @@ Câu hỏi: """
 
 def get_searcher() -> WeaviateSearcher:
     """Get singleton searcher instance"""
-    global _searcher
+    global _searcher  # pylint: disable=global-statement
     if _searcher is None:
         _searcher = WeaviateSearcher()
     return _searcher
@@ -506,7 +601,7 @@ def search_relevant_embeddings(query: str, limit: int = 5) -> Dict[str, Any]:
         return response
 
     except Exception as e:
-        logger.error(f"Error in search_relevant_embeddings: {str(e)}")
+        logger.error("Error in search_relevant_embeddings: %s", str(e))
         return {
             "ids": [[]],
             "documents": [[]],
@@ -522,7 +617,7 @@ def search_relevant_embeddings(query: str, limit: int = 5) -> Dict[str, Any]:
 
 def cleanup():
     """Cleanup function to close connections"""
-    global _searcher
+    global _searcher  # pylint: disable=global-statement
     if _searcher:
         _searcher.close()
         _searcher = None

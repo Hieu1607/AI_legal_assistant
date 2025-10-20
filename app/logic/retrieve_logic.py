@@ -43,13 +43,13 @@ def retrieve_embeddings_logic(question: str, top_k: int):
         data["metadatas"] = relevant_embeddings["metadatas"][0][i]
         data["score"] = relevant_embeddings["cosine_similarities"][0][i]
         data["content"] = relevant_embeddings["documents"][0][i]
-        
+
         # Extract title and other metadata for display
         metadata = relevant_embeddings["metadatas"][0][i]
         data["title"] = metadata.get("title", "Không có tiêu đề")
         data["date_of_issue"] = metadata.get("date_of_issue", "")
         data["update_day"] = metadata.get("update_day", "")
-        
+
         result.append(data)
 
     if result:

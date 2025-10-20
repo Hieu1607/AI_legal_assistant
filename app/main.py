@@ -1,26 +1,45 @@
 import os
 import sys
+import time
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
-# Load environment variables and configure Gemini API
 load_dotenv()
 
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
 from app.constants.http_status import HTTP_STATUS_UNPROCESSABLE_ENTITY
-from app.routers import health, rag, retrieve
+from app.routers import health, metrics, rag, retrieve
+from app.routers.metrics import metrics_collector
 from configs.logger import get_logger, setup_logging
 
 setup_logging()
 logger = get_logger(__name__)
 
 app = FastAPI()
+
+
+# Add middleware to track metrics
+@app.middleware("http")
+async def track_metrics(request: Request, call_next):
+    """Middleware to track request metrics"""
+
+    start_time = time.time()
+    response = await call_next(request)
+    latency_ms = (time.time() - start_time) * 1000
+
+    # Record metrics
+    endpoint = request.url.path
+    method = request.method
+    metrics_collector.record_request(endpoint, response.status_code, latency_ms, method)
+
+    return response
+
 
 # Configure CORS to allow all origins
 app.add_middleware(
@@ -34,6 +53,7 @@ app.add_middleware(
 app.include_router(retrieve.router)
 app.include_router(rag.router)
 app.include_router(health.router)
+app.include_router(metrics.router)
 
 
 @app.get("/")
@@ -47,6 +67,7 @@ def root():
             "health": "/health",
             "retrieve": "/retrieve",
             "rag": "/rag",
+            "metrics": "/metrics",
         },
     }
 
