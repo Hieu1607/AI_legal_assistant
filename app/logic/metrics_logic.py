@@ -135,4 +135,4 @@ class MetricsCollector:
         self.start_time = time.time()
 
         # Clear Prometheus metrics by recreating them
-        self.__init__()
+        self.__init__()  # type: ignore
