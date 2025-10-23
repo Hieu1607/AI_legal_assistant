@@ -382,3 +382,4 @@ Mục 1 LY HÔN
 2025-10-20 06:59:44,521 - app.logic.rag_logic - INFO - RAG answer successfully processed by Query Agent
 2025-10-20 06:59:44,521 - app.logic.rag_logic - INFO - Cached answer for question: Điều 2 Chương I luật hôn nhân mới nhất là gì
 2025-10-20 07:00:17,246 - app.routers.metrics - INFO - Metrics endpoint accessed (Prometheus format)
+2025-10-20 07:15:38,636 - app.routers.metrics - INFO - Metrics endpoint accessed (Prometheus format)

@@ -43,16 +43,3 @@ def get_metrics():
     logger.info("Metrics endpoint accessed (Prometheus format)")
 
     return PlainTextResponse(content=prometheus_metrics, media_type=content_type)
-
-
-@router.post("/metrics/reset")
-def reset_metrics():
-    """
-    Reset all metrics (admin endpoint).
-
-    Warning: This will reset all collected metrics.
-    """
-    collector = get_metrics_collector()
-    collector.reset_metrics()
-    logger.warning("Metrics have been reset")
-    return {"status": "success", "message": "Metrics reset successfully"}

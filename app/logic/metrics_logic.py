@@ -128,11 +128,3 @@ class MetricsCollector:
             str: Content type for Prometheus format
         """
         return CONTENT_TYPE_LATEST
-
-    def reset_metrics(self):
-        """Reset all metrics"""
-        logger.info("Resetting metrics")
-        self.start_time = time.time()
-
-        # Clear Prometheus metrics by recreating them
-        self.__init__()  # type: ignore
