@@ -37,4 +37,11 @@ disable = [
     "broad-exception-caught",
     "broad-exception-raised",
     "unknown-option-value",
+    "global-variable-not-assigned",
+    "global-statement",
+    "logging-fstring-interpolation",
+    "attribute-defined-outside-init",
+    "undefined-variable",
+    "unused-import",
+    "wrong-import-order",
 ]

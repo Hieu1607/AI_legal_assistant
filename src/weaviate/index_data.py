@@ -4,23 +4,21 @@ Weaviate Cloud Data Indexing Module (Simplified Version)
 This module provides functionality to index legal document chunks to Weaviate Cloud
 using the stable v3 API.
 
-Author: AI Legal Assistant Team  
+Author: AI Legal Assistant Team
 Created: October 2025
 """
 
 import json
+import logging
 import os
 import sys
 import time
-from typing import Dict, List, Any, Optional
-import uuid
-import logging
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 import weaviate
-from weaviate.classes.init import Auth
-import numpy as np
 from dotenv import load_dotenv
+from weaviate.classes.init import Auth
 
 # Load environment variables
 load_dotenv()
@@ -40,15 +38,17 @@ class WeaviateIndexer:
     """
     A class to handle indexing legal document data to Weaviate Cloud using v4 API.
     """
-    
-    def __init__(self, 
-                 weaviate_url: str = None,
-                 weaviate_api_key: str = None,
-                 class_name: str = "LegalDocument",
-                 batch_size: int = 100):
+
+    def __init__(
+        self,
+        weaviate_url: str = None,
+        weaviate_api_key: str = None,
+        class_name: str = "LegalDocument",
+        batch_size: int = 100,
+    ):
         """
         Initialize the Weaviate indexer.
-        
+
         Args:
             weaviate_url: Weaviate Cloud URL
             weaviate_api_key: Weaviate Cloud API key
@@ -60,14 +60,16 @@ class WeaviateIndexer:
         self.class_name = class_name
         self.batch_size = batch_size
         self.client = None
-        
+
         if not self.weaviate_url or not self.weaviate_api_key:
-            raise ValueError("Weaviate URL and API key must be provided via parameters or environment variables")
-    
+            raise ValueError(
+                "Weaviate URL and API key must be provided via parameters or environment variables"
+            )
+
     def connect(self) -> bool:
         """
         Establish connection to Weaviate Cloud.
-        
+
         Returns:
             bool: True if connection successful, False otherwise
         """
@@ -77,7 +79,7 @@ class WeaviateIndexer:
                 cluster_url=self.weaviate_url,
                 auth_credentials=Auth.api_key(self.weaviate_api_key),
             )
-            
+
             # Test connection
             if self.client.is_ready():
                 logger.info("Successfully connected to Weaviate Cloud")
@@ -85,15 +87,15 @@ class WeaviateIndexer:
             else:
                 logger.error("Failed to connect to Weaviate Cloud")
                 return False
-                
+
         except Exception as e:
             logger.error(f"Error connecting to Weaviate: {str(e)}")
             return False
-    
+
     def create_schema(self) -> bool:
         """
         Create the schema for legal documents in Weaviate.
-        
+
         Returns:
             bool: True if schema created successfully, False otherwise
         """
@@ -103,7 +105,7 @@ class WeaviateIndexer:
             if self.class_name in [col.name for col in collections]:
                 logger.info(f"Class '{self.class_name}' already exists")
                 return True
-            
+
             # Define the class schema
             collection = self.client.collections.create(
                 name=self.class_name,
@@ -112,54 +114,54 @@ class WeaviateIndexer:
                     Property(
                         name="title",
                         data_type=DataType.TEXT,
-                        description="Title of the legal document"
+                        description="Title of the legal document",
                     ),
                     Property(
                         name="update_day",
                         data_type=DataType.TEXT,
-                        description="Last update date of the document"
+                        description="Last update date of the document",
                     ),
                     Property(
                         name="date_of_issue",
                         data_type=DataType.TEXT,
-                        description="Date when the document was issued"
+                        description="Date when the document was issued",
                     ),
                     Property(
                         name="chunk_id",
                         data_type=DataType.TEXT,
-                        description="Unique identifier for the text chunk"
+                        description="Unique identifier for the text chunk",
                     ),
                     Property(
                         name="text",
                         data_type=DataType.TEXT,
-                        description="The actual text content of the chunk"
+                        description="The actual text content of the chunk",
                     ),
                     Property(
                         name="embedding_model",
                         data_type=DataType.TEXT,
-                        description="Name of the model used to create embeddings"
+                        description="Name of the model used to create embeddings",
                     ),
                     Property(
                         name="created_at",
                         data_type=DataType.DATE,
-                        description="Timestamp when the object was indexed"
-                    )
+                        description="Timestamp when the object was indexed",
+                    ),
                 ],
                 # Configure vectorizer (optional - can use custom embeddings)
                 vectorizer_config=Configure.Vectorizer.none(),  # We'll provide our own embeddings
             )
-            
+
             logger.info(f"Successfully created class '{self.class_name}'")
             return True
-            
+
         except Exception as e:
             logger.error(f"Error creating schema: {str(e)}")
             return False
-    
+
     def delete_class(self) -> bool:
         """
         Delete the existing class (useful for resetting data).
-        
+
         Returns:
             bool: True if deletion successful, False otherwise
         """
@@ -170,49 +172,50 @@ class WeaviateIndexer:
         except Exception as e:
             logger.error(f"Error deleting class: {str(e)}")
             return False
-    
+
     def load_embedded_data(self, file_path: str) -> List[Dict[str, Any]]:
         """
         Load embedded data from JSON file.
-        
+
         Args:
             file_path: Path to the JSON file containing embedded chunks
-            
+
         Returns:
             List of dictionaries containing the data
         """
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
             logger.info(f"Loaded {len(data)} chunks from {file_path}")
             return data
         except Exception as e:
             logger.error(f"Error loading data from {file_path}: {str(e)}")
             return []
-    
-    def prepare_objects(self, data: List[Dict[str, Any]], 
-                       embedding_model: str = "unknown") -> List[DataObject]:
+
+    def prepare_objects(
+        self, data: List[Dict[str, Any]], embedding_model: str = "unknown"
+    ) -> List[DataObject]:
         """
         Prepare data objects for Weaviate upload.
-        
+
         Args:
             data: List of dictionaries containing document chunks
             embedding_model: Name of the embedding model used
-            
+
         Returns:
             List of DataObject instances ready for upload
         """
         objects = []
         current_time = datetime.now()
-        
+
         for item in data:
             try:
                 # Extract embedding vector if present
-                vector = item.get('embedding', None)
+                vector = item.get("embedding", None)
                 if vector and isinstance(vector, list):
                     # Ensure vector is properly formatted
                     vector = [float(x) for x in vector]
-                
+
                 # Create properties dictionary
                 properties = {
                     "title": item.get("title", ""),
@@ -221,54 +224,59 @@ class WeaviateIndexer:
                     "chunk_id": item.get("chunk_id", ""),
                     "text": item.get("text", ""),
                     "embedding_model": embedding_model,
-                    "created_at": current_time
+                    "created_at": current_time,
                 }
-                
+
                 # Create data object
                 data_object = DataObject(
-                    properties=properties,
-                    vector=vector  # Custom embedding vector
+                    properties=properties, vector=vector  # Custom embedding vector
                 )
-                
+
                 objects.append(data_object)
-                
+
             except Exception as e:
-                logger.error(f"Error preparing object {item.get('chunk_id', 'unknown')}: {str(e)}")
+                logger.error(
+                    f"Error preparing object {item.get('chunk_id', 'unknown')}: {str(e)}"
+                )
                 continue
-        
+
         logger.info(f"Prepared {len(objects)} objects for upload")
         return objects
-    
+
     def upload_data(self, objects: List[DataObject]) -> Dict[str, int]:
         """
         Upload data objects to Weaviate in batches.
-        
+
         Args:
             objects: List of DataObject instances to upload
-            
+
         Returns:
             Dictionary with upload statistics
         """
         collection = self.client.collections.get(self.class_name)
-        
+
         total_objects = len(objects)
         successful_uploads = 0
         failed_uploads = 0
-        
-        logger.info(f"Starting upload of {total_objects} objects in batches of {self.batch_size}")
-        
+
+        logger.info(
+            f"Starting upload of {total_objects} objects in batches of {self.batch_size}"
+        )
+
         # Process in batches
         for i in range(0, total_objects, self.batch_size):
-            batch = objects[i:i + self.batch_size]
+            batch = objects[i : i + self.batch_size]
             batch_num = (i // self.batch_size) + 1
             total_batches = (total_objects + self.batch_size - 1) // self.batch_size
-            
+
             try:
-                logger.info(f"Uploading batch {batch_num}/{total_batches} ({len(batch)} objects)")
-                
+                logger.info(
+                    f"Uploading batch {batch_num}/{total_batches} ({len(batch)} objects)"
+                )
+
                 # Insert batch
                 response = collection.data.insert_many(batch)
-                
+
                 # Check for errors
                 if response.errors:
                     logger.error(f"Batch {batch_num} had errors: {response.errors}")
@@ -277,28 +285,30 @@ class WeaviateIndexer:
                 else:
                     successful_uploads += len(batch)
                     logger.info(f"Batch {batch_num} uploaded successfully")
-                
+
                 # Small delay between batches to avoid rate limiting
                 time.sleep(0.1)
-                
+
             except Exception as e:
                 logger.error(f"Error uploading batch {batch_num}: {str(e)}")
                 failed_uploads += len(batch)
-        
+
         results = {
             "total_objects": total_objects,
             "successful_uploads": successful_uploads,
             "failed_uploads": failed_uploads,
-            "success_rate": (successful_uploads / total_objects) * 100 if total_objects > 0 else 0
+            "success_rate": (
+                (successful_uploads / total_objects) * 100 if total_objects > 0 else 0
+            ),
         }
-        
+
         logger.info(f"Upload completed. Success rate: {results['success_rate']:.2f}%")
         return results
-    
+
     def get_object_count(self) -> int:
         """
         Get the total number of objects in the collection.
-        
+
         Returns:
             Number of objects in the collection
         """
@@ -311,45 +321,47 @@ class WeaviateIndexer:
         except Exception as e:
             logger.error(f"Error getting object count: {str(e)}")
             return 0
-    
+
     def test_query(self, query_text: str, limit: int = 5) -> List[Dict[str, Any]]:
         """
         Test query to verify the indexed data.
-        
+
         Args:
             query_text: Text to search for
             limit: Maximum number of results to return
-            
+
         Returns:
             List of search results
         """
         try:
             collection = self.client.collections.get(self.class_name)
-            
+
             # Perform a simple text search
             response = collection.query.bm25(
-                query=query_text,
-                limit=limit,
-                return_metadata=["score"]
+                query=query_text, limit=limit, return_metadata=["score"]
             )
-            
+
             results = []
             for obj in response.objects:
                 result = {
                     "chunk_id": obj.properties.get("chunk_id"),
                     "title": obj.properties.get("title"),
-                    "text": obj.properties.get("text")[:200] + "..." if len(obj.properties.get("text", "")) > 200 else obj.properties.get("text"),
-                    "score": obj.metadata.score if obj.metadata.score else 0
+                    "text": (
+                        obj.properties.get("text")[:200] + "..."
+                        if len(obj.properties.get("text", "")) > 200
+                        else obj.properties.get("text")
+                    ),
+                    "score": obj.metadata.score if obj.metadata.score else 0,
                 }
                 results.append(result)
-            
+
             logger.info(f"Found {len(results)} results for query: {query_text}")
             return results
-            
+
         except Exception as e:
             logger.error(f"Error performing test query: {str(e)}")
             return []
-    
+
     def close_connection(self):
         """Close the Weaviate client connection."""
         if self.client:
@@ -362,59 +374,62 @@ def main():
     Main function to demonstrate the indexing process.
     """
     # Configuration
-    DATA_FILE = os.path.join(root, "data", "processed", "sample_embedded_chunks_with_API.json")
+    DATA_FILE = os.path.join(
+        root, "data", "processed", "sample_embedded_chunks_with_API.json"
+    )
     EMBEDDING_MODEL = "models/embedding-001"  # Google Gemini embedding model
-    
+
     # Create indexer instance
     indexer = WeaviateIndexer(
-        class_name="LegalDocument",
-        batch_size=50  # Smaller batch size for stability
+        class_name="LegalDocument", batch_size=50  # Smaller batch size for stability
     )
-    
+
     try:
         # Step 1: Connect to Weaviate
         logger.info("=== Step 1: Connecting to Weaviate Cloud ===")
         if not indexer.connect():
             logger.error("Failed to connect to Weaviate Cloud")
             return
-        
+
         # Step 2: Create schema
         logger.info("=== Step 2: Creating Schema ===")
         if not indexer.create_schema():
             logger.error("Failed to create schema")
             return
-        
+
         # Step 3: Load data
         logger.info("=== Step 3: Loading Data ===")
         data = indexer.load_embedded_data(DATA_FILE)
         if not data:
             logger.error("No data loaded")
             return
-        
+
         # Step 4: Prepare objects
         logger.info("=== Step 4: Preparing Objects ===")
         objects = indexer.prepare_objects(data, EMBEDDING_MODEL)
         if not objects:
             logger.error("No objects prepared")
             return
-        
+
         # Step 5: Upload data
         logger.info("=== Step 5: Uploading Data ===")
         results = indexer.upload_data(objects)
-        
+
         # Step 6: Verify upload
         logger.info("=== Step 6: Verifying Upload ===")
         count = indexer.get_object_count()
-        
+
         # Step 7: Test query
         logger.info("=== Step 7: Testing Query ===")
         test_results = indexer.test_query("hình sự", limit=3)
         for i, result in enumerate(test_results, 1):
-            logger.info(f"Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}")
-        
+            logger.info(
+                f"Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
+            )
+
         logger.info("=== Indexing Process Completed Successfully ===")
         logger.info(f"Final Statistics: {results}")
-        
+
     except KeyboardInterrupt:
         logger.info("Process interrupted by user")
     except Exception as e:
