@@ -10,6 +10,6 @@ class RAGRequest(BaseModel):
     Request model for RAG endpoint.
     """
 
-    question: str = Field(
+    query: str = Field(
         json_schema_extra={"example": "Chương I điều 1 luật tố tụng dân sự mới nhất ?"}
     )
