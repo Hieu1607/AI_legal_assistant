@@ -1,5 +1,7 @@
 import hashlib
+import re
 import time
+import unicodedata
 from dataclasses import dataclass
 from threading import Lock
 from typing import Dict, Optional, Tuple
@@ -31,11 +33,16 @@ class RAGCacheManager:
         self._lock = Lock()
 
     def _generate_key(self, question: str) -> str:
-        """Generate cache key from question"""
-        # Normalize question: lowercase, strip whitespace
-        normalized = question.lower().strip()
-        # Hash for smaller keys
-        return hashlib.md5(normalized.encode("utf-8")).hexdigest()
+        # Normalize unicode
+        normalized = unicodedata.normalize("NFKC", question)
+        # Lowercase
+        normalized = normalized.lower()
+        # Remove extra whitespace
+        normalized = re.sub(r"\s+", " ", normalized).strip()
+        # Remove punctuation variations
+        normalized = re.sub(r"[?.!,;]+", "", normalized)
+
+        return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
     def _is_expired(self, entry: CacheEntry) -> bool:
         """Check if a entry is expired"""
