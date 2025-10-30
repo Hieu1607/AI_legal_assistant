@@ -15,10 +15,6 @@ from weaviate.classes.init import Auth
 
 # Load environment variables
 dotenv.load_dotenv()
-# Add root to sys.path for local imports
-root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if root not in sys.path:
-    sys.path.append(root)
 
 SYS_PROMPT = """
 Với vai trò là một trợ lý ảo pháp luật chuyên nghiệp, trả lời câu hỏi sau theo 3 trường hợp:
@@ -85,39 +81,42 @@ class WeaviateSearcher:
         Returns:
             dict: A dictionary containing the extracted information.
         """
-        try:
-            if response.sources:
-                logger.info(f"Found {len(response.sources)} sources for the response.")
-                relevant_chunks = []
-                for i, source in enumerate(response.sources):
-                    if hasattr(source, "collection") and hasattr(source, "object_id"):
-                        if not self.client:
-                            logger.error("Weaviate client is not connected.")
-                            continue
-                        collection = self.client.collections.get(source.collection)
-                        obj = collection.query.fetch_object_by_id(source.object_id)
-                        properties = obj.properties if obj else {}
-                        text = str(properties.get("text", ""))
-                        chunk_info = {
-                            "text": text,
-                            "title": properties.get("title", ""),
-                            "chunk_id": properties.get("chunk_id", ""),
-                            "date_of_issue": properties.get("date_of_issue", ""),
-                            "update_day": properties.get("update_day", ""),
-                            "uuid": source.object_id,
-                        }
-                        relevant_chunks.append(chunk_info)
-                        logger.info(
-                            "Added chunk %d from fetched object property '%s'%s...",
-                            i + 1,
-                            source.collection,
-                            text[:30] if text else "(no text)",
-                        )
-                return relevant_chunks
+        if not response.sources:
             return []
-        except Exception as e:
-            logger.error(f"Error while extracting chunks from response: {e}")
-            return []
+
+        relevant_chunks = []
+        for i, source in enumerate(response.sources):
+            try:
+                if not self.client:
+                    logger.error("Weaviate client is not connected.")
+                    continue
+
+                collection = self.client.collections.get(source.collection)
+                obj = collection.query.fetch_object_by_id(source.object_id)
+                if not obj:
+                    continue
+
+                properties = obj.properties
+                text = str(properties.get("text", ""))
+                chunk_info = {
+                    "text": text,
+                    "title": properties.get("title", ""),
+                    "chunk_id": properties.get("chunk_id", ""),
+                    "date_of_issue": properties.get("date_of_issue", ""),
+                    "update_day": properties.get("update_day", ""),
+                    "uuid": source.object_id,
+                }
+                relevant_chunks.append(chunk_info)
+                logger.info(
+                    "Added chunk %d from fetched object property '%s'%s...",
+                    i + 1,
+                    source.collection,
+                    text[:30] if text else "(no text)",
+                )
+            except Exception as e:
+                logger.error(f"Error processing source {i+1}: {e}")
+
+        return relevant_chunks
 
     def ask_question(self, query: str) -> Dict[str, Any]:
         """Ask a question to Weaviate.
