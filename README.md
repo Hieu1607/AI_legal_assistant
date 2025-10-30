@@ -88,11 +88,3 @@ Combines document retrieval with LLM generation for comprehensive answers.
 
 ### Interactive API Documentation
 Access Swagger UI at: `http://127.0.0.1:8000/docs`
-
-## 📄 License
-
-[Add your license information here]
-
-## 🤝 Contributing
-
-[Add contribution guidelines here]

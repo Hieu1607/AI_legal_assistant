@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.requests import Request
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse
 
 from app.configs.logger import get_logger, setup_logging
 from app.routes import all_router
@@ -75,7 +75,7 @@ def create_app() -> FastAPI:
 
     @main_app.get("/")
     async def read_root():
-        return RedirectResponse(url="/docs")
+        return {"message": "Welcome to the AI Legal Assistant API!"}
 
     return main_app
 
