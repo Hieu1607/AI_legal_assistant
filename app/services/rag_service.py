@@ -12,9 +12,6 @@ from app.tools.weaviate_search import get_searcher
 
 load_dotenv()
 
-# root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# if root not in sys.path:
-#     sys.path.append(root)
 from app.configs.logger import get_logger, setup_logging
 from app.tools.cache_manager import get_cache_manager
 
