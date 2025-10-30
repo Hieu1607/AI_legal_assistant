@@ -2,7 +2,7 @@
 Weaviate tool integration for vector database operations.
 """
 
-import io
+from typing import Optional
 import os
 import sys
 from functools import lru_cache
@@ -20,6 +20,15 @@ root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if root not in sys.path:
     sys.path.append(root)
 
+SYS_PROMPT = """
+Với vai trò là một trợ lý ảo pháp luật chuyên nghiệp, trả lời câu hỏi sau theo 3 trường hợp:
+- Nếu tìm thấy nội dung thích hợp trong tài liệu, trả lời theo cấu trúc 'Theo [nguồn], [nội dung trích dẫn được diễn giải lại]'. Ví dụ: 'Theo chương I điều 1 luật tố tụng dân sự mới nhất, ...'
+- Nếu không tìm thấy nội dung để trả lời chính xác, trả lời: 'Tôi chưa thể tìm thấy thông tin phù hợp trong tài liệu. Vui lòng đặt câu hỏi rõ ràng hơn hoặc tham khảo ý kiến chuyên gia pháp luật.'
+- Nếu câu hỏi linh tinh, không liên quan đến pháp luật, trả lời: 'Tôi là trợ lý ảo pháp luật, vui lòng đặt câu hỏi liên quan đến lĩnh vực pháp luật.'
+
+Câu hỏi:
+"""
+
 from app.configs.logger import get_logger, setup_logging
 
 setup_logging()
@@ -27,7 +36,7 @@ logger = get_logger(__name__)
 
 systemPrompt = os.getenv(
     "SYSTEM_PROMPT",
-    "Trả lời câu hỏi sau với vai trò là một trợ lý ảo pháp luật chuyên nghiệp:",
+    SYS_PROMPT,
 )
 
 
@@ -164,16 +173,6 @@ class WeaviateSearcher:
                 "answer": "An error occurred while processing the question.",
                 "relevant_chunks": [],
             }
-        finally:
-            if connection_opened and self.client:
-                try:
-                    self.client.close()
-                    logger.info("Weaviate client connection closed.")
-                except Exception as e:
-                    logger.error(f"Error while closing Weaviate client connection: {e}")
-                finally:
-                    self.client = None
-                    self.query_agent = None
 
     def close(self):
         """Close the Weaviate client connection."""
@@ -189,7 +188,7 @@ class WeaviateSearcher:
 
 
 @lru_cache(maxsize=1)
-def get_searcher():
+def get_searcher() -> Optional[WeaviateSearcher]:
     """Get an instance of WeaviateSearcher.
     Returns:
         WeaviateSearcher: An instance of WeaviateSearcher.
@@ -199,3 +198,4 @@ def get_searcher():
         return WeaviateSearcher()
     except Exception as e:
         logger.error(f"Error while creating WeaviateSearcher instance: {e}")
+        return None
