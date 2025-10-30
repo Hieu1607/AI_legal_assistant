@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set up logging
-project_root = os.path.dirname(os.getcwd())
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, str(project_root))
 from app.configs.logger import get_logger, setup_logging
 from app.tools.weaviate_search import get_searcher
