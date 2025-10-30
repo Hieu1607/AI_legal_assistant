@@ -4,6 +4,7 @@ Router/Controller for health check endpoint
 
 import os
 import sys
+from http import HTTPStatus
 
 from dotenv import load_dotenv
 from fastapi import APIRouter
@@ -15,9 +16,8 @@ load_dotenv()
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
-from app.constants.http_status import HTTP_STATUS_INTERNAL_SERVER_ERROR, HTTP_STATUS_OK
-from app.logic.health_logic import health_check
-from configs.logger import get_logger, setup_logging
+from app.configs.logger import get_logger, setup_logging
+from app.services.health_service import health_check
 
 setup_logging()
 logger = get_logger(__name__)
@@ -30,7 +30,7 @@ def process_health_check():
     try:
         health_check()
         return JSONResponse(
-            status_code=HTTP_STATUS_OK,
+            status_code=HTTPStatus.OK,
             content={
                 "service": "AI Legal Assistant",
                 "status": "healthy",
@@ -44,8 +44,6 @@ def process_health_check():
             },
         )
 
-
-
     except Exception as e:  # pylint: disable=broad-except
         # This will catch Weaviate errors and other unexpected errors
         error_message = str(e)
@@ -55,7 +53,7 @@ def process_health_check():
             error_type = "Unexpected error"
 
         return JSONResponse(
-            status_code=HTTP_STATUS_INTERNAL_SERVER_ERROR,
+            status_code=HTTPStatus.SERVICE_UNAVAILABLE,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",

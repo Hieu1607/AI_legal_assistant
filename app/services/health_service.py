@@ -9,8 +9,8 @@ load_dotenv()
 # Set up logging
 project_root = os.path.dirname(os.getcwd())
 sys.path.insert(0, str(project_root))
-from configs.logger import get_logger, setup_logging
-from src.store_vector.weaviate_search import get_searcher
+from app.configs.logger import get_logger, setup_logging
+from app.tools.weaviate_search import get_searcher
 
 setup_logging()
 logger = get_logger(__name__)
@@ -19,6 +19,9 @@ logger = get_logger(__name__)
 def health_check():
     # Check Weaviate Cloud connection
     searcher = get_searcher()
+    if not searcher:
+        raise Exception("Failed to create WeaviateSearcher instance")
+
     if not searcher.connect():
         raise Exception("Cannot connect to Weaviate Cloud")
 

@@ -1,11 +1,8 @@
 """
-Models package for data models.
-Contains all Pydantic models for the application.
+Model package for the AI legal assistant application.
+This package contains all the data models used in the application.
 """
 
-from .base_model import QueryQuestion, QueryRequest
+from .baseModel import RAGRequest
 
-__all__ = [
-    "QueryRequest",
-    "QueryQuestion",
-]
+__all__ = ["RAGRequest"]

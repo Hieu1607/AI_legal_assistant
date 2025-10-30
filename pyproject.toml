@@ -44,4 +44,6 @@ disable = [
     "undefined-variable",
     "unused-import",
     "wrong-import-order",
+    "invalid-envvar-default",
+    "no-member",
 ]

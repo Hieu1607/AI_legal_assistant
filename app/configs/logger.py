@@ -111,9 +111,6 @@ _APP_LOG_HANDLER = None
 _APP_LOG_PATH = None
 
 
-
-
-
 def get_logger_app(name="app"):
     """
     Get a logger specifically configured to write to app.log.
@@ -175,9 +172,6 @@ def get_logger_app(name="app"):
     return logger
 
 
-
-
-
 def reset_logging():
     """Reset the setup flag for testing purposes."""
     return _logger_manager.reset_logging()
@@ -194,5 +188,3 @@ if __name__ == "__main__":
     # App logger (writes to app.log)
     app_logger = get_logger_app()
     app_logger.info("App logger working correctly - check logs/app.log")
-
-
