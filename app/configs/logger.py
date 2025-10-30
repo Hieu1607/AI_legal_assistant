@@ -5,7 +5,6 @@ Simple centralized logging configuration for the AI Legal Assistant project.
 
 import logging
 import logging.config
-from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 import yaml
@@ -107,71 +106,6 @@ def get_logger(name):
     return logging.getLogger(name)
 
 
-_APP_LOG_HANDLER = None
-_APP_LOG_PATH = None
-
-
-def get_logger_app(name="app"):
-    """
-    Get a logger specifically configured to write to app.log.
-
-    This function creates a logger with the given name and adds a
-    RotatingFileHandler that writes to logs/app.log. It ensures that
-    only one handler is added to prevent duplicate logs.
-
-    Args:
-        name: The name of the logger. Defaults to "app".
-
-    Returns:
-        logging.Logger: A configured logger that writes to app.log
-    """
-    setup_logging()
-
-    # pylint: disable=global-statement
-    global _APP_LOG_HANDLER, _APP_LOG_PATH
-
-    if _APP_LOG_HANDLER is None:
-        logs_dir = get_project_root() / "logs"
-        logs_dir.mkdir(exist_ok=True)
-
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
-
-        app_log_path = str(logs_dir / "app.log")
-        handler = RotatingFileHandler(
-            filename=app_log_path,
-            maxBytes=10485760,  # 10MB
-            backupCount=5,
-            encoding="utf8",
-        )
-
-        handler.setLevel(logging.INFO)
-        handler.setFormatter(formatter)
-
-        _APP_LOG_HANDLER = handler
-        _APP_LOG_PATH = app_log_path
-
-    # Get the logger with the specified name
-    logger = logging.getLogger(name)
-
-    logger.propagate = False
-
-    if not logger.level:
-        logger.setLevel(logging.INFO)
-
-    app_handler_exists = any(
-        isinstance(handler, logging.FileHandler)
-        and getattr(handler, "baseFilename", "") == _APP_LOG_PATH
-        for handler in logger.handlers
-    )
-
-    if not app_handler_exists:
-        logger.addHandler(_APP_LOG_HANDLER)
-
-    return logger
-
-
 def reset_logging():
     """Reset the setup flag for testing purposes."""
     return _logger_manager.reset_logging()
@@ -184,7 +118,3 @@ if __name__ == "__main__":
     # Regular logger (writes to info.log)
     current_logger = get_logger(__name__)
     current_logger.info("Logger module working correctly")
-
-    # App logger (writes to app.log)
-    app_logger = get_logger_app()
-    app_logger.info("App logger working correctly - check logs/app.log")
