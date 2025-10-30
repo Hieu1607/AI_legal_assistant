@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (result.status === 'success' && result.data && result.data.answer) {
                 const relevantChunks = result.data.relevant_chunks || [];
-                await displayTypingMessage(result.data.answer, 'bot', relevantChunks);
+                const totalTime = result.data.total_time;
+                await displayTypingMessage(result.data.answer, 'bot', relevantChunks, totalTime);
             } else {
                 await displayTypingMessage('Xin lỗi, tôi không thể tìm thấy câu trả lời.', 'bot');
             }
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const displayMessage = (message, sender, relevantChunks = null) => {
+    const displayMessage = (message, sender, relevantChunks = null, totalTime = null) => {
         if (sender === 'bot' && relevantChunks && relevantChunks.length > 0) {
             // Create container for bot message with source button
             const messageContainer = document.createElement('div');
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Add click event to source button
             sourceButton.addEventListener('click', () => {
-                showSourceModal(relevantChunks);
+                showSourceModal(relevantChunks, totalTime);
             });
             
             messageContainer.appendChild(messageElement);
@@ -151,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const displayTypingMessage = async (message, sender, relevantChunks = null) => {
+    const displayTypingMessage = async (message, sender, relevantChunks = null, totalTime = null) => {
         if (sender === 'bot' && relevantChunks && relevantChunks.length > 0) {
             // Create container for bot message with source button
             const messageContainer = document.createElement('div');
@@ -195,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Add click event to source button
                 sourceButton.addEventListener('click', () => {
-                    showSourceModal(relevantChunks);
+                    showSourceModal(relevantChunks, totalTime);
                 });
                 
                 messageContainer.appendChild(sourceButton);
@@ -256,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Source modal functions
-    const showSourceModal = (relevantChunks) => {
+    const showSourceModal = (relevantChunks, totalTime) => {
         // Create modal overlay if it doesn't exist
         let modalOverlay = document.getElementById('source-modal');
         if (!modalOverlay) {
@@ -271,6 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Nguồn thông tin liên quan (${relevantChunks.length} đoạn)</h3>
+                    ${totalTime ? `<div class="modal-total-time">Tổng thời gian: ${totalTime.toFixed(2)}s</div>` : ''}
                     <button class="modal-close">&times;</button>
                 </div>
                 <div class="modal-body">
