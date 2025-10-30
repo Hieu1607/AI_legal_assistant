@@ -12,8 +12,9 @@ from fastapi.responses import PlainTextResponse
 root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, str(root))
 
-from app.services.metric_service import MetricsCollector
 from configs.logger import get_logger
+
+from app.services.metric_service import MetricsCollector
 
 logger = get_logger(__name__)
 
