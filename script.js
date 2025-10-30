@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
     const welcomeScreen = document.getElementById('welcome-screen');
 
-    const API_ENDPOINT = 'https://ai-legal-assistant-zswt.onrender.com/rag';
+    const API_ENDPOINT = 'https://ai-legal-assistant-zswt.onrender.com/api/rag';
 
     let isFirstMessage = true; // Track if this is the first message
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ question: question }),
+                body: JSON.stringify({ query: question }),
             });
 
             if (!response.ok) {
