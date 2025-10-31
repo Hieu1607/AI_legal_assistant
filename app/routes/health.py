@@ -13,9 +13,6 @@ from fastapi.responses import JSONResponse
 # Load environment variables
 load_dotenv()
 
-# Set up logging
-project_root = os.path.dirname(os.getcwd())
-sys.path.insert(0, str(project_root))
 from app.configs.logger import get_logger, setup_logging
 from app.services.health_service import health_check
 

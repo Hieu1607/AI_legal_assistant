@@ -33,30 +33,11 @@ handlers:
     encoding: utf8
 
 loggers:
-  src:
-    level: INFO
-    handlers: [console, info_file_handler, error_file_handler]
-    propagate: False  # Prevent duplicate logging
-
-  scripts:
-    level: INFO
-    handlers: [console, info_file_handler, error_file_handler]
-    propagate: False
 
   app:
     level: INFO
     handlers: [console, info_file_handler, error_file_handler]
-    propagate: False 
-
-  services:
-    level: INFO
-    handlers: [console, info_file_handler, error_file_handler]
-    propagate: False 
-
-  # retrieve:
-  #   level: INFO
-  #   handlers: [console, info_file_handler, error_file_handler]
-  #   propagate: False
+    propagate: False  
 
 root:
   level: INFO
