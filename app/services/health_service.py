@@ -1,10 +1,5 @@
-import os
-import sys
-
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
+"""
+Health check service for Weaviate Cloud connection."""
 
 from app.configs.logger import get_logger, setup_logging
 from app.tools.weaviate_search import get_searcher
