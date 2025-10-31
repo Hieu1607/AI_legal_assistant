@@ -2,11 +2,9 @@
 Weaviate tool integration for vector database operations.
 """
 
-from typing import Optional
 import os
-import sys
 from functools import lru_cache
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import dotenv
 import weaviate
