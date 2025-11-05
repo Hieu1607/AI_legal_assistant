@@ -2,42 +2,28 @@
 Business logic for the Retrieval-Augmented Generation (RAG) service.
 """
 
-import os
-import sys
 import time
-
-from dotenv import load_dotenv
 
 from app.tools.weaviate_search import get_searcher
 
-load_dotenv()
-
-from app.configs.logger import get_logger, setup_logging
+from app.configs.logger import get_logger
 from app.tools.cache_manager import get_cache_manager
 
-setup_logging()
 logger = get_logger(__name__)
-
-# Initialize cache manager
-_cache_manager = get_cache_manager(
-    ttl_seconds=int(os.getenv("CACHE_TTL_SECONDS", 3600)),
-    max_size=int(os.getenv("CACHE_MAX_SIZE", 1000)),
-)
 
 
 class RAGService:
     """Service for handling RAG operations."""
 
     def __init__(self):
-        # Initialize any required components, e.g., vector store, LLM, etc.
-        pass
+        self.cache_manager = get_cache_manager()
 
     async def process_query(self, question: str):
         """Process the RAG query and return response."""
         logger.info(f"Processing query: {question}")
         start_time = time.perf_counter()
         # Check cache first
-        cached_response = _cache_manager.get(question)
+        cached_response = self.cache_manager.get(question)
         if cached_response:
             answer, original_question, context_count = cached_response
             cache_time = time.perf_counter() - start_time
@@ -57,9 +43,9 @@ class RAGService:
 
         try:
             searcher = get_searcher()
-            if searcher:
-                result = searcher.ask_question(question)
-                _cache_manager.set(
+            if searcher and await searcher.connect():
+                result = await searcher.ask_question(question)
+                self.cache_manager.set(
                     question, str(result["answer"]), len(result["relevant_chunks"])
                 )
                 total_time = time.perf_counter() - start_time
@@ -92,3 +78,6 @@ class RAGService:
                 "total_time": time.perf_counter() - start_time,
                 "cached": False,
             }
+        finally:
+            if searcher:
+                await searcher.close()

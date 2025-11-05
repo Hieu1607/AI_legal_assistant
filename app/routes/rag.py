@@ -2,22 +2,18 @@
 Route/controller for RAG-related endpoints.
 """
 
-import os
-import sys
 from http import HTTPStatus
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-from app.configs.logger import get_logger, setup_logging
+from app.configs.logger import get_logger
 from app.models.baseModel import RAGRequest
 from app.services.rag_service import RAGService
 
-setup_logging()
 logger = get_logger(__name__)
 
 router = APIRouter()
-
 
 @router.post("/rag")
 async def rag_endpoint(request: RAGRequest):

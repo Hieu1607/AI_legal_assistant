@@ -1,37 +1,25 @@
 """
 Weaviate tool integration for vector database operations.
 """
-
+import asyncio
 import os
 from functools import lru_cache
 from typing import Any, Dict, List, Optional
-
-import dotenv
+from functools import lru_cache
+from app.configs.settings import settings
 import weaviate
-from weaviate.agents.query import QueryAgent
 from weaviate.classes.init import Auth
+from weaviate.agents.query import AsyncQueryAgent
 
-# Load environment variables
-dotenv.load_dotenv()
-
-SYS_PROMPT = """
-Với vai trò là một trợ lý ảo pháp luật chuyên nghiệp, trả lời câu hỏi sau theo 3 trường hợp:
-- Nếu tìm thấy nội dung thích hợp trong tài liệu, trả lời theo cấu trúc 'Theo [nguồn], [nội dung trích dẫn được diễn giải lại]'. Ví dụ: 'Theo chương I điều 1 luật tố tụng dân sự mới nhất, ...'
-- Nếu không tìm thấy nội dung để trả lời chính xác, trả lời: 'Tôi chưa thể tìm thấy thông tin phù hợp trong tài liệu. Vui lòng đặt câu hỏi rõ ràng hơn hoặc tham khảo ý kiến chuyên gia pháp luật.'
-- Nếu câu hỏi linh tinh, không liên quan đến pháp luật, trả lời: 'Tôi là trợ lý ảo pháp luật, vui lòng đặt câu hỏi liên quan đến lĩnh vực pháp luật.'
-
-Câu hỏi:
-"""
-
-from app.configs.logger import get_logger, setup_logging
-
-setup_logging()
+from app.configs.logger import get_logger
 logger = get_logger(__name__)
 
-systemPrompt = os.getenv(
-    "SYSTEM_PROMPT",
-    SYS_PROMPT,
-)
+
+@lru_cache(maxsize=1)
+def load_system_prompt() -> str:
+    """Load the system prompt from environment variable or file."""
+    with open("app/configs/system_prompt.txt", "r", encoding="utf-8") as f:
+        return f.read()
 
 
 class WeaviateSearcher:
@@ -39,14 +27,14 @@ class WeaviateSearcher:
         self.client = None
         self.query_agent = None
 
-    def connect(self) -> bool:
+    async def connect(self, timeout: float = 10.0, retry: int = 1) -> bool:
         """Connect to Weaviate instance.
         Returns:
             bool: True if connection is successful, False otherwise.
         """
         try:
-            weaviate_url = os.getenv("WEAVIATE_URL")
-            api_key = os.getenv("WEAVIATE_API_KEY")
+            weaviate_url = settings.WEAVIATE_URL
+            api_key = settings.WEAVIATE_API_KEY
 
             if not weaviate_url or not api_key:
                 logger.error(
@@ -54,24 +42,36 @@ class WeaviateSearcher:
                 )
                 return False
 
-            self.client = weaviate.connect_to_weaviate_cloud(
+            self.client = weaviate.use_async_with_weaviate_cloud(
                 cluster_url=weaviate_url,
                 auth_credentials=Auth.api_key(api_key),  # type: ignore
             )
+            for attempt in range(retry + 1):
+                try:
+                    await asyncio.wait_for(self.client.connect(), timeout=timeout)
 
-            # Test connection
-            if self.client.is_ready():
-                logger.info("Connected to Weaviate successfully.")
-                return True
-            logger.error("Failed to connect to Weaviate.")
+                    if await self.client.is_ready():
+                        logger.info("Connected to Weaviate successfully.")
+                        return True
+
+                    logger.error("Server not ready after connection.")
+                    return False
+
+                except asyncio.TimeoutError:
+                    logger.warning(f"Timeout while connecting (attempt {attempt + 1}/{retry + 1})")
+
+                except Exception as e:
+                    logger.error(f"Connection error: {e}")
+                    break
+
+            self.client = None  # Reset if fail
+            logger.error("Failed to connect to Weaviate after retries.")
             return False
         except Exception as e:
-            logger.error(f"Failed to connect to Weaviate: {e}")
-            self.client = None
-            self.query_agent = None
+            logger.error(f"Unexpected error during connection: {e}")
             return False
 
-    def _extract_chunks_from_response(self, response) -> List[Dict[str, Any]]:
+    async def _extract_chunks_from_response(self, response) -> List[Dict[str, Any]]:
         """Extract relevant information from fetched object.
         Args:
             obj (dict): The object fetched from Weaviate.
@@ -85,12 +85,8 @@ class WeaviateSearcher:
         relevant_chunks = []
         for i, source in enumerate(response.sources):
             try:
-                if not self.client:
-                    logger.error("Weaviate client is not connected.")
-                    continue
-
                 collection = self.client.collections.get(source.collection)
-                obj = collection.query.fetch_object_by_id(source.object_id)
+                obj = await collection.query.fetch_object_by_id(source.object_id)
                 if not obj:
                     continue
 
@@ -116,7 +112,7 @@ class WeaviateSearcher:
 
         return relevant_chunks
 
-    def ask_question(self, query: str) -> Dict[str, Any]:
+    async def ask_question(self, query: str) -> Dict[str, Any]:
         """Ask a question to Weaviate.
         Args:
             query (str): The question to ask.
@@ -125,25 +121,20 @@ class WeaviateSearcher:
         """
         if not self.client:
             logger.info("Weaviate client is connecting...")
-            if not self.connect():
-                return {"error": "Failed to connect to Weaviate."}
+            if not await self.connect():
+                return {
+                    "answer": "Failed to connect to Weaviate.",
+                    "relevant_chunks": [],
+                }
 
-        connection_opened = False
         try:
-            if not self.client:
-                if not self.connect():
-                    return {
-                        "answer": "Failed to connect to Weaviate.",
-                        "relevant_chunks": [],
-                    }
-            connection_opened = True
 
             if not self.query_agent:
                 try:
-                    weaviate_agent = QueryAgent(  # type: ignore
+                    weaviate_agent = AsyncQueryAgent(  # type: ignore
                         client=self.client,  # type: ignore
                         collections=["LegalDocument"],
-                        system_prompt=systemPrompt,
+                        system_prompt=load_system_prompt(),
                     )
                     self.query_agent = weaviate_agent
                 except Exception as e:
@@ -152,17 +143,18 @@ class WeaviateSearcher:
                         "answer": "Failed to create QueryAgent.",
                         "relevant_chunks": [],
                     }
+            
 
             # Query the agent
-            response = self.query_agent.ask(query)
+            response = await self.query_agent.ask(query)
             answer = (
                 response.final_answer if response.final_answer else "No answer found."
             )
-            relevant_chunks = self._extract_chunks_from_response(response)
+            relevant_chunks = await self._extract_chunks_from_response(response)
             if not relevant_chunks:
                 logger.info("No sources found for the response.")
                 relevant_chunks = []
-            logger.info(f'Query Agent successfully answered the question: "{query}"')
+            logger.info(f'Query Agent successfully answered the question: "{query[:10]}..."')
             return {"answer": answer.strip(), "relevant_chunks": relevant_chunks}
         except Exception as e:
             logger.error(f"Error while asking question: {e}")
@@ -171,11 +163,11 @@ class WeaviateSearcher:
                 "relevant_chunks": [],
             }
 
-    def close(self):
+    async def close(self):
         """Close the Weaviate client connection."""
         if self.client:
             try:
-                self.client.close()
+                await self.client.close()
                 logger.info("Weaviate client connection closed.")
             except Exception as e:
                 logger.error(f"Error while closing Weaviate client connection: {e}")

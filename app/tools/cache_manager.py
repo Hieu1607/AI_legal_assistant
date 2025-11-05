@@ -5,6 +5,7 @@ import unicodedata
 from dataclasses import dataclass
 from threading import Lock
 from typing import Dict, Optional, Tuple
+from pyparsing import lru_cache
 
 
 @dataclass
@@ -133,14 +134,9 @@ class RAGCacheManager:
                 ],
             }
 
-
-# Singleton instance
-_cache_manager = None
-
-
+@lru_cache(maxsize=1)
 def get_cache_manager(ttl_seconds: int = 3600, max_size: int = 1000) -> RAGCacheManager:
     """Get singleton cache manager instance"""
-    global _cache_manager  # pylint: disable=global-statement
-    if _cache_manager is None:
-        _cache_manager = RAGCacheManager(ttl_seconds, max_size)
+    _cache_manager = RAGCacheManager(ttl_seconds, max_size)
     return _cache_manager
+
