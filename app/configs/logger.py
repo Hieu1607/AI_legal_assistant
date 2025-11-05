@@ -31,35 +31,27 @@ class LoggerManager:
                         handler_config["filename"] = str(project_root / filename)
 
     def setup_logging(self, force_setup=False):
-        """
-        Setup logging configuration from YAML file.
-
-        Args:
-            force_setup: If True, force setup even if already done
-
-        Returns:
-            bool: True if successful, False otherwise
-        """
         if self._setup_done and not force_setup:
             return True
-
+        
         try:
             project_root = self.get_project_root()
             config_path = project_root / "configs" / "logging.yaml"
             logs_dir = project_root / "logs"
 
-            # Create logs directory if it doesn't exist
-            logs_dir.mkdir(exist_ok=True)
+            # Ensure logs dir exists
+            logs_dir.mkdir(parents=True, exist_ok=True)
 
             if config_path.exists():
                 with open(config_path, "r", encoding="utf-8") as f:
                     config = yaml.safe_load(f)
 
-                # Update file handler paths to use absolute paths
                 self._update_handler_paths(config, project_root)
+
+                logging.getLogger().handlers.clear()
+
                 logging.config.dictConfig(config)
             else:
-                # Fallback to basic config
                 logging.basicConfig(
                     level=logging.INFO,
                     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -68,12 +60,13 @@ class LoggerManager:
 
             self._setup_done = True
             return True
-
-        except (FileNotFoundError, yaml.YAMLError, KeyError) as e:
+        
+        except Exception as e:
             logging.basicConfig(level=logging.ERROR)
             logging.error("Failed to setup logging: %s", e)
+            self._setup_done = False
             return False
-
+        
     def reset_logging(self):
         """Reset the setup flag for testing purposes."""
         self._setup_done = False
