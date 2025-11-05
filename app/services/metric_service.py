@@ -2,8 +2,6 @@
 Metrics collection và monitoring logic với Prometheus
 """
 
-import os
-import sys
 import time
 
 from prometheus_client import (
