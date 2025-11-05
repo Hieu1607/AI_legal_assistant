@@ -23,7 +23,7 @@ ensure_newline_before_comments = true
 src_paths = ["."]
 
 [tool.pylint]
-max-line-length = 1000
+max-line-length = 880
 disable = [
     "missing-module-docstring",
     "missing-class-docstring",
