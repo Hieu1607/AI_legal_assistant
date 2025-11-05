@@ -2,21 +2,15 @@
 Router/Controller for health check endpoint
 """
 
-import os
-import sys
 from http import HTTPStatus
 
-from dotenv import load_dotenv
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-# Load environment variables
-load_dotenv()
-
-from app.configs.logger import get_logger, setup_logging
+from app.configs.logger import get_logger
 from app.services.health_service import health_check
 
-setup_logging()
+
 logger = get_logger(__name__)
 
 router = APIRouter()
@@ -48,12 +42,12 @@ def process_health_check():
             error_type = "Weaviate error"
         else:
             error_type = "Unexpected error"
-
+        logger.error(f"Health check failed: {error_message}")
         return JSONResponse(
             status_code=HTTPStatus.SERVICE_UNAVAILABLE,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",
-                "error": f"{error_type}: {error_message}",
+                "error": f"{error_type}",
             },
         )
