@@ -2,30 +2,24 @@
 Router/Controller for health check endpoint
 """
 
-import os
-import sys
 from http import HTTPStatus
 
-from dotenv import load_dotenv
+import weaviate.exceptions as weaviate_exceptions
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
-# Load environment variables
-load_dotenv()
-
-from app.configs.logger import get_logger, setup_logging
+from app.configs.logger import get_logger
 from app.services.health_service import health_check
 
-setup_logging()
 logger = get_logger(__name__)
 
 router = APIRouter()
 
 
 @router.get("/health")
-def process_health_check():
+async def process_health_check():
     try:
-        health_check()
+        await health_check()
         return JSONResponse(
             status_code=HTTPStatus.OK,
             content={
@@ -40,6 +34,16 @@ def process_health_check():
                 },
             },
         )
+    except weaviate_exceptions.WeaviateBaseError as weaviate_error:
+        logger.error(f"Weaviate health check failed: {weaviate_error}")
+        return JSONResponse(
+            status_code=HTTPStatus.SERVICE_UNAVAILABLE,
+            content={
+                "service": "AI Legal Assistant",
+                "status": "unhealthy",
+                "error": "Weaviate service is unavailable",
+            },
+        )
 
     except Exception as e:  # pylint: disable=broad-except
         # This will catch Weaviate errors and other unexpected errors
@@ -48,12 +52,12 @@ def process_health_check():
             error_type = "Weaviate error"
         else:
             error_type = "Unexpected error"
-
+        logger.error(f"Health check failed: {error_message}")
         return JSONResponse(
             status_code=HTTPStatus.SERVICE_UNAVAILABLE,
             content={
                 "service": "AI Legal Assistant",
                 "status": "unhealthy",
-                "error": f"{error_type}: {error_message}",
+                "error": f"{error_type}",
             },
         )

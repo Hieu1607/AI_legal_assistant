@@ -1,10 +1,7 @@
 """
 Router for metrics endpoints - Prometheus format only
 """
-
-import os
-import sys
-
+from functools import lru_cache
 from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
 
@@ -17,13 +14,11 @@ logger = get_logger(__name__)
 router = APIRouter()
 
 # Global metrics collector instance
-metrics_collector = MetricsCollector()
-
-
+@lru_cache(maxsize=1)
 def get_metrics_collector() -> MetricsCollector:
     """Get global metrics collector instance"""
+    metrics_collector = MetricsCollector()
     return metrics_collector
-
 
 @router.get("/metrics")
 def get_metrics():

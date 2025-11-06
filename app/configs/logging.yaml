@@ -1,5 +1,5 @@
 version: 1
-disable_existing_loggers: False
+disable_existing_loggers: False # Keep existing loggers
 
 formatters:
   standard:
@@ -12,7 +12,7 @@ handlers:
     class: logging.StreamHandler
     level: INFO
     formatter: standard
-    stream: ext://sys.stdout
+    stream: ext://sys.stdout # Log to stdout
 
   info_file_handler:
     class: logging.handlers.RotatingFileHandler

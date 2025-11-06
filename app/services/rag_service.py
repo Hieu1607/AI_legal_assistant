@@ -2,42 +2,34 @@
 Business logic for the Retrieval-Augmented Generation (RAG) service.
 """
 
-import os
-import sys
 import time
+from http import HTTPStatus
 
-from dotenv import load_dotenv
+import weaviate
 
-from app.tools.weaviate_search import get_searcher
+from app.configs.logger import get_logger
+from app.tools.cache_manager import RAGCacheManager, get_cache_manager
+from app.tools.weaviate_search import WeaviateSearcher
 
-load_dotenv()
-
-from app.configs.logger import get_logger, setup_logging
-from app.tools.cache_manager import get_cache_manager
-
-setup_logging()
 logger = get_logger(__name__)
-
-# Initialize cache manager
-_cache_manager = get_cache_manager(
-    ttl_seconds=int(os.getenv("CACHE_TTL_SECONDS", 3600)),
-    max_size=int(os.getenv("CACHE_MAX_SIZE", 1000)),
-)
 
 
 class RAGService:
     """Service for handling RAG operations."""
 
-    def __init__(self):
-        # Initialize any required components, e.g., vector store, LLM, etc.
-        pass
-
-    async def process_query(self, question: str):
+    async def process_query(
+        self,
+        question: str,
+        searcher: WeaviateSearcher | None = None,
+        cache_manager: RAGCacheManager | None = None,
+    ) -> dict:
         """Process the RAG query and return response."""
         logger.info(f"Processing query: {question}")
         start_time = time.perf_counter()
         # Check cache first
-        cached_response = _cache_manager.get(question)
+        if cache_manager is None:
+            cache_manager = await get_cache_manager()
+        cached_response = await cache_manager.get(question)
         if cached_response:
             answer, original_question, context_count = cached_response
             cache_time = time.perf_counter() - start_time
@@ -53,13 +45,10 @@ class RAGService:
 
         logger.info(f"Cache miss for question: {question}")
 
-        searcher = None
-
         try:
-            searcher = get_searcher()
-            if searcher:
-                result = searcher.ask_question(question)
-                _cache_manager.set(
+            if searcher and await searcher.connect():
+                result = await searcher.ask_question(question)
+                await cache_manager.set(
                     question, str(result["answer"]), len(result["relevant_chunks"])
                 )
                 total_time = time.perf_counter() - start_time
@@ -72,16 +61,47 @@ class RAGService:
                     "total_time": total_time,
                     "cached": False,
                 }
-            else:
-                logger.error("WeaviateSearcher instance is None.")
-                return {
-                    "answer": "Unable to process the question at this time.",
-                    "question": question,
-                    "relevant_chunks": [],
-                    "context_count": 0,
-                    "total_time": time.perf_counter() - start_time,
-                    "cached": False,
-                }
+            logger.error("WeaviateSearcher instance is None.")
+            return {
+                "answer": "Unable to process the question at this time.",
+                "question": question,
+                "relevant_chunks": [],
+                "context_count": 0,
+                "total_time": time.perf_counter() - start_time,
+                "cached": False,
+            }
+        except TimeoutError as timeout_error:
+            logger.error(f"Timeout error processing query: {timeout_error}")
+            return {
+                "answer": "The request timed out. Please try again later.",
+                "question": question,
+                "relevant_chunks": [],
+                "context_count": 0,
+                "total_time": time.perf_counter() - start_time,
+                "cached": False,
+            }
+
+        except weaviate.exceptions.WeaviateConnectionError as conn_error:
+            logger.error(f"Weaviate connection error: {conn_error}")
+            return {
+                "answer": "Failed to connect to the Weaviate server.",
+                "question": question,
+                "relevant_chunks": [],
+                "context_count": 0,
+                "total_time": time.perf_counter() - start_time,
+                "cached": False,
+            }
+        except weaviate.exceptions.WeaviateQueryError as query_error:
+            logger.error(f"Weaviate query error: {query_error}")
+            return {
+                "answer": "An error occurred while querying the Weaviate server.",
+                "question": question,
+                "relevant_chunks": [],
+                "context_count": 0,
+                "total_time": time.perf_counter() - start_time,
+                "cached": False,
+            }
+
         except Exception as e:
             logger.error(f"Error processing query: {e}")
             return {
@@ -92,3 +112,6 @@ class RAGService:
                 "total_time": time.perf_counter() - start_time,
                 "cached": False,
             }
+        finally:
+            if searcher:
+                await searcher.close()

@@ -3,8 +3,8 @@ import re
 import time
 import unicodedata
 from dataclasses import dataclass
-from threading import Lock
 from typing import Dict, Optional, Tuple
+import asyncio
 
 
 @dataclass
@@ -30,7 +30,7 @@ class RAGCacheManager:
         self.ttl_seconds = ttl_seconds
         self.max_size = max_size
         self._cache: Dict[str, CacheEntry] = {}
-        self._lock = Lock()
+        self._lock = asyncio.Lock()
 
     def _generate_key(self, question: str) -> str:
         # Normalize unicode
@@ -48,7 +48,7 @@ class RAGCacheManager:
         """Check if a entry is expired"""
         return time.time() - entry.timestamp > self.ttl_seconds
 
-    def _cleanup_expired(self):
+    async def _cleanup_expired(self):
         """Remove expired entries"""
         current_time = time.time()
         expired_keys = [
@@ -59,13 +59,13 @@ class RAGCacheManager:
         for key in expired_keys:
             del self._cache[key]
 
-    def _evict_lru(self):
+    async def _evict_lru(self):
         """Evict least recently used entries if cache is full"""
         if len(self._cache) >= self.max_size:
             lru_key = min(self._cache.keys(), key=lambda k: self._cache[k].hit_count)
             del self._cache[lru_key]
 
-    def get(self, question: str) -> Optional[Tuple[str, str, int]]:
+    async def get(self, question: str) -> Optional[Tuple[str, str, int]]:
         """
         Get cached answer for question
 
@@ -74,8 +74,8 @@ class RAGCacheManager:
         """
         key = self._generate_key(question)
 
-        with self._lock:
-            self._cleanup_expired()
+        async with self._lock:
+            await self._cleanup_expired()
 
             if key not in self._cache:
                 return None
@@ -90,13 +90,13 @@ class RAGCacheManager:
 
             return (entry.answer, entry.question, entry.context_count)
 
-    def set(self, question: str, answer: str, context_count: int):
+    async def set(self, question: str, answer: str, context_count: int):
         """Cache answer for question"""
         key = self._generate_key(question)
 
-        with self._lock:
-            self._cleanup_expired()
-            self._evict_lru()
+        async with self._lock:
+            await self._cleanup_expired()
+            await self._evict_lru()
 
             self._cache[key] = CacheEntry(
                 answer=answer,
@@ -106,15 +106,15 @@ class RAGCacheManager:
                 hit_count=0,
             )
 
-    def clear(self):
+    async def clear(self):
         """Clear all cache"""
-        with self._lock:
+        async with self._lock:
             self._cache.clear()
 
-    def get_stats(self) -> Dict:
+    async def get_stats(self) -> Dict:
         """Get cache statistics"""
-        with self._lock:
-            self._cleanup_expired()
+        async with self._lock:
+            await self._cleanup_expired()
             return {
                 "size": len(self._cache),
                 "max_size": self.max_size,
@@ -134,13 +134,14 @@ class RAGCacheManager:
             }
 
 
-# Singleton instance
-_cache_manager = None
+_cache_manager: Optional[RAGCacheManager] = None
 
 
-def get_cache_manager(ttl_seconds: int = 3600, max_size: int = 1000) -> RAGCacheManager:
+async def get_cache_manager(
+    ttl_seconds: int = 3600, max_size: int = 1000
+) -> RAGCacheManager:
     """Get singleton cache manager instance"""
-    global _cache_manager  # pylint: disable=global-statement
+    global _cache_manager
     if _cache_manager is None:
         _cache_manager = RAGCacheManager(ttl_seconds, max_size)
     return _cache_manager
