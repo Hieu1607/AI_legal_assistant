@@ -46,30 +46,44 @@ class RAGService:
         logger.info(f"Cache miss for question: {question}")
 
         try:
-            if searcher and await searcher.connect():
-                result = await searcher.ask_question(question)
-                await cache_manager.set(
-                    question, str(result["answer"]), len(result["relevant_chunks"])
-                )
-                total_time = time.perf_counter() - start_time
-                logger.info(f"Processed query in {total_time:.4f}s")
+            if searcher:
+                # Try to connect
+                connection_success = await searcher.connect()
+                if connection_success:
+                    result = await searcher.ask_question(question)
+                    await cache_manager.set(
+                        question, str(result["answer"]), len(result["relevant_chunks"])
+                    )
+                    total_time = time.perf_counter() - start_time
+                    logger.info(f"Processed query in {total_time:.4f}s")
+                    return {
+                        "answer": result["answer"].strip(),
+                        "question": question,
+                        "relevant_chunks": result["relevant_chunks"],
+                        "context_count": len(result["relevant_chunks"]),
+                        "total_time": total_time,
+                        "cached": False,
+                    }
+                else:
+                    logger.error("Failed to connect to Weaviate.")
+                    return {
+                        "answer": "Unable to connect to the knowledge base at this time.",
+                        "question": question,
+                        "relevant_chunks": [],
+                        "context_count": 0,
+                        "total_time": time.perf_counter() - start_time,
+                        "cached": False,
+                    }
+            else:
+                logger.error("WeaviateSearcher instance is None.")
                 return {
-                    "answer": result["answer"].strip(),
+                    "answer": "Unable to process the question at this time.",
                     "question": question,
-                    "relevant_chunks": result["relevant_chunks"],
-                    "context_count": len(result["relevant_chunks"]),
-                    "total_time": total_time,
+                    "relevant_chunks": [],
+                    "context_count": 0,
+                    "total_time": time.perf_counter() - start_time,
                     "cached": False,
                 }
-            logger.error("WeaviateSearcher instance is None.")
-            return {
-                "answer": "Unable to process the question at this time.",
-                "question": question,
-                "relevant_chunks": [],
-                "context_count": 0,
-                "total_time": time.perf_counter() - start_time,
-                "cached": False,
-            }
         except TimeoutError as timeout_error:
             logger.error(f"Timeout error processing query: {timeout_error}")
             return {
