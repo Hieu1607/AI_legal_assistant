@@ -1,24 +1,28 @@
 """
 Weaviate tool integration for vector database operations.
 """
+
 import asyncio
-import os
 from functools import lru_cache
 from typing import Any, Dict, List, Optional
-from functools import lru_cache
-from app.configs.settings import settings
+
 import weaviate
-from weaviate.classes.init import Auth
 from weaviate.agents.query import AsyncQueryAgent
+from weaviate.classes.init import Auth
 
 from app.configs.logger import get_logger
+from app.configs.settings import settings
+
 logger = get_logger(__name__)
+
+COLLECTION_NAME = settings.WEAVIATE_COLLECTION_NAME or "LegalDocument"
+SYSTEM_PROMPT_PATH = settings.SYSTEM_PROMPT_PATH
 
 
 @lru_cache(maxsize=1)
 def load_system_prompt() -> str:
     """Load the system prompt from environment variable or file."""
-    with open("app/configs/system_prompt.txt", "r", encoding="utf-8") as f:
+    with open(SYSTEM_PROMPT_PATH, "r", encoding="utf-8") as f:
         return f.read()
 
 
@@ -58,7 +62,9 @@ class WeaviateSearcher:
                     return False
 
                 except asyncio.TimeoutError:
-                    logger.warning(f"Timeout while connecting (attempt {attempt + 1}/{retry + 1})")
+                    logger.warning(
+                        f"Timeout while connecting (attempt {attempt + 1}/{retry + 1})"
+                    )
 
                 except Exception as e:
                     logger.error(f"Connection error: {e}")
@@ -85,7 +91,7 @@ class WeaviateSearcher:
         relevant_chunks = []
         for i, source in enumerate(response.sources):
             try:
-                collection = self.client.collections.get(source.collection)
+                collection = self.client.collections.get(source.collection)  # type: ignore
                 obj = await collection.query.fetch_object_by_id(source.object_id)
                 if not obj:
                     continue
@@ -143,7 +149,6 @@ class WeaviateSearcher:
                         "answer": "Failed to create QueryAgent.",
                         "relevant_chunks": [],
                     }
-            
 
             # Query the agent
             response = await self.query_agent.ask(query)
@@ -154,7 +159,9 @@ class WeaviateSearcher:
             if not relevant_chunks:
                 logger.info("No sources found for the response.")
                 relevant_chunks = []
-            logger.info(f'Query Agent successfully answered the question: "{query[:10]}..."')
+            logger.info(
+                f'Query Agent successfully answered the question: "{query[:10]}..."'
+            )
             return {"answer": answer.strip(), "relevant_chunks": relevant_chunks}
         except Exception as e:
             logger.error(f"Error while asking question: {e}")
@@ -176,7 +183,11 @@ class WeaviateSearcher:
                 self.query_agent = None
 
 
-@lru_cache(maxsize=1)
+# Singleton instance (module-level)
+searcher_instance: WeaviateSearcher | None = None
+
+
+@lru_cache(1)
 def get_searcher() -> Optional[WeaviateSearcher]:
     """Get an instance of WeaviateSearcher.
     Returns:
