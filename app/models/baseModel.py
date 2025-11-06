@@ -18,7 +18,8 @@ class RAGRequest(BaseModel):
     )
 
     @field_validator("query")
-    def validate_query(self, v):
+    @classmethod
+    def validate_query(cls, v):
         # Remove potential injection attempts
         dangerous_patterns = ["<script>", "javascript:", "eval("]
         for pattern in dangerous_patterns:
