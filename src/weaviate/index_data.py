@@ -19,6 +19,8 @@ from typing import Any, Dict, List, Optional
 import weaviate
 from dotenv import load_dotenv
 from weaviate.classes.init import Auth
+from weaviate.classes.config import Configure, Property, DataType
+from weaviate.classes.data import DataObject
 
 # Load environment variables
 load_dotenv()
@@ -92,9 +94,12 @@ class WeaviateIndexer:
             logger.error(f"Error connecting to Weaviate: {str(e)}")
             return False
 
-    def create_schema(self) -> bool:
+    def create_schema(self, use_simple_vectorizer: bool = True) -> bool:
         """
         Create the schema for legal documents in Weaviate.
+
+        Args:
+            use_simple_vectorizer: If True, use no vectorizer (BM25 only). If False, use transformers.
 
         Returns:
             bool: True if schema created successfully, False otherwise
@@ -106,10 +111,18 @@ class WeaviateIndexer:
                 logger.info(f"Class '{self.class_name}' already exists")
                 return True
 
-            # Define the class schema
+            # Configure vectorizer based on parameter
+            if use_simple_vectorizer:
+                vectorizer_config = Configure.Vectorizer.none()
+                logger.info("Using no vectorizer - BM25 keyword search only")
+            else:
+                vectorizer_config = Configure.Vectorizer.text2vec_transformers()
+                logger.info("Using text2vec-transformers for semantic search")
+
+            # Define the class schema without embeddings
             collection = self.client.collections.create(
                 name=self.class_name,
-                description="Legal document chunks with embeddings for Vietnamese law",
+                description="Legal document chunks for Vietnamese law",
                 properties=[
                     Property(
                         name="title",
@@ -137,18 +150,13 @@ class WeaviateIndexer:
                         description="The actual text content of the chunk",
                     ),
                     Property(
-                        name="embedding_model",
-                        data_type=DataType.TEXT,
-                        description="Name of the model used to create embeddings",
-                    ),
-                    Property(
                         name="created_at",
                         data_type=DataType.DATE,
                         description="Timestamp when the object was indexed",
                     ),
                 ],
-                # Configure vectorizer (optional - can use custom embeddings)
-                vectorizer_config=Configure.Vectorizer.none(),  # We'll provide our own embeddings
+                vectorizer_config=vectorizer_config,
+                generative_config=None
             )
 
             logger.info(f"Successfully created class '{self.class_name}'")
@@ -156,6 +164,10 @@ class WeaviateIndexer:
 
         except Exception as e:
             logger.error(f"Error creating schema: {str(e)}")
+            # If transformers failed, try with no vectorizer
+            if not use_simple_vectorizer:
+                logger.info("Transformers failed, trying with no vectorizer...")
+                return self.create_schema(use_simple_vectorizer=True)
             return False
 
     def delete_class(self) -> bool:
@@ -192,15 +204,13 @@ class WeaviateIndexer:
             logger.error(f"Error loading data from {file_path}: {str(e)}")
             return []
 
-    def prepare_objects(
-        self, data: List[Dict[str, Any]], embedding_model: str = "unknown"
-    ) -> List[DataObject]:
+    def prepare_objects(self, data: List[Dict[str, Any]]) -> List[DataObject]:
         """
-        Prepare data objects for Weaviate upload.
+        Prepare data objects for Weaviate upload without embeddings.
+        Weaviate will automatically generate embeddings using its vectorizer.
 
         Args:
             data: List of dictionaries containing document chunks
-            embedding_model: Name of the embedding model used
 
         Returns:
             List of DataObject instances ready for upload
@@ -210,27 +220,19 @@ class WeaviateIndexer:
 
         for item in data:
             try:
-                # Extract embedding vector if present
-                vector = item.get("embedding", None)
-                if vector and isinstance(vector, list):
-                    # Ensure vector is properly formatted
-                    vector = [float(x) for x in vector]
-
-                # Create properties dictionary
+                # Create properties dictionary (no embedding needed)
                 properties = {
                     "title": item.get("title", ""),
                     "update_day": item.get("update_day", ""),
                     "date_of_issue": item.get("date_of_issue", ""),
                     "chunk_id": item.get("chunk_id", ""),
                     "text": item.get("text", ""),
-                    "embedding_model": embedding_model,
                     "created_at": current_time,
                 }
 
-                # Create data object
-                data_object = DataObject(
-                    properties=properties, vector=vector  # Custom embedding vector
-                )
+                # Create data object without custom vector
+                # Weaviate will automatically generate embeddings from the text
+                data_object = DataObject(properties=properties)
 
                 objects.append(data_object)
 
@@ -240,7 +242,7 @@ class WeaviateIndexer:
                 )
                 continue
 
-        logger.info(f"Prepared {len(objects)} objects for upload")
+        logger.info(f"Prepared {len(objects)} objects for upload (embeddings will be auto-generated)")
         return objects
 
     def upload_data(self, objects: List[DataObject]) -> Dict[str, int]:
@@ -324,7 +326,7 @@ class WeaviateIndexer:
 
     def test_query(self, query_text: str, limit: int = 5) -> List[Dict[str, Any]]:
         """
-        Test query to verify the indexed data.
+        Test query using BM25 keyword search.
 
         Args:
             query_text: Text to search for
@@ -336,9 +338,11 @@ class WeaviateIndexer:
         try:
             collection = self.client.collections.get(self.class_name)
 
-            # Perform a simple text search
+            # Perform BM25 keyword search (works without vectorizer)
             response = collection.query.bm25(
-                query=query_text, limit=limit, return_metadata=["score"]
+                query=query_text, 
+                limit=limit, 
+                return_metadata=["score"]
             )
 
             results = []
@@ -355,11 +359,97 @@ class WeaviateIndexer:
                 }
                 results.append(result)
 
-            logger.info(f"Found {len(results)} results for query: {query_text}")
+            logger.info(f"Found {len(results)} results for BM25 search: {query_text}")
             return results
 
         except Exception as e:
-            logger.error(f"Error performing test query: {str(e)}")
+            logger.error(f"Error performing BM25 query: {str(e)}")
+            return []
+    
+    def test_vector_query(self, query_text: str, limit: int = 5) -> List[Dict[str, Any]]:
+        """
+        Test query using vector similarity search (requires vectorizer).
+
+        Args:
+            query_text: Text to search for
+            limit: Maximum number of results to return
+
+        Returns:
+            List of search results
+        """
+        try:
+            collection = self.client.collections.get(self.class_name)
+
+            # Perform semantic vector search
+            response = collection.query.near_text(
+                query=query_text, 
+                limit=limit, 
+                return_metadata=["score", "distance"]
+            )
+
+            results = []
+            for obj in response.objects:
+                result = {
+                    "chunk_id": obj.properties.get("chunk_id"),
+                    "title": obj.properties.get("title"),
+                    "text": (
+                        obj.properties.get("text")[:200] + "..."
+                        if len(obj.properties.get("text", "")) > 200
+                        else obj.properties.get("text")
+                    ),
+                    "score": obj.metadata.score if obj.metadata.score else 0,
+                    "distance": obj.metadata.distance if obj.metadata.distance else 0,
+                }
+                results.append(result)
+
+            logger.info(f"Found {len(results)} results for vector search: {query_text}")
+            return results
+
+        except Exception as e:
+            logger.error(f"Error performing vector query: {str(e)}")
+            logger.info("Vector search failed - collection may not have vectorizer configured")
+            return []
+    
+    def test_hybrid_query(self, query_text: str, limit: int = 5) -> List[Dict[str, Any]]:
+        """
+        Test hybrid query combining vector and keyword search.
+
+        Args:
+            query_text: Text to search for
+            limit: Maximum number of results to return
+
+        Returns:
+            List of search results
+        """
+        try:
+            collection = self.client.collections.get(self.class_name)
+
+            # Perform hybrid search (vector + BM25)
+            response = collection.query.hybrid(
+                query=query_text, 
+                limit=limit, 
+                return_metadata=["score"]
+            )
+
+            results = []
+            for obj in response.objects:
+                result = {
+                    "chunk_id": obj.properties.get("chunk_id"),
+                    "title": obj.properties.get("title"),
+                    "text": (
+                        obj.properties.get("text")[:200] + "..."
+                        if len(obj.properties.get("text", "")) > 200
+                        else obj.properties.get("text")
+                    ),
+                    "score": obj.metadata.score if obj.metadata.score else 0,
+                }
+                results.append(result)
+
+            logger.info(f"Found {len(results)} results for hybrid search: {query_text}")
+            return results
+
+        except Exception as e:
+            logger.error(f"Error performing hybrid query: {str(e)}")
             return []
 
     def close_connection(self):
@@ -375,9 +465,8 @@ def main():
     """
     # Configuration
     DATA_FILE = os.path.join(
-        root, "data", "processed", "sample_embedded_chunks_with_API.json"
+        root, "total_chunks_fixed.json"
     )
-    EMBEDDING_MODEL = "models/embedding-001"  # Google Gemini embedding model
 
     # Create indexer instance
     indexer = WeaviateIndexer(
@@ -406,7 +495,7 @@ def main():
 
         # Step 4: Prepare objects
         logger.info("=== Step 4: Preparing Objects ===")
-        objects = indexer.prepare_objects(data, EMBEDDING_MODEL)
+        objects = indexer.prepare_objects(data)
         if not objects:
             logger.error("No objects prepared")
             return
@@ -419,12 +508,31 @@ def main():
         logger.info("=== Step 6: Verifying Upload ===")
         count = indexer.get_object_count()
 
-        # Step 7: Test query
-        logger.info("=== Step 7: Testing Query ===")
-        test_results = indexer.test_query("hình sự", limit=3)
-        for i, result in enumerate(test_results, 1):
+        # Step 7: Test queries
+        logger.info("=== Step 7: Testing Queries ===")
+        
+        # Test BM25 search (always works)
+        logger.info("--- BM25 Keyword Search Test ---")
+        bm25_results = indexer.test_query("hình sự", limit=3)
+        for i, result in enumerate(bm25_results, 1):
             logger.info(
-                f"Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
+                f"BM25 Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
+            )
+        
+        # Test vector search (if vectorizer is available)
+        logger.info("--- Vector Search Test ---")
+        vector_results = indexer.test_vector_query("hình sự", limit=3)
+        for i, result in enumerate(vector_results, 1):
+            logger.info(
+                f"Vector Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
+            )
+        
+        # Test hybrid search (if vectorizer is available)
+        logger.info("--- Hybrid Search Test ---")
+        hybrid_results = indexer.test_hybrid_query("hình sự", limit=3)
+        for i, result in enumerate(hybrid_results, 1):
+            logger.info(
+                f"Hybrid Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
             )
 
         logger.info("=== Indexing Process Completed Successfully ===")

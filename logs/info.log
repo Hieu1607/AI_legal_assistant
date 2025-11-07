@@ -383,3 +383,1112 @@ Mục 1 LY HÔN
 2025-10-20 06:59:44,521 - app.logic.rag_logic - INFO - Cached answer for question: Điều 2 Chương I luật hôn nhân mới nhất là gì
 2025-10-20 07:00:17,246 - app.routers.metrics - INFO - Metrics endpoint accessed (Prometheus format)
 2025-10-20 07:15:38,636 - app.routers.metrics - INFO - Metrics endpoint accessed (Prometheus format)
+2025-11-07 08:43:55,079 - __main__ - INFO - === Step 1: Connecting to Weaviate Cloud ===
+2025-11-07 08:43:55,915 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-11-07 08:43:56,385 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-11-07 08:43:56,511 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:43:56,511 - __main__ - INFO - Successfully connected to Weaviate Cloud
+2025-11-07 08:43:56,511 - __main__ - INFO - === Step 2: Creating Schema ===
+2025-11-07 08:43:56,585 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/schema "HTTP/1.1 200 OK"
+2025-11-07 08:43:56,585 - __main__ - INFO - Using no vectorizer - BM25 keyword search only
+2025-11-07 08:43:56,815 - httpx - INFO - HTTP Request: POST https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/schema "HTTP/1.1 200 OK"
+2025-11-07 08:43:56,824 - __main__ - INFO - Successfully created class 'LegalDocument'
+2025-11-07 08:43:56,824 - __main__ - INFO - === Step 3: Loading Data ===
+2025-11-07 08:43:57,045 - __main__ - INFO - Loaded 26888 chunks from C:\Users\Admin\Desktop\AI_legal_assistant\total_chunks_fixed.json
+2025-11-07 08:43:57,045 - __main__ - INFO - === Step 4: Preparing Objects ===
+2025-11-07 08:43:57,085 - __main__ - INFO - Prepared 26888 objects for upload (embeddings will be auto-generated)
+2025-11-07 08:43:57,085 - __main__ - INFO - === Step 5: Uploading Data ===
+2025-11-07 08:43:57,085 - __main__ - INFO - Starting upload of 26888 objects in batches of 50
+2025-11-07 08:43:57,085 - __main__ - INFO - Uploading batch 1/538 (50 objects)
+2025-11-07 08:43:57,228 - __main__ - INFO - Batch 1 uploaded successfully
+2025-11-07 08:43:57,334 - __main__ - INFO - Uploading batch 2/538 (50 objects)
+2025-11-07 08:43:57,445 - __main__ - INFO - Batch 2 uploaded successfully
+2025-11-07 08:43:57,547 - __main__ - INFO - Uploading batch 3/538 (50 objects)
+2025-11-07 08:43:57,647 - __main__ - INFO - Batch 3 uploaded successfully
+2025-11-07 08:43:57,750 - __main__ - INFO - Uploading batch 4/538 (50 objects)
+2025-11-07 08:43:57,857 - __main__ - INFO - Batch 4 uploaded successfully
+2025-11-07 08:43:57,958 - __main__ - INFO - Uploading batch 5/538 (50 objects)
+2025-11-07 08:43:58,061 - __main__ - INFO - Batch 5 uploaded successfully
+2025-11-07 08:43:58,163 - __main__ - INFO - Uploading batch 6/538 (50 objects)
+2025-11-07 08:43:58,299 - __main__ - INFO - Batch 6 uploaded successfully
+2025-11-07 08:43:58,401 - __main__ - INFO - Uploading batch 7/538 (50 objects)
+2025-11-07 08:43:58,495 - __main__ - INFO - Batch 7 uploaded successfully
+2025-11-07 08:43:58,598 - __main__ - INFO - Uploading batch 8/538 (50 objects)
+2025-11-07 08:43:58,725 - __main__ - INFO - Batch 8 uploaded successfully
+2025-11-07 08:43:58,832 - __main__ - INFO - Uploading batch 9/538 (50 objects)
+2025-11-07 08:43:58,935 - __main__ - INFO - Batch 9 uploaded successfully
+2025-11-07 08:43:59,035 - __main__ - INFO - Uploading batch 10/538 (50 objects)
+2025-11-07 08:43:59,135 - __main__ - INFO - Batch 10 uploaded successfully
+2025-11-07 08:43:59,238 - __main__ - INFO - Uploading batch 11/538 (50 objects)
+2025-11-07 08:43:59,336 - __main__ - INFO - Batch 11 uploaded successfully
+2025-11-07 08:43:59,437 - __main__ - INFO - Uploading batch 12/538 (50 objects)
+2025-11-07 08:43:59,525 - __main__ - INFO - Batch 12 uploaded successfully
+2025-11-07 08:43:59,628 - __main__ - INFO - Uploading batch 13/538 (50 objects)
+2025-11-07 08:43:59,725 - __main__ - INFO - Batch 13 uploaded successfully
+2025-11-07 08:43:59,826 - __main__ - INFO - Uploading batch 14/538 (50 objects)
+2025-11-07 08:43:59,925 - __main__ - INFO - Batch 14 uploaded successfully
+2025-11-07 08:44:00,026 - __main__ - INFO - Uploading batch 15/538 (50 objects)
+2025-11-07 08:44:00,125 - __main__ - INFO - Batch 15 uploaded successfully
+2025-11-07 08:44:00,226 - __main__ - INFO - Uploading batch 16/538 (50 objects)
+2025-11-07 08:44:00,331 - __main__ - INFO - Batch 16 uploaded successfully
+2025-11-07 08:44:00,431 - __main__ - INFO - Uploading batch 17/538 (50 objects)
+2025-11-07 08:44:00,539 - __main__ - INFO - Batch 17 uploaded successfully
+2025-11-07 08:44:00,643 - __main__ - INFO - Uploading batch 18/538 (50 objects)
+2025-11-07 08:44:00,725 - __main__ - INFO - Batch 18 uploaded successfully
+2025-11-07 08:44:00,832 - __main__ - INFO - Uploading batch 19/538 (50 objects)
+2025-11-07 08:44:00,920 - __main__ - INFO - Batch 19 uploaded successfully
+2025-11-07 08:44:01,021 - __main__ - INFO - Uploading batch 20/538 (50 objects)
+2025-11-07 08:44:01,115 - __main__ - INFO - Batch 20 uploaded successfully
+2025-11-07 08:44:01,215 - __main__ - INFO - Uploading batch 21/538 (50 objects)
+2025-11-07 08:44:01,295 - __main__ - INFO - Batch 21 uploaded successfully
+2025-11-07 08:44:01,402 - __main__ - INFO - Uploading batch 22/538 (50 objects)
+2025-11-07 08:44:01,500 - __main__ - INFO - Batch 22 uploaded successfully
+2025-11-07 08:44:01,601 - __main__ - INFO - Uploading batch 23/538 (50 objects)
+2025-11-07 08:44:01,696 - __main__ - INFO - Batch 23 uploaded successfully
+2025-11-07 08:44:01,798 - __main__ - INFO - Uploading batch 24/538 (50 objects)
+2025-11-07 08:44:01,885 - __main__ - INFO - Batch 24 uploaded successfully
+2025-11-07 08:44:01,994 - __main__ - INFO - Uploading batch 25/538 (50 objects)
+2025-11-07 08:44:02,078 - __main__ - INFO - Batch 25 uploaded successfully
+2025-11-07 08:44:02,181 - __main__ - INFO - Uploading batch 26/538 (50 objects)
+2025-11-07 08:44:02,283 - __main__ - INFO - Batch 26 uploaded successfully
+2025-11-07 08:44:02,384 - __main__ - INFO - Uploading batch 27/538 (50 objects)
+2025-11-07 08:44:02,467 - __main__ - INFO - Batch 27 uploaded successfully
+2025-11-07 08:44:02,570 - __main__ - INFO - Uploading batch 28/538 (50 objects)
+2025-11-07 08:44:02,664 - __main__ - INFO - Batch 28 uploaded successfully
+2025-11-07 08:44:02,765 - __main__ - INFO - Uploading batch 29/538 (50 objects)
+2025-11-07 08:44:02,846 - __main__ - INFO - Batch 29 uploaded successfully
+2025-11-07 08:44:02,948 - __main__ - INFO - Uploading batch 30/538 (50 objects)
+2025-11-07 08:44:03,035 - __main__ - INFO - Batch 30 uploaded successfully
+2025-11-07 08:44:03,137 - __main__ - INFO - Uploading batch 31/538 (50 objects)
+2025-11-07 08:44:03,230 - __main__ - INFO - Batch 31 uploaded successfully
+2025-11-07 08:44:03,334 - __main__ - INFO - Uploading batch 32/538 (50 objects)
+2025-11-07 08:44:03,420 - __main__ - INFO - Batch 32 uploaded successfully
+2025-11-07 08:44:03,524 - __main__ - INFO - Uploading batch 33/538 (50 objects)
+2025-11-07 08:44:03,625 - __main__ - INFO - Batch 33 uploaded successfully
+2025-11-07 08:44:03,727 - __main__ - INFO - Uploading batch 34/538 (50 objects)
+2025-11-07 08:44:03,825 - __main__ - INFO - Batch 34 uploaded successfully
+2025-11-07 08:44:03,929 - __main__ - INFO - Uploading batch 35/538 (50 objects)
+2025-11-07 08:44:04,038 - __main__ - INFO - Batch 35 uploaded successfully
+2025-11-07 08:44:04,141 - __main__ - INFO - Uploading batch 36/538 (50 objects)
+2025-11-07 08:44:04,235 - __main__ - INFO - Batch 36 uploaded successfully
+2025-11-07 08:44:04,344 - __main__ - INFO - Uploading batch 37/538 (50 objects)
+2025-11-07 08:44:04,436 - __main__ - INFO - Batch 37 uploaded successfully
+2025-11-07 08:44:04,537 - __main__ - INFO - Uploading batch 38/538 (50 objects)
+2025-11-07 08:44:04,630 - __main__ - INFO - Batch 38 uploaded successfully
+2025-11-07 08:44:04,732 - __main__ - INFO - Uploading batch 39/538 (50 objects)
+2025-11-07 08:44:04,822 - __main__ - INFO - Batch 39 uploaded successfully
+2025-11-07 08:44:04,925 - __main__ - INFO - Uploading batch 40/538 (50 objects)
+2025-11-07 08:44:05,015 - __main__ - INFO - Batch 40 uploaded successfully
+2025-11-07 08:44:05,120 - __main__ - INFO - Uploading batch 41/538 (50 objects)
+2025-11-07 08:44:05,207 - __main__ - INFO - Batch 41 uploaded successfully
+2025-11-07 08:44:05,312 - __main__ - INFO - Uploading batch 42/538 (50 objects)
+2025-11-07 08:44:05,395 - __main__ - INFO - Batch 42 uploaded successfully
+2025-11-07 08:44:05,496 - __main__ - INFO - Uploading batch 43/538 (50 objects)
+2025-11-07 08:44:05,580 - __main__ - INFO - Batch 43 uploaded successfully
+2025-11-07 08:44:05,683 - __main__ - INFO - Uploading batch 44/538 (50 objects)
+2025-11-07 08:44:05,780 - __main__ - INFO - Batch 44 uploaded successfully
+2025-11-07 08:44:05,882 - __main__ - INFO - Uploading batch 45/538 (50 objects)
+2025-11-07 08:44:05,957 - __main__ - INFO - Batch 45 uploaded successfully
+2025-11-07 08:44:06,061 - __main__ - INFO - Uploading batch 46/538 (50 objects)
+2025-11-07 08:44:06,141 - __main__ - INFO - Batch 46 uploaded successfully
+2025-11-07 08:44:06,243 - __main__ - INFO - Uploading batch 47/538 (50 objects)
+2025-11-07 08:44:06,330 - __main__ - INFO - Batch 47 uploaded successfully
+2025-11-07 08:44:06,432 - __main__ - INFO - Uploading batch 48/538 (50 objects)
+2025-11-07 08:44:06,525 - __main__ - INFO - Batch 48 uploaded successfully
+2025-11-07 08:44:06,626 - __main__ - INFO - Uploading batch 49/538 (50 objects)
+2025-11-07 08:44:06,727 - __main__ - INFO - Batch 49 uploaded successfully
+2025-11-07 08:44:06,827 - __main__ - INFO - Uploading batch 50/538 (50 objects)
+2025-11-07 08:44:06,919 - __main__ - INFO - Batch 50 uploaded successfully
+2025-11-07 08:44:07,020 - __main__ - INFO - Uploading batch 51/538 (50 objects)
+2025-11-07 08:44:07,105 - __main__ - INFO - Batch 51 uploaded successfully
+2025-11-07 08:44:07,207 - __main__ - INFO - Uploading batch 52/538 (50 objects)
+2025-11-07 08:44:07,301 - __main__ - INFO - Batch 52 uploaded successfully
+2025-11-07 08:44:07,402 - __main__ - INFO - Uploading batch 53/538 (50 objects)
+2025-11-07 08:44:07,488 - __main__ - INFO - Batch 53 uploaded successfully
+2025-11-07 08:44:07,590 - __main__ - INFO - Uploading batch 54/538 (50 objects)
+2025-11-07 08:44:07,680 - __main__ - INFO - Batch 54 uploaded successfully
+2025-11-07 08:44:07,785 - __main__ - INFO - Uploading batch 55/538 (50 objects)
+2025-11-07 08:44:07,880 - __main__ - INFO - Batch 55 uploaded successfully
+2025-11-07 08:44:07,984 - __main__ - INFO - Uploading batch 56/538 (50 objects)
+2025-11-07 08:44:08,065 - __main__ - INFO - Batch 56 uploaded successfully
+2025-11-07 08:44:08,172 - __main__ - INFO - Uploading batch 57/538 (50 objects)
+2025-11-07 08:44:08,255 - __main__ - INFO - Batch 57 uploaded successfully
+2025-11-07 08:44:08,360 - __main__ - INFO - Uploading batch 58/538 (50 objects)
+2025-11-07 08:44:08,455 - __main__ - INFO - Batch 58 uploaded successfully
+2025-11-07 08:44:08,556 - __main__ - INFO - Uploading batch 59/538 (50 objects)
+2025-11-07 08:44:08,645 - __main__ - INFO - Batch 59 uploaded successfully
+2025-11-07 08:44:08,749 - __main__ - INFO - Uploading batch 60/538 (50 objects)
+2025-11-07 08:44:08,847 - __main__ - INFO - Batch 60 uploaded successfully
+2025-11-07 08:44:08,948 - __main__ - INFO - Uploading batch 61/538 (50 objects)
+2025-11-07 08:44:09,040 - __main__ - INFO - Batch 61 uploaded successfully
+2025-11-07 08:44:09,143 - __main__ - INFO - Uploading batch 62/538 (50 objects)
+2025-11-07 08:44:09,235 - __main__ - INFO - Batch 62 uploaded successfully
+2025-11-07 08:44:09,336 - __main__ - INFO - Uploading batch 63/538 (50 objects)
+2025-11-07 08:44:09,427 - __main__ - INFO - Batch 63 uploaded successfully
+2025-11-07 08:44:09,529 - __main__ - INFO - Uploading batch 64/538 (50 objects)
+2025-11-07 08:44:09,625 - __main__ - INFO - Batch 64 uploaded successfully
+2025-11-07 08:44:09,729 - __main__ - INFO - Uploading batch 65/538 (50 objects)
+2025-11-07 08:44:09,819 - __main__ - INFO - Batch 65 uploaded successfully
+2025-11-07 08:44:09,924 - __main__ - INFO - Uploading batch 66/538 (50 objects)
+2025-11-07 08:44:10,020 - __main__ - INFO - Batch 66 uploaded successfully
+2025-11-07 08:44:10,120 - __main__ - INFO - Uploading batch 67/538 (50 objects)
+2025-11-07 08:44:10,209 - __main__ - INFO - Batch 67 uploaded successfully
+2025-11-07 08:44:10,310 - __main__ - INFO - Uploading batch 68/538 (50 objects)
+2025-11-07 08:44:10,390 - __main__ - INFO - Batch 68 uploaded successfully
+2025-11-07 08:44:10,493 - __main__ - INFO - Uploading batch 69/538 (50 objects)
+2025-11-07 08:44:10,585 - __main__ - INFO - Batch 69 uploaded successfully
+2025-11-07 08:44:10,689 - __main__ - INFO - Uploading batch 70/538 (50 objects)
+2025-11-07 08:44:10,768 - __main__ - INFO - Batch 70 uploaded successfully
+2025-11-07 08:44:10,871 - __main__ - INFO - Uploading batch 71/538 (50 objects)
+2025-11-07 08:44:10,955 - __main__ - INFO - Batch 71 uploaded successfully
+2025-11-07 08:44:11,058 - __main__ - INFO - Uploading batch 72/538 (50 objects)
+2025-11-07 08:44:11,145 - __main__ - INFO - Batch 72 uploaded successfully
+2025-11-07 08:44:11,247 - __main__ - INFO - Uploading batch 73/538 (50 objects)
+2025-11-07 08:44:11,328 - __main__ - INFO - Batch 73 uploaded successfully
+2025-11-07 08:44:11,430 - __main__ - INFO - Uploading batch 74/538 (50 objects)
+2025-11-07 08:44:11,505 - __main__ - INFO - Batch 74 uploaded successfully
+2025-11-07 08:44:11,609 - __main__ - INFO - Uploading batch 75/538 (50 objects)
+2025-11-07 08:44:11,695 - __main__ - INFO - Batch 75 uploaded successfully
+2025-11-07 08:44:11,796 - __main__ - INFO - Uploading batch 76/538 (50 objects)
+2025-11-07 08:44:11,875 - __main__ - INFO - Batch 76 uploaded successfully
+2025-11-07 08:44:11,983 - __main__ - INFO - Uploading batch 77/538 (50 objects)
+2025-11-07 08:44:12,075 - __main__ - INFO - Batch 77 uploaded successfully
+2025-11-07 08:44:12,176 - __main__ - INFO - Uploading batch 78/538 (50 objects)
+2025-11-07 08:44:12,256 - __main__ - INFO - Batch 78 uploaded successfully
+2025-11-07 08:44:12,359 - __main__ - INFO - Uploading batch 79/538 (50 objects)
+2025-11-07 08:44:12,436 - __main__ - INFO - Batch 79 uploaded successfully
+2025-11-07 08:44:12,545 - __main__ - INFO - Uploading batch 80/538 (50 objects)
+2025-11-07 08:44:12,623 - __main__ - INFO - Batch 80 uploaded successfully
+2025-11-07 08:44:12,724 - __main__ - INFO - Uploading batch 81/538 (50 objects)
+2025-11-07 08:44:12,815 - __main__ - INFO - Batch 81 uploaded successfully
+2025-11-07 08:44:12,916 - __main__ - INFO - Uploading batch 82/538 (50 objects)
+2025-11-07 08:44:12,995 - __main__ - INFO - Batch 82 uploaded successfully
+2025-11-07 08:44:13,096 - __main__ - INFO - Uploading batch 83/538 (50 objects)
+2025-11-07 08:44:13,175 - __main__ - INFO - Batch 83 uploaded successfully
+2025-11-07 08:44:13,276 - __main__ - INFO - Uploading batch 84/538 (50 objects)
+2025-11-07 08:44:13,358 - __main__ - INFO - Batch 84 uploaded successfully
+2025-11-07 08:44:13,462 - __main__ - INFO - Uploading batch 85/538 (50 objects)
+2025-11-07 08:44:13,561 - __main__ - INFO - Batch 85 uploaded successfully
+2025-11-07 08:44:13,662 - __main__ - INFO - Uploading batch 86/538 (50 objects)
+2025-11-07 08:44:13,745 - __main__ - INFO - Batch 86 uploaded successfully
+2025-11-07 08:44:13,853 - __main__ - INFO - Uploading batch 87/538 (50 objects)
+2025-11-07 08:44:13,935 - __main__ - INFO - Batch 87 uploaded successfully
+2025-11-07 08:44:14,044 - __main__ - INFO - Uploading batch 88/538 (50 objects)
+2025-11-07 08:44:14,125 - __main__ - INFO - Batch 88 uploaded successfully
+2025-11-07 08:44:14,233 - __main__ - INFO - Uploading batch 89/538 (50 objects)
+2025-11-07 08:44:14,325 - __main__ - INFO - Batch 89 uploaded successfully
+2025-11-07 08:44:14,430 - __main__ - INFO - Uploading batch 90/538 (50 objects)
+2025-11-07 08:44:14,515 - __main__ - INFO - Batch 90 uploaded successfully
+2025-11-07 08:44:14,617 - __main__ - INFO - Uploading batch 91/538 (50 objects)
+2025-11-07 08:44:14,705 - __main__ - INFO - Batch 91 uploaded successfully
+2025-11-07 08:44:14,809 - __main__ - INFO - Uploading batch 92/538 (50 objects)
+2025-11-07 08:44:14,915 - __main__ - INFO - Batch 92 uploaded successfully
+2025-11-07 08:44:15,018 - __main__ - INFO - Uploading batch 93/538 (50 objects)
+2025-11-07 08:44:15,111 - __main__ - INFO - Batch 93 uploaded successfully
+2025-11-07 08:44:15,212 - __main__ - INFO - Uploading batch 94/538 (50 objects)
+2025-11-07 08:44:15,298 - __main__ - INFO - Batch 94 uploaded successfully
+2025-11-07 08:44:15,401 - __main__ - INFO - Uploading batch 95/538 (50 objects)
+2025-11-07 08:44:15,491 - __main__ - INFO - Batch 95 uploaded successfully
+2025-11-07 08:44:15,592 - __main__ - INFO - Uploading batch 96/538 (50 objects)
+2025-11-07 08:44:15,665 - __main__ - INFO - Batch 96 uploaded successfully
+2025-11-07 08:44:15,774 - __main__ - INFO - Uploading batch 97/538 (50 objects)
+2025-11-07 08:44:15,855 - __main__ - INFO - Batch 97 uploaded successfully
+2025-11-07 08:44:15,965 - __main__ - INFO - Uploading batch 98/538 (50 objects)
+2025-11-07 08:44:16,050 - __main__ - INFO - Batch 98 uploaded successfully
+2025-11-07 08:44:16,152 - __main__ - INFO - Uploading batch 99/538 (50 objects)
+2025-11-07 08:44:16,245 - __main__ - INFO - Batch 99 uploaded successfully
+2025-11-07 08:44:16,351 - __main__ - INFO - Uploading batch 100/538 (50 objects)
+2025-11-07 08:44:16,441 - __main__ - INFO - Batch 100 uploaded successfully
+2025-11-07 08:44:16,542 - __main__ - INFO - Uploading batch 101/538 (50 objects)
+2025-11-07 08:44:16,619 - __main__ - INFO - Batch 101 uploaded successfully
+2025-11-07 08:44:16,721 - __main__ - INFO - Uploading batch 102/538 (50 objects)
+2025-11-07 08:44:16,800 - __main__ - INFO - Batch 102 uploaded successfully
+2025-11-07 08:44:16,902 - __main__ - INFO - Uploading batch 103/538 (50 objects)
+2025-11-07 08:44:16,995 - __main__ - INFO - Batch 103 uploaded successfully
+2025-11-07 08:44:17,096 - __main__ - INFO - Uploading batch 104/538 (50 objects)
+2025-11-07 08:44:17,185 - __main__ - INFO - Batch 104 uploaded successfully
+2025-11-07 08:44:17,290 - __main__ - INFO - Uploading batch 105/538 (50 objects)
+2025-11-07 08:44:17,467 - __main__ - INFO - Batch 105 uploaded successfully
+2025-11-07 08:44:17,571 - __main__ - INFO - Uploading batch 106/538 (50 objects)
+2025-11-07 08:44:17,650 - __main__ - INFO - Batch 106 uploaded successfully
+2025-11-07 08:44:17,753 - __main__ - INFO - Uploading batch 107/538 (50 objects)
+2025-11-07 08:44:17,831 - __main__ - INFO - Batch 107 uploaded successfully
+2025-11-07 08:44:17,934 - __main__ - INFO - Uploading batch 108/538 (50 objects)
+2025-11-07 08:44:18,015 - __main__ - INFO - Batch 108 uploaded successfully
+2025-11-07 08:44:18,121 - __main__ - INFO - Uploading batch 109/538 (50 objects)
+2025-11-07 08:44:18,211 - __main__ - INFO - Batch 109 uploaded successfully
+2025-11-07 08:44:18,312 - __main__ - INFO - Uploading batch 110/538 (50 objects)
+2025-11-07 08:44:18,412 - __main__ - INFO - Batch 110 uploaded successfully
+2025-11-07 08:44:18,515 - __main__ - INFO - Uploading batch 111/538 (50 objects)
+2025-11-07 08:44:18,605 - __main__ - INFO - Batch 111 uploaded successfully
+2025-11-07 08:44:18,708 - __main__ - INFO - Uploading batch 112/538 (50 objects)
+2025-11-07 08:44:18,805 - __main__ - INFO - Batch 112 uploaded successfully
+2025-11-07 08:44:18,907 - __main__ - INFO - Uploading batch 113/538 (50 objects)
+2025-11-07 08:44:19,005 - __main__ - INFO - Batch 113 uploaded successfully
+2025-11-07 08:44:19,108 - __main__ - INFO - Uploading batch 114/538 (50 objects)
+2025-11-07 08:44:19,199 - __main__ - INFO - Batch 114 uploaded successfully
+2025-11-07 08:44:19,305 - __main__ - INFO - Uploading batch 115/538 (50 objects)
+2025-11-07 08:44:19,405 - __main__ - INFO - Batch 115 uploaded successfully
+2025-11-07 08:44:19,506 - __main__ - INFO - Uploading batch 116/538 (50 objects)
+2025-11-07 08:44:19,605 - __main__ - INFO - Batch 116 uploaded successfully
+2025-11-07 08:44:19,707 - __main__ - INFO - Uploading batch 117/538 (50 objects)
+2025-11-07 08:44:19,805 - __main__ - INFO - Batch 117 uploaded successfully
+2025-11-07 08:44:19,908 - __main__ - INFO - Uploading batch 118/538 (50 objects)
+2025-11-07 08:44:20,005 - __main__ - INFO - Batch 118 uploaded successfully
+2025-11-07 08:44:20,106 - __main__ - INFO - Uploading batch 119/538 (50 objects)
+2025-11-07 08:44:20,200 - __main__ - INFO - Batch 119 uploaded successfully
+2025-11-07 08:44:20,303 - __main__ - INFO - Uploading batch 120/538 (50 objects)
+2025-11-07 08:44:20,400 - __main__ - INFO - Batch 120 uploaded successfully
+2025-11-07 08:44:20,501 - __main__ - INFO - Uploading batch 121/538 (50 objects)
+2025-11-07 08:44:20,597 - __main__ - INFO - Batch 121 uploaded successfully
+2025-11-07 08:44:20,699 - __main__ - INFO - Uploading batch 122/538 (50 objects)
+2025-11-07 08:44:20,780 - __main__ - INFO - Batch 122 uploaded successfully
+2025-11-07 08:44:20,883 - __main__ - INFO - Uploading batch 123/538 (50 objects)
+2025-11-07 08:44:20,975 - __main__ - INFO - Batch 123 uploaded successfully
+2025-11-07 08:44:21,077 - __main__ - INFO - Uploading batch 124/538 (50 objects)
+2025-11-07 08:44:21,155 - __main__ - INFO - Batch 124 uploaded successfully
+2025-11-07 08:44:21,258 - __main__ - INFO - Uploading batch 125/538 (50 objects)
+2025-11-07 08:44:21,337 - __main__ - INFO - Batch 125 uploaded successfully
+2025-11-07 08:44:21,445 - __main__ - INFO - Uploading batch 126/538 (50 objects)
+2025-11-07 08:44:21,539 - __main__ - INFO - Batch 126 uploaded successfully
+2025-11-07 08:44:21,641 - __main__ - INFO - Uploading batch 127/538 (50 objects)
+2025-11-07 08:44:21,745 - __main__ - INFO - Batch 127 uploaded successfully
+2025-11-07 08:44:21,846 - __main__ - INFO - Uploading batch 128/538 (50 objects)
+2025-11-07 08:44:21,935 - __main__ - INFO - Batch 128 uploaded successfully
+2025-11-07 08:44:22,041 - __main__ - INFO - Uploading batch 129/538 (50 objects)
+2025-11-07 08:44:22,138 - __main__ - INFO - Batch 129 uploaded successfully
+2025-11-07 08:44:22,240 - __main__ - INFO - Uploading batch 130/538 (50 objects)
+2025-11-07 08:44:22,330 - __main__ - INFO - Batch 130 uploaded successfully
+2025-11-07 08:44:22,434 - __main__ - INFO - Uploading batch 131/538 (50 objects)
+2025-11-07 08:44:22,525 - __main__ - INFO - Batch 131 uploaded successfully
+2025-11-07 08:44:22,628 - __main__ - INFO - Uploading batch 132/538 (50 objects)
+2025-11-07 08:44:22,715 - __main__ - INFO - Batch 132 uploaded successfully
+2025-11-07 08:44:22,816 - __main__ - INFO - Uploading batch 133/538 (50 objects)
+2025-11-07 08:44:22,913 - __main__ - INFO - Batch 133 uploaded successfully
+2025-11-07 08:44:23,015 - __main__ - INFO - Uploading batch 134/538 (50 objects)
+2025-11-07 08:44:23,117 - __main__ - INFO - Batch 134 uploaded successfully
+2025-11-07 08:44:23,219 - __main__ - INFO - Uploading batch 135/538 (50 objects)
+2025-11-07 08:44:23,305 - __main__ - INFO - Batch 135 uploaded successfully
+2025-11-07 08:44:23,406 - __main__ - INFO - Uploading batch 136/538 (50 objects)
+2025-11-07 08:44:23,490 - __main__ - INFO - Batch 136 uploaded successfully
+2025-11-07 08:44:23,594 - __main__ - INFO - Uploading batch 137/538 (50 objects)
+2025-11-07 08:44:23,697 - __main__ - INFO - Batch 137 uploaded successfully
+2025-11-07 08:44:23,798 - __main__ - INFO - Uploading batch 138/538 (50 objects)
+2025-11-07 08:44:23,885 - __main__ - INFO - Batch 138 uploaded successfully
+2025-11-07 08:44:23,987 - __main__ - INFO - Uploading batch 139/538 (50 objects)
+2025-11-07 08:44:24,070 - __main__ - INFO - Batch 139 uploaded successfully
+2025-11-07 08:44:24,175 - __main__ - INFO - Uploading batch 140/538 (50 objects)
+2025-11-07 08:44:24,257 - __main__ - INFO - Batch 140 uploaded successfully
+2025-11-07 08:44:24,362 - __main__ - INFO - Uploading batch 141/538 (50 objects)
+2025-11-07 08:44:24,445 - __main__ - INFO - Batch 141 uploaded successfully
+2025-11-07 08:44:24,550 - __main__ - INFO - Uploading batch 142/538 (50 objects)
+2025-11-07 08:44:24,650 - __main__ - INFO - Batch 142 uploaded successfully
+2025-11-07 08:44:24,753 - __main__ - INFO - Uploading batch 143/538 (50 objects)
+2025-11-07 08:44:24,845 - __main__ - INFO - Batch 143 uploaded successfully
+2025-11-07 08:44:24,946 - __main__ - INFO - Uploading batch 144/538 (50 objects)
+2025-11-07 08:44:25,055 - __main__ - INFO - Batch 144 uploaded successfully
+2025-11-07 08:44:25,158 - __main__ - INFO - Uploading batch 145/538 (50 objects)
+2025-11-07 08:44:25,258 - __main__ - INFO - Batch 145 uploaded successfully
+2025-11-07 08:44:25,359 - __main__ - INFO - Uploading batch 146/538 (50 objects)
+2025-11-07 08:44:25,475 - __main__ - INFO - Batch 146 uploaded successfully
+2025-11-07 08:44:25,576 - __main__ - INFO - Uploading batch 147/538 (50 objects)
+2025-11-07 08:44:25,681 - __main__ - INFO - Batch 147 uploaded successfully
+2025-11-07 08:44:25,785 - __main__ - INFO - Uploading batch 148/538 (50 objects)
+2025-11-07 08:44:25,885 - __main__ - INFO - Batch 148 uploaded successfully
+2025-11-07 08:44:25,986 - __main__ - INFO - Uploading batch 149/538 (50 objects)
+2025-11-07 08:44:26,095 - __main__ - INFO - Batch 149 uploaded successfully
+2025-11-07 08:44:26,197 - __main__ - INFO - Uploading batch 150/538 (50 objects)
+2025-11-07 08:44:26,315 - __main__ - INFO - Batch 150 uploaded successfully
+2025-11-07 08:44:26,416 - __main__ - INFO - Uploading batch 151/538 (50 objects)
+2025-11-07 08:44:26,525 - __main__ - INFO - Batch 151 uploaded successfully
+2025-11-07 08:44:26,628 - __main__ - INFO - Uploading batch 152/538 (50 objects)
+2025-11-07 08:44:26,725 - __main__ - INFO - Batch 152 uploaded successfully
+2025-11-07 08:44:26,830 - __main__ - INFO - Uploading batch 153/538 (50 objects)
+2025-11-07 08:44:26,935 - __main__ - INFO - Batch 153 uploaded successfully
+2025-11-07 08:44:27,041 - __main__ - INFO - Uploading batch 154/538 (50 objects)
+2025-11-07 08:44:27,141 - __main__ - INFO - Batch 154 uploaded successfully
+2025-11-07 08:44:27,244 - __main__ - INFO - Uploading batch 155/538 (50 objects)
+2025-11-07 08:44:27,338 - __main__ - INFO - Batch 155 uploaded successfully
+2025-11-07 08:44:27,442 - __main__ - INFO - Uploading batch 156/538 (50 objects)
+2025-11-07 08:44:27,565 - __main__ - INFO - Batch 156 uploaded successfully
+2025-11-07 08:44:27,670 - __main__ - INFO - Uploading batch 157/538 (50 objects)
+2025-11-07 08:44:27,755 - __main__ - INFO - Batch 157 uploaded successfully
+2025-11-07 08:44:27,863 - __main__ - INFO - Uploading batch 158/538 (50 objects)
+2025-11-07 08:44:27,955 - __main__ - INFO - Batch 158 uploaded successfully
+2025-11-07 08:44:28,057 - __main__ - INFO - Uploading batch 159/538 (50 objects)
+2025-11-07 08:44:28,157 - __main__ - INFO - Batch 159 uploaded successfully
+2025-11-07 08:44:28,259 - __main__ - INFO - Uploading batch 160/538 (50 objects)
+2025-11-07 08:44:28,365 - __main__ - INFO - Batch 160 uploaded successfully
+2025-11-07 08:44:28,469 - __main__ - INFO - Uploading batch 161/538 (50 objects)
+2025-11-07 08:44:28,576 - __main__ - INFO - Batch 161 uploaded successfully
+2025-11-07 08:44:28,682 - __main__ - INFO - Uploading batch 162/538 (50 objects)
+2025-11-07 08:44:28,790 - __main__ - INFO - Batch 162 uploaded successfully
+2025-11-07 08:44:28,891 - __main__ - INFO - Uploading batch 163/538 (50 objects)
+2025-11-07 08:44:28,998 - __main__ - INFO - Batch 163 uploaded successfully
+2025-11-07 08:44:29,099 - __main__ - INFO - Uploading batch 164/538 (50 objects)
+2025-11-07 08:44:29,192 - __main__ - INFO - Batch 164 uploaded successfully
+2025-11-07 08:44:29,295 - __main__ - INFO - Uploading batch 165/538 (50 objects)
+2025-11-07 08:44:29,375 - __main__ - INFO - Batch 165 uploaded successfully
+2025-11-07 08:44:29,478 - __main__ - INFO - Uploading batch 166/538 (50 objects)
+2025-11-07 08:44:29,575 - __main__ - INFO - Batch 166 uploaded successfully
+2025-11-07 08:44:29,679 - __main__ - INFO - Uploading batch 167/538 (50 objects)
+2025-11-07 08:44:29,785 - __main__ - INFO - Batch 167 uploaded successfully
+2025-11-07 08:44:29,892 - __main__ - INFO - Uploading batch 168/538 (50 objects)
+2025-11-07 08:44:29,991 - __main__ - INFO - Batch 168 uploaded successfully
+2025-11-07 08:44:30,094 - __main__ - INFO - Uploading batch 169/538 (50 objects)
+2025-11-07 08:44:30,187 - __main__ - INFO - Batch 169 uploaded successfully
+2025-11-07 08:44:30,288 - __main__ - INFO - Uploading batch 170/538 (50 objects)
+2025-11-07 08:44:30,385 - __main__ - INFO - Batch 170 uploaded successfully
+2025-11-07 08:44:30,487 - __main__ - INFO - Uploading batch 171/538 (50 objects)
+2025-11-07 08:44:30,595 - __main__ - INFO - Batch 171 uploaded successfully
+2025-11-07 08:44:30,696 - __main__ - INFO - Uploading batch 172/538 (50 objects)
+2025-11-07 08:44:30,775 - __main__ - INFO - Batch 172 uploaded successfully
+2025-11-07 08:44:30,881 - __main__ - INFO - Uploading batch 173/538 (50 objects)
+2025-11-07 08:44:30,965 - __main__ - INFO - Batch 173 uploaded successfully
+2025-11-07 08:44:31,067 - __main__ - INFO - Uploading batch 174/538 (50 objects)
+2025-11-07 08:44:31,155 - __main__ - INFO - Batch 174 uploaded successfully
+2025-11-07 08:44:31,257 - __main__ - INFO - Uploading batch 175/538 (50 objects)
+2025-11-07 08:44:31,387 - __main__ - INFO - Batch 175 uploaded successfully
+2025-11-07 08:44:31,488 - __main__ - INFO - Uploading batch 176/538 (50 objects)
+2025-11-07 08:44:31,592 - __main__ - INFO - Batch 176 uploaded successfully
+2025-11-07 08:44:31,693 - __main__ - INFO - Uploading batch 177/538 (50 objects)
+2025-11-07 08:44:31,795 - __main__ - INFO - Batch 177 uploaded successfully
+2025-11-07 08:44:31,896 - __main__ - INFO - Uploading batch 178/538 (50 objects)
+2025-11-07 08:44:31,987 - __main__ - INFO - Batch 178 uploaded successfully
+2025-11-07 08:44:32,089 - __main__ - INFO - Uploading batch 179/538 (50 objects)
+2025-11-07 08:44:32,196 - __main__ - INFO - Batch 179 uploaded successfully
+2025-11-07 08:44:32,298 - __main__ - INFO - Uploading batch 180/538 (50 objects)
+2025-11-07 08:44:32,387 - __main__ - INFO - Batch 180 uploaded successfully
+2025-11-07 08:44:32,488 - __main__ - INFO - Uploading batch 181/538 (50 objects)
+2025-11-07 08:44:32,591 - __main__ - INFO - Batch 181 uploaded successfully
+2025-11-07 08:44:32,693 - __main__ - INFO - Uploading batch 182/538 (50 objects)
+2025-11-07 08:44:32,785 - __main__ - INFO - Batch 182 uploaded successfully
+2025-11-07 08:44:32,896 - __main__ - INFO - Uploading batch 183/538 (50 objects)
+2025-11-07 08:44:32,995 - __main__ - INFO - Batch 183 uploaded successfully
+2025-11-07 08:44:33,097 - __main__ - INFO - Uploading batch 184/538 (50 objects)
+2025-11-07 08:44:33,187 - __main__ - INFO - Batch 184 uploaded successfully
+2025-11-07 08:44:33,288 - __main__ - INFO - Uploading batch 185/538 (50 objects)
+2025-11-07 08:44:33,387 - __main__ - INFO - Batch 185 uploaded successfully
+2025-11-07 08:44:33,489 - __main__ - INFO - Uploading batch 186/538 (50 objects)
+2025-11-07 08:44:33,583 - __main__ - INFO - Batch 186 uploaded successfully
+2025-11-07 08:44:33,684 - __main__ - INFO - Uploading batch 187/538 (50 objects)
+2025-11-07 08:44:33,801 - __main__ - INFO - Batch 187 uploaded successfully
+2025-11-07 08:44:33,903 - __main__ - INFO - Uploading batch 188/538 (50 objects)
+2025-11-07 08:44:34,062 - __main__ - INFO - Batch 188 uploaded successfully
+2025-11-07 08:44:34,165 - __main__ - INFO - Uploading batch 189/538 (50 objects)
+2025-11-07 08:44:34,265 - __main__ - INFO - Batch 189 uploaded successfully
+2025-11-07 08:44:34,369 - __main__ - INFO - Uploading batch 190/538 (50 objects)
+2025-11-07 08:44:34,469 - __main__ - INFO - Batch 190 uploaded successfully
+2025-11-07 08:44:34,574 - __main__ - INFO - Uploading batch 191/538 (50 objects)
+2025-11-07 08:44:34,665 - __main__ - INFO - Batch 191 uploaded successfully
+2025-11-07 08:44:34,767 - __main__ - INFO - Uploading batch 192/538 (50 objects)
+2025-11-07 08:44:34,865 - __main__ - INFO - Batch 192 uploaded successfully
+2025-11-07 08:44:34,965 - __main__ - INFO - Uploading batch 193/538 (50 objects)
+2025-11-07 08:44:35,065 - __main__ - INFO - Batch 193 uploaded successfully
+2025-11-07 08:44:35,166 - __main__ - INFO - Uploading batch 194/538 (50 objects)
+2025-11-07 08:44:35,255 - __main__ - INFO - Batch 194 uploaded successfully
+2025-11-07 08:44:35,356 - __main__ - INFO - Uploading batch 195/538 (50 objects)
+2025-11-07 08:44:35,455 - __main__ - INFO - Batch 195 uploaded successfully
+2025-11-07 08:44:35,558 - __main__ - INFO - Uploading batch 196/538 (50 objects)
+2025-11-07 08:44:35,655 - __main__ - INFO - Batch 196 uploaded successfully
+2025-11-07 08:44:35,757 - __main__ - INFO - Uploading batch 197/538 (50 objects)
+2025-11-07 08:44:35,862 - __main__ - INFO - Batch 197 uploaded successfully
+2025-11-07 08:44:35,964 - __main__ - INFO - Uploading batch 198/538 (50 objects)
+2025-11-07 08:44:36,065 - __main__ - INFO - Batch 198 uploaded successfully
+2025-11-07 08:44:36,166 - __main__ - INFO - Uploading batch 199/538 (50 objects)
+2025-11-07 08:44:36,285 - __main__ - INFO - Batch 199 uploaded successfully
+2025-11-07 08:44:36,387 - __main__ - INFO - Uploading batch 200/538 (50 objects)
+2025-11-07 08:44:36,495 - __main__ - INFO - Batch 200 uploaded successfully
+2025-11-07 08:44:36,597 - __main__ - INFO - Uploading batch 201/538 (50 objects)
+2025-11-07 08:44:36,699 - __main__ - INFO - Batch 201 uploaded successfully
+2025-11-07 08:44:36,800 - __main__ - INFO - Uploading batch 202/538 (50 objects)
+2025-11-07 08:44:36,902 - __main__ - INFO - Batch 202 uploaded successfully
+2025-11-07 08:44:37,003 - __main__ - INFO - Uploading batch 203/538 (50 objects)
+2025-11-07 08:44:37,095 - __main__ - INFO - Batch 203 uploaded successfully
+2025-11-07 08:44:37,199 - __main__ - INFO - Uploading batch 204/538 (50 objects)
+2025-11-07 08:44:37,295 - __main__ - INFO - Batch 204 uploaded successfully
+2025-11-07 08:44:37,398 - __main__ - INFO - Uploading batch 205/538 (50 objects)
+2025-11-07 08:44:37,568 - __main__ - INFO - Batch 205 uploaded successfully
+2025-11-07 08:44:37,675 - __main__ - INFO - Uploading batch 206/538 (50 objects)
+2025-11-07 08:44:37,775 - __main__ - INFO - Batch 206 uploaded successfully
+2025-11-07 08:44:37,879 - __main__ - INFO - Uploading batch 207/538 (50 objects)
+2025-11-07 08:44:37,975 - __main__ - INFO - Batch 207 uploaded successfully
+2025-11-07 08:44:38,081 - __main__ - INFO - Uploading batch 208/538 (50 objects)
+2025-11-07 08:44:38,155 - __main__ - INFO - Batch 208 uploaded successfully
+2025-11-07 08:44:38,256 - __main__ - INFO - Uploading batch 209/538 (50 objects)
+2025-11-07 08:44:38,329 - __main__ - INFO - Batch 209 uploaded successfully
+2025-11-07 08:44:38,430 - __main__ - INFO - Uploading batch 210/538 (50 objects)
+2025-11-07 08:44:38,505 - __main__ - INFO - Batch 210 uploaded successfully
+2025-11-07 08:44:38,614 - __main__ - INFO - Uploading batch 211/538 (50 objects)
+2025-11-07 08:44:38,685 - __main__ - INFO - Batch 211 uploaded successfully
+2025-11-07 08:44:38,794 - __main__ - INFO - Uploading batch 212/538 (50 objects)
+2025-11-07 08:44:38,875 - __main__ - INFO - Batch 212 uploaded successfully
+2025-11-07 08:44:38,977 - __main__ - INFO - Uploading batch 213/538 (50 objects)
+2025-11-07 08:44:39,055 - __main__ - INFO - Batch 213 uploaded successfully
+2025-11-07 08:44:39,161 - __main__ - INFO - Uploading batch 214/538 (50 objects)
+2025-11-07 08:44:39,245 - __main__ - INFO - Batch 214 uploaded successfully
+2025-11-07 08:44:39,355 - __main__ - INFO - Uploading batch 215/538 (50 objects)
+2025-11-07 08:44:39,436 - __main__ - INFO - Batch 215 uploaded successfully
+2025-11-07 08:44:39,537 - __main__ - INFO - Uploading batch 216/538 (50 objects)
+2025-11-07 08:44:39,625 - __main__ - INFO - Batch 216 uploaded successfully
+2025-11-07 08:44:39,731 - __main__ - INFO - Uploading batch 217/538 (50 objects)
+2025-11-07 08:44:39,808 - __main__ - INFO - Batch 217 uploaded successfully
+2025-11-07 08:44:39,910 - __main__ - INFO - Uploading batch 218/538 (50 objects)
+2025-11-07 08:44:39,995 - __main__ - INFO - Batch 218 uploaded successfully
+2025-11-07 08:44:40,097 - __main__ - INFO - Uploading batch 219/538 (50 objects)
+2025-11-07 08:44:40,205 - __main__ - INFO - Batch 219 uploaded successfully
+2025-11-07 08:44:40,306 - __main__ - INFO - Uploading batch 220/538 (50 objects)
+2025-11-07 08:44:40,405 - __main__ - INFO - Batch 220 uploaded successfully
+2025-11-07 08:44:40,507 - __main__ - INFO - Uploading batch 221/538 (50 objects)
+2025-11-07 08:44:40,590 - __main__ - INFO - Batch 221 uploaded successfully
+2025-11-07 08:44:40,695 - __main__ - INFO - Uploading batch 222/538 (50 objects)
+2025-11-07 08:44:40,785 - __main__ - INFO - Batch 222 uploaded successfully
+2025-11-07 08:44:40,891 - __main__ - INFO - Uploading batch 223/538 (50 objects)
+2025-11-07 08:44:40,976 - __main__ - INFO - Batch 223 uploaded successfully
+2025-11-07 08:44:41,077 - __main__ - INFO - Uploading batch 224/538 (50 objects)
+2025-11-07 08:44:41,168 - __main__ - INFO - Batch 224 uploaded successfully
+2025-11-07 08:44:41,274 - __main__ - INFO - Uploading batch 225/538 (50 objects)
+2025-11-07 08:44:41,371 - __main__ - INFO - Batch 225 uploaded successfully
+2025-11-07 08:44:41,472 - __main__ - INFO - Uploading batch 226/538 (50 objects)
+2025-11-07 08:44:41,555 - __main__ - INFO - Batch 226 uploaded successfully
+2025-11-07 08:44:41,662 - __main__ - INFO - Uploading batch 227/538 (50 objects)
+2025-11-07 08:44:41,755 - __main__ - INFO - Batch 227 uploaded successfully
+2025-11-07 08:44:41,858 - __main__ - INFO - Uploading batch 228/538 (50 objects)
+2025-11-07 08:44:41,939 - __main__ - INFO - Batch 228 uploaded successfully
+2025-11-07 08:44:42,044 - __main__ - INFO - Uploading batch 229/538 (50 objects)
+2025-11-07 08:44:42,146 - __main__ - INFO - Batch 229 uploaded successfully
+2025-11-07 08:44:42,246 - __main__ - INFO - Uploading batch 230/538 (50 objects)
+2025-11-07 08:44:42,335 - __main__ - INFO - Batch 230 uploaded successfully
+2025-11-07 08:44:42,441 - __main__ - INFO - Uploading batch 231/538 (50 objects)
+2025-11-07 08:44:42,526 - __main__ - INFO - Batch 231 uploaded successfully
+2025-11-07 08:44:42,628 - __main__ - INFO - Uploading batch 232/538 (50 objects)
+2025-11-07 08:44:42,755 - __main__ - INFO - Batch 232 uploaded successfully
+2025-11-07 08:44:42,861 - __main__ - INFO - Uploading batch 233/538 (50 objects)
+2025-11-07 08:44:42,977 - __main__ - INFO - Batch 233 uploaded successfully
+2025-11-07 08:44:43,078 - __main__ - INFO - Uploading batch 234/538 (50 objects)
+2025-11-07 08:44:43,185 - __main__ - INFO - Batch 234 uploaded successfully
+2025-11-07 08:44:43,286 - __main__ - INFO - Uploading batch 235/538 (50 objects)
+2025-11-07 08:44:43,373 - __main__ - INFO - Batch 235 uploaded successfully
+2025-11-07 08:44:43,474 - __main__ - INFO - Uploading batch 236/538 (50 objects)
+2025-11-07 08:44:43,565 - __main__ - INFO - Batch 236 uploaded successfully
+2025-11-07 08:44:43,669 - __main__ - INFO - Uploading batch 237/538 (50 objects)
+2025-11-07 08:44:43,790 - __main__ - INFO - Batch 237 uploaded successfully
+2025-11-07 08:44:43,895 - __main__ - INFO - Uploading batch 238/538 (50 objects)
+2025-11-07 08:44:44,001 - __main__ - INFO - Batch 238 uploaded successfully
+2025-11-07 08:44:44,103 - __main__ - INFO - Uploading batch 239/538 (50 objects)
+2025-11-07 08:44:44,205 - __main__ - INFO - Batch 239 uploaded successfully
+2025-11-07 08:44:44,307 - __main__ - INFO - Uploading batch 240/538 (50 objects)
+2025-11-07 08:44:44,407 - __main__ - INFO - Batch 240 uploaded successfully
+2025-11-07 08:44:44,511 - __main__ - INFO - Uploading batch 241/538 (50 objects)
+2025-11-07 08:44:44,665 - __main__ - INFO - Batch 241 uploaded successfully
+2025-11-07 08:44:44,768 - __main__ - INFO - Uploading batch 242/538 (50 objects)
+2025-11-07 08:44:44,859 - __main__ - INFO - Batch 242 uploaded successfully
+2025-11-07 08:44:44,960 - __main__ - INFO - Uploading batch 243/538 (50 objects)
+2025-11-07 08:44:45,056 - __main__ - INFO - Batch 243 uploaded successfully
+2025-11-07 08:44:45,157 - __main__ - INFO - Uploading batch 244/538 (50 objects)
+2025-11-07 08:44:45,263 - __main__ - INFO - Batch 244 uploaded successfully
+2025-11-07 08:44:45,365 - __main__ - INFO - Uploading batch 245/538 (50 objects)
+2025-11-07 08:44:45,465 - __main__ - INFO - Batch 245 uploaded successfully
+2025-11-07 08:44:45,565 - __main__ - INFO - Uploading batch 246/538 (50 objects)
+2025-11-07 08:44:45,655 - __main__ - INFO - Batch 246 uploaded successfully
+2025-11-07 08:44:45,759 - __main__ - INFO - Uploading batch 247/538 (50 objects)
+2025-11-07 08:44:45,835 - __main__ - INFO - Batch 247 uploaded successfully
+2025-11-07 08:44:45,941 - __main__ - INFO - Uploading batch 248/538 (50 objects)
+2025-11-07 08:44:46,025 - __main__ - INFO - Batch 248 uploaded successfully
+2025-11-07 08:44:46,134 - __main__ - INFO - Uploading batch 249/538 (50 objects)
+2025-11-07 08:44:46,235 - __main__ - INFO - Batch 249 uploaded successfully
+2025-11-07 08:44:46,343 - __main__ - INFO - Uploading batch 250/538 (50 objects)
+2025-11-07 08:44:46,475 - __main__ - INFO - Batch 250 uploaded successfully
+2025-11-07 08:44:46,583 - __main__ - INFO - Uploading batch 251/538 (50 objects)
+2025-11-07 08:44:46,700 - __main__ - INFO - Batch 251 uploaded successfully
+2025-11-07 08:44:46,801 - __main__ - INFO - Uploading batch 252/538 (50 objects)
+2025-11-07 08:44:46,895 - __main__ - INFO - Batch 252 uploaded successfully
+2025-11-07 08:44:46,998 - __main__ - INFO - Uploading batch 253/538 (50 objects)
+2025-11-07 08:44:47,085 - __main__ - INFO - Batch 253 uploaded successfully
+2025-11-07 08:44:47,187 - __main__ - INFO - Uploading batch 254/538 (50 objects)
+2025-11-07 08:44:47,295 - __main__ - INFO - Batch 254 uploaded successfully
+2025-11-07 08:44:47,396 - __main__ - INFO - Uploading batch 255/538 (50 objects)
+2025-11-07 08:44:47,505 - __main__ - INFO - Batch 255 uploaded successfully
+2025-11-07 08:44:47,606 - __main__ - INFO - Uploading batch 256/538 (50 objects)
+2025-11-07 08:44:47,695 - __main__ - INFO - Batch 256 uploaded successfully
+2025-11-07 08:44:47,796 - __main__ - INFO - Uploading batch 257/538 (50 objects)
+2025-11-07 08:44:47,893 - __main__ - INFO - Batch 257 uploaded successfully
+2025-11-07 08:44:47,995 - __main__ - INFO - Uploading batch 258/538 (50 objects)
+2025-11-07 08:44:48,105 - __main__ - INFO - Batch 258 uploaded successfully
+2025-11-07 08:44:48,205 - __main__ - INFO - Uploading batch 259/538 (50 objects)
+2025-11-07 08:44:48,319 - __main__ - INFO - Batch 259 uploaded successfully
+2025-11-07 08:44:48,423 - __main__ - INFO - Uploading batch 260/538 (50 objects)
+2025-11-07 08:44:48,531 - __main__ - INFO - Batch 260 uploaded successfully
+2025-11-07 08:44:48,633 - __main__ - INFO - Uploading batch 261/538 (50 objects)
+2025-11-07 08:44:48,727 - __main__ - INFO - Batch 261 uploaded successfully
+2025-11-07 08:44:48,834 - __main__ - INFO - Uploading batch 262/538 (50 objects)
+2025-11-07 08:44:48,927 - __main__ - INFO - Batch 262 uploaded successfully
+2025-11-07 08:44:49,034 - __main__ - INFO - Uploading batch 263/538 (50 objects)
+2025-11-07 08:44:49,139 - __main__ - INFO - Batch 263 uploaded successfully
+2025-11-07 08:44:49,240 - __main__ - INFO - Uploading batch 264/538 (50 objects)
+2025-11-07 08:44:49,335 - __main__ - INFO - Batch 264 uploaded successfully
+2025-11-07 08:44:49,436 - __main__ - INFO - Uploading batch 265/538 (50 objects)
+2025-11-07 08:44:49,528 - __main__ - INFO - Batch 265 uploaded successfully
+2025-11-07 08:44:49,632 - __main__ - INFO - Uploading batch 266/538 (50 objects)
+2025-11-07 08:44:49,725 - __main__ - INFO - Batch 266 uploaded successfully
+2025-11-07 08:44:49,827 - __main__ - INFO - Uploading batch 267/538 (50 objects)
+2025-11-07 08:44:49,920 - __main__ - INFO - Batch 267 uploaded successfully
+2025-11-07 08:44:50,025 - __main__ - INFO - Uploading batch 268/538 (50 objects)
+2025-11-07 08:44:50,134 - __main__ - INFO - Batch 268 uploaded successfully
+2025-11-07 08:44:50,235 - __main__ - INFO - Uploading batch 269/538 (50 objects)
+2025-11-07 08:44:50,335 - __main__ - INFO - Batch 269 uploaded successfully
+2025-11-07 08:44:50,438 - __main__ - INFO - Uploading batch 270/538 (50 objects)
+2025-11-07 08:44:50,565 - __main__ - INFO - Batch 270 uploaded successfully
+2025-11-07 08:44:50,669 - __main__ - INFO - Uploading batch 271/538 (50 objects)
+2025-11-07 08:44:50,775 - __main__ - INFO - Batch 271 uploaded successfully
+2025-11-07 08:44:50,882 - __main__ - INFO - Uploading batch 272/538 (50 objects)
+2025-11-07 08:44:50,995 - __main__ - INFO - Batch 272 uploaded successfully
+2025-11-07 08:44:51,098 - __main__ - INFO - Uploading batch 273/538 (50 objects)
+2025-11-07 08:44:51,211 - __main__ - INFO - Batch 273 uploaded successfully
+2025-11-07 08:44:51,314 - __main__ - INFO - Uploading batch 274/538 (50 objects)
+2025-11-07 08:44:51,415 - __main__ - INFO - Batch 274 uploaded successfully
+2025-11-07 08:44:51,518 - __main__ - INFO - Uploading batch 275/538 (50 objects)
+2025-11-07 08:44:51,610 - __main__ - INFO - Batch 275 uploaded successfully
+2025-11-07 08:44:51,715 - __main__ - INFO - Uploading batch 276/538 (50 objects)
+2025-11-07 08:44:51,802 - __main__ - INFO - Batch 276 uploaded successfully
+2025-11-07 08:44:51,905 - __main__ - INFO - Uploading batch 277/538 (50 objects)
+2025-11-07 08:44:51,995 - __main__ - INFO - Batch 277 uploaded successfully
+2025-11-07 08:44:52,099 - __main__ - INFO - Uploading batch 278/538 (50 objects)
+2025-11-07 08:44:52,192 - __main__ - INFO - Batch 278 uploaded successfully
+2025-11-07 08:44:52,293 - __main__ - INFO - Uploading batch 279/538 (50 objects)
+2025-11-07 08:44:52,384 - __main__ - INFO - Batch 279 uploaded successfully
+2025-11-07 08:44:52,485 - __main__ - INFO - Uploading batch 280/538 (50 objects)
+2025-11-07 08:44:52,565 - __main__ - INFO - Batch 280 uploaded successfully
+2025-11-07 08:44:52,670 - __main__ - INFO - Uploading batch 281/538 (50 objects)
+2025-11-07 08:44:52,795 - __main__ - INFO - Batch 281 uploaded successfully
+2025-11-07 08:44:52,897 - __main__ - INFO - Uploading batch 282/538 (50 objects)
+2025-11-07 08:44:53,025 - __main__ - INFO - Batch 282 uploaded successfully
+2025-11-07 08:44:53,126 - __main__ - INFO - Uploading batch 283/538 (50 objects)
+2025-11-07 08:44:53,226 - __main__ - INFO - Batch 283 uploaded successfully
+2025-11-07 08:44:53,327 - __main__ - INFO - Uploading batch 284/538 (50 objects)
+2025-11-07 08:44:53,425 - __main__ - INFO - Batch 284 uploaded successfully
+2025-11-07 08:44:53,528 - __main__ - INFO - Uploading batch 285/538 (50 objects)
+2025-11-07 08:44:53,636 - __main__ - INFO - Batch 285 uploaded successfully
+2025-11-07 08:44:53,743 - __main__ - INFO - Uploading batch 286/538 (50 objects)
+2025-11-07 08:44:53,845 - __main__ - INFO - Batch 286 uploaded successfully
+2025-11-07 08:44:53,946 - __main__ - INFO - Uploading batch 287/538 (50 objects)
+2025-11-07 08:44:54,075 - __main__ - INFO - Batch 287 uploaded successfully
+2025-11-07 08:44:54,178 - __main__ - INFO - Uploading batch 288/538 (50 objects)
+2025-11-07 08:44:54,367 - __main__ - INFO - Batch 288 uploaded successfully
+2025-11-07 08:44:54,474 - __main__ - INFO - Uploading batch 289/538 (50 objects)
+2025-11-07 08:44:54,575 - __main__ - INFO - Batch 289 uploaded successfully
+2025-11-07 08:44:54,684 - __main__ - INFO - Uploading batch 290/538 (50 objects)
+2025-11-07 08:44:54,785 - __main__ - INFO - Batch 290 uploaded successfully
+2025-11-07 08:44:54,886 - __main__ - INFO - Uploading batch 291/538 (50 objects)
+2025-11-07 08:44:54,978 - __main__ - INFO - Batch 291 uploaded successfully
+2025-11-07 08:44:55,080 - __main__ - INFO - Uploading batch 292/538 (50 objects)
+2025-11-07 08:44:55,175 - __main__ - INFO - Batch 292 uploaded successfully
+2025-11-07 08:44:55,282 - __main__ - INFO - Uploading batch 293/538 (50 objects)
+2025-11-07 08:44:55,368 - __main__ - INFO - Batch 293 uploaded successfully
+2025-11-07 08:44:55,472 - __main__ - INFO - Uploading batch 294/538 (50 objects)
+2025-11-07 08:44:55,575 - __main__ - INFO - Batch 294 uploaded successfully
+2025-11-07 08:44:55,677 - __main__ - INFO - Uploading batch 295/538 (50 objects)
+2025-11-07 08:44:55,802 - __main__ - INFO - Batch 295 uploaded successfully
+2025-11-07 08:44:55,904 - __main__ - INFO - Uploading batch 296/538 (50 objects)
+2025-11-07 08:44:56,035 - __main__ - INFO - Batch 296 uploaded successfully
+2025-11-07 08:44:56,136 - __main__ - INFO - Uploading batch 297/538 (50 objects)
+2025-11-07 08:44:56,266 - __main__ - INFO - Batch 297 uploaded successfully
+2025-11-07 08:44:56,367 - __main__ - INFO - Uploading batch 298/538 (50 objects)
+2025-11-07 08:44:56,472 - __main__ - INFO - Batch 298 uploaded successfully
+2025-11-07 08:44:56,573 - __main__ - INFO - Uploading batch 299/538 (50 objects)
+2025-11-07 08:44:56,675 - __main__ - INFO - Batch 299 uploaded successfully
+2025-11-07 08:44:56,778 - __main__ - INFO - Uploading batch 300/538 (50 objects)
+2025-11-07 08:44:56,885 - __main__ - INFO - Batch 300 uploaded successfully
+2025-11-07 08:44:56,990 - __main__ - INFO - Uploading batch 301/538 (50 objects)
+2025-11-07 08:44:57,092 - __main__ - INFO - Batch 301 uploaded successfully
+2025-11-07 08:44:57,195 - __main__ - INFO - Uploading batch 302/538 (50 objects)
+2025-11-07 08:44:57,291 - __main__ - INFO - Batch 302 uploaded successfully
+2025-11-07 08:44:57,393 - __main__ - INFO - Uploading batch 303/538 (50 objects)
+2025-11-07 08:44:57,496 - __main__ - INFO - Batch 303 uploaded successfully
+2025-11-07 08:44:57,599 - __main__ - INFO - Uploading batch 304/538 (50 objects)
+2025-11-07 08:44:57,700 - __main__ - INFO - Batch 304 uploaded successfully
+2025-11-07 08:44:57,802 - __main__ - INFO - Uploading batch 305/538 (50 objects)
+2025-11-07 08:44:57,895 - __main__ - INFO - Batch 305 uploaded successfully
+2025-11-07 08:44:57,996 - __main__ - INFO - Uploading batch 306/538 (50 objects)
+2025-11-07 08:44:58,106 - __main__ - INFO - Batch 306 uploaded successfully
+2025-11-07 08:44:58,209 - __main__ - INFO - Uploading batch 307/538 (50 objects)
+2025-11-07 08:44:58,306 - __main__ - INFO - Batch 307 uploaded successfully
+2025-11-07 08:44:58,407 - __main__ - INFO - Uploading batch 308/538 (50 objects)
+2025-11-07 08:44:58,505 - __main__ - INFO - Batch 308 uploaded successfully
+2025-11-07 08:44:58,606 - __main__ - INFO - Uploading batch 309/538 (50 objects)
+2025-11-07 08:44:58,705 - __main__ - INFO - Batch 309 uploaded successfully
+2025-11-07 08:44:58,805 - __main__ - INFO - Uploading batch 310/538 (50 objects)
+2025-11-07 08:44:58,919 - __main__ - INFO - Batch 310 uploaded successfully
+2025-11-07 08:44:59,021 - __main__ - INFO - Uploading batch 311/538 (50 objects)
+2025-11-07 08:44:59,115 - __main__ - INFO - Batch 311 uploaded successfully
+2025-11-07 08:44:59,218 - __main__ - INFO - Uploading batch 312/538 (50 objects)
+2025-11-07 08:44:59,375 - __main__ - INFO - Batch 312 uploaded successfully
+2025-11-07 08:44:59,478 - __main__ - INFO - Uploading batch 313/538 (50 objects)
+2025-11-07 08:44:59,565 - __main__ - INFO - Batch 313 uploaded successfully
+2025-11-07 08:44:59,668 - __main__ - INFO - Uploading batch 314/538 (50 objects)
+2025-11-07 08:44:59,765 - __main__ - INFO - Batch 314 uploaded successfully
+2025-11-07 08:44:59,868 - __main__ - INFO - Uploading batch 315/538 (50 objects)
+2025-11-07 08:44:59,965 - __main__ - INFO - Batch 315 uploaded successfully
+2025-11-07 08:45:00,066 - __main__ - INFO - Uploading batch 316/538 (50 objects)
+2025-11-07 08:45:00,158 - __main__ - INFO - Batch 316 uploaded successfully
+2025-11-07 08:45:00,260 - __main__ - INFO - Uploading batch 317/538 (50 objects)
+2025-11-07 08:45:00,360 - __main__ - INFO - Batch 317 uploaded successfully
+2025-11-07 08:45:00,460 - __main__ - INFO - Uploading batch 318/538 (50 objects)
+2025-11-07 08:45:00,545 - __main__ - INFO - Batch 318 uploaded successfully
+2025-11-07 08:45:00,647 - __main__ - INFO - Uploading batch 319/538 (50 objects)
+2025-11-07 08:45:00,735 - __main__ - INFO - Batch 319 uploaded successfully
+2025-11-07 08:45:00,838 - __main__ - INFO - Uploading batch 320/538 (50 objects)
+2025-11-07 08:45:00,921 - __main__ - INFO - Batch 320 uploaded successfully
+2025-11-07 08:45:01,023 - __main__ - INFO - Uploading batch 321/538 (50 objects)
+2025-11-07 08:45:01,112 - __main__ - INFO - Batch 321 uploaded successfully
+2025-11-07 08:45:01,216 - __main__ - INFO - Uploading batch 322/538 (50 objects)
+2025-11-07 08:45:01,315 - __main__ - INFO - Batch 322 uploaded successfully
+2025-11-07 08:45:01,419 - __main__ - INFO - Uploading batch 323/538 (50 objects)
+2025-11-07 08:45:01,516 - __main__ - INFO - Batch 323 uploaded successfully
+2025-11-07 08:45:01,622 - __main__ - INFO - Uploading batch 324/538 (50 objects)
+2025-11-07 08:45:01,722 - __main__ - INFO - Batch 324 uploaded successfully
+2025-11-07 08:45:01,823 - __main__ - INFO - Uploading batch 325/538 (50 objects)
+2025-11-07 08:45:01,935 - __main__ - INFO - Batch 325 uploaded successfully
+2025-11-07 08:45:02,036 - __main__ - INFO - Uploading batch 326/538 (50 objects)
+2025-11-07 08:45:02,128 - __main__ - INFO - Batch 326 uploaded successfully
+2025-11-07 08:45:02,230 - __main__ - INFO - Uploading batch 327/538 (50 objects)
+2025-11-07 08:45:02,325 - __main__ - INFO - Batch 327 uploaded successfully
+2025-11-07 08:45:02,430 - __main__ - INFO - Uploading batch 328/538 (50 objects)
+2025-11-07 08:45:02,525 - __main__ - INFO - Batch 328 uploaded successfully
+2025-11-07 08:45:02,632 - __main__ - INFO - Uploading batch 329/538 (50 objects)
+2025-11-07 08:45:02,737 - __main__ - INFO - Batch 329 uploaded successfully
+2025-11-07 08:45:02,843 - __main__ - INFO - Uploading batch 330/538 (50 objects)
+2025-11-07 08:45:02,939 - __main__ - INFO - Batch 330 uploaded successfully
+2025-11-07 08:45:03,040 - __main__ - INFO - Uploading batch 331/538 (50 objects)
+2025-11-07 08:45:03,136 - __main__ - INFO - Batch 331 uploaded successfully
+2025-11-07 08:45:03,242 - __main__ - INFO - Uploading batch 332/538 (50 objects)
+2025-11-07 08:45:03,337 - __main__ - INFO - Batch 332 uploaded successfully
+2025-11-07 08:45:03,437 - __main__ - INFO - Uploading batch 333/538 (50 objects)
+2025-11-07 08:45:03,537 - __main__ - INFO - Batch 333 uploaded successfully
+2025-11-07 08:45:03,644 - __main__ - INFO - Uploading batch 334/538 (50 objects)
+2025-11-07 08:45:03,747 - __main__ - INFO - Batch 334 uploaded successfully
+2025-11-07 08:45:03,849 - __main__ - INFO - Uploading batch 335/538 (50 objects)
+2025-11-07 08:45:03,950 - __main__ - INFO - Batch 335 uploaded successfully
+2025-11-07 08:45:04,054 - __main__ - INFO - Uploading batch 336/538 (50 objects)
+2025-11-07 08:45:04,172 - __main__ - INFO - Batch 336 uploaded successfully
+2025-11-07 08:45:04,274 - __main__ - INFO - Uploading batch 337/538 (50 objects)
+2025-11-07 08:45:04,375 - __main__ - INFO - Batch 337 uploaded successfully
+2025-11-07 08:45:04,485 - __main__ - INFO - Uploading batch 338/538 (50 objects)
+2025-11-07 08:45:04,575 - __main__ - INFO - Batch 338 uploaded successfully
+2025-11-07 08:45:04,676 - __main__ - INFO - Uploading batch 339/538 (50 objects)
+2025-11-07 08:45:04,783 - __main__ - INFO - Batch 339 uploaded successfully
+2025-11-07 08:45:04,885 - __main__ - INFO - Uploading batch 340/538 (50 objects)
+2025-11-07 08:45:04,985 - __main__ - INFO - Batch 340 uploaded successfully
+2025-11-07 08:45:05,091 - __main__ - INFO - Uploading batch 341/538 (50 objects)
+2025-11-07 08:45:05,187 - __main__ - INFO - Batch 341 uploaded successfully
+2025-11-07 08:45:05,291 - __main__ - INFO - Uploading batch 342/538 (50 objects)
+2025-11-07 08:45:05,401 - __main__ - INFO - Batch 342 uploaded successfully
+2025-11-07 08:45:05,504 - __main__ - INFO - Uploading batch 343/538 (50 objects)
+2025-11-07 08:45:05,615 - __main__ - INFO - Batch 343 uploaded successfully
+2025-11-07 08:45:05,724 - __main__ - INFO - Uploading batch 344/538 (50 objects)
+2025-11-07 08:45:05,825 - __main__ - INFO - Batch 344 uploaded successfully
+2025-11-07 08:45:05,927 - __main__ - INFO - Uploading batch 345/538 (50 objects)
+2025-11-07 08:45:06,010 - __main__ - INFO - Batch 345 uploaded successfully
+2025-11-07 08:45:06,116 - __main__ - INFO - Uploading batch 346/538 (50 objects)
+2025-11-07 08:45:06,217 - __main__ - INFO - Batch 346 uploaded successfully
+2025-11-07 08:45:06,323 - __main__ - INFO - Uploading batch 347/538 (50 objects)
+2025-11-07 08:45:06,415 - __main__ - INFO - Batch 347 uploaded successfully
+2025-11-07 08:45:06,517 - __main__ - INFO - Uploading batch 348/538 (50 objects)
+2025-11-07 08:45:06,600 - __main__ - INFO - Batch 348 uploaded successfully
+2025-11-07 08:45:06,701 - __main__ - INFO - Uploading batch 349/538 (50 objects)
+2025-11-07 08:45:06,805 - __main__ - INFO - Batch 349 uploaded successfully
+2025-11-07 08:45:06,908 - __main__ - INFO - Uploading batch 350/538 (50 objects)
+2025-11-07 08:45:07,015 - __main__ - INFO - Batch 350 uploaded successfully
+2025-11-07 08:45:07,116 - __main__ - INFO - Uploading batch 351/538 (50 objects)
+2025-11-07 08:45:07,215 - __main__ - INFO - Batch 351 uploaded successfully
+2025-11-07 08:45:07,324 - __main__ - INFO - Uploading batch 352/538 (50 objects)
+2025-11-07 08:45:07,440 - __main__ - INFO - Batch 352 uploaded successfully
+2025-11-07 08:45:07,542 - __main__ - INFO - Uploading batch 353/538 (50 objects)
+2025-11-07 08:45:07,645 - __main__ - INFO - Batch 353 uploaded successfully
+2025-11-07 08:45:07,748 - __main__ - INFO - Uploading batch 354/538 (50 objects)
+2025-11-07 08:45:07,835 - __main__ - INFO - Batch 354 uploaded successfully
+2025-11-07 08:45:07,941 - __main__ - INFO - Uploading batch 355/538 (50 objects)
+2025-11-07 08:45:08,035 - __main__ - INFO - Batch 355 uploaded successfully
+2025-11-07 08:45:08,141 - __main__ - INFO - Uploading batch 356/538 (50 objects)
+2025-11-07 08:45:08,255 - __main__ - INFO - Batch 356 uploaded successfully
+2025-11-07 08:45:08,356 - __main__ - INFO - Uploading batch 357/538 (50 objects)
+2025-11-07 08:45:08,445 - __main__ - INFO - Batch 357 uploaded successfully
+2025-11-07 08:45:08,548 - __main__ - INFO - Uploading batch 358/538 (50 objects)
+2025-11-07 08:45:08,670 - __main__ - INFO - Batch 358 uploaded successfully
+2025-11-07 08:45:08,775 - __main__ - INFO - Uploading batch 359/538 (50 objects)
+2025-11-07 08:45:08,866 - __main__ - INFO - Batch 359 uploaded successfully
+2025-11-07 08:45:08,969 - __main__ - INFO - Uploading batch 360/538 (50 objects)
+2025-11-07 08:45:09,071 - __main__ - INFO - Batch 360 uploaded successfully
+2025-11-07 08:45:09,173 - __main__ - INFO - Uploading batch 361/538 (50 objects)
+2025-11-07 08:45:09,285 - __main__ - INFO - Batch 361 uploaded successfully
+2025-11-07 08:45:09,394 - __main__ - INFO - Uploading batch 362/538 (50 objects)
+2025-11-07 08:45:09,495 - __main__ - INFO - Batch 362 uploaded successfully
+2025-11-07 08:45:09,597 - __main__ - INFO - Uploading batch 363/538 (50 objects)
+2025-11-07 08:45:09,685 - __main__ - INFO - Batch 363 uploaded successfully
+2025-11-07 08:45:09,795 - __main__ - INFO - Uploading batch 364/538 (50 objects)
+2025-11-07 08:45:09,890 - __main__ - INFO - Batch 364 uploaded successfully
+2025-11-07 08:45:09,992 - __main__ - INFO - Uploading batch 365/538 (50 objects)
+2025-11-07 08:45:10,075 - __main__ - INFO - Batch 365 uploaded successfully
+2025-11-07 08:45:10,185 - __main__ - INFO - Uploading batch 366/538 (50 objects)
+2025-11-07 08:45:10,299 - __main__ - INFO - Batch 366 uploaded successfully
+2025-11-07 08:45:10,402 - __main__ - INFO - Uploading batch 367/538 (50 objects)
+2025-11-07 08:45:10,497 - __main__ - INFO - Batch 367 uploaded successfully
+2025-11-07 08:45:10,599 - __main__ - INFO - Uploading batch 368/538 (50 objects)
+2025-11-07 08:45:10,680 - __main__ - INFO - Batch 368 uploaded successfully
+2025-11-07 08:45:10,783 - __main__ - INFO - Uploading batch 369/538 (50 objects)
+2025-11-07 08:45:10,885 - __main__ - INFO - Batch 369 uploaded successfully
+2025-11-07 08:45:10,990 - __main__ - INFO - Uploading batch 370/538 (50 objects)
+2025-11-07 08:45:11,092 - __main__ - INFO - Batch 370 uploaded successfully
+2025-11-07 08:45:11,194 - __main__ - INFO - Uploading batch 371/538 (50 objects)
+2025-11-07 08:45:11,295 - __main__ - INFO - Batch 371 uploaded successfully
+2025-11-07 08:45:11,405 - __main__ - INFO - Uploading batch 372/538 (50 objects)
+2025-11-07 08:45:11,505 - __main__ - INFO - Batch 372 uploaded successfully
+2025-11-07 08:45:11,607 - __main__ - INFO - Uploading batch 373/538 (50 objects)
+2025-11-07 08:45:11,695 - __main__ - INFO - Batch 373 uploaded successfully
+2025-11-07 08:45:11,796 - __main__ - INFO - Uploading batch 374/538 (50 objects)
+2025-11-07 08:45:11,895 - __main__ - INFO - Batch 374 uploaded successfully
+2025-11-07 08:45:11,998 - __main__ - INFO - Uploading batch 375/538 (50 objects)
+2025-11-07 08:45:12,095 - __main__ - INFO - Batch 375 uploaded successfully
+2025-11-07 08:45:12,203 - __main__ - INFO - Uploading batch 376/538 (50 objects)
+2025-11-07 08:45:12,285 - __main__ - INFO - Batch 376 uploaded successfully
+2025-11-07 08:45:12,389 - __main__ - INFO - Uploading batch 377/538 (50 objects)
+2025-11-07 08:45:12,485 - __main__ - INFO - Batch 377 uploaded successfully
+2025-11-07 08:45:12,589 - __main__ - INFO - Uploading batch 378/538 (50 objects)
+2025-11-07 08:45:12,686 - __main__ - INFO - Batch 378 uploaded successfully
+2025-11-07 08:45:12,787 - __main__ - INFO - Uploading batch 379/538 (50 objects)
+2025-11-07 08:45:12,894 - __main__ - INFO - Batch 379 uploaded successfully
+2025-11-07 08:45:12,995 - __main__ - INFO - Uploading batch 380/538 (50 objects)
+2025-11-07 08:45:13,099 - __main__ - INFO - Batch 380 uploaded successfully
+2025-11-07 08:45:13,204 - __main__ - INFO - Uploading batch 381/538 (50 objects)
+2025-11-07 08:45:13,305 - __main__ - INFO - Batch 381 uploaded successfully
+2025-11-07 08:45:13,410 - __main__ - INFO - Uploading batch 382/538 (50 objects)
+2025-11-07 08:45:13,513 - __main__ - INFO - Batch 382 uploaded successfully
+2025-11-07 08:45:13,615 - __main__ - INFO - Uploading batch 383/538 (50 objects)
+2025-11-07 08:45:13,725 - __main__ - INFO - Batch 383 uploaded successfully
+2025-11-07 08:45:13,829 - __main__ - INFO - Uploading batch 384/538 (50 objects)
+2025-11-07 08:45:13,917 - __main__ - INFO - Batch 384 uploaded successfully
+2025-11-07 08:45:14,019 - __main__ - INFO - Uploading batch 385/538 (50 objects)
+2025-11-07 08:45:14,105 - __main__ - INFO - Batch 385 uploaded successfully
+2025-11-07 08:45:14,208 - __main__ - INFO - Uploading batch 386/538 (50 objects)
+2025-11-07 08:45:14,295 - __main__ - INFO - Batch 386 uploaded successfully
+2025-11-07 08:45:14,398 - __main__ - INFO - Uploading batch 387/538 (50 objects)
+2025-11-07 08:45:14,505 - __main__ - INFO - Batch 387 uploaded successfully
+2025-11-07 08:45:14,607 - __main__ - INFO - Uploading batch 388/538 (50 objects)
+2025-11-07 08:45:14,690 - __main__ - INFO - Batch 388 uploaded successfully
+2025-11-07 08:45:14,793 - __main__ - INFO - Uploading batch 389/538 (50 objects)
+2025-11-07 08:45:14,901 - __main__ - INFO - Batch 389 uploaded successfully
+2025-11-07 08:45:15,003 - __main__ - INFO - Uploading batch 390/538 (50 objects)
+2025-11-07 08:45:15,099 - __main__ - INFO - Batch 390 uploaded successfully
+2025-11-07 08:45:15,201 - __main__ - INFO - Uploading batch 391/538 (50 objects)
+2025-11-07 08:45:15,295 - __main__ - INFO - Batch 391 uploaded successfully
+2025-11-07 08:45:15,398 - __main__ - INFO - Uploading batch 392/538 (50 objects)
+2025-11-07 08:45:15,491 - __main__ - INFO - Batch 392 uploaded successfully
+2025-11-07 08:45:15,595 - __main__ - INFO - Uploading batch 393/538 (50 objects)
+2025-11-07 08:45:15,685 - __main__ - INFO - Batch 393 uploaded successfully
+2025-11-07 08:45:15,786 - __main__ - INFO - Uploading batch 394/538 (50 objects)
+2025-11-07 08:45:15,876 - __main__ - INFO - Batch 394 uploaded successfully
+2025-11-07 08:45:15,982 - __main__ - INFO - Uploading batch 395/538 (50 objects)
+2025-11-07 08:45:16,058 - __main__ - INFO - Batch 395 uploaded successfully
+2025-11-07 08:45:16,165 - __main__ - INFO - Uploading batch 396/538 (50 objects)
+2025-11-07 08:45:16,255 - __main__ - INFO - Batch 396 uploaded successfully
+2025-11-07 08:45:16,362 - __main__ - INFO - Uploading batch 397/538 (50 objects)
+2025-11-07 08:45:16,441 - __main__ - INFO - Batch 397 uploaded successfully
+2025-11-07 08:45:16,544 - __main__ - INFO - Uploading batch 398/538 (50 objects)
+2025-11-07 08:45:16,643 - __main__ - INFO - Batch 398 uploaded successfully
+2025-11-07 08:45:16,744 - __main__ - INFO - Uploading batch 399/538 (50 objects)
+2025-11-07 08:45:16,835 - __main__ - INFO - Batch 399 uploaded successfully
+2025-11-07 08:45:16,942 - __main__ - INFO - Uploading batch 400/538 (50 objects)
+2025-11-07 08:45:17,037 - __main__ - INFO - Batch 400 uploaded successfully
+2025-11-07 08:45:17,141 - __main__ - INFO - Uploading batch 401/538 (50 objects)
+2025-11-07 08:45:17,231 - __main__ - INFO - Batch 401 uploaded successfully
+2025-11-07 08:45:17,335 - __main__ - INFO - Uploading batch 402/538 (50 objects)
+2025-11-07 08:45:17,439 - __main__ - INFO - Batch 402 uploaded successfully
+2025-11-07 08:45:17,541 - __main__ - INFO - Uploading batch 403/538 (50 objects)
+2025-11-07 08:45:17,632 - __main__ - INFO - Batch 403 uploaded successfully
+2025-11-07 08:45:17,734 - __main__ - INFO - Uploading batch 404/538 (50 objects)
+2025-11-07 08:45:17,835 - __main__ - INFO - Batch 404 uploaded successfully
+2025-11-07 08:45:17,936 - __main__ - INFO - Uploading batch 405/538 (50 objects)
+2025-11-07 08:45:18,055 - __main__ - INFO - Batch 405 uploaded successfully
+2025-11-07 08:45:18,156 - __main__ - INFO - Uploading batch 406/538 (50 objects)
+2025-11-07 08:45:18,249 - __main__ - INFO - Batch 406 uploaded successfully
+2025-11-07 08:45:18,350 - __main__ - INFO - Uploading batch 407/538 (50 objects)
+2025-11-07 08:45:18,449 - __main__ - INFO - Batch 407 uploaded successfully
+2025-11-07 08:45:18,551 - __main__ - INFO - Uploading batch 408/538 (50 objects)
+2025-11-07 08:45:18,636 - __main__ - INFO - Batch 408 uploaded successfully
+2025-11-07 08:45:18,739 - __main__ - INFO - Uploading batch 409/538 (50 objects)
+2025-11-07 08:45:18,832 - __main__ - INFO - Batch 409 uploaded successfully
+2025-11-07 08:45:18,933 - __main__ - INFO - Uploading batch 410/538 (50 objects)
+2025-11-07 08:45:19,016 - __main__ - INFO - Batch 410 uploaded successfully
+2025-11-07 08:45:19,117 - __main__ - INFO - Uploading batch 411/538 (50 objects)
+2025-11-07 08:45:19,217 - __main__ - INFO - Batch 411 uploaded successfully
+2025-11-07 08:45:19,317 - __main__ - INFO - Uploading batch 412/538 (50 objects)
+2025-11-07 08:45:19,420 - __main__ - INFO - Batch 412 uploaded successfully
+2025-11-07 08:45:19,521 - __main__ - INFO - Uploading batch 413/538 (50 objects)
+2025-11-07 08:45:19,635 - __main__ - INFO - Batch 413 uploaded successfully
+2025-11-07 08:45:19,739 - __main__ - INFO - Uploading batch 414/538 (50 objects)
+2025-11-07 08:45:19,834 - __main__ - INFO - Batch 414 uploaded successfully
+2025-11-07 08:45:19,935 - __main__ - INFO - Uploading batch 415/538 (50 objects)
+2025-11-07 08:45:20,020 - __main__ - INFO - Batch 415 uploaded successfully
+2025-11-07 08:45:20,123 - __main__ - INFO - Uploading batch 416/538 (50 objects)
+2025-11-07 08:45:20,225 - __main__ - INFO - Batch 416 uploaded successfully
+2025-11-07 08:45:20,332 - __main__ - INFO - Uploading batch 417/538 (50 objects)
+2025-11-07 08:45:20,425 - __main__ - INFO - Batch 417 uploaded successfully
+2025-11-07 08:45:20,525 - __main__ - INFO - Uploading batch 418/538 (50 objects)
+2025-11-07 08:45:20,615 - __main__ - INFO - Batch 418 uploaded successfully
+2025-11-07 08:45:20,716 - __main__ - INFO - Uploading batch 419/538 (50 objects)
+2025-11-07 08:45:20,805 - __main__ - INFO - Batch 419 uploaded successfully
+2025-11-07 08:45:20,911 - __main__ - INFO - Uploading batch 420/538 (50 objects)
+2025-11-07 08:45:20,999 - __main__ - INFO - Batch 420 uploaded successfully
+2025-11-07 08:45:21,105 - __main__ - INFO - Uploading batch 421/538 (50 objects)
+2025-11-07 08:45:21,205 - __main__ - INFO - Batch 421 uploaded successfully
+2025-11-07 08:45:21,311 - __main__ - INFO - Uploading batch 422/538 (50 objects)
+2025-11-07 08:45:21,408 - __main__ - INFO - Batch 422 uploaded successfully
+2025-11-07 08:45:21,511 - __main__ - INFO - Uploading batch 423/538 (50 objects)
+2025-11-07 08:45:21,612 - __main__ - INFO - Batch 423 uploaded successfully
+2025-11-07 08:45:21,714 - __main__ - INFO - Uploading batch 424/538 (50 objects)
+2025-11-07 08:45:21,875 - __main__ - INFO - Batch 424 uploaded successfully
+2025-11-07 08:45:21,976 - __main__ - INFO - Uploading batch 425/538 (50 objects)
+2025-11-07 08:45:22,067 - __main__ - INFO - Batch 425 uploaded successfully
+2025-11-07 08:45:22,168 - __main__ - INFO - Uploading batch 426/538 (50 objects)
+2025-11-07 08:45:22,282 - __main__ - INFO - Batch 426 uploaded successfully
+2025-11-07 08:45:22,383 - __main__ - INFO - Uploading batch 427/538 (50 objects)
+2025-11-07 08:45:22,481 - __main__ - INFO - Batch 427 uploaded successfully
+2025-11-07 08:45:22,584 - __main__ - INFO - Uploading batch 428/538 (50 objects)
+2025-11-07 08:45:22,679 - __main__ - INFO - Batch 428 uploaded successfully
+2025-11-07 08:45:22,781 - __main__ - INFO - Uploading batch 429/538 (50 objects)
+2025-11-07 08:45:22,875 - __main__ - INFO - Batch 429 uploaded successfully
+2025-11-07 08:45:22,984 - __main__ - INFO - Uploading batch 430/538 (50 objects)
+2025-11-07 08:45:23,075 - __main__ - INFO - Batch 430 uploaded successfully
+2025-11-07 08:45:23,179 - __main__ - INFO - Uploading batch 431/538 (50 objects)
+2025-11-07 08:45:23,273 - __main__ - INFO - Batch 431 uploaded successfully
+2025-11-07 08:45:23,374 - __main__ - INFO - Uploading batch 432/538 (50 objects)
+2025-11-07 08:45:23,483 - __main__ - INFO - Batch 432 uploaded successfully
+2025-11-07 08:45:23,584 - __main__ - INFO - Uploading batch 433/538 (50 objects)
+2025-11-07 08:45:23,685 - __main__ - INFO - Batch 433 uploaded successfully
+2025-11-07 08:45:23,786 - __main__ - INFO - Uploading batch 434/538 (50 objects)
+2025-11-07 08:45:23,891 - __main__ - INFO - Batch 434 uploaded successfully
+2025-11-07 08:45:23,992 - __main__ - INFO - Uploading batch 435/538 (50 objects)
+2025-11-07 08:45:24,085 - __main__ - INFO - Batch 435 uploaded successfully
+2025-11-07 08:45:24,186 - __main__ - INFO - Uploading batch 436/538 (50 objects)
+2025-11-07 08:45:24,277 - __main__ - INFO - Batch 436 uploaded successfully
+2025-11-07 08:45:24,377 - __main__ - INFO - Uploading batch 437/538 (50 objects)
+2025-11-07 08:45:24,475 - __main__ - INFO - Batch 437 uploaded successfully
+2025-11-07 08:45:24,578 - __main__ - INFO - Uploading batch 438/538 (50 objects)
+2025-11-07 08:45:24,666 - __main__ - INFO - Batch 438 uploaded successfully
+2025-11-07 08:45:24,768 - __main__ - INFO - Uploading batch 439/538 (50 objects)
+2025-11-07 08:45:24,861 - __main__ - INFO - Batch 439 uploaded successfully
+2025-11-07 08:45:24,964 - __main__ - INFO - Uploading batch 440/538 (50 objects)
+2025-11-07 08:45:25,075 - __main__ - INFO - Batch 440 uploaded successfully
+2025-11-07 08:45:25,177 - __main__ - INFO - Uploading batch 441/538 (50 objects)
+2025-11-07 08:45:25,293 - __main__ - INFO - Batch 441 uploaded successfully
+2025-11-07 08:45:25,394 - __main__ - INFO - Uploading batch 442/538 (50 objects)
+2025-11-07 08:45:25,556 - __main__ - INFO - Batch 442 uploaded successfully
+2025-11-07 08:45:25,661 - __main__ - INFO - Uploading batch 443/538 (50 objects)
+2025-11-07 08:45:25,778 - __main__ - INFO - Batch 443 uploaded successfully
+2025-11-07 08:45:25,879 - __main__ - INFO - Uploading batch 444/538 (50 objects)
+2025-11-07 08:45:25,979 - __main__ - INFO - Batch 444 uploaded successfully
+2025-11-07 08:45:26,083 - __main__ - INFO - Uploading batch 445/538 (50 objects)
+2025-11-07 08:45:26,170 - __main__ - INFO - Batch 445 uploaded successfully
+2025-11-07 08:45:26,272 - __main__ - INFO - Uploading batch 446/538 (50 objects)
+2025-11-07 08:45:26,464 - __main__ - INFO - Batch 446 uploaded successfully
+2025-11-07 08:45:26,564 - __main__ - INFO - Uploading batch 447/538 (50 objects)
+2025-11-07 08:45:26,669 - __main__ - INFO - Batch 447 uploaded successfully
+2025-11-07 08:45:26,775 - __main__ - INFO - Uploading batch 448/538 (50 objects)
+2025-11-07 08:45:26,877 - __main__ - INFO - Batch 448 uploaded successfully
+2025-11-07 08:45:26,978 - __main__ - INFO - Uploading batch 449/538 (50 objects)
+2025-11-07 08:45:27,065 - __main__ - INFO - Batch 449 uploaded successfully
+2025-11-07 08:45:27,171 - __main__ - INFO - Uploading batch 450/538 (50 objects)
+2025-11-07 08:45:27,278 - __main__ - INFO - Batch 450 uploaded successfully
+2025-11-07 08:45:27,384 - __main__ - INFO - Uploading batch 451/538 (50 objects)
+2025-11-07 08:45:27,475 - __main__ - INFO - Batch 451 uploaded successfully
+2025-11-07 08:45:27,585 - __main__ - INFO - Uploading batch 452/538 (50 objects)
+2025-11-07 08:45:27,775 - __main__ - INFO - Batch 452 uploaded successfully
+2025-11-07 08:45:27,880 - __main__ - INFO - Uploading batch 453/538 (50 objects)
+2025-11-07 08:45:27,969 - __main__ - INFO - Batch 453 uploaded successfully
+2025-11-07 08:45:28,069 - __main__ - INFO - Uploading batch 454/538 (50 objects)
+2025-11-07 08:45:28,175 - __main__ - INFO - Batch 454 uploaded successfully
+2025-11-07 08:45:28,278 - __main__ - INFO - Uploading batch 455/538 (50 objects)
+2025-11-07 08:45:28,370 - __main__ - INFO - Batch 455 uploaded successfully
+2025-11-07 08:45:28,473 - __main__ - INFO - Uploading batch 456/538 (50 objects)
+2025-11-07 08:45:28,559 - __main__ - INFO - Batch 456 uploaded successfully
+2025-11-07 08:45:28,665 - __main__ - INFO - Uploading batch 457/538 (50 objects)
+2025-11-07 08:45:28,747 - __main__ - INFO - Batch 457 uploaded successfully
+2025-11-07 08:45:28,849 - __main__ - INFO - Uploading batch 458/538 (50 objects)
+2025-11-07 08:45:28,940 - __main__ - INFO - Batch 458 uploaded successfully
+2025-11-07 08:45:29,044 - __main__ - INFO - Uploading batch 459/538 (50 objects)
+2025-11-07 08:45:29,135 - __main__ - INFO - Batch 459 uploaded successfully
+2025-11-07 08:45:29,240 - __main__ - INFO - Uploading batch 460/538 (50 objects)
+2025-11-07 08:45:29,343 - __main__ - INFO - Batch 460 uploaded successfully
+2025-11-07 08:45:29,444 - __main__ - INFO - Uploading batch 461/538 (50 objects)
+2025-11-07 08:45:29,525 - __main__ - INFO - Batch 461 uploaded successfully
+2025-11-07 08:45:29,627 - __main__ - INFO - Uploading batch 462/538 (50 objects)
+2025-11-07 08:45:29,725 - __main__ - INFO - Batch 462 uploaded successfully
+2025-11-07 08:45:29,826 - __main__ - INFO - Uploading batch 463/538 (50 objects)
+2025-11-07 08:45:29,922 - __main__ - INFO - Batch 463 uploaded successfully
+2025-11-07 08:45:30,022 - __main__ - INFO - Uploading batch 464/538 (50 objects)
+2025-11-07 08:45:30,123 - __main__ - INFO - Batch 464 uploaded successfully
+2025-11-07 08:45:30,224 - __main__ - INFO - Uploading batch 465/538 (50 objects)
+2025-11-07 08:45:30,325 - __main__ - INFO - Batch 465 uploaded successfully
+2025-11-07 08:45:30,425 - __main__ - INFO - Uploading batch 466/538 (50 objects)
+2025-11-07 08:45:30,525 - __main__ - INFO - Batch 466 uploaded successfully
+2025-11-07 08:45:30,626 - __main__ - INFO - Uploading batch 467/538 (50 objects)
+2025-11-07 08:45:30,720 - __main__ - INFO - Batch 467 uploaded successfully
+2025-11-07 08:45:30,824 - __main__ - INFO - Uploading batch 468/538 (50 objects)
+2025-11-07 08:45:30,927 - __main__ - INFO - Batch 468 uploaded successfully
+2025-11-07 08:45:31,028 - __main__ - INFO - Uploading batch 469/538 (50 objects)
+2025-11-07 08:45:31,125 - __main__ - INFO - Batch 469 uploaded successfully
+2025-11-07 08:45:31,233 - __main__ - INFO - Uploading batch 470/538 (50 objects)
+2025-11-07 08:45:31,335 - __main__ - INFO - Batch 470 uploaded successfully
+2025-11-07 08:45:31,445 - __main__ - INFO - Uploading batch 471/538 (50 objects)
+2025-11-07 08:45:31,547 - __main__ - INFO - Batch 471 uploaded successfully
+2025-11-07 08:45:31,654 - __main__ - INFO - Uploading batch 472/538 (50 objects)
+2025-11-07 08:45:31,750 - __main__ - INFO - Batch 472 uploaded successfully
+2025-11-07 08:45:31,854 - __main__ - INFO - Uploading batch 473/538 (50 objects)
+2025-11-07 08:45:31,945 - __main__ - INFO - Batch 473 uploaded successfully
+2025-11-07 08:45:32,053 - __main__ - INFO - Uploading batch 474/538 (50 objects)
+2025-11-07 08:45:32,155 - __main__ - INFO - Batch 474 uploaded successfully
+2025-11-07 08:45:32,258 - __main__ - INFO - Uploading batch 475/538 (50 objects)
+2025-11-07 08:45:32,360 - __main__ - INFO - Batch 475 uploaded successfully
+2025-11-07 08:45:32,461 - __main__ - INFO - Uploading batch 476/538 (50 objects)
+2025-11-07 08:45:32,555 - __main__ - INFO - Batch 476 uploaded successfully
+2025-11-07 08:45:32,656 - __main__ - INFO - Uploading batch 477/538 (50 objects)
+2025-11-07 08:45:32,745 - __main__ - INFO - Batch 477 uploaded successfully
+2025-11-07 08:45:32,848 - __main__ - INFO - Uploading batch 478/538 (50 objects)
+2025-11-07 08:45:32,945 - __main__ - INFO - Batch 478 uploaded successfully
+2025-11-07 08:45:33,046 - __main__ - INFO - Uploading batch 479/538 (50 objects)
+2025-11-07 08:45:33,135 - __main__ - INFO - Batch 479 uploaded successfully
+2025-11-07 08:45:33,237 - __main__ - INFO - Uploading batch 480/538 (50 objects)
+2025-11-07 08:45:33,327 - __main__ - INFO - Batch 480 uploaded successfully
+2025-11-07 08:45:33,429 - __main__ - INFO - Uploading batch 481/538 (50 objects)
+2025-11-07 08:45:33,515 - __main__ - INFO - Batch 481 uploaded successfully
+2025-11-07 08:45:33,616 - __main__ - INFO - Uploading batch 482/538 (50 objects)
+2025-11-07 08:45:33,725 - __main__ - INFO - Batch 482 uploaded successfully
+2025-11-07 08:45:33,829 - __main__ - INFO - Uploading batch 483/538 (50 objects)
+2025-11-07 08:45:33,915 - __main__ - INFO - Batch 483 uploaded successfully
+2025-11-07 08:45:34,016 - __main__ - INFO - Uploading batch 484/538 (50 objects)
+2025-11-07 08:45:34,115 - __main__ - INFO - Batch 484 uploaded successfully
+2025-11-07 08:45:34,221 - __main__ - INFO - Uploading batch 485/538 (50 objects)
+2025-11-07 08:45:34,332 - __main__ - INFO - Batch 485 uploaded successfully
+2025-11-07 08:45:34,434 - __main__ - INFO - Uploading batch 486/538 (50 objects)
+2025-11-07 08:45:34,528 - __main__ - INFO - Batch 486 uploaded successfully
+2025-11-07 08:45:34,630 - __main__ - INFO - Uploading batch 487/538 (50 objects)
+2025-11-07 08:45:34,725 - __main__ - INFO - Batch 487 uploaded successfully
+2025-11-07 08:45:34,827 - __main__ - INFO - Uploading batch 488/538 (50 objects)
+2025-11-07 08:45:34,915 - __main__ - INFO - Batch 488 uploaded successfully
+2025-11-07 08:45:35,016 - __main__ - INFO - Uploading batch 489/538 (50 objects)
+2025-11-07 08:45:35,111 - __main__ - INFO - Batch 489 uploaded successfully
+2025-11-07 08:45:35,212 - __main__ - INFO - Uploading batch 490/538 (50 objects)
+2025-11-07 08:45:35,305 - __main__ - INFO - Batch 490 uploaded successfully
+2025-11-07 08:45:35,406 - __main__ - INFO - Uploading batch 491/538 (50 objects)
+2025-11-07 08:45:35,495 - __main__ - INFO - Batch 491 uploaded successfully
+2025-11-07 08:45:35,595 - __main__ - INFO - Uploading batch 492/538 (50 objects)
+2025-11-07 08:45:35,685 - __main__ - INFO - Batch 492 uploaded successfully
+2025-11-07 08:45:35,786 - __main__ - INFO - Uploading batch 493/538 (50 objects)
+2025-11-07 08:45:35,865 - __main__ - INFO - Batch 493 uploaded successfully
+2025-11-07 08:45:35,966 - __main__ - INFO - Uploading batch 494/538 (50 objects)
+2025-11-07 08:45:36,066 - __main__ - INFO - Batch 494 uploaded successfully
+2025-11-07 08:45:36,167 - __main__ - INFO - Uploading batch 495/538 (50 objects)
+2025-11-07 08:45:36,259 - __main__ - INFO - Batch 495 uploaded successfully
+2025-11-07 08:45:36,360 - __main__ - INFO - Uploading batch 496/538 (50 objects)
+2025-11-07 08:45:36,453 - __main__ - INFO - Batch 496 uploaded successfully
+2025-11-07 08:45:36,555 - __main__ - INFO - Uploading batch 497/538 (50 objects)
+2025-11-07 08:45:36,645 - __main__ - INFO - Batch 497 uploaded successfully
+2025-11-07 08:45:36,754 - __main__ - INFO - Uploading batch 498/538 (50 objects)
+2025-11-07 08:45:36,855 - __main__ - INFO - Batch 498 uploaded successfully
+2025-11-07 08:45:36,956 - __main__ - INFO - Uploading batch 499/538 (50 objects)
+2025-11-07 08:45:37,053 - __main__ - INFO - Batch 499 uploaded successfully
+2025-11-07 08:45:37,154 - __main__ - INFO - Uploading batch 500/538 (50 objects)
+2025-11-07 08:45:37,250 - __main__ - INFO - Batch 500 uploaded successfully
+2025-11-07 08:45:37,355 - __main__ - INFO - Uploading batch 501/538 (50 objects)
+2025-11-07 08:45:37,453 - __main__ - INFO - Batch 501 uploaded successfully
+2025-11-07 08:45:37,555 - __main__ - INFO - Uploading batch 502/538 (50 objects)
+2025-11-07 08:45:37,655 - __main__ - INFO - Batch 502 uploaded successfully
+2025-11-07 08:45:37,759 - __main__ - INFO - Uploading batch 503/538 (50 objects)
+2025-11-07 08:45:37,875 - __main__ - INFO - Batch 503 uploaded successfully
+2025-11-07 08:45:37,980 - __main__ - INFO - Uploading batch 504/538 (50 objects)
+2025-11-07 08:45:38,065 - __main__ - INFO - Batch 504 uploaded successfully
+2025-11-07 08:45:38,168 - __main__ - INFO - Uploading batch 505/538 (50 objects)
+2025-11-07 08:45:38,255 - __main__ - INFO - Batch 505 uploaded successfully
+2025-11-07 08:45:38,363 - __main__ - INFO - Uploading batch 506/538 (50 objects)
+2025-11-07 08:45:38,469 - __main__ - INFO - Batch 506 uploaded successfully
+2025-11-07 08:45:38,570 - __main__ - INFO - Uploading batch 507/538 (50 objects)
+2025-11-07 08:45:38,675 - __main__ - INFO - Batch 507 uploaded successfully
+2025-11-07 08:45:38,776 - __main__ - INFO - Uploading batch 508/538 (50 objects)
+2025-11-07 08:45:38,867 - __main__ - INFO - Batch 508 uploaded successfully
+2025-11-07 08:45:38,973 - __main__ - INFO - Uploading batch 509/538 (50 objects)
+2025-11-07 08:45:39,065 - __main__ - INFO - Batch 509 uploaded successfully
+2025-11-07 08:45:39,166 - __main__ - INFO - Uploading batch 510/538 (50 objects)
+2025-11-07 08:45:39,255 - __main__ - INFO - Batch 510 uploaded successfully
+2025-11-07 08:45:39,363 - __main__ - INFO - Uploading batch 511/538 (50 objects)
+2025-11-07 08:45:39,445 - __main__ - INFO - Batch 511 uploaded successfully
+2025-11-07 08:45:39,550 - __main__ - INFO - Uploading batch 512/538 (50 objects)
+2025-11-07 08:45:39,635 - __main__ - INFO - Batch 512 uploaded successfully
+2025-11-07 08:45:39,740 - __main__ - INFO - Uploading batch 513/538 (50 objects)
+2025-11-07 08:45:39,815 - __main__ - INFO - Batch 513 uploaded successfully
+2025-11-07 08:45:39,924 - __main__ - INFO - Uploading batch 514/538 (50 objects)
+2025-11-07 08:45:40,015 - __main__ - INFO - Batch 514 uploaded successfully
+2025-11-07 08:45:40,116 - __main__ - INFO - Uploading batch 515/538 (50 objects)
+2025-11-07 08:45:40,215 - __main__ - INFO - Batch 515 uploaded successfully
+2025-11-07 08:45:40,315 - __main__ - INFO - Uploading batch 516/538 (50 objects)
+2025-11-07 08:45:40,397 - __main__ - INFO - Batch 516 uploaded successfully
+2025-11-07 08:45:40,503 - __main__ - INFO - Uploading batch 517/538 (50 objects)
+2025-11-07 08:45:40,583 - __main__ - INFO - Batch 517 uploaded successfully
+2025-11-07 08:45:40,685 - __main__ - INFO - Uploading batch 518/538 (50 objects)
+2025-11-07 08:45:40,785 - __main__ - INFO - Batch 518 uploaded successfully
+2025-11-07 08:45:40,891 - __main__ - INFO - Uploading batch 519/538 (50 objects)
+2025-11-07 08:45:41,000 - __main__ - INFO - Batch 519 uploaded successfully
+2025-11-07 08:45:41,103 - __main__ - INFO - Uploading batch 520/538 (50 objects)
+2025-11-07 08:45:41,195 - __main__ - INFO - Batch 520 uploaded successfully
+2025-11-07 08:45:41,300 - __main__ - INFO - Uploading batch 521/538 (50 objects)
+2025-11-07 08:45:41,470 - __main__ - INFO - Batch 521 uploaded successfully
+2025-11-07 08:45:41,571 - __main__ - INFO - Uploading batch 522/538 (50 objects)
+2025-11-07 08:45:41,668 - __main__ - INFO - Batch 522 uploaded successfully
+2025-11-07 08:45:41,769 - __main__ - INFO - Uploading batch 523/538 (50 objects)
+2025-11-07 08:45:41,855 - __main__ - INFO - Batch 523 uploaded successfully
+2025-11-07 08:45:41,963 - __main__ - INFO - Uploading batch 524/538 (50 objects)
+2025-11-07 08:45:42,055 - __main__ - INFO - Batch 524 uploaded successfully
+2025-11-07 08:45:42,156 - __main__ - INFO - Uploading batch 525/538 (50 objects)
+2025-11-07 08:45:42,260 - __main__ - INFO - Batch 525 uploaded successfully
+2025-11-07 08:45:42,363 - __main__ - INFO - Uploading batch 526/538 (50 objects)
+2025-11-07 08:45:42,445 - __main__ - INFO - Batch 526 uploaded successfully
+2025-11-07 08:45:42,548 - __main__ - INFO - Uploading batch 527/538 (50 objects)
+2025-11-07 08:45:42,635 - __main__ - INFO - Batch 527 uploaded successfully
+2025-11-07 08:45:42,740 - __main__ - INFO - Uploading batch 528/538 (50 objects)
+2025-11-07 08:45:42,815 - __main__ - INFO - Batch 528 uploaded successfully
+2025-11-07 08:45:42,916 - __main__ - INFO - Uploading batch 529/538 (50 objects)
+2025-11-07 08:45:43,015 - __main__ - INFO - Batch 529 uploaded successfully
+2025-11-07 08:45:43,117 - __main__ - INFO - Uploading batch 530/538 (50 objects)
+2025-11-07 08:45:43,205 - __main__ - INFO - Batch 530 uploaded successfully
+2025-11-07 08:45:43,308 - __main__ - INFO - Uploading batch 531/538 (50 objects)
+2025-11-07 08:45:43,397 - __main__ - INFO - Batch 531 uploaded successfully
+2025-11-07 08:45:43,501 - __main__ - INFO - Uploading batch 532/538 (50 objects)
+2025-11-07 08:45:43,577 - __main__ - INFO - Batch 532 uploaded successfully
+2025-11-07 08:45:43,677 - __main__ - INFO - Uploading batch 533/538 (50 objects)
+2025-11-07 08:45:43,771 - __main__ - INFO - Batch 533 uploaded successfully
+2025-11-07 08:45:43,872 - __main__ - INFO - Uploading batch 534/538 (50 objects)
+2025-11-07 08:45:43,975 - __main__ - INFO - Batch 534 uploaded successfully
+2025-11-07 08:45:44,076 - __main__ - INFO - Uploading batch 535/538 (50 objects)
+2025-11-07 08:45:44,175 - __main__ - INFO - Batch 535 uploaded successfully
+2025-11-07 08:45:44,276 - __main__ - INFO - Uploading batch 536/538 (50 objects)
+2025-11-07 08:45:44,351 - __main__ - INFO - Batch 536 uploaded successfully
+2025-11-07 08:45:44,454 - __main__ - INFO - Uploading batch 537/538 (50 objects)
+2025-11-07 08:45:44,539 - __main__ - INFO - Batch 537 uploaded successfully
+2025-11-07 08:45:44,645 - __main__ - INFO - Uploading batch 538/538 (38 objects)
+2025-11-07 08:45:44,725 - __main__ - INFO - Batch 538 uploaded successfully
+2025-11-07 08:45:44,833 - __main__ - INFO - Upload completed. Success rate: 100.00%
+2025-11-07 08:45:44,833 - __main__ - INFO - === Step 6: Verifying Upload ===
+2025-11-07 08:45:44,895 - __main__ - INFO - Collection 'LegalDocument' contains 26888 objects
+2025-11-07 08:45:44,897 - __main__ - INFO - === Step 7: Testing Queries ===
+2025-11-07 08:45:44,897 - __main__ - INFO - --- BM25 Keyword Search Test ---
+2025-11-07 08:45:45,095 - __main__ - INFO - Found 3 results for BM25 search: hình sự
+2025-11-07 08:45:45,095 - __main__ - INFO - BM25 Result 1: 41_2019_QH14_CHUONG_II_Dieu_11 - Score: 4.5041
+2025-11-07 08:45:45,096 - __main__ - INFO - BM25 Result 2: 41_2019_QH14_CHUONG_XII_Dieu_167 - Score: 3.0774
+2025-11-07 08:45:45,096 - __main__ - INFO - BM25 Result 3: 10_2017_QH14_CHUONG_IV_Dieu_38 - Score: 3.0650
+2025-11-07 08:45:45,096 - __main__ - INFO - --- Vector Search Test ---
+2025-11-07 08:45:45,165 - __main__ - ERROR - Error performing vector query: Query call with protocol GRPC search failed with message explorer: get class: vectorize params: could not vectorize input for collection LegalDocument with search-type nearText. Make sure a vectorizer module is configured for this collection.
+2025-11-07 08:45:45,165 - __main__ - INFO - Vector search failed - collection may not have vectorizer configured
+2025-11-07 08:45:45,165 - __main__ - INFO - --- Hybrid Search Test ---
+2025-11-07 08:45:45,329 - __main__ - ERROR - Error performing hybrid query: Query call with protocol GRPC search failed with message VectorFromInput was called without vectorizer on class LegalDocument for input hình sự.
+2025-11-07 08:45:45,329 - __main__ - INFO - === Indexing Process Completed Successfully ===
+2025-11-07 08:45:45,329 - __main__ - INFO - Final Statistics: {'total_objects': 26888, 'successful_uploads': 26888, 'failed_uploads': 0, 'success_rate': 100.0}
+2025-11-07 08:45:45,331 - __main__ - INFO - Weaviate connection closed

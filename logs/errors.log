@@ -10,3 +10,5 @@
 2025-10-19 21:43:30,053 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
 2025-10-20 06:57:28,029 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
 2025-10-20 06:57:28,030 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
+2025-11-07 08:45:45,165 - __main__ - ERROR - index_data - test_vector_query - Error performing vector query: Query call with protocol GRPC search failed with message explorer: get class: vectorize params: could not vectorize input for collection LegalDocument with search-type nearText. Make sure a vectorizer module is configured for this collection.
+2025-11-07 08:45:45,329 - __main__ - ERROR - index_data - test_hybrid_query - Error performing hybrid query: Query call with protocol GRPC search failed with message VectorFromInput was called without vectorizer on class LegalDocument for input hình sự.
