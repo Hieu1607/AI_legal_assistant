@@ -26,7 +26,7 @@ scrape_configs:
 
   # Scrape metrics from AI Legal Assistant
   - job_name: "ai-legal-assistant"
-    metrics_path: "/metrics"
+    metrics_path: "/api/metrics"
     scrape_interval: 30s
     scheme: https  # Render uses HTTPS
     static_configs:

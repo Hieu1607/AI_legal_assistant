@@ -1,0 +1,116 @@
+2025-10-30 17:22:29,918 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-10-30 17:22:47,130 - app.tools.weaviate_search - ERROR - Weaviate URL or API key not set in environment variables.
+2025-10-30 17:24:07,179 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-10-30 17:24:15,645 - app.tools.weaviate_search - ERROR - Weaviate URL or API key not set in environment variables.
+2025-10-30 17:25:19,554 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-10-30 17:25:19,651 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 3
+2025-10-30 17:26:12,421 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-10-30 17:26:28,892 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-10-30 17:26:29,456 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-10-30 17:26:29,585 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-10-30 17:26:29,586 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-10-30 17:26:36,355 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-10-30 17:26:36,355 - app.tools.weaviate_search - INFO - No sources found for the response.
+2025-10-30 17:26:36,355 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "test"
+2025-10-30 17:26:36,355 - app.tools.weaviate_search - INFO - Weaviate client connection closed.
+2025-10-30 17:26:44,053 - app.routes.metrics - INFO - Metrics endpoint accessed (Prometheus format)
+2025-10-30 17:27:00,775 - app.services.rag_service - INFO - Processing query: Chương I điều 1 luật tố tụng dân sự mới nhất ?
+2025-10-30 17:27:00,780 - app.services.rag_service - INFO - Cache miss for question: Chương I điều 1 luật tố tụng dân sự mới nhất ?
+2025-10-30 17:27:00,780 - app.tools.weaviate_search - INFO - Weaviate client is connecting...
+2025-10-30 17:27:00,989 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-10-30 17:27:01,621 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-10-30 17:27:01,736 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-10-30 17:27:01,737 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-10-30 17:27:18,020 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-10-30 17:27:18,151 - app.tools.weaviate_search - INFO - Added chunk 1 from fetched object property 'LegalDocument'Văn bản: Bộ luật Tố tụng dân s...
+2025-10-30 17:27:18,151 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "Chương I điều 1 luật tố tụng dân sự mới nhất ?"
+2025-10-30 17:27:18,151 - app.services.rag_service - INFO - Processed query in 17.3739s
+2025-10-31 09:14:18,814 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-10-31 09:14:18,905 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 10
+2025-10-31 09:14:18,905 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 12
+2025-10-31 09:14:18,906 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 13
+2025-10-31 09:14:18,906 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 14
+2025-10-31 09:14:18,906 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 15
+2025-10-31 09:14:18,906 - dotenv.main - WARNING - python-dotenv could not parse statement starting at line 16
+2025-10-31 09:15:01,968 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-10-31 09:17:08,437 - app.services.rag_service - INFO - Processing query: 1 đoàn tàu đang đi trên đường ray phía trước là 1 tảng đá, nếu người lái tàu chọn đi thẳng tiếp thì đâm vào sẽ khiến 100 hành khách trên chuyến tàu gặp tai nạn, thế nhưng nếu người lái tàu cho đoàn tàu đổi hướng thì sẽ đâm chết 1 người trên đường ray khác, vậy nếu người lái tàu đổi hướng và đâm chết người kia thì có cấu thành tội giết người không ?
+2025-10-31 09:17:08,441 - app.services.rag_service - INFO - Cache miss for question: 1 đoàn tàu đang đi trên đường ray phía trước là 1 tảng đá, nếu người lái tàu chọn đi thẳng tiếp thì đâm vào sẽ khiến 100 hành khách trên chuyến tàu gặp tai nạn, thế nhưng nếu người lái tàu cho đoàn tàu đổi hướng thì sẽ đâm chết 1 người trên đường ray khác, vậy nếu người lái tàu đổi hướng và đâm chết người kia thì có cấu thành tội giết người không ?
+2025-10-31 09:17:08,441 - app.tools.weaviate_search - INFO - Weaviate client is connecting...
+2025-10-31 09:17:08,955 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-10-31 09:17:09,585 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-10-31 09:17:09,736 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-10-31 09:17:09,736 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-10-31 09:17:28,556 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-10-31 09:17:28,572 - app.tools.weaviate_search - INFO - No sources found for the response.
+2025-10-31 09:17:28,572 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "1 đoàn tàu đang đi trên đường ray phía trước là 1 tảng đá, nếu người lái tàu chọn đi thẳng tiếp thì đâm vào sẽ khiến 100 hành khách trên chuyến tàu gặp tai nạn, thế nhưng nếu người lái tàu cho đoàn tàu đổi hướng thì sẽ đâm chết 1 người trên đường ray khác, vậy nếu người lái tàu đổi hướng và đâm chết người kia thì có cấu thành tội giết người không ?"
+2025-10-31 09:17:28,572 - app.services.rag_service - INFO - Processed query in 20.1339s
+2025-10-31 09:17:28,792 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-10-31 09:17:29,335 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-10-31 09:17:29,427 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-10-31 09:17:29,428 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-10-31 09:17:34,184 - app.routes.metrics - INFO - Metrics endpoint accessed (Prometheus format)
+2025-10-31 09:17:35,385 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-10-31 09:17:35,385 - app.tools.weaviate_search - INFO - No sources found for the response.
+2025-10-31 09:17:35,385 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "test"
+2025-10-31 09:17:35,385 - app.tools.weaviate_search - INFO - Weaviate client connection closed.
+2025-10-31 09:18:40,809 - app.services.rag_service - INFO - Processing query: 1 đoàn tàu đang đi trên đường ray phía trước là 1 tảng đá, nếu người lái tàu chọn đi thẳng tiếp thì đâm vào sẽ khiến 100 hành khách trên chuyến tàu gặp tai nạn, thế nhưng nếu người lái tàu cho đoàn tàu đổi hướng thì sẽ đâm chết 1 người trên đường ray khác, vậy nếu người lái tàu đổi hướng và đâm chết người kia thì có cấu thành tội giết người không ? Dựa vào bộ luật Hình sự
+2025-10-31 09:18:40,809 - app.services.rag_service - INFO - Cache miss for question: 1 đoàn tàu đang đi trên đường ray phía trước là 1 tảng đá, nếu người lái tàu chọn đi thẳng tiếp thì đâm vào sẽ khiến 100 hành khách trên chuyến tàu gặp tai nạn, thế nhưng nếu người lái tàu cho đoàn tàu đổi hướng thì sẽ đâm chết 1 người trên đường ray khác, vậy nếu người lái tàu đổi hướng và đâm chết người kia thì có cấu thành tội giết người không ? Dựa vào bộ luật Hình sự
+2025-10-31 09:18:40,809 - app.tools.weaviate_search - INFO - Weaviate client is connecting...
+2025-10-31 09:18:40,997 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-10-31 09:18:41,551 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-10-31 09:18:41,715 - httpx - INFO - HTTP Request: GET https://j6hwsycxr4knwtfjwlea.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-10-31 09:18:41,715 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-10-31 09:18:56,263 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-10-31 09:18:56,400 - app.tools.weaviate_search - INFO - Added chunk 1 from fetched object property 'LegalDocument'Văn bản: Bộ luật Hình sự 2015,...
+2025-10-31 09:18:56,401 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "1 đoàn tàu đang đi trên đường ray phía trước là 1 tảng đá, nếu người lái tàu chọn đi thẳng tiếp thì đâm vào sẽ khiến 100 hành khách trên chuyến tàu gặp tai nạn, thế nhưng nếu người lái tàu cho đoàn tàu đổi hướng thì sẽ đâm chết 1 người trên đường ray khác, vậy nếu người lái tàu đổi hướng và đâm chết người kia thì có cấu thành tội giết người không ? Dựa vào bộ luật Hình sự"
+2025-10-31 09:18:56,402 - app.services.rag_service - INFO - Processed query in 15.5928s
+2025-11-07 08:47:53,532 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-11-07 08:47:53,927 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-11-07 08:47:54,561 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-11-07 08:47:54,714 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:47:54,714 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-11-07 08:47:54,809 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:47:57,560 - app.routes.metrics - INFO - Metrics endpoint accessed (Prometheus format)
+2025-11-07 08:48:01,115 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-11-07 08:48:01,128 - app.tools.weaviate_search - INFO - No sources found for the response.
+2025-11-07 08:48:01,128 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "test..."
+2025-11-07 08:48:01,130 - app.tools.weaviate_search - INFO - Weaviate client connection closed.
+2025-11-07 08:48:14,465 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-11-07 08:48:14,465 - app.services.rag_service - INFO - Processing query: Chương I điều 1 luật tố tụng dân sự mới nhất ?
+2025-11-07 08:48:14,465 - app.services.rag_service - INFO - Cache miss for question: Chương I điều 1 luật tố tụng dân sự mới nhất ?
+2025-11-07 08:48:14,647 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-11-07 08:48:15,055 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-11-07 08:48:15,179 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:48:15,179 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-11-07 08:48:15,278 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:48:33,258 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-11-07 08:48:33,358 - app.tools.weaviate_search - INFO - Added chunk 1 from fetched object property 'LegalDocument'Văn bản: Bộ luật Tố tụng dân s...
+2025-11-07 08:48:33,358 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "Chương I đ..."
+2025-11-07 08:48:33,358 - app.services.rag_service - INFO - Processed query in 18.9012s
+2025-11-07 08:48:33,358 - app.tools.weaviate_search - INFO - Weaviate client connection closed.
+2025-11-07 08:48:49,446 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-11-07 08:48:49,446 - app.services.rag_service - INFO - Processing query: Sơn Tùng sinh năm bao nhiêu?
+2025-11-07 08:48:49,446 - app.services.rag_service - INFO - Cache miss for question: Sơn Tùng sinh năm bao nhiêu?
+2025-11-07 08:48:49,803 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-11-07 08:48:50,245 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-11-07 08:48:50,410 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:48:50,410 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-11-07 08:48:50,506 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:48:59,857 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-11-07 08:48:59,857 - app.tools.weaviate_search - INFO - No sources found for the response.
+2025-11-07 08:48:59,857 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "Sơn Tùng s..."
+2025-11-07 08:48:59,857 - app.services.rag_service - INFO - Processed query in 10.4161s
+2025-11-07 08:48:59,864 - app.tools.weaviate_search - INFO - Weaviate client connection closed.
+2025-11-07 08:49:14,517 - app.tools.weaviate_search - INFO - Creating WeaviateSearcher instance...
+2025-11-07 08:49:14,517 - app.services.rag_service - INFO - Processing query: Meo meo
+2025-11-07 08:49:14,517 - app.services.rag_service - INFO - Cache miss for question: Meo meo
+2025-11-07 08:49:14,708 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/meta "HTTP/1.1 200 OK"
+2025-11-07 08:49:15,239 - httpx - INFO - HTTP Request: GET https://pypi.org/pypi/weaviate-client/json "HTTP/1.1 200 OK"
+2025-11-07 08:49:15,374 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:49:15,384 - app.tools.weaviate_search - INFO - Connected to Weaviate successfully.
+2025-11-07 08:49:15,461 - httpx - INFO - HTTP Request: GET https://xya2akxasqsatylifrjbkg.c0.asia-southeast1.gcp.weaviate.cloud/v1/.well-known/ready "HTTP/1.1 200 OK"
+2025-11-07 08:49:21,390 - httpx - INFO - HTTP Request: POST https://api.agents.weaviate.io/query/ask "HTTP/1.1 200 OK"
+2025-11-07 08:49:21,391 - app.tools.weaviate_search - INFO - No sources found for the response.
+2025-11-07 08:49:21,391 - app.tools.weaviate_search - INFO - Query Agent successfully answered the question: "Meo meo..."
+2025-11-07 08:49:21,391 - app.services.rag_service - INFO - Processed query in 6.8742s
+2025-11-07 08:49:21,392 - app.tools.weaviate_search - INFO - Weaviate client connection closed.
