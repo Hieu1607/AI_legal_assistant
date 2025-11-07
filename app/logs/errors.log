@@ -1,2 +1,0 @@
-2025-10-30 17:22:47,130 - app.tools.weaviate_search - ERROR - weaviate_search - connect - Weaviate URL or API key not set in environment variables.
-2025-10-30 17:24:15,645 - app.tools.weaviate_search - ERROR - weaviate_search - connect - Weaviate URL or API key not set in environment variables.
