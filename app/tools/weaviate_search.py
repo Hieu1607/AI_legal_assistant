@@ -3,8 +3,9 @@ Weaviate tool integration for vector database operations.
 """
 
 import asyncio
+import warnings
 from functools import lru_cache
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import weaviate
 from weaviate.agents.query import AsyncQueryAgent
@@ -30,23 +31,22 @@ class WeaviateSearcher:
     def __init__(self):
         self.client = None
         self.query_agent = None
-        
+
     async def __aenter__(self):
         """Async context manager entry."""
         await self.connect()
         return self
-        
+
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         """Async context manager exit."""
         await self.close()
-        
+
     def __del__(self):
         """Destructor to ensure connection is closed."""
         if self.client:
-            import warnings
             warnings.warn(
                 "WeaviateSearcher was not properly closed. Use async context manager or call close() explicitly.",
-                ResourceWarning
+                ResourceWarning,
             )
 
     async def connect(self, timeout: float = 10.0, retry: int = 1) -> bool:
@@ -73,7 +73,7 @@ class WeaviateSearcher:
                     if not self.client:
                         logger.error("Client is None, cannot connect")
                         return False
-                        
+
                     await asyncio.wait_for(self.client.connect(), timeout=timeout)
 
                     if self.client and await self.client.is_ready():
@@ -182,7 +182,9 @@ class WeaviateSearcher:
         # Verify client is still connected and ready
         try:
             if self.client and not await self.client.is_ready():
-                logger.warning("Weaviate client is not ready, attempting to reconnect...")
+                logger.warning(
+                    "Weaviate client is not ready, attempting to reconnect..."
+                )
                 if not await self.connect():
                     return {
                         "answer": "Failed to reconnect to Weaviate.",
@@ -239,7 +241,7 @@ class WeaviateSearcher:
         if self.client:
             try:
                 # Check if client is still connected before attempting to close
-                if hasattr(self.client, '_connection') and self.client._connection:
+                if hasattr(self.client, "_connection") and self.client._connection:
                     await self.client.close()
                     logger.info("Weaviate client connection closed.")
                 else:
@@ -248,7 +250,7 @@ class WeaviateSearcher:
                 logger.error(f"Error while closing Weaviate client connection: {e}")
                 # Force close even if there's an error
                 try:
-                    if hasattr(self.client, 'close'):
+                    if hasattr(self.client, "close"):
                         await self.client.close()
                 except Exception:
                     pass  # Suppress any secondary errors during forced close

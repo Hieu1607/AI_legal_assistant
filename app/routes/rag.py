@@ -2,6 +2,7 @@
 Route/controller for RAG-related endpoints.
 """
 
+import traceback
 from http import HTTPStatus
 
 from fastapi import APIRouter
@@ -33,7 +34,6 @@ async def rag_endpoint(
     """
     try:
         rag_service = RAGService()
-        
         # Initialize dependencies internally to avoid exposing them as request parameters
         try:
             searcher = get_searcher()
@@ -47,7 +47,7 @@ async def rag_endpoint(
                     "error": "Failed to initialize services.",
                 },
             )
-        
+
         response_data = await rag_service.process_query(
             request.query, searcher=searcher, cache_manager=cache_manager
         )
@@ -77,7 +77,6 @@ async def rag_endpoint(
 
     except Exception as e:
         logger.error(f"Error in /rag endpoint: {e}")
-        import traceback
         logger.error(f"Full traceback: {traceback.format_exc()}")
         return JSONResponse(
             status_code=HTTPStatus.INTERNAL_SERVER_ERROR,

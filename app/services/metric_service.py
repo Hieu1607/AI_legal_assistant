@@ -1,5 +1,5 @@
 """
-Metrics collection và monitoring logic với Prometheus
+Metrics collection and monitoring logic with Prometheus
 """
 
 import time
@@ -18,7 +18,7 @@ logger = get_logger(__name__)
 
 
 class MetricsCollector:
-    """Prometheus metrics collector cho ứng dụng AI Legal Assistant"""
+    """Prometheus metrics collector for AI Legal Assistant"""
 
     def __init__(self):
         """Initialize Prometheus metrics"""
@@ -27,13 +27,13 @@ class MetricsCollector:
         # Prometheus metrics
         self.http_requests_total = Counter(
             "http_requests_total",
-            "Tổng số HTTP requests",
+            "Total number of HTTP requests",
             ["method", "endpoint", "status_code"],
         )
 
         self.http_request_duration_seconds = Histogram(
             "http_request_duration_seconds",
-            "Thời gian xử lý HTTP requests",
+            "HTTP request processing duration",
             ["method", "endpoint"],
             buckets=(
                 0.005,
@@ -54,12 +54,12 @@ class MetricsCollector:
         )
 
         self.application_uptime_seconds = Gauge(
-            "application_uptime_seconds", "Thời gian uptime của ứng dụng tính bằng giây"
+            "application_uptime_seconds", "Uptime calculator"
         )
 
         self.http_errors_total = Counter(
             "http_errors_total",
-            "Tổng số HTTP errors",
+            "Total HTTP errors",
             ["method", "endpoint", "status_code"],
         )
 
