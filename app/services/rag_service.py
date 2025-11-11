@@ -3,12 +3,13 @@ Business logic for the Retrieval-Augmented Generation (RAG) service.
 """
 
 import time
-from http import HTTPStatus
 
 import weaviate
 
 from app.configs.logger import get_logger
+from app.configs.settings import settings
 from app.tools.cache_manager import RAGCacheManager, get_cache_manager
+from app.tools.groq_classify import GroqClassifier, get_groq_classifier
 from app.tools.weaviate_search import WeaviateSearcher
 
 logger = get_logger(__name__)
@@ -22,8 +23,10 @@ class RAGService:
         question: str,
         searcher: WeaviateSearcher | None = None,
         cache_manager: RAGCacheManager | None = None,
+        classifier: GroqClassifier | None = None,
     ) -> dict:
         """Process the RAG query and return response."""
+
         logger.info(f"Processing query: {question}")
         start_time = time.perf_counter()
         # Check cache first
@@ -44,13 +47,25 @@ class RAGService:
             }
 
         logger.info(f"Cache miss for question: {question}")
+        try:
+            if classifier is None:
+                classifier = get_groq_classifier()
+            classification_result = await classifier.classify(question)
+            law_codes = classification_result.split("\n")
+        except Exception as e:
+            logger.error(f"Error classifying question: {e}")
+            law_codes = []
 
         try:
             if searcher:
                 # Try to connect
                 connection_success = await searcher.connect()
                 if connection_success:
-                    result = await searcher.ask_question(question)
+                    result = await searcher.ask_question(
+                        question
+                        + " Dựa trên các bộ luật "
+                        + ", ".join(code for code in law_codes if code.strip())
+                    )
                     await cache_manager.set(
                         question, str(result["answer"]), len(result["relevant_chunks"])
                     )
