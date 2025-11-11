@@ -12,3 +12,11 @@
 2025-10-20 06:57:28,030 - src.store_vector.weaviate_search - ERROR - weaviate_search - _extract_chunks_from_response - Weaviate client not initialized
 2025-11-07 08:45:45,165 - __main__ - ERROR - index_data - test_vector_query - Error performing vector query: Query call with protocol GRPC search failed with message explorer: get class: vectorize params: could not vectorize input for collection LegalDocument with search-type nearText. Make sure a vectorizer module is configured for this collection.
 2025-11-07 08:45:45,329 - __main__ - ERROR - index_data - test_hybrid_query - Error performing hybrid query: Query call with protocol GRPC search failed with message VectorFromInput was called without vectorizer on class LegalDocument for input hình sự.
+2025-11-11 15:51:41,474 - __main__ - ERROR - index_data - load_embedded_data - Error loading data from C:\Users\HP\Desktop\AI_legal_assistant\filtered_chunks_by_titles_extract.json: [Errno 2] No such file or directory: 'C:\\Users\\HP\\Desktop\\AI_legal_assistant\\filtered_chunks_by_titles_extract.json'
+2025-11-11 15:51:41,474 - __main__ - ERROR - index_data - main - No data loaded
+2025-11-11 15:52:38,083 - __main__ - ERROR - index_data - create_schema - Error creating schema: 'str' object has no attribute 'name'
+2025-11-11 15:52:38,083 - __main__ - ERROR - index_data - main - Failed to create schema
+2025-11-11 15:54:03,795 - __main__ - ERROR - index_data - create_schema - Error creating schema: Collection may not have been created properly.! Unexpected status code: 422, with response body: {'error': [{'message': 'class name LegalDocument already exists'}]}.
+2025-11-11 15:54:03,796 - __main__ - ERROR - index_data - main - Failed to create schema
+2025-11-11 15:56:48,852 - __main__ - ERROR - index_data - test_vector_query - Error performing vector query: Query call with protocol GRPC search failed with message explorer: get class: vectorize params: could not vectorize input for collection LegalDocument with search-type nearText. Make sure a vectorizer module is configured for this collection.
+2025-11-11 15:56:49,049 - __main__ - ERROR - index_data - test_hybrid_query - Error performing hybrid query: Query call with protocol GRPC search failed with message VectorFromInput was called without vectorizer on class LegalDocument for input hình sự.

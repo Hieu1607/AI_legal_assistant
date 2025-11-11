@@ -18,9 +18,9 @@ from typing import Any, Dict, List, Optional
 
 import weaviate
 from dotenv import load_dotenv
-from weaviate.classes.init import Auth
-from weaviate.classes.config import Configure, Property, DataType
+from weaviate.classes.config import Configure, DataType, Property
 from weaviate.classes.data import DataObject
+from weaviate.classes.init import Auth
 
 # Load environment variables
 load_dotenv()
@@ -106,10 +106,14 @@ class WeaviateIndexer:
         """
         try:
             # Check if class already exists
-            collections = self.client.collections.list_all()
-            if self.class_name in [col.name for col in collections]:
-                logger.info(f"Class '{self.class_name}' already exists")
-                return True
+            try:
+                existing_collection = self.client.collections.get(self.class_name)
+                if existing_collection:
+                    logger.info(f"Class '{self.class_name}' already exists")
+                    return True
+            except Exception:
+                # Collection doesn't exist, continue with creation
+                pass
 
             # Configure vectorizer based on parameter
             if use_simple_vectorizer:
@@ -156,7 +160,7 @@ class WeaviateIndexer:
                     ),
                 ],
                 vectorizer_config=vectorizer_config,
-                generative_config=None
+                generative_config=None,
             )
 
             logger.info(f"Successfully created class '{self.class_name}'")
@@ -242,7 +246,9 @@ class WeaviateIndexer:
                 )
                 continue
 
-        logger.info(f"Prepared {len(objects)} objects for upload (embeddings will be auto-generated)")
+        logger.info(
+            f"Prepared {len(objects)} objects for upload (embeddings will be auto-generated)"
+        )
         return objects
 
     def upload_data(self, objects: List[DataObject]) -> Dict[str, int]:
@@ -340,9 +346,7 @@ class WeaviateIndexer:
 
             # Perform BM25 keyword search (works without vectorizer)
             response = collection.query.bm25(
-                query=query_text, 
-                limit=limit, 
-                return_metadata=["score"]
+                query=query_text, limit=limit, return_metadata=["score"]
             )
 
             results = []
@@ -365,8 +369,10 @@ class WeaviateIndexer:
         except Exception as e:
             logger.error(f"Error performing BM25 query: {str(e)}")
             return []
-    
-    def test_vector_query(self, query_text: str, limit: int = 5) -> List[Dict[str, Any]]:
+
+    def test_vector_query(
+        self, query_text: str, limit: int = 5
+    ) -> List[Dict[str, Any]]:
         """
         Test query using vector similarity search (requires vectorizer).
 
@@ -382,9 +388,7 @@ class WeaviateIndexer:
 
             # Perform semantic vector search
             response = collection.query.near_text(
-                query=query_text, 
-                limit=limit, 
-                return_metadata=["score", "distance"]
+                query=query_text, limit=limit, return_metadata=["score", "distance"]
             )
 
             results = []
@@ -407,10 +411,14 @@ class WeaviateIndexer:
 
         except Exception as e:
             logger.error(f"Error performing vector query: {str(e)}")
-            logger.info("Vector search failed - collection may not have vectorizer configured")
+            logger.info(
+                "Vector search failed - collection may not have vectorizer configured"
+            )
             return []
-    
-    def test_hybrid_query(self, query_text: str, limit: int = 5) -> List[Dict[str, Any]]:
+
+    def test_hybrid_query(
+        self, query_text: str, limit: int = 5
+    ) -> List[Dict[str, Any]]:
         """
         Test hybrid query combining vector and keyword search.
 
@@ -426,9 +434,7 @@ class WeaviateIndexer:
 
             # Perform hybrid search (vector + BM25)
             response = collection.query.hybrid(
-                query=query_text, 
-                limit=limit, 
-                return_metadata=["score"]
+                query=query_text, limit=limit, return_metadata=["score"]
             )
 
             results = []
@@ -464,9 +470,7 @@ def main():
     Main function to demonstrate the indexing process.
     """
     # Configuration
-    DATA_FILE = os.path.join(
-        root, "total_chunks_fixed.json"
-    )
+    DATA_FILE = os.path.join(root, "filtered_chunks_by_titles_exact.json")
 
     # Create indexer instance
     indexer = WeaviateIndexer(
@@ -510,7 +514,7 @@ def main():
 
         # Step 7: Test queries
         logger.info("=== Step 7: Testing Queries ===")
-        
+
         # Test BM25 search (always works)
         logger.info("--- BM25 Keyword Search Test ---")
         bm25_results = indexer.test_query("hình sự", limit=3)
@@ -518,7 +522,7 @@ def main():
             logger.info(
                 f"BM25 Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
             )
-        
+
         # Test vector search (if vectorizer is available)
         logger.info("--- Vector Search Test ---")
         vector_results = indexer.test_vector_query("hình sự", limit=3)
@@ -526,7 +530,7 @@ def main():
             logger.info(
                 f"Vector Result {i}: {result['chunk_id']} - Score: {result['score']:.4f}"
             )
-        
+
         # Test hybrid search (if vectorizer is available)
         logger.info("--- Hybrid Search Test ---")
         hybrid_results = indexer.test_hybrid_query("hình sự", limit=3)
