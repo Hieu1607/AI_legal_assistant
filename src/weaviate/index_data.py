@@ -35,6 +35,8 @@ from configs.logger import get_logger, setup_logging
 setup_logging()
 logger = get_logger(__name__)
 
+HUGGINGFACE_KEY = os.getenv("HUGGINGFACE_API_KEY")
+
 
 class WeaviateIndexer:
     """
@@ -78,8 +80,13 @@ class WeaviateIndexer:
         try:
             # Create client with authentication
             self.client = weaviate.connect_to_weaviate_cloud(
-                cluster_url=self.weaviate_url,
-                auth_credentials=Auth.api_key(self.weaviate_api_key),
+                cluster_url=self.weaviate_url if self.weaviate_url else "",
+                auth_credentials=Auth.api_key(
+                    self.weaviate_api_key if self.weaviate_api_key else ""
+                ),
+                headers={
+                    "X-HuggingFace-Api-Key": HUGGINGFACE_KEY if HUGGINGFACE_KEY else ""
+                },  # Include Hugging Face API key if available
             )
 
             # Test connection
@@ -94,7 +101,7 @@ class WeaviateIndexer:
             logger.error(f"Error connecting to Weaviate: {str(e)}")
             return False
 
-    def create_schema(self, use_simple_vectorizer: bool = True) -> bool:
+    def create_schema(self, use_simple_vectorizer: bool = False) -> bool:
         """
         Create the schema for legal documents in Weaviate.
 
@@ -117,10 +124,14 @@ class WeaviateIndexer:
 
             # Configure vectorizer based on parameter
             if use_simple_vectorizer:
-                vectorizer_config = Configure.Vectorizer.none()
+                vector_config = Configure.Vectorizer.none()
                 logger.info("Using no vectorizer - BM25 keyword search only")
             else:
-                vectorizer_config = Configure.Vectorizer.text2vec_transformers()
+                vector_config = Configure.Vectors.text2vec_huggingface(
+                    name="title_vector",
+                    source_properties=["text"],
+                    model="sentence-transformers/all-MiniLM-L6-v2",
+                )
                 logger.info("Using text2vec-transformers for semantic search")
 
             # Define the class schema without embeddings
@@ -159,7 +170,7 @@ class WeaviateIndexer:
                         description="Timestamp when the object was indexed",
                     ),
                 ],
-                vectorizer_config=vectorizer_config,
+                vector_config=vector_config,
                 generative_config=None,
             )
 
