@@ -33,7 +33,6 @@ class LoggerManager:
     def setup_logging(self, force_setup=False):
         if self._setup_done and not force_setup:
             return True
-        
         try:
             project_root = self.get_project_root()
             config_path = project_root / "configs" / "logging.yaml"
@@ -60,13 +59,12 @@ class LoggerManager:
 
             self._setup_done = True
             return True
-        
         except Exception as e:
             logging.basicConfig(level=logging.ERROR)
             logging.error("Failed to setup logging: %s", e)
             self._setup_done = False
             return False
-        
+
     def reset_logging(self):
         """Reset the setup flag for testing purposes."""
         self._setup_done = False

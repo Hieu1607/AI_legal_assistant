@@ -13,12 +13,13 @@ class RAGRequest(BaseModel):
     query: str = Field(
         description="The question to ask.",
         min_length=5,
-        max_length=200,
+        max_length=1000,
         json_schema_extra={"example": "Chương I điều 1 luật tố tụng dân sự mới nhất ?"},
     )
 
     @field_validator("query")
-    def validate_query(self, v):
+    @classmethod
+    def validate_query(cls, v):
         # Remove potential injection attempts
         dangerous_patterns = ["<script>", "javascript:", "eval("]
         for pattern in dangerous_patterns:

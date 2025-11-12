@@ -2,9 +2,10 @@
 Route/controller for RAG-related endpoints.
 """
 
+import traceback
 from http import HTTPStatus
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
 from app.configs.logger import get_logger
@@ -21,8 +22,6 @@ router = APIRouter()
 @router.post("/rag")
 async def rag_endpoint(
     request: RAGRequest,
-    searcher: WeaviateSearcher | None = Depends(get_searcher),
-    cache_manager: RAGCacheManager | None = Depends(get_cache_manager),
 ) -> JSONResponse:
     """
     Endpoint to handle RAG requests.
@@ -33,8 +32,22 @@ async def rag_endpoint(
     Returns:
         RAGResponse: The RAG response payload.
     """
-    rag_service = RAGService()
     try:
+        rag_service = RAGService()
+        # Initialize dependencies internally to avoid exposing them as request parameters
+        try:
+            searcher = get_searcher()
+            cache_manager = await get_cache_manager()
+        except Exception as e:
+            logger.error(f"Error initializing dependencies: {e}")
+            return JSONResponse(
+                status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
+                content={
+                    "status": "error",
+                    "error": "Failed to initialize services.",
+                },
+            )
+
         response_data = await rag_service.process_query(
             request.query, searcher=searcher, cache_manager=cache_manager
         )
@@ -64,6 +77,7 @@ async def rag_endpoint(
 
     except Exception as e:
         logger.error(f"Error in /rag endpoint: {e}")
+        logger.error(f"Full traceback: {traceback.format_exc()}")
         return JSONResponse(
             status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
             content={

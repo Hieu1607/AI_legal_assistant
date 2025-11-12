@@ -3,8 +3,9 @@ Weaviate tool integration for vector database operations.
 """
 
 import asyncio
+import warnings
 from functools import lru_cache
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import weaviate
 from weaviate.agents.query import AsyncQueryAgent
@@ -31,6 +32,23 @@ class WeaviateSearcher:
         self.client = None
         self.query_agent = None
 
+    async def __aenter__(self):
+        """Async context manager entry."""
+        await self.connect()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """Async context manager exit."""
+        await self.close()
+
+    def __del__(self):
+        """Destructor to ensure connection is closed."""
+        if self.client:
+            warnings.warn(
+                "WeaviateSearcher was not properly closed. Use async context manager or call close() explicitly.",
+                ResourceWarning,
+            )
+
     async def connect(self, timeout: float = 10.0, retry: int = 1) -> bool:
         """Connect to Weaviate instance.
         Returns:
@@ -52,25 +70,48 @@ class WeaviateSearcher:
             )
             for attempt in range(retry + 1):
                 try:
+                    if not self.client:
+                        logger.error("Client is None, cannot connect")
+                        return False
+
                     await asyncio.wait_for(self.client.connect(), timeout=timeout)
 
-                    if await self.client.is_ready():
+                    if self.client and await self.client.is_ready():
                         logger.info("Connected to Weaviate successfully.")
                         return True
 
                     logger.error("Server not ready after connection.")
+                    # Clean up failed connection
+                    if self.client:
+                        try:
+                            await self.client.close()
+                        except Exception:
+                            pass
+                        self.client = None
                     return False
 
                 except asyncio.TimeoutError:
                     logger.warning(
                         f"Timeout while connecting (attempt {attempt + 1}/{retry + 1})"
                     )
+                    # Clean up failed connection attempt
+                    if self.client:
+                        try:
+                            await self.client.close()
+                        except Exception:
+                            pass
+                        self.client = None
 
                 except Exception as e:
                     logger.error(f"Connection error: {e}")
+                    # Clean up failed connection attempt
+                    if self.client:
+                        try:
+                            await self.client.close()
+                        except Exception:
+                            pass
+                        self.client = None
                     break
-
-            self.client = None  # Reset if fail
             logger.error("Failed to connect to Weaviate after retries.")
             return False
         except Exception as e:
@@ -86,6 +127,11 @@ class WeaviateSearcher:
             dict: A dictionary containing the extracted information.
         """
         if not response.sources:
+            return []
+
+        # Check if client is available and connected
+        if not self.client:
+            logger.warning("Weaviate client is not available for extracting chunks")
             return []
 
         relevant_chunks = []
@@ -133,6 +179,26 @@ class WeaviateSearcher:
                     "relevant_chunks": [],
                 }
 
+        # Verify client is still connected and ready
+        try:
+            if self.client and not await self.client.is_ready():
+                logger.warning(
+                    "Weaviate client is not ready, attempting to reconnect..."
+                )
+                if not await self.connect():
+                    return {
+                        "answer": "Failed to reconnect to Weaviate.",
+                        "relevant_chunks": [],
+                    }
+        except Exception as e:
+            logger.error(f"Error checking client readiness: {e}")
+            # Try to reconnect
+            if not await self.connect():
+                return {
+                    "answer": "Error checking Weaviate connection status.",
+                    "relevant_chunks": [],
+                }
+
         try:
 
             if not self.query_agent:
@@ -174,10 +240,20 @@ class WeaviateSearcher:
         """Close the Weaviate client connection."""
         if self.client:
             try:
-                await self.client.close()
-                logger.info("Weaviate client connection closed.")
+                # Check if client is still connected before attempting to close
+                if hasattr(self.client, "_connection") and self.client._connection:
+                    await self.client.close()
+                    logger.info("Weaviate client connection closed.")
+                else:
+                    logger.info("Weaviate client was already disconnected.")
             except Exception as e:
                 logger.error(f"Error while closing Weaviate client connection: {e}")
+                # Force close even if there's an error
+                try:
+                    if hasattr(self.client, "close"):
+                        await self.client.close()
+                except Exception:
+                    pass  # Suppress any secondary errors during forced close
             finally:
                 self.client = None
                 self.query_agent = None
@@ -187,8 +263,7 @@ class WeaviateSearcher:
 searcher_instance: WeaviateSearcher | None = None
 
 
-@lru_cache(1)
-def get_searcher() -> Optional[WeaviateSearcher]:
+def get_searcher() -> WeaviateSearcher:
     """Get an instance of WeaviateSearcher.
     Returns:
         WeaviateSearcher: An instance of WeaviateSearcher.
@@ -198,4 +273,5 @@ def get_searcher() -> Optional[WeaviateSearcher]:
         return WeaviateSearcher()
     except Exception as e:
         logger.error(f"Error while creating WeaviateSearcher instance: {e}")
-        return None
+        # Return a new instance anyway - connection errors will be handled in connect()
+        return WeaviateSearcher()

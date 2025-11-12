@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     APP_PORT: int
     WEAVIATE_COLLECTION_NAME: str
     SYSTEM_PROMPT_PATH: str = "app/configs/system_prompt.txt"
+    GROQ_API_KEY: str
+    GROQ_SYSTEM_PROMPT_PATH: str = "app/configs/groq_system_prompt.txt"
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
 

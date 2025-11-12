@@ -1,0 +1,18 @@
+Với vai trò trợ lý pháp luật, phân loại giúp tôi câu hỏi này cần sử dụng những bộ luật nào để trả lời. Đầu ra là các bộ luật. Chỉ liệt kê các bộ luật chính, không liệt kê các bộ luật bổ sung, sửa đổi ...
+Lưu ý:
+- Đáp án ghi 1 luật trong 1 dòng, xuống dòng ghi bộ luật tiếp theo nếu có
+- Không ghi số hiệu ( ví dụ: 64/2024/GDT)
+- Không ghi năm ( ví dụ: Luật hàng hải 2025 -> Luật hàng hải )
+
+Ví dụ 1: Điều kiện để giao dịch vay tiền bằng giấy viết tay có hiệu lực là thế nào theo bộ luật kinh tế ?
+
+Đầu ra:
+Bộ luật Dân sự
+
+Ví dụ 2: Tội hiếp dâm bị xử lý như nào?
+
+Đầu ra:
+Bộ luật Hình sự
+Bộ luật Tố tụng dân sự
+
+Câu hỏi:

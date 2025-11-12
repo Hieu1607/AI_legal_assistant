@@ -38,6 +38,43 @@ C:\Users\HP\Desktop\AI_legal_assistant\
         └───weaviate_search.py
 ```
 
+## 🛠️ Technologies Used
+
+- **Backend**: FastAPI, Uvicorn
+- **Vector Database**: Weaviate
+- **Containerization**: Docker
+- **Core Libraries**:
+  - `pydantic` for data validation.
+  - `python-dotenv` for managing environment variables.
+  - `prometheus-client` for exposing metrics.
+  - `pyyaml` for configuration.
+
+## 🔑 Environment Variables Setup
+
+To run the application, you need to set up the following environment variables in a `.env` file. You can copy the example file:
+
+```bash
+cp .env.example .env
+```
+
+The `.env` file requires `WEAVIATE_URL` and `WEAVIATE_API_KEY`. Follow these steps to obtain them:
+
+1.  **Login to Weaviate Cloud**: Go to [Weaviate Cloud Console](https://console.weaviate.cloud/) and log in to your account.
+2.  **Navigate to Your Cluster**: Select the Weaviate cluster that contains your data.
+3.  **Copy Cluster URL**: In the cluster details, find and copy the **Cluster URL**. This will be your `WEAVIATE_URL`.
+4.  **Create an API Key**:
+    *   Click on the **"API Keys"** tab.
+    *   Click the **"Create API Key"** button.
+    *   Give the key a descriptive name, grant it **Admin** or **Viewer** permissions as needed, and create it.
+    *   Copy the generated key immediately. This will be your `WEAVIATE_API_KEY`.
+
+After setting these variables, your `.env` file should look like this:
+
+```env
+WEAVIATE_URL="<YOUR_WEAVIATE_URL>"
+WEAVIATE_API_KEY="<YOUR_WEAVIATE_API_KEY>"
+```
+
 ## 🚀 Quick Start
 
 ### Local Development
